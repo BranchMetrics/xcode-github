@@ -1,21 +1,27 @@
 # xcode-github
+
 A macOS app that creates new Xcode bots when a new PR is created on an observed GitHub repo.
+
+There are projects for a full Mac app and another for a command line utility.
 
 * [To Do](#to-do)
 * [Overview](#overview)
+* [Command Line and Help](#command-line-and-help)
 * [Program Flow](#program-flow)
 * [References](#references)
 * [Xcode Bot Documentation](#xcode-bot-documentation)
 * [GitHub Documentation](#github-documentation)
-* [Command Line and Help](#command-line-and-help)
 * [Note Pad](#note-pad)
 
 ## To Do
 ```
 * [x] Parse command line options.
+* [x] Xcode server status.
+* [x] Create Xcode bots from new PRs.
+* [x] Start rough version of the Mac app.
 * [ ] Update integration status in GitHub.
-* [ ] Clean up logging and messages.
-* [ ] Polish Documentation
+* [ ] Clean up command line logging and messages.
+* [ ] Polish Documentation.
 ```
 
 ## Overview
@@ -23,6 +29,43 @@ A macOS app that creates new Xcode bots when a new PR is created on an observed 
 This command line tool creates a new Xcode test bot when a new PR on a GitHub repo is created.
 
 When a new PR is created, this app creates a new Xcode test bot on an Xcode server based on an existing template bot and schedules it to run. The bot will report the test status back on GitHub.
+
+## Command Line and Help
+[Standard command line parsers.](https://stackoverflow.com/questions/9642732/parsing-command-line-arguments)
+
+```
+xcode-github - Creates an Xcode test bots for new GitHub PRs.
+
+usage: xcode-github [-dhsVv] -g <github-auth-token>
+                 -t <bot-template> -x <xcode-server-domain-name>
+
+
+  -d, --dryrun
+      Dry run. Print what would be done.
+
+  -g, --github <github-auth-token>
+      A GitHub auth token that allows checking the status of a repo
+      and change a PR's status.
+
+  -h, --help
+      Print this help information.
+
+  -s, --status
+      Only print the status of the xcode server bots and quit.
+
+  -t --template <bot-template>
+      An existing bot on the xcode server that is used as a template
+      for the new GitHub PR bots.
+
+  -V, --version
+      Show version and exit.
+
+  -v, --verbose
+      Verbose. Extra 'v' increases the verbosity.
+
+  -x, --xcodeserver <xcode-server-domain-name>
+      The network name of the xcode server.
+```
 
 ## Program Flow
 
@@ -125,43 +168,6 @@ curl --insecure --request POST \
         --header 'Accept: application/vnd.github.v3+json' \
         --header 'Authorization: token 13e499f7d9ba4fca42e4715558d1e5bc30a6a4e9' \
         https://api.github.com/repos/BranchMetrics/ios-branch-deep-linking/commits/push-notifications/statuses
-```
-
-## Command Line and Help
-[Standard command line parsers.](https://stackoverflow.com/questions/9642732/parsing-command-line-arguments)
-
-```
-xcode-github - Creates an Xcode test bots for new GitHub PRs.
-
-usage: xcode-github [-dhsVv] -g <github-auth-token>
-                 -t <bot-template> -x <xcode-server-domain-name>
-
-
-  -d, --dryrun
-      Dry run. Print what would be done.
-
-  -g, --github <github-auth-token>
-      A GitHub auth token that allows checking the status of a repo
-      and change a PR's status.
-
-  -h, --help
-      Print this help information.
-
-  -s, --status
-      Only print the status of the xcode server bots and quit.
-
-  -t --template <bot-template>
-      An existing bot on the xcode server that is used as a template
-      for the new GitHub PR bots.
-
-  -V, --version
-      Show version and exit.
-
-  -v, --verbose
-      Verbose. Extra 'v' increases the verbosity.
-
-  -x, --xcodeserver <xcode-server-domain-name>
-      The network name of the xcode server.
 ```
 
 ## Note Pad

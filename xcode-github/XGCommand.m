@@ -12,12 +12,12 @@
 #import "XGGitHubPullRequest.h"
 #include <sysexits.h>
 
-int XGCommand(XGCommandOptions *options) {
+NSError*_Nullable XGUpdateXcodeBotsWithGitHub(XGCommandOptions*_Nonnull options) {
+    NSError *error = nil;
     int returnCode = EXIT_FAILURE;
     {
         BNCLogInfo(@"Getting Xcode bots on '%@'...", options.xcodeServerName);
 
-        NSError *error = nil;
         NSDictionary<NSString*, XGXcodeBot*> *bots =
             [XGXcodeBot botsForServer:options.xcodeServerName error:&error];
         if (error) {
@@ -57,7 +57,7 @@ int XGCommand(XGCommandOptions *options) {
                     BNCLog(@"Would create bot '%@'.", newBotName);
                 } else {
                     BNCLogInfo(@"Creating bot '%@'...", newBotName);
-                    NSError *error = nil;
+                    error = nil;
                     [pr setStatus:XGPullRequestStatusPending
                         message:@"Creating Xcode Bot..."
                         statusURL:nil
@@ -83,10 +83,11 @@ int XGCommand(XGCommandOptions *options) {
                     BNCLog(@"Would delete bot '%@'.", bot.name);
                 } else  {
                     BNCLogInfo(@"Deleting old bot '%@'...", bot.name);
-                    NSError *error = [bot removeFromServer];
+                    error = [bot removeFromServer];
                     if (error) {
-                        BNCLogError(@"Can't remove old bot named '%@' from server: %@.",
-                            bot.name, error);
+                        BNCLogError(
+                            @"Can't remove old bot named '%@' from server: %@.", bot.name, error
+                        );
                         returnCode = EX_NOPERM;
                         goto exit;
                     }
@@ -94,11 +95,19 @@ int XGCommand(XGCommandOptions *options) {
             }
         }
 
-//        // Show status and end:
-//        error = showBotStatus(options.xcodeServerName);
-//        if (error == nil) returnCode = EXIT_SUCCESS;
+        error = nil;
+        returnCode = EXIT_SUCCESS;
     }
 
 exit:
-    return returnCode;
+    if (returnCode != EXIT_SUCCESS) {
+        if (!error) error = [NSError errorWithDomain:NSMachErrorDomain code:KERN_FAILURE userInfo:nil];
+        NSMutableDictionary *userInfo =
+            ([error.userInfo isKindOfClass:NSDictionary.class])
+            ? [error.userInfo mutableCopy]
+            : [NSMutableDictionary new];
+        userInfo[@"return_code"] = @(returnCode);
+        error = [NSError errorWithDomain:error.domain code:error.code userInfo:userInfo];
+    }
+    return error;
 }

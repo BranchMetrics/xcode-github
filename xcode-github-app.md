@@ -1,5 +1,14 @@
 # xcode-github-app
 
+## To Do
+```
+* [ ] Update bot status detail message strings.
+* [ ] Make "Add Server" flow.
+* [ ] Make "Add GitHub Token" flow.
+* [ ] Make log window.
+* [ ] Add help.
+```
+ 
 ## Menus
 * New Server
 * New GitHub Repo Token

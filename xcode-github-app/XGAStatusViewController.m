@@ -7,15 +7,19 @@
 //
 
 #import "XGAStatusViewController.h"
-#import "BNCUtilities.h"
 #import "XGXcodeBot.h"
+#import "XGCommand.h"
+#import "XGASettings.h"
+#import "BNCUtilities.h"
 #import "BNCNetworkService.h"
+#import "BNCLog.h"
+#import <stdatomic.h>
 
 #pragma mark XGAServerStatus
 
 @interface XGAServerStatus : NSObject
 @property NSString *serverName;
-@property NSString *pullRequestName;
+@property NSString *botName;
 @property NSString *statusSummary;
 @property NSString *statusDetail;
 @end
@@ -30,18 +34,13 @@
 }
 @property (strong) dispatch_queue_t asyncQueue;
 @property (strong) dispatch_source_t statusTimer;
+@property (assign) _Atomic(BOOL) statusIsInProgress;
 @property (strong) NSArray<XGAServerStatus*> *serverStatusArray;
 @property (strong) IBOutlet NSArrayController *arrayController;
 @property (weak)   IBOutlet NSTableView *tableView;
 @end
 
 @implementation XGAStatusViewController
-
-- (void) dealloc {
-    @synchronized(self) {
-        [self stopStatusUpdates];
-    }
-}
 
 - (void) setServerStatusArray:(NSArray<XGAServerStatus *> *)serverStatusArray {
     @synchronized(self) {
@@ -121,7 +120,12 @@
         dispatch_source_set_event_handler(self.statusTimer, ^ {
             __strong __typeof(weakSelf) strongSelf = weakSelf;
             if (strongSelf) {
-                [strongSelf updateStatus];
+                // Prevent double status getting:
+                BOOL statusIsInProgress = atomic_exchange(&strongSelf->_statusIsInProgress, YES);
+                if (!statusIsInProgress) {
+                    [strongSelf updateStatus];
+                    atomic_exchange(&strongSelf->_statusIsInProgress, NO);
+                }
             } else {
                 dispatch_source_cancel(localStatusTimer);
             }
@@ -141,9 +145,46 @@
 }
 
 - (void) updateStatus {
+    // Prevent double status getting:
+    BOOL statusIsInProgress = atomic_exchange(&self->_statusIsInProgress, YES);
+    if (statusIsInProgress) return;
+
+    BNCLogDebug(@"Start updateStatus.");
+    NSMutableSet *statusServers = [NSMutableSet new];
+    NSArray<XGAServerGitHubSyncTask*>* syncTasks = [XGASettings shared].serverGitHubSyncTasks;
+    for (XGAServerGitHubSyncTask*task in syncTasks) {
+        if (task.xcodeServerName.length == 0) continue;
+        [[BNCNetworkService shared].anySSLCertHosts addObject:task.xcodeServerName];
+        [self updateSyncBots:task];
+        [statusServers addObject:task.xcodeServerName];
+    }
+    for (NSString*serverName in statusServers) {
+        [self updateXcodeServerStatus:serverName];
+    }
+    BNCLogDebug(@"End updateStatus.");
+
+    // Release status lock:
+    atomic_exchange(&self->_statusIsInProgress, NO);
+}
+
+- (void) updateSyncBots:(XGAServerGitHubSyncTask*)syncTask {
     NSError*error = nil;
-    NSString*serverName = @"esmith.local";
-    [[BNCNetworkService shared].anySSLCertHosts addObject:serverName];
+    if (syncTask.xcodeServerName.length &&
+        syncTask.gitHubRepo.length &&
+        syncTask.templateBotName.length) {
+        XGCommandOptions*options = [XGCommandOptions new];
+        options.xcodeServerName = syncTask.xcodeServerName;
+        options.templateBotName = syncTask.templateBotName;
+        options.githubAuthToken = syncTask.gitHubToken;
+        options.dryRun = YES;
+        error = XGUpdateXcodeBotsWithGitHub(options);
+        if (error) {
+        }
+    }
+}
+
+- (void) updateXcodeServerStatus:(NSString*)serverName {
+    NSError*error = nil;
     NSMutableArray *statusArray = [NSMutableArray new];
     NSDictionary<NSString*, XGXcodeBot*>* bots = [XGXcodeBot botsForServer:serverName error:&error];
     if (error) {
@@ -155,7 +196,7 @@
     } else {
         for (XGXcodeBot *bot in bots.objectEnumerator) {
             XGXcodeBotStatus*botStatus = [bot status];
-            XGAServerStatus* status = [self statusWithBotStatus:botStatus];
+            XGAServerStatus*status = [self statusWithBotStatus:botStatus];
             if (status) [statusArray addObject:status];
         }
     }
@@ -172,7 +213,7 @@
     if (botStatus == nil) return nil;
     XGAServerStatus *status = [XGAServerStatus new];
     status.serverName = botStatus.serverName;
-    status.pullRequestName = botStatus.botName;
+    status.botName = botStatus.botName;
     if ([botStatus.currentStep isEqualToString:@"completed"]) {
         status.statusSummary = botStatus.result;
     } else {
@@ -182,7 +223,7 @@
         [[status.statusSummary
             stringByReplacingOccurrencesOfString:@"-" withString:@" "]
             capitalizedString];
-    status.statusDetail = @"No detail yet!";
+    status.statusDetail = @"No details yet!";
     return status;
 }
 

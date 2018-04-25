@@ -7,7 +7,16 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "BNCLog.h"
 
 int main(int argc, const char * argv[]) {
-    return NSApplicationMain(argc, argv);
+    @autoreleasepool {
+        BNCLogSetDisplayLevel(BNCLogLevelAll);
+        BNCLog(@"%@ version %@(%@).",
+            [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleExecutable"],
+            [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"],
+            [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]
+        );
+        return NSApplicationMain(argc, argv);
+    }
 }

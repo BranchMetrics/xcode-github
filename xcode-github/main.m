@@ -14,6 +14,7 @@
 #import "XGCommandOptions.h"
 #import "BNCLog.h"
 #import "BNCNetworkService.h"
+#import "XGCommand.h"
 #include <sysexits.h>
 
 NSString *helpString =
@@ -115,83 +116,10 @@ int main(int argc, char*const argv[]) {
             goto exit;
         }
 
-        BNCLogInfo(@"Getting Xcode bots on '%@'...", options.xcodeServerName);
-        
-        NSError *error = nil;
-        NSDictionary<NSString*, XGXcodeBot*> *bots =
-            [XGXcodeBot botsForServer:options.xcodeServerName error:&error];
+        NSError *error = XGUpdateXcodeBotsWithGitHub(options);
         if (error) {
-            BNCLogError(@"Can't retrieve Xcode bot information from %@: %@.",
-                options.xcodeServerName, error);
-            returnCode = EX_NOHOST;
+            returnCode = [error.userInfo[@"return_code"] intValue];
             goto exit;
-        }
-
-        // Check that the template bot exists:
-        XGXcodeBot *templateBot = bots[options.templateBotName];
-        if (!templateBot) {
-            BNCLogError(@"Can't find Xcode template bot named '%@'.", options.templateBotName);
-            returnCode = EX_CONFIG;
-            goto exit;
-        }
-
-        BNCLogInfo(@"Getting pull requests for '%@'...", templateBot.sourceControlRepository);
-
-        NSDictionary<NSString*, XGGitHubPullRequest*> *pullRequests =
-            [XGGitHubPullRequest pullsRequestsForRepository:templateBot.sourceControlRepository
-                authToken:options.githubAuthToken
-                error:&error];
-        if (error) {
-            BNCLogError(@"Can't retrieve pull requests from '%@': %@.",
-            templateBot.sourceControlRepository, error);
-            returnCode = EX_NOHOST;
-            goto exit;
-        }
-
-        // Check for open pull requests with state 'open' and no bot:
-        for (XGGitHubPullRequest *pr in pullRequests.objectEnumerator) {
-            NSString *newBotName = [XGXcodeBot botNameFromPRNumber:pr.number title:pr.title];
-            XGXcodeBot *bot = bots[newBotName];
-            if ([pr.state isEqualToString:@"open"] && !bot) {
-                if (options.dryRun) {
-                    BNCLog(@"Would create bot '%@'.", newBotName);
-                } else {
-                    BNCLogInfo(@"Creating bot '%@'...", newBotName);
-                    NSError *error = nil;
-                    [pr setStatus:XGPullRequestStatusPending
-                        message:@"Creating Xcode Bot..."
-                        statusURL:nil
-                        authToken:options.githubAuthToken];
-                    [XGXcodeBot duplicateBot:templateBot
-                        withNewName:newBotName
-                        gitHubBranchName:pr.branch
-                        error:&error];
-                    if (error) {
-                        BNCLogError(@"Can't create Xcode bot: %@.", error);
-                        returnCode = EX_NOPERM;
-                        goto exit;
-                    }
-                }
-            }
-        }
-
-        // Check for bots with no PR and delete it:
-        for (XGXcodeBot *bot in bots.objectEnumerator) {
-            NSString *number = bot.pullRequestNumber;
-            if (number && !pullRequests[number]) {
-                if (options.dryRun) {
-                    BNCLog(@"Would delete bot '%@'.", bot.name);
-                } else  {
-                    BNCLogInfo(@"Deleting old bot '%@'...", bot.name);
-                    NSError *error = [bot removeFromServer];
-                    if (error) {
-                        BNCLogError(@"Can't remove old bot named '%@' from server: %@.",
-                            bot.name, error);
-                        returnCode = EX_NOPERM;
-                        goto exit;
-                    }
-                }
-            }
         }
 
         error = showBotStatus(options.xcodeServerName);

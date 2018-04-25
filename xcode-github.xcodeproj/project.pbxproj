@@ -11,7 +11,6 @@
 		4D744C072047A53B002CA796 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D744C062047A53B002CA796 /* main.m */; };
 		4D744C162047BA5F002CA796 /* BNCLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D744C112047BA5F002CA796 /* BNCLog.m */; };
 		4D744C172047BA5F002CA796 /* BNCNetworkService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D744C122047BA5F002CA796 /* BNCNetworkService.m */; };
-		4D744C182047BA5F002CA796 /* BNCUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D744C142047BA5F002CA796 /* BNCUtilities.m */; };
 		4D744C1E2047C652002CA796 /* XGXcodeBot.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D744C1D2047C652002CA796 /* XGXcodeBot.m */; };
 		4D744C212047C9E1002CA796 /* XGGitHubPullRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D744C202047C9E1002CA796 /* XGGitHubPullRequest.m */; };
 		4DF0F591208FE64E0015D1F7 /* XGCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF0F590208FE64E0015D1F7 /* XGCommand.m */; };
@@ -35,14 +34,10 @@
 		4D744C032047A53B002CA796 /* xcode-github */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "xcode-github"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D744C062047A53B002CA796 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4D744C0D2047B886002CA796 /* ReadMe.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = ReadMe.md; sourceTree = "<group>"; };
-		4D744C102047BA5F002CA796 /* BNCUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCUtilities.h; sourceTree = "<group>"; };
 		4D744C112047BA5F002CA796 /* BNCLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCLog.m; sourceTree = "<group>"; };
 		4D744C122047BA5F002CA796 /* BNCNetworkService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCNetworkService.m; sourceTree = "<group>"; };
 		4D744C132047BA5F002CA796 /* BNCLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCLog.h; sourceTree = "<group>"; };
-		4D744C142047BA5F002CA796 /* BNCUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCUtilities.m; sourceTree = "<group>"; };
 		4D744C152047BA5F002CA796 /* BNCNetworkService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCNetworkService.h; sourceTree = "<group>"; };
-		4D744C192047BE61002CA796 /* BNCNetworkOperation+Image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BNCNetworkOperation+Image.h"; sourceTree = "<group>"; };
-		4D744C1A2047BE61002CA796 /* BNCNetworkOperation+Image.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "BNCNetworkOperation+Image.m"; sourceTree = "<group>"; };
 		4D744C1C2047C652002CA796 /* XGXcodeBot.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGXcodeBot.h; sourceTree = "<group>"; };
 		4D744C1D2047C652002CA796 /* XGXcodeBot.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGXcodeBot.m; sourceTree = "<group>"; };
 		4D744C1F2047C9E1002CA796 /* XGGitHubPullRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGGitHubPullRequest.h; sourceTree = "<group>"; };
@@ -111,12 +106,8 @@
 			children = (
 				4D744C132047BA5F002CA796 /* BNCLog.h */,
 				4D744C112047BA5F002CA796 /* BNCLog.m */,
-				4D744C192047BE61002CA796 /* BNCNetworkOperation+Image.h */,
-				4D744C1A2047BE61002CA796 /* BNCNetworkOperation+Image.m */,
 				4D744C152047BA5F002CA796 /* BNCNetworkService.h */,
 				4D744C122047BA5F002CA796 /* BNCNetworkService.m */,
-				4D744C102047BA5F002CA796 /* BNCUtilities.h */,
-				4D744C142047BA5F002CA796 /* BNCUtilities.m */,
 			);
 			path = Branch;
 			sourceTree = "<group>";
@@ -178,7 +169,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D744C182047BA5F002CA796 /* BNCUtilities.m in Sources */,
 				4D744C162047BA5F002CA796 /* BNCLog.m in Sources */,
 				4D744C212047C9E1002CA796 /* XGGitHubPullRequest.m in Sources */,
 				4D744C072047A53B002CA796 /* main.m in Sources */,

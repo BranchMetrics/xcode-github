@@ -9,4 +9,4 @@
 #import <Foundation/Foundation.h>
 #import "XGCommandOptions.h"
 
-extern int XGCommand(XGCommandOptions*_Nonnull options);
+extern NSError*_Nullable XGUpdateXcodeBotsWithGitHub(XGCommandOptions*_Nonnull options);

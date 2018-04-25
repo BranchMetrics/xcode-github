@@ -9,7 +9,6 @@
 */
 
 @import Foundation;
-//#import "BNCDebug.h"
 
 #ifdef __cplusplus
 extern "C" {
