@@ -28,7 +28,7 @@
 		4D0DD54420597FE6001721C1 /* xcode-github-app.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "xcode-github-app.md"; sourceTree = "<group>"; };
 		4D5CC05C2090CAB50042E98B /* BNCKeyChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCKeyChain.h; sourceTree = "<group>"; };
 		4D5CC05D2090CAB60042E98B /* BNCKeyChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCKeyChain.m; sourceTree = "<group>"; };
-		4D7661682057565200216B72 /* xcode-github-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "xcode-github-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D7661682057565200216B72 /* Xcode-GitHub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Xcode-GitHub.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D76616B2057565200216B72 /* XGAAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGAAppDelegate.h; sourceTree = "<group>"; };
 		4D76616C2057565200216B72 /* XGAAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGAAppDelegate.m; sourceTree = "<group>"; };
 		4D76616E2057565200216B72 /* XGAStatusViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGAStatusViewController.h; sourceTree = "<group>"; };
@@ -79,7 +79,7 @@
 		4D7661692057565200216B72 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4D7661682057565200216B72 /* xcode-github-app.app */,
+				4D7661682057565200216B72 /* Xcode-GitHub.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -160,7 +160,7 @@
 			);
 			name = "xcode-github-app";
 			productName = XcodeGitHub;
-			productReference = 4D7661682057565200216B72 /* xcode-github-app.app */;
+			productReference = 4D7661682057565200216B72 /* Xcode-GitHub.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -367,7 +367,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/xcode-github-app/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.xcode-github-app";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Xcode-GitHub";
 			};
 			name = Debug;
 		};
@@ -382,7 +382,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/xcode-github-app/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.xcode-github-app";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Xcode-GitHub";
 			};
 			name = Release;
 		};

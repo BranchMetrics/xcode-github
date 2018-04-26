@@ -36,8 +36,14 @@
 @property (strong) dispatch_source_t statusTimer;
 @property (assign) _Atomic(BOOL) statusIsInProgress;
 @property (strong) NSArray<XGAServerStatus*> *serverStatusArray;
-@property (strong) IBOutlet NSArrayController *arrayController;
 @property (weak)   IBOutlet NSTableView *tableView;
+@property (strong) IBOutlet NSArrayController *arrayController;
+
+// Update display
+@property (weak)   IBOutlet NSProgressIndicator *updateProgessIndictor;
+@property (strong) NSDate *lastUpdateDate;
+
+@property (weak) IBOutlet NSTextField *statusTextField;
 @end
 
 @implementation XGAStatusViewController
@@ -64,15 +70,6 @@
     status.statusSummary = @"< Refreshing >";
     self.serverStatusArray = @[ status ];
     [self startStatusUpdates];
-
-/* eDebug
-    XGAServerStatus *status = [XGAServerStatus new];
-    status.serverName = @"esmith.local";
-    status.pullRequestName = @"Branch:ios-branch-deep-linking #811 Skype Sharing DEVEX-278";
-    status.statusSummary = @"Success";
-    status.statusDetail = @"All 277 tests completed successfully.";
-    self.serverStatusArray = @[ status ];
-*/
 }
 
 - (void)setRepresentedObject:(id)representedObject {
@@ -106,7 +103,7 @@
         self.statusTimer = localStatusTimer;
         if (!self.statusTimer) return;
 
-        NSTimeInterval kStatusRefreshInterval = 30.0;
+        NSTimeInterval kStatusRefreshInterval = 1.0;
 
         dispatch_time_t startTime =
             dispatch_time(DISPATCH_TIME_NOW, BNCNanoSecondsFromTimeInterval(kStatusRefreshInterval));
@@ -139,11 +136,21 @@
 }
 
 - (void) updateStatus {
+    NSTimeInterval kStatusRefreshInterval = 30.0;
+
+    NSTimeInterval elapsed = - [self.lastUpdateDate timeIntervalSinceNow];
+    BNCPerformBlockOnMainThreadAsync(^{
+        self.updateProgessIndictor.doubleValue = elapsed / kStatusRefreshInterval * 100.0;
+    });
+    if (elapsed < kStatusRefreshInterval && self.lastUpdateDate != nil)
+        return;
+
     // Prevent double status getting:
     BOOL statusIsInProgress = atomic_exchange(&self->_statusIsInProgress, YES);
     if (statusIsInProgress) return;
 
     BNCLogDebug(@"Start updateStatus.");
+    BNCPerformBlockOnMainThreadAsync(^{ self.statusTextField.stringValue = @""; });
     NSMutableSet *statusServers = [NSMutableSet new];
     NSArray<XGAServerGitHubSyncTask*>* syncTasks = [XGASettings shared].serverGitHubSyncTasks;
     for (XGAServerGitHubSyncTask*task in syncTasks) {
@@ -156,6 +163,9 @@
         [self updateXcodeServerStatus:serverName];
     }
     BNCLogDebug(@"End updateStatus.");
+
+    self.lastUpdateDate = [NSDate date];
+    BNCPerformBlockOnMainThreadAsync(^ { self.updateProgessIndictor.doubleValue = 0.0; });
 
     // Release status lock:
     atomic_exchange(&self->_statusIsInProgress, NO);
@@ -173,7 +183,11 @@
         options.dryRun = YES;
         error = XGUpdateXcodeBotsWithGitHub(options);
         if (error) {
-            // eDebug -- Report error somehow.
+            NSString *message = [NSString stringWithFormat:@"%@:%@ %@",
+                options.xcodeServerName, options.templateBotName, error];
+            BNCPerformBlockOnMainThreadAsync(^{
+                self.statusTextField.stringValue = message;
+            });
         }
     }
 }
