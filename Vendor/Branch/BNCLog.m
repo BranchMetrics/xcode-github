@@ -12,7 +12,6 @@
 #import <stdatomic.h> // import not available in Xcode 7
 
 #define _countof(array)  (sizeof(array)/sizeof(array[0]))
-#define _compiletime_assert(e) {enum { ct_assert_value = 1/(!!(e)) };}
 static NSNumber *bnc_LogIsInitialized = nil;
 
 // All log synchronization and globals are coordinated through the bnc_LogQueue.
@@ -490,7 +489,6 @@ static NSString*const bnc_logLevelStrings[] = {
     @"BNCLogLevelAll",
     @"BNCLogLevelBreakPoint",
     @"BNCLogLevelDebug",
-    @"BNCLogLevelInfo",
     @"BNCLogLevelWarning",
     @"BNCLogLevelError",
     @"BNCLogLevelAssert",
@@ -498,8 +496,6 @@ static NSString*const bnc_logLevelStrings[] = {
     @"BNCLogLevelNone",
     @"BNCLogLevelMax"
 };
-static_assert(_countof(bnc_logLevelStrings) == BNCLogLevelMax+1,
-    "BNCLogLevel enum must match bnc_logLevelStrings");
 
 NSString* BNCLogStringFromLogLevel(BNCLogLevel level) {
     level = MAX(MIN(level, BNCLogLevelMax), 0);
@@ -597,7 +593,7 @@ void BNCLogSetFlushFunction(BNCLogFlushFunctionPtr flushFunction) {
 void BNCLogWriteMessageFormat(
         BNCLogLevel logLevel,
         const char *_Nullable file,
-        int lineNumber,
+        int32_t lineNumber,
         NSString *_Nullable message,
         ...
     ) {
@@ -617,15 +613,12 @@ void BNCLogWriteMessageFormat(
         @"DebugSDK",
         @"Break",
         @"Debug",
-        @"Info",
         @"Warning",
         @"Error",
         @"Assert",
         @"Log",
         @"None",
     };
-    static_assert(_countof(logLevels) == BNCLogLevelMax,
-        "BNCLogLevel enum must match logLevels");
 
     logLevel = MAX(MIN(logLevel, BNCLogLevelMax-1), 0);
     NSString *levelString = logLevels[logLevel];
@@ -649,10 +642,10 @@ void BNCLogWriteMessageFormat(
 void BNCLogWriteMessage(
         BNCLogLevel logLevel,
         NSString *_Nonnull file,
-        NSUInteger lineNumber,
+        int32_t lineNumber,
         NSString *_Nonnull message
     ) {
-    BNCLogWriteMessageFormat(logLevel, file.UTF8String, (int)lineNumber, @"%@", message);
+    BNCLogWriteMessageFormat(logLevel, file.UTF8String, lineNumber, @"%@", message);
 }
 
 void BNCLogFlushMessages() {

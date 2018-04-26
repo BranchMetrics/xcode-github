@@ -119,16 +119,10 @@
         __weak __typeof(self) weakSelf = self;
         dispatch_source_set_event_handler(self.statusTimer, ^ {
             __strong __typeof(weakSelf) strongSelf = weakSelf;
-            if (strongSelf) {
-                // Prevent double status getting:
-                BOOL statusIsInProgress = atomic_exchange(&strongSelf->_statusIsInProgress, YES);
-                if (!statusIsInProgress) {
-                    [strongSelf updateStatus];
-                    atomic_exchange(&strongSelf->_statusIsInProgress, NO);
-                }
-            } else {
+            if (strongSelf)
+                [strongSelf updateStatus];
+            else
                 dispatch_source_cancel(localStatusTimer);
-            }
         });
         dispatch_resume(self.statusTimer);
         dispatch_async(self.asyncQueue, ^{ [self updateStatus]; });

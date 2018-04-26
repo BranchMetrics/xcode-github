@@ -10,7 +10,7 @@
 
 #import "BNCTestCase.h"
 #import "BNCKeyChain.h"
-#import "BNCApplication.h"
+//#import "BNCApplication.h"
 
 @interface BNCKeyChainTest : BNCTestCase
 @end

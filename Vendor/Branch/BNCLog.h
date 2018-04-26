@@ -8,7 +8,7 @@
  @copyright     Copyright © 2016 Branch. All rights reserved.
 */
 
-@import Foundation;
+#import "BNCDebug.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -30,7 +30,6 @@ typedef NS_ENUM(NSInteger, BNCLogLevel) {
     BNCLogLevelDebugSDK = BNCLogLevelAll,
     BNCLogLevelBreakPoint,
     BNCLogLevelDebug,
-    BNCLogLevelInfo,
     BNCLogLevelWarning,
     BNCLogLevelError,
     BNCLogLevelAssert,
@@ -132,7 +131,7 @@ extern BNCLogFlushFunctionPtr _Nullable BNCLogFlushFunction(void);
 extern void BNCLogWriteMessageFormat(
     BNCLogLevel logLevel,
     const char *_Nullable sourceFileName,
-    int sourceLineNumber,
+    int32_t sourceLineNumber,
     id _Nullable messageFormat,
     ...
 );
@@ -141,7 +140,7 @@ extern void BNCLogWriteMessageFormat(
 extern void BNCLogWriteMessage(
     BNCLogLevel logLevel,
     NSString *_Nonnull sourceFileName,
-    NSUInteger sourceLineNumber,
+    int32_t sourceLineNumber,
     NSString *_Nonnull message
 );
 
@@ -160,10 +159,6 @@ extern void BNCLogFlushMessages(void);
 ///@param format Log a debug message with the specified formatting.
 #define BNCLogDebug(...) \
     do  { BNCLogWriteMessageFormat(BNCLogLevelDebug, __FILE__, __LINE__, __VA_ARGS__); } while (0)
-
-///@param format Log a info message with the specified formatting.
-#define BNCLogInfo(...) \
-    do  { BNCLogWriteMessageFormat(BNCLogLevelInfo, __FILE__, __LINE__, __VA_ARGS__); } while (0)
 
 ///@param format Log a warning message with the specified formatting.
 #define BNCLogWarning(...) \

@@ -29,6 +29,15 @@ static inline uint64_t BNCNanoSecondsFromTimeInterval(NSTimeInterval interval) {
     return interval * ((NSTimeInterval) NSEC_PER_SEC);
 }
 
+static inline void BNCSleepForTimeInterval(NSTimeInterval seconds) {
+    double secPart = trunc(seconds);
+    double nanoPart = trunc((seconds - secPart) * ((double)NSEC_PER_SEC));
+    struct timespec sleepTime;
+    sleepTime.tv_sec = (__typeof(sleepTime.tv_sec)) secPart;
+    sleepTime.tv_nsec = (__typeof(sleepTime.tv_nsec)) nanoPart;
+    nanosleep(&sleepTime, NULL);
+}
+
 ///@group Geometric Functions
 #pragma mark Geometric Functions
 
