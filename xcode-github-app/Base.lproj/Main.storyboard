@@ -818,7 +818,7 @@
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IRj-6P-GjH">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="356" height="17"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="251" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="AWd-5N-HOv">
                                                                         <font key="font" metaFont="system"/>
@@ -843,7 +843,7 @@
                                         </tableView>
                                     </subviews>
                                 </clipView>
-                                <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="ZcK-cj-SIH">
+                                <scroller key="horizontalScroller" verticalHuggingPriority="750" doubleValue="0.98058252427184467" horizontal="YES" id="ZcK-cj-SIH">
                                     <rect key="frame" x="1" y="253" width="478" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>

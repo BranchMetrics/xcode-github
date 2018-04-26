@@ -173,6 +173,7 @@
         options.dryRun = YES;
         error = XGUpdateXcodeBotsWithGitHub(options);
         if (error) {
+            // eDebug -- Report error somehow.
         }
     }
 }
@@ -207,7 +208,7 @@
     if (botStatus == nil) return nil;
     XGAServerStatus *status = [XGAServerStatus new];
     status.serverName = botStatus.serverName;
-    status.botName = botStatus.botName;
+    status.botName = ([XGXcodeBot gitHubPRNameFromString:botStatus.botName]) ?: botStatus.botName;
     if ([botStatus.currentStep isEqualToString:@"completed"]) {
         status.statusSummary = botStatus.result;
     } else {

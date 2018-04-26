@@ -139,6 +139,12 @@
     return newTitle;
 }
 
++ (NSString*_Nullable) gitHubPRNameFromString:(NSString*_Nullable)string {
+    if ([string hasPrefix:@"xcode-github PR#"])
+        return [string substringFromIndex:13];
+    return nil;
+}
+
 + (NSDictionary<NSString*, XGXcodeBot*>*_Nullable) botsForServer:(NSString*_Nonnull)xcodeServerName
 error:(NSError*__autoreleasing _Nullable*_Nullable)error {
 
