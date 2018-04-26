@@ -55,7 +55,7 @@ NSString *helpString =
 NSError *showBotStatus(NSString* xcodeServerName) {
     // Update the bots and display the results:
 
-    BNCLogInfo(@"Refreshing Xcode bot status...");
+    BNCLogDebug(@"Refreshing Xcode bot status...");
     NSError *error = nil;
     NSDictionary<NSString*, XGXcodeBot*> *bots =
         [XGXcodeBot botsForServer:xcodeServerName error:&error];

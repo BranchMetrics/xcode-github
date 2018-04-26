@@ -106,7 +106,7 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
     @synchronized(self) {
         XGAServerGitHubSyncTask*task = nil;
         self.serverGitHubSyncTasks = [NSMutableArray new];
-
+/*
         task = [XGAServerGitHubSyncTask new];
         [task setXcodeServerName:@"esmith.local" userPassword:nil];
         task.templateBotName = @"Branch-TestBed Test Bot";
@@ -118,6 +118,13 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
         [task setXcodeServerName:@"esmith.local" userPassword:nil];
         task.templateBotName = @"BranchLabs Bot";
         [task setGitHubRepo:@"BranchMetrics:BranchLabs-iOS"
+            gitHubToken:@"13e499f7d9ba4fca42e4715558d1e5bc30a6a4e9"];
+        [self.serverGitHubSyncTasks addObject:task];
+*/
+        task = [XGAServerGitHubSyncTask new];
+        [task setXcodeServerName:@"esmith.local" userPassword:nil];
+        task.templateBotName = @"xcode-github-tests master";
+        [task setGitHubRepo:@"BranchMetrics:xcode-github"
             gitHubToken:@"13e499f7d9ba4fca42e4715558d1e5bc30a6a4e9"];
         [self.serverGitHubSyncTasks addObject:task];
     }
