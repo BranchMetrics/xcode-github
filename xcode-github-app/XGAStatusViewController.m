@@ -78,9 +78,15 @@
 }
 
 - (void) doubleClickRow:(id)sender {
+    /*
     XGAServerStatus *status = self.arrayController.selectedObjects.firstObject;
     if (!status) return;
-
+    */
+    NSInteger idx = self.tableView.selectedRow;
+    if (idx < 0 || idx >= [self.arrayController.arrangedObjects count]) return;
+    XGAServerStatus *status = [self.arrayController.arrangedObjects objectAtIndex:idx];
+    if (![status isKindOfClass:XGAServerStatus.class]) return;
+    
     NSAlert *alert = [[NSAlert alloc] init];
     [alert addButtonWithTitle:@"OK"];
     alert.messageText = status.statusSummary;
@@ -223,16 +229,8 @@
     XGAServerStatus *status = [XGAServerStatus new];
     status.serverName = botStatus.serverName;
     status.botName = ([XGXcodeBot gitHubPRNameFromString:botStatus.botName]) ?: botStatus.botName;
-    if ([botStatus.currentStep isEqualToString:@"completed"]) {
-        status.statusSummary = botStatus.result;
-    } else {
-        status.statusSummary = botStatus.currentStep;
-    }
-    status.statusSummary =
-        [[status.statusSummary
-            stringByReplacingOccurrencesOfString:@"-" withString:@" "]
-            capitalizedString];
-    status.statusDetail = @"No details yet!";
+    status.statusSummary = botStatus.formattedSummaryString;
+    status.statusDetail = botStatus.formattedDetailString;
     return status;
 }
 

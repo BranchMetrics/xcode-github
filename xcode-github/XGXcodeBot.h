@@ -18,8 +18,40 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, readonly) NSString*_Nullable serverName;
 @property (strong, readonly) NSString*_Nullable integrationID;
 @property (strong, readonly) NSNumber*_Nullable integrationNumber;
-@property (strong, readonly) NSString*_Nullable result;
+/**
+  currentStep possible values:
+    "pending"
+    "preparing"
+    "checkout"
+    "before-triggers"
+    "building"
+    "testing"
+    "archiving"
+    "processing"
+    "after-triggers"
+    "uploading"
+    "completed"
+*/
 @property (strong, readonly) NSString*_Nullable currentStep;
+/**
+ result possible values:
+    "unknown"
+    "succeeded"
+    "build-errors"
+    "test-failures"
+    "warnings"
+    "analyzer-warnings"
+    "build-failed"
+    "checkout-error"
+    "internal-error"
+    "internal-checkout-error"
+    "internal-build-error"
+    "internal-processing-error"
+    "canceled"
+    "trigger-error"
+
+*/
+@property (strong, readonly) NSString*_Nullable result;
 @property (strong, readonly) NSDictionary*_Nullable dictionary;
 @property (strong, readonly) NSError*_Nullable  error;
 
@@ -34,9 +66,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, readonly) NSNumber*_Nullable testFailureCount;
 @property (strong, readonly) NSNumber*_Nullable codeCoveragePercentage;
 
+@property (strong, readonly) NSArray<NSString*>*_Nullable tags;
+
 - (instancetype _Nonnull) initWithServerName:(NSString*_Nullable)serverName
                                   dictionary:(NSDictionary*_Nullable)dictionary
                                   NS_DESIGNATED_INITIALIZER;
+
+- (NSString*) formattedSummaryString;
+- (NSString*) formattedDetailString;
 @end
 
 #pragma mark - XGXcodeBot

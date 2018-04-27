@@ -16,11 +16,11 @@ There are projects for a full Mac app and another for a command line utility.
 ## To Do
 ```
 * [x] Parse command line options.
-* [x] Xcode server status.
+* [x] Update Xcode server status.
 * [x] Create Xcode bots from new PRs.
 * [x] Start rough version of the Mac app.
 * [ ] Update integration status in GitHub.
-* [ ] Clean up command line logging and messages.
+* [ ] Clean up command line app logging and messages.
 * [ ] Polish Documentation.
 ```
 

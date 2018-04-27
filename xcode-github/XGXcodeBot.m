@@ -10,7 +10,47 @@
 #import "BNCLog.h"
 #import "BNCNetworkService.h"
 
-#pragma mark NSDateFormatter (xcodegithub)
+#pragma mark Helper Functions
+
+NSString* XGDurationStringFromTimeInterval(NSTimeInterval timeInterval) {
+    int seconds = (int) round(fabs(timeInterval));
+    int minutes = seconds / 60;
+    seconds = seconds % 60;
+    int hours = minutes / 60;
+    minutes = minutes % 60;
+
+    NSMutableString *string = [NSMutableString new];
+    if (hours == 1)
+        [string appendString:@"one hour, "];
+    else
+    if (hours > 0)
+        [string appendFormat:@"%d hours, ", hours];
+
+    if (minutes == 1)
+        [string appendString:@"one minute, "];
+    else
+    if (minutes > 0)
+        [string appendFormat:@"%d minutes, ", minutes];
+
+    if (seconds == 1)
+        [string appendString:@"one second, "];
+    else
+    if (seconds > 0)
+        [string appendFormat:@"%d seconds, ", seconds];
+
+    if (string.length > 2)
+        [string deleteCharactersInRange:NSMakeRange(string.length-2, 2)];
+    else
+        string = [NSMutableString stringWithString:@"zero seconds"];
+
+    NSString *result = [NSString stringWithFormat:@"%@%@",
+        [[string substringToIndex:1] uppercaseString],
+        [string substringFromIndex:1]];
+
+    return result;
+}
+
+#pragma mark - NSDateFormatter (xcodegithub)
 
 @interface NSDateFormatter (xcodegithub)
 + (NSDateFormatter*_Nonnull) dateFormatter8601;
@@ -36,8 +76,8 @@
 @property (readwrite) NSString*_Nullable botName;
 @property (readwrite) NSString*_Nullable integrationID;
 @property (readwrite) NSNumber*_Nullable integrationNumber;
-@property (readwrite) NSString*_Nullable result;
 @property (readwrite) NSString*_Nullable currentStep;
+@property (readwrite) NSString*_Nullable result;
 @property (readwrite) NSDictionary*_Nullable dictionary;
 @property (readwrite) NSError*_Nullable  error;
 @end
@@ -61,6 +101,7 @@
     _integrationNumber = _dictionary[@"number"];
     _result = _dictionary[@"result"];
     _currentStep = _dictionary[@"currentStep"];
+    _tags = _dictionary[@"tags"];
 
     NSDateFormatter *dateFormatter = [NSDateFormatter dateFormatter8601];
     _queuedDate = [dateFormatter dateFromString:_dictionary[@"queuedDate"]];
@@ -87,6 +128,105 @@
         self.integrationNumber,
         self.currentStep,
         self.result];
+}
+
+- (NSString*) formattedSummaryString {
+    NSString *summary = nil;
+    if ([self.currentStep isEqualToString:@"completed"]) {
+        summary = self.result;
+    } else
+    if (self.currentStep.length) {
+        summary = self.currentStep;
+    } else {
+        summary = @"unknown";
+    }
+    summary = [[summary stringByReplacingOccurrencesOfString:@"-" withString:@" "] capitalizedString];
+    return summary;
+}
+
+- (NSString*) formattedDetailString {
+    NSTimeInterval duration = [self.endedDate timeIntervalSinceDate:self.startedDate];
+    NSString*durationString = XGDurationStringFromTimeInterval(duration);
+
+    NSMutableString *string = [NSMutableString stringWithFormat:
+        @"Result of Integration %@\n---\n*Duration*: %@\n",
+        self.integrationNumber,
+        durationString];
+
+    if ([self.result isEqualToString:@"canceled"]) {
+        [string appendString:@"Build was **manually canceled**."];
+        return string;
+    }
+    [string appendString:@"*Result*: "];
+
+    if ([self.errorCount integerValue] > 0) {
+        [string appendFormat:@"**%@ errors, failing state: %@**", self.errorCount,
+            self.formattedSummaryString];
+        return string;
+    }
+
+    if ([self.testFailureCount integerValue] > 0) {
+        [string appendFormat:@"**Build failed %@ tests** out of %@",
+            self.testFailureCount, self.testsCount];
+        return string;
+    }
+
+    if ([self.testsCount integerValue] > 0 &&
+        [self.warningCount integerValue] > 0 &&
+        [self.analyzerWarningCount integerValue] > 0) {
+        [string appendFormat:
+            @"All %@ tests passed, but please **fix %@ warnings** and **%@ analyzer warnings**.",
+                self.testsCount, self.warningCount, self.analyzerWarningCount];
+        if ([self.codeCoveragePercentage doubleValue] > 0) {
+            [string appendFormat:@"\n*Test Coverage*: %@%%", self.codeCoveragePercentage];
+        }
+        return string;
+    }
+
+    if ([self.testsCount integerValue] > 0 &&
+        [self.warningCount integerValue] > 0) {
+        [string appendFormat:@"All %@ tests passed, but please **fix %@ warnings**.",
+            self.testsCount, self.warningCount];
+        if ([self.codeCoveragePercentage doubleValue] > 0) {
+            [string appendFormat:@"\n*Test Coverage*: %@%%", self.codeCoveragePercentage];
+        }
+        return string;
+    }
+
+    if ([self.testsCount integerValue] > 0 &&
+        [self.analyzerWarningCount integerValue] > 0) {
+        [string appendFormat:@"All %@ tests passed, but please **fix %@ analyzer warnings**.",
+            self.testsCount, self.analyzerWarningCount];
+        if ([self.codeCoveragePercentage doubleValue] > 0) {
+            [string appendFormat:@"\n*Test Coverage*: %@%%", self.codeCoveragePercentage];
+        }
+        return string;
+    }
+
+    if ([self.testsCount integerValue] > 0 &&
+        [self.errorCount integerValue] == 0 &&
+        [self.result isEqualToString:@"succeeded"]) {
+        if ([self.codeCoveragePercentage doubleValue] > 0.0)
+            [string appendFormat:@"**Perfect build!** :+1:\n*Test Coverage*: %@%% (%@ tests).",
+                self.codeCoveragePercentage, self.testsCount];
+        else
+            [string appendFormat:@"**Perfect build!** :+1:\n*All %@ tests passed.*",
+                self.testsCount];
+        return string;
+    }
+
+    if ([self.errorCount integerValue] == 0 &&
+        [self.result isEqualToString:@"succeeded"]) {
+        [string appendFormat:@"**Perfect build!** :+1:"];
+        return string;
+    }
+
+    [string appendFormat:@"**Failing state: %@**.", self.formattedSummaryString];
+    if ([self.tags containsObject:@"xcs-upgrade"]) {
+        [string appendString:@"\n**The current configuration may not be supported by the Xcode upgrade.**"];
+    }
+
+    return string;
 }
 
 @end

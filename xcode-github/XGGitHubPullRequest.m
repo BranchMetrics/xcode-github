@@ -163,7 +163,7 @@ exit:
 
     NSMutableDictionary *dictionary = [NSMutableDictionary new];
     dictionary[@"state"] = [self.class stringFromStatus:status];
-    dictionary[@"context"] = @"continuous-integration/jenkins";
+    dictionary[@"context"] = @"continuous-integration/xcode-github";
     if (statusURL) dictionary[@"target_url"] = statusURL;
     if (message.length) dictionary[@"description"] = message;
 
@@ -176,6 +176,63 @@ exit:
             dispatch_semaphore_signal(semaphore);
         }];
     [operation.request addValue:@"application/vnd.github.v3+json" forHTTPHeaderField:@"Accept"];
+    if (authToken.length > 0) {
+        NSString *token = [NSString stringWithFormat:@"token %@", authToken];
+        [operation.request addValue:token forHTTPHeaderField:@"Authorization"];
+    }
+    [operation start];
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+
+    if (operation.error) {
+        NSString *message = operation.stringFromResponseData;
+        if (message.length) BNCLogError(@"From GitHub: %@.", message);
+        return operation.error;
+    }
+    [operation deserializeJSONResponseData];
+    if (operation.error) {
+        NSString *message = operation.stringFromResponseData;
+        if (message.length) BNCLogError(@"From GitHub: %@.", message);
+        return operation.error;
+    }
+    if (operation.HTTPStatusCode != 201) {
+        error = [NSError errorWithDomain:NSNetServicesErrorDomain
+            code:NSNetServicesInvalidError userInfo:@{NSLocalizedDescriptionKey:
+                [NSString stringWithFormat:@"HTTP Status %ld", (long) operation.HTTPStatusCode]}];
+        BNCLogError(@"Response was: %@.", [operation stringFromResponseData]);
+        return error;
+    }
+
+    return error;
+}
+
+- (NSError*_Nullable) addComment:(NSString*)comment
+                       authToken:(NSString*)authToken {
+    NSError *error = nil;
+    NSString* string = [NSString stringWithFormat:
+        @"https://api.github.com/repos/%@/%@/commits/%@/comments",
+            self.repoOwner, self.repoName, self.sha];
+    NSURL *URL = [NSURL URLWithString:string];
+    if (!URL) {
+        error =
+            [NSError errorWithDomain:NSNetServicesErrorDomain code:NSURLErrorBadURL userInfo:@{
+                NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Bad URL '%@'.", URL]
+            }];
+        BNCLogError(@"Bad URL '%@'.", URL);
+        return error;
+    }
+
+    NSMutableDictionary *dictionary = [NSMutableDictionary new];
+    dictionary[@"body"] = comment;
+
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    BNCNetworkOperation *operation =
+        [[BNCNetworkService shared]
+            postOperationWithURL:URL
+            JSONData:dictionary
+            completion:^(BNCNetworkOperation *operation) {
+            dispatch_semaphore_signal(semaphore);
+        }];
+    [operation.request addValue:@"application/vnd.github.v3.raw+json" forHTTPHeaderField:@"Accept"];
     if (authToken.length > 0) {
         NSString *token = [NSString stringWithFormat:@"token %@", authToken];
         [operation.request addValue:token forHTTPHeaderField:@"Authorization"];

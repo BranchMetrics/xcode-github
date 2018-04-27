@@ -59,7 +59,7 @@ NSError*_Nullable XGUpdateXcodeBotsWithGitHub(XGCommandOptions*_Nonnull options)
                     BNCLogDebug(@"Creating bot '%@'...", newBotName);
                     error = nil;
                     [pr setStatus:XGPullRequestStatusPending
-                        message:@"Creating Xcode Bot..."
+                        message:@"Creating Xcode bot..."
                         statusURL:nil
                         authToken:options.githubAuthToken];
                     [XGXcodeBot duplicateBot:templateBot

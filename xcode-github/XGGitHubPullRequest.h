@@ -36,6 +36,9 @@ typedef NS_ENUM(NSInteger, XGPullRequestStatus) {
                       statusURL:(NSURL*_Nullable)statusURL
                       authToken:(NSString*_Nullable)authToken;
 
+- (NSError*_Nullable) addComment:(NSString*)comment
+                       authToken:(NSString*)authToken;
+
 + (NSDictionary<NSString*, XGGitHubPullRequest*>*_Nullable)
     pullsRequestsForRepository:(NSString*_Nonnull)sourceControlRepository
     authToken:(NSString*_Nonnull)authToken

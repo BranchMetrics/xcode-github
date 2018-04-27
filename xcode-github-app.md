@@ -2,10 +2,11 @@
 
 ## To Do
 ```
-* [ ] Update bot status detail message strings.
+* [x] Update bot status detail message strings.
+* [ ] Make preferences dialog: 'Observe' only mode.
+* [ ] Make log window.
 * [ ] Make "Add Server" flow.
 * [ ] Make "Add GitHub Token" flow.
-* [ ] Make log window.
 * [ ] Add help.
 ```
  
