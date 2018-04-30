@@ -21,7 +21,7 @@
 @property NSString *serverName;
 @property NSString *botName;
 @property NSString *statusSummary;
-@property NSString *statusDetail;
+@property APFormattedString *statusDetail;
 @end
 
 @implementation XGAServerStatus
@@ -90,7 +90,7 @@
     NSAlert *alert = [[NSAlert alloc] init];
     [alert addButtonWithTitle:@"OK"];
     alert.messageText = status.statusSummary;
-    alert.informativeText = status.statusDetail;
+    alert.informativeText = [status.statusDetail renderText];
     alert.alertStyle = NSAlertStyleWarning;
     [alert runModal];
 }
@@ -109,15 +109,15 @@
         self.statusTimer = localStatusTimer;
         if (!self.statusTimer) return;
 
-        NSTimeInterval kStatusRefreshInterval = 1.0;
+        NSTimeInterval kUIRefreshInterval = 1.0;
 
         dispatch_time_t startTime =
-            dispatch_time(DISPATCH_TIME_NOW, BNCNanoSecondsFromTimeInterval(kStatusRefreshInterval));
+            dispatch_time(DISPATCH_TIME_NOW, BNCNanoSecondsFromTimeInterval(kUIRefreshInterval));
         dispatch_source_set_timer(
             self.statusTimer,
             startTime,
-            BNCNanoSecondsFromTimeInterval(kStatusRefreshInterval),
-            BNCNanoSecondsFromTimeInterval(kStatusRefreshInterval / 10.0)
+            BNCNanoSecondsFromTimeInterval(kUIRefreshInterval),
+            BNCNanoSecondsFromTimeInterval(kUIRefreshInterval / 10.0)
         );
         __weak __typeof(self) weakSelf = self;
         dispatch_source_set_event_handler(self.statusTimer, ^ {
@@ -206,7 +206,7 @@
         XGAServerStatus *status = [XGAServerStatus new];
         status.serverName = serverName;
         status.statusSummary = @"Server Error";
-        status.statusDetail = error.localizedDescription;
+        status.statusDetail = [APFormattedString plainText:error.localizedDescription];
         [statusArray addObject:status];
     } else {
         for (XGXcodeBot *bot in bots.objectEnumerator) {
@@ -229,7 +229,7 @@
     XGAServerStatus *status = [XGAServerStatus new];
     status.serverName = botStatus.serverName;
     status.botName = ([XGXcodeBot gitHubPRNameFromString:botStatus.botName]) ?: botStatus.botName;
-    status.statusSummary = botStatus.formattedSummaryString;
+    status.statusSummary = botStatus.summaryString;
     status.statusDetail = botStatus.formattedDetailString;
     return status;
 }

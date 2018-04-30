@@ -11,11 +11,13 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSInteger, XGPullRequestStatus) {
-    XGPullRequestStatusError,
+    XGPullRequestStatusError = 0,
     XGPullRequestStatusFailure,
     XGPullRequestStatusPending,
     XGPullRequestStatusSuccess,
  };
+
+extern NSString*_Nonnull NSStringFromXGPullRequestStatus(XGPullRequestStatus status);
 
 @interface XGGitHubPullRequest : NSObject
 @property (strong, readonly) NSString*_Nullable repoOwner;

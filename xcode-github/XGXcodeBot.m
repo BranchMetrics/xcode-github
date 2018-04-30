@@ -9,6 +9,7 @@
 #import "XGXcodeBot.h"
 #import "BNCLog.h"
 #import "BNCNetworkService.h"
+#import "APFormattedString.h"
 
 #pragma mark Helper Functions
 
@@ -130,7 +131,7 @@ NSString* XGDurationStringFromTimeInterval(NSTimeInterval timeInterval) {
         self.result];
 }
 
-- (NSString*) formattedSummaryString {
+- (NSString*) summaryString {
     NSString *summary = nil;
     if ([self.currentStep isEqualToString:@"completed"]) {
         summary = self.result;
@@ -144,89 +145,124 @@ NSString* XGDurationStringFromTimeInterval(NSTimeInterval timeInterval) {
     return summary;
 }
 
-- (NSString*) formattedDetailString {
+- (APFormattedString*) formattedDetailString {
     NSTimeInterval duration = [self.endedDate timeIntervalSinceDate:self.startedDate];
     NSString*durationString = XGDurationStringFromTimeInterval(duration);
 
-    NSMutableString *string = [NSMutableString stringWithFormat:
-        @"Result of Integration %@\n---\n*Duration*: %@\n",
-        self.integrationNumber,
-        durationString];
+    APFormattedString *apstring =
+        [[[[[[APFormattedString builder]
+            appendBold:@"Result of Integration %@\n", self.integrationNumber]
+            appendLine]
+            appendItalic:@"Duration"]
+            appendPlain:@": %@\n", durationString]
+                build];
 
     if ([self.result isEqualToString:@"canceled"]) {
-        [string appendString:@"Build was **manually canceled**."];
-        return string;
+        [[[[[apstring builder]
+            appendPlain:@"Build was "]
+            appendBold:@"**manually canceled**"]
+            appendPlain:@"."]
+                build];
+        return apstring;
     }
-    [string appendString:@"*Result*: "];
+    
+    [[[[apstring builder]
+        appendItalic:@"Result"]
+        appendPlain:@": "]
+            build];
 
     if ([self.errorCount integerValue] > 0) {
-        [string appendFormat:@"**%@ errors, failing state: %@**", self.errorCount,
-            self.formattedSummaryString];
-        return string;
+        [[[apstring builder]
+            appendBold:@"%@ errors, failing state: %@", self.errorCount, self.summaryString]
+                build];
+        return apstring;
     }
 
     if ([self.testFailureCount integerValue] > 0) {
-        [string appendFormat:@"**Build failed %@ tests** out of %@",
-            self.testFailureCount, self.testsCount];
-        return string;
+        [[[[apstring builder]
+            appendBold:@"Build failed %@ tests", self.testFailureCount]
+            appendPlain:@" out of %@", self.testsCount]
+                build];
+        return apstring;
     }
 
     if ([self.testsCount integerValue] > 0 &&
         [self.warningCount integerValue] > 0 &&
         [self.analyzerWarningCount integerValue] > 0) {
-        [string appendFormat:
-            @"All %@ tests passed, but please **fix %@ warnings** and **%@ analyzer warnings**.",
-                self.testsCount, self.warningCount, self.analyzerWarningCount];
+        [[[[[[[apstring builder]
+            appendPlain:@"All %@ tests passed, but please ", self.testsCount]
+            appendBold:@"fix %@ warnings", self.warningCount]
+            appendPlain:@" and "]
+            appendBold:@"%@ analyzer warnings", self.analyzerWarningCount]
+            appendPlain:@"."]
+                build];
         if ([self.codeCoveragePercentage doubleValue] > 0) {
-            [string appendFormat:@"\n*Test Coverage*: %@%%", self.codeCoveragePercentage];
+            [[[[apstring builder]
+                appendItalic:@"\nTest Coverage"]
+                appendPlain:@": %@%%", self.codeCoveragePercentage]
+                    build];
         }
-        return string;
+        return apstring;
     }
 
     if ([self.testsCount integerValue] > 0 &&
         [self.warningCount integerValue] > 0) {
-        [string appendFormat:@"All %@ tests passed, but please **fix %@ warnings**.",
-            self.testsCount, self.warningCount];
+        [[[[apstring builder]
+            appendPlain:@"All %@ tests passed, but please ", self.testsCount]
+            appendBold:@"fix %@ warnings.", self.warningCount]
+                build];
         if ([self.codeCoveragePercentage doubleValue] > 0) {
-            [string appendFormat:@"\n*Test Coverage*: %@%%", self.codeCoveragePercentage];
+            [[[[apstring builder]
+                appendItalic:@"\nTest Coverage"]
+                appendPlain:@": %@%%", self.codeCoveragePercentage]
+                    build];
         }
-        return string;
+        return apstring;
     }
 
     if ([self.testsCount integerValue] > 0 &&
         [self.analyzerWarningCount integerValue] > 0) {
-        [string appendFormat:@"All %@ tests passed, but please **fix %@ analyzer warnings**.",
-            self.testsCount, self.analyzerWarningCount];
+        [[[[apstring builder]
+            appendPlain:@"All %@ tests passed, but please ", self.testsCount]
+            appendBold:@"fix %@ analyzer warnings.", self.analyzerWarningCount]
+                build];
         if ([self.codeCoveragePercentage doubleValue] > 0) {
-            [string appendFormat:@"\n*Test Coverage*: %@%%", self.codeCoveragePercentage];
+            [[[[apstring builder]
+                appendItalic:@"\nTest Coverage"]
+                appendPlain:@": %@%%", self.codeCoveragePercentage]
+                    build];
         }
-        return string;
-    }
-
-    if ([self.testsCount integerValue] > 0 &&
-        [self.errorCount integerValue] == 0 &&
-        [self.result isEqualToString:@"succeeded"]) {
-        if ([self.codeCoveragePercentage doubleValue] > 0.0)
-            [string appendFormat:@"**Perfect build!** :+1:\n*Test Coverage*: %@%% (%@ tests).",
-                self.codeCoveragePercentage, self.testsCount];
-        else
-            [string appendFormat:@"**Perfect build!** :+1:\n*All %@ tests passed.*",
-                self.testsCount];
-        return string;
+        return apstring;
     }
 
     if ([self.errorCount integerValue] == 0 &&
         [self.result isEqualToString:@"succeeded"]) {
-        [string appendFormat:@"**Perfect build!** :+1:"];
-        return string;
+        [[[apstring builder] appendBold:@"Perfect build! 👍"] build];
+
+        if ([self.testsCount integerValue] > 0) {
+            if ([self.codeCoveragePercentage doubleValue] > 0.0) {
+                [[[[apstring builder]
+                    appendItalic:@"\nTest Coverage"]
+                    appendPlain:@": %@%% (%@ tests).", self.codeCoveragePercentage, self.testsCount]
+                        build];
+            } else {
+                [[[apstring builder]
+                    appendItalic:@"\nAll %@ tests passed.", self.testsCount]
+                        build];
+            }
+        }
+
+        return apstring;
     }
 
-    [string appendFormat:@"**Failing state: %@**.", self.formattedSummaryString];
+    [[[apstring builder] appendBold:@"Failing state: %@.", self.summaryString] build];
     if ([self.tags containsObject:@"xcs-upgrade"]) {
-        [string appendString:@"\n**The current configuration may not be supported by the Xcode upgrade.**"];
+        [[[apstring builder]
+            appendItalic:@"\nThe current configuration may not be supported by the Xcode upgrade."]
+                build];
     }
 
-    return string;
+    return apstring;
 }
 
 @end
@@ -263,6 +299,30 @@ NSString* XGDurationStringFromTimeInterval(NSTimeInterval timeInterval) {
     @catch(id error) {
         BNCLogError(@"Can't retrieve source control URL: %@", error);
     }
+
+    NSRange repoRange = [self.sourceControlRepository rangeOfString:@"/" options:NSBackwardsSearch];
+    if (repoRange.location != NSNotFound) {
+        NSRange ownerRange = [self.sourceControlRepository rangeOfString:@"/"
+            options:NSBackwardsSearch range:NSMakeRange(0, repoRange.location)];
+        if (ownerRange.location == NSNotFound) {
+            ownerRange = [self.sourceControlRepository rangeOfString:@":"
+                options:NSBackwardsSearch range:NSMakeRange(0, repoRange.location)];
+        }
+        if (ownerRange.location != NSNotFound) {
+            _repoOwner = [self.sourceControlRepository
+                substringWithRange:NSMakeRange(ownerRange.location+1, repoRange.location - ownerRange.location - 1)];
+            _repoName = [self.sourceControlRepository
+                substringWithRange:NSMakeRange(repoRange.location+1, self.sourceControlRepository.length - repoRange.location - 1)];
+            if ([_repoName hasSuffix:@".git"]) {
+                _repoName = [_repoName substringWithRange:NSMakeRange(0, _repoName.length-4)];
+            }
+            NSDictionary*locations = _dictionary[@"configuration"][@"sourceControlBlueprint"][@"DVTSourceControlWorkspaceBlueprintLocationsKey"];
+            for (NSDictionary*location in locations.objectEnumerator) {
+                _branch = location[@"DVTSourceControlBranchIdentifierKey"];
+            }
+        }
+    }
+
     return self;
 }
 

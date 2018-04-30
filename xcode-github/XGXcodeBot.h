@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "APFormattedString.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -49,7 +50,6 @@ NS_ASSUME_NONNULL_BEGIN
     "internal-processing-error"
     "canceled"
     "trigger-error"
-
 */
 @property (strong, readonly) NSString*_Nullable result;
 @property (strong, readonly) NSDictionary*_Nullable dictionary;
@@ -72,8 +72,8 @@ NS_ASSUME_NONNULL_BEGIN
                                   dictionary:(NSDictionary*_Nullable)dictionary
                                   NS_DESIGNATED_INITIALIZER;
 
-- (NSString*) formattedSummaryString;
-- (NSString*) formattedDetailString;
+- (NSString*) summaryString;
+- (APFormattedString*) formattedDetailString;
 @end
 
 #pragma mark - XGXcodeBot
@@ -86,6 +86,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, readonly) NSString*_Nullable pullRequestNumber;
 @property (strong, readonly) NSString*_Nonnull  serverName;
 @property (strong, readonly) NSString*_Nonnull  sourceControlWorkspaceBlueprintLocationsID;
+
+@property (strong, readonly) NSString*_Nonnull repoOwner;
+@property (strong, readonly) NSString*_Nonnull repoName;
+@property (strong, readonly) NSString*_Nonnull branch;
 
 - (instancetype _Nonnull) initWithServerName:(NSString*_Nullable)serverName
                                   dictionary:(NSDictionary*_Nullable)dictionary

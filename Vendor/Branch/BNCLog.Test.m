@@ -298,7 +298,10 @@ extern void BNCLogInternalErrorFunction(int linenumber, NSString*format, ...);
 - (void) testLogObject {
     BNCLogSetOutputFunction(TestLogProcedure);
     NSData *data = [@"Test string." dataUsingEncoding:NSUTF8StringEncoding];
-    BNCLog(data);
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Wformat-security"
+    BNCLog((id)data);
+    #pragma clang diagnostic pop
     BNCLogFlushMessages();
     XCTAssert([globalTestLogString bnc_isEqualToMaskedString:
         @"[branch.io] BNCLog.Test.m(***) Log: "

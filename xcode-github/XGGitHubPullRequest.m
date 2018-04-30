@@ -10,6 +10,20 @@
 #import "BNCLog.h"
 #import "BNCNetworkService.h"
 
+NSString*_Nonnull NSStringFromXGPullRequestStatus(XGPullRequestStatus status) {
+    NSArray<NSString*>*statusStrings = @[
+        @"XGPullRequestStatusError",
+        @"XGPullRequestStatusFailure",
+        @"XGPullRequestStatusPending",
+        @"XGPullRequestStatusSuccess",
+    ];
+    if (status >= XGPullRequestStatusError && status < XGPullRequestStatusSuccess)
+        return statusStrings[status];
+    return [NSString stringWithFormat:@"< Unknown status '%ld' >", (long) status];
+}
+
+#pragma mark - XGGitHubPullRequest
+
 @implementation XGGitHubPullRequest
 
 - (instancetype) init {
