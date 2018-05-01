@@ -38,9 +38,6 @@ NSMutableDictionary*_Nonnull XGGitHubStatusDictionaryWithPR(XGGitHubPullRequest*
         XGMutableDictionaryWithDictionary(dictionary[pr.repoOwner][pr.repoName]);
     dictionary[pr.repoOwner][pr.repoName][pr.branch] =
         XGMutableDictionaryWithDictionary(dictionary[pr.repoOwner][pr.repoName][pr.branch]);
-    dictionary[pr.repoOwner][pr.repoName][pr.branch][pr.sha] =
-        XGMutableDictionaryWithDictionary(dictionary[pr.repoOwner][pr.repoName][pr.branch][pr.sha]);
-
     return dictionary;
 }
 
@@ -59,7 +56,7 @@ void XGDeleteGitHubStatusDictionaryWithBot(XGXcodeBot*_Nonnull bot) {
     [[NSUserDefaults standardUserDefaults] setObject:dictionary forKey:@"githubStatus"];
 }
 
-#pragma mark - Helper Functions
+#pragma mark - Bot Functions
 
 NSError*_Nullable XGCreateBotWithOptions(
         XGCommandOptions*_Nonnull options,
@@ -84,6 +81,27 @@ NSError*_Nullable XGCreateBotWithOptions(
     if (error) {
         BNCLogError(@"Can't create Xcode bot: %@.", error);
     }
+    return error;
+}
+
+NSError*_Nullable XGDeleteBotWithOptions(
+        XGCommandOptions*_Nonnull options,
+        XGXcodeBot*_Nonnull bot
+    ) {
+    NSError*error = nil;
+    if (options.dryRun) {
+        BNCLog(@"Would delete bot '%@'.", bot.name);
+        return error;
+    }
+    BNCLogDebug(@"Deleting old bot '%@'...", bot.name);
+    error = [bot removeFromServer];
+    if (error) {
+        BNCLogError(
+            @"Can't remove old bot named '%@' from server: %@.", bot.name, error
+        );
+        return error;
+    }
+    XGDeleteGitHubStatusDictionaryWithBot(bot);
     return error;
 }
 
@@ -223,20 +241,8 @@ NSError*_Nullable XGUpdateXcodeBotsWithGitHub(XGCommandOptions*_Nonnull options)
         for (XGXcodeBot *bot in bots.objectEnumerator) {
             NSString *number = bot.pullRequestNumber;
             if (number && !pullRequests[number]) {
-                if (options.dryRun) {
-                    BNCLog(@"Would delete bot '%@'.", bot.name);
-                } else  {
-                    BNCLogDebug(@"Deleting old bot '%@'...", bot.name);
-                    error = [bot removeFromServer];
-                    if (error) {
-                        BNCLogError(
-                            @"Can't remove old bot named '%@' from server: %@.", bot.name, error
-                        );
-                        returnCode = EX_NOPERM;
-                        goto exit;
-                    }
-                    XGDeleteGitHubStatusDictionaryWithBot(bot);
-                }
+                error = XGDeleteBotWithOptions(options, bot);
+                if (error) { returnCode = EX_NOPERM; goto exit; }
             }
         }
 
