@@ -46,6 +46,7 @@
     value = [BNCKeyChain retrieveValueForService:kServiceName key:@"key3" error:&error];
     XCTAssertTrue(value == nil && error.code == errSecItemNotFound);
 
+    // TODO: Fix this.
     if ([UIApplication sharedApplication] == nil) {
         NSLog(@"No host application for keychain testing!");
         return;
