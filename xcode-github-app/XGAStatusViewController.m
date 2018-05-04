@@ -10,7 +10,7 @@
 #import "XGXcodeBot.h"
 #import "XGCommand.h"
 #import "XGASettings.h"
-#import "BNCUtilities.h"
+#import "BNCThreads.h"
 #import "BNCNetworkService.h"
 #import "BNCLog.h"
 #import <stdatomic.h>

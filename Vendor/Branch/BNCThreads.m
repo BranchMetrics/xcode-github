@@ -1,11 +1,11 @@
 /**
- @file          BNCUtilities.h
+ @file          BNCThreads.m
  @package       Branch-SDK
- @brief         Miscellaneous Utilities.
+ @brief         Utilities for working with threads, queues, and blocks.
 
  @author        Edward Smith
  @date          May 2017
  @copyright     Copyright © 2017 Branch. All rights reserved.
 */
 
-#import "BNCUtilities.h"
+#import "BNCThreads.h"
