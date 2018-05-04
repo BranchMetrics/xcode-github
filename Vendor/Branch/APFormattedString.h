@@ -8,8 +8,26 @@
  @copyright     Copyright © 2018 Branch. All rights reserved.
 */
 
+#if __has_feature(modules)
+@import Foundation;
+#else
 #import <Foundation/Foundation.h>
-#import <AppKit/AppKit.h>
+#endif
+
+#if TARGET_OS_IOS
+    #if __has_feature(modules)
+    @import UIKit;
+    #else
+    #import <UIKit/UIKit.h>
+    #endif
+    typedef UIFont APFont;
+#elif TARGET_OS_OSX
+    #if __has_feature(modules)
+    @import AppKit;
+    #else
+    #import <AppKit/AppKit.h>
+    #endif
+#endif
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -47,7 +65,12 @@ typedef NS_ENUM(NSInteger, APFormattedStringStyle) {
 
 - (NSString*) renderText;
 - (NSString*) renderMarkDown;
+
+#if TARGET_OS_IOS
+- (NSAttributedString*) renderAttributedStringWithFont:(UIFont*)font;
+#elif TARGET_OS_OSX
 - (NSAttributedString*) renderAttributedStringWithFont:(NSFont*)font;
+#endif
 
 @end
 

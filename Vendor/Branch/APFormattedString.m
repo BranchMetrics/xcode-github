@@ -9,6 +9,7 @@
 */
 
 #import "APFormattedString.h"
+#import <CoreText/CoreText.h>
 
 #pragma mark APFormattedString
 
@@ -99,8 +100,74 @@
     return string;
 }
 
-- (NSAttributedString*) renderAttributedStringWithFont:(NSFont*)font {
+- (NSString*) renderMarkDown {
+    NSMutableString*string = [NSMutableString new];
+    for (APFormattedStringBuilder*builder in self.builderArray) {
+        switch (builder.style) {
+        default:
+        case APFormattedStringFormatPlain:
+            [string appendString:builder.string];
+            break;
+        case APFormattedStringFormatBold:
+            [string appendFormat:@"**%@**", builder.string];
+            break;
+        case APFormattedStringFormatItalic:
+            [string appendFormat:@"*%@*", builder.string];
+            break;
+        case APFormattedStringFormatLine:
+            [string appendString:@"\n---\n"];
+            break;
+        }
+    }
+    return string;
+}
 
+#if TARGET_OS_IOS
+
+- (NSAttributedString*) renderAttributedStringWithFont:(UIFont*)font {
+    UIFontDescriptor *descriptor =
+        [[font fontDescriptor]
+            fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold];
+    UIFont*boldFont = [UIFont fontWithDescriptor:descriptor size:0.0];
+
+    descriptor =
+        [[font fontDescriptor]
+            fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitItalic];
+    UIFont*italicFont = [UIFont fontWithDescriptor:descriptor size:0.0];
+
+    NSMutableAttributedString*string = [NSMutableAttributedString new];
+    for (APFormattedStringBuilder*builder in self.builderArray) {
+        NSDictionary*attributes = @{};
+        switch (builder.style) {
+        default:
+        case APFormattedStringFormatPlain:
+            attributes = @{
+                (__bridge NSString*) kCTFontAttributeName: font,
+            };
+            break;
+        case APFormattedStringFormatBold:
+            attributes = @{
+                (__bridge NSString*) kCTFontAttributeName: boldFont,
+            };
+            break;
+        case APFormattedStringFormatItalic:
+            attributes = @{
+                (__bridge NSString*) kCTFontAttributeName: italicFont,
+            };
+            break;
+        case APFormattedStringFormatLine:
+            break;
+        }
+        NSAttributedString*as =
+            [[NSAttributedString alloc] initWithString:builder.string attributes:attributes];
+        [string appendAttributedString:as];
+    }
+    return string;
+}
+
+#elif TARGET_OS_OSX
+
+- (NSAttributedString*) renderAttributedStringWithFont:(NSFont*)font {
     NSFontDescriptor *descriptor =
         [[font fontDescriptor]
             fontDescriptorWithSymbolicTraits:NSFontDescriptorTraitBold];
@@ -141,26 +208,6 @@
     return string;
 }
 
-- (NSString*) renderMarkDown {
-    NSMutableString*string = [NSMutableString new];
-    for (APFormattedStringBuilder*builder in self.builderArray) {
-        switch (builder.style) {
-        default:
-        case APFormattedStringFormatPlain:
-            [string appendString:builder.string];
-            break;
-        case APFormattedStringFormatBold:
-            [string appendFormat:@"**%@**", builder.string];
-            break;
-        case APFormattedStringFormatItalic:
-            [string appendFormat:@"*%@*", builder.string];
-            break;
-        case APFormattedStringFormatLine:
-            [string appendString:@"\n---\n"];
-            break;
-        }
-    }
-    return string;
-}
+#endif
 
 @end
