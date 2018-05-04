@@ -6,6 +6,9 @@
 .DS_Store
 .LSOverride
 
+# merge-repo commit/discard file
+merge-repo-commit
+
 ## Build generated
 [Bb]uild/
 DerivedData/
