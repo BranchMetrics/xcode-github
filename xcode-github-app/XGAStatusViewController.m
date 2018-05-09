@@ -39,7 +39,7 @@
 @property (weak)   IBOutlet NSTableView *tableView;
 @property (strong) IBOutlet NSArrayController *arrayController;
 
-// Update display
+// Display update
 @property (weak)   IBOutlet NSProgressIndicator *updateProgessIndictor;
 @property (strong) NSDate *lastUpdateDate;
 
@@ -189,8 +189,8 @@
         options.dryRun = YES;
         error = XGUpdateXcodeBotsWithGitHub(options);
         if (error) {
-            NSString *message = [NSString stringWithFormat:@"%@:%@ %@",
-                options.xcodeServerName, options.templateBotName, error];
+            NSString *message = [NSString stringWithFormat:@"%@:%@    —    %@",
+                options.xcodeServerName, options.templateBotName, error.localizedDescription];
             BNCPerformBlockOnMainThreadAsync(^{
                 self.statusTextField.stringValue = message;
             });

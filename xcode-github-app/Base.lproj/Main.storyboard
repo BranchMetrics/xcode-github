@@ -566,7 +566,7 @@
                                         </tableView>
                                     </subviews>
                                 </clipView>
-                                <scroller key="horizontalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="ZcK-cj-SIH">
+                                <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="ZcK-cj-SIH">
                                     <rect key="frame" x="0.0" y="234" width="480" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
@@ -579,29 +579,42 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableHeaderView>
                             </scrollView>
-                            <progressIndicator wantsLayer="YES" canDrawConcurrently="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" bezeled="NO" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="tH4-hA-jna">
-                                <rect key="frame" x="460" y="251" width="16" height="16"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                            </progressIndicator>
-                            <textField verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YfT-77-lXN">
+                            <customView focusRingType="none" translatesAutoresizingMaskIntoConstraints="NO" id="lFD-B8-OlN">
                                 <rect key="frame" x="0.0" y="0.0" width="480" height="20"/>
+                                <subviews>
+                                    <textField verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YfT-77-lXN">
+                                        <rect key="frame" x="26" y="3" width="454" height="14"/>
+                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" refusesFirstResponder="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" title="Status " drawsBackground="YES" allowsEditingTextAttributes="YES" id="2Ig-FE-mu8">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <progressIndicator wantsLayer="YES" canDrawConcurrently="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" bezeled="NO" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="tH4-hA-jna">
+                                        <rect key="frame" x="5" y="2" width="16" height="16"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="16" id="GIn-Au-g2H"/>
+                                            <constraint firstAttribute="width" constant="16" id="hHk-SY-Qzk"/>
+                                        </constraints>
+                                    </progressIndicator>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="jfk-OR-Z4M"/>
+                                    <constraint firstAttribute="height" constant="20" id="Oq3-Xm-GJX"/>
+                                    <constraint firstItem="tH4-hA-jna" firstAttribute="leading" secondItem="lFD-B8-OlN" secondAttribute="leading" constant="5" id="Yaf-TN-GVJ"/>
+                                    <constraint firstItem="YfT-77-lXN" firstAttribute="centerY" secondItem="tH4-hA-jna" secondAttribute="centerY" id="biw-4s-SwN"/>
+                                    <constraint firstAttribute="trailing" secondItem="YfT-77-lXN" secondAttribute="trailing" id="fRb-av-h3K"/>
+                                    <constraint firstItem="YfT-77-lXN" firstAttribute="leading" secondItem="tH4-hA-jna" secondAttribute="trailing" constant="5" id="oW0-pC-bij"/>
+                                    <constraint firstItem="tH4-hA-jna" firstAttribute="centerY" secondItem="lFD-B8-OlN" secondAttribute="centerY" id="rwI-O5-c1N"/>
                                 </constraints>
-                                <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" refusesFirstResponder="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" title="Status " drawsBackground="YES" allowsEditingTextAttributes="YES" id="2Ig-FE-mu8">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
+                            </customView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="YfT-77-lXN" firstAttribute="top" secondItem="8l6-4R-v8u" secondAttribute="bottom" id="1Xw-PU-Q7m"/>
                             <constraint firstAttribute="trailing" secondItem="8l6-4R-v8u" secondAttribute="trailing" id="39k-eV-yGZ"/>
-                            <constraint firstAttribute="trailing" secondItem="YfT-77-lXN" secondAttribute="trailing" id="4UF-NO-tdg"/>
                             <constraint firstItem="8l6-4R-v8u" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="Cuh-pW-Pe1"/>
-                            <constraint firstItem="YfT-77-lXN" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="I1h-jZ-lH7"/>
-                            <constraint firstAttribute="bottom" secondItem="YfT-77-lXN" secondAttribute="bottom" id="rKW-l7-cVt"/>
+                            <constraint firstItem="lFD-B8-OlN" firstAttribute="top" secondItem="8l6-4R-v8u" secondAttribute="bottom" id="FsV-aZ-DCa"/>
+                            <constraint firstAttribute="trailing" secondItem="lFD-B8-OlN" secondAttribute="trailing" id="KQ1-tM-YLn"/>
+                            <constraint firstItem="lFD-B8-OlN" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="Kho-Gr-BA2"/>
+                            <constraint firstAttribute="bottom" secondItem="lFD-B8-OlN" secondAttribute="bottom" id="toP-cc-FMS"/>
                             <constraint firstItem="8l6-4R-v8u" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="y3c-y2-W4N"/>
                         </constraints>
                     </view>

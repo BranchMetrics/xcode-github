@@ -3,8 +3,8 @@
 ## To Do
 ```
 * [x] Update bot status detail message strings.
-* [ ] Make preferences dialog: 'Observe' only mode.
 * [ ] Make log window.
+* [ ] Make preferences dialog: 'Observe' only mode.
 * [ ] Make "Add Server" flow.
 * [ ] Make "Add GitHub Token" flow.
 * [ ] Add help.
@@ -33,7 +33,6 @@ Status view: a table with columns
 * Button: Download logs
 
 ### Configure Window
-
 
 ### Log Window
 Shows the xcode-github log messages.
