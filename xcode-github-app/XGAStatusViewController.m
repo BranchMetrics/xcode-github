@@ -48,11 +48,20 @@
 
 @implementation XGAStatusViewController
 
++ (instancetype) loadController {
+    XGAStatusViewController*controller = [[XGAStatusViewController alloc] init];
+    BOOL loaded =
+        [[NSBundle mainBundle]
+            loadNibNamed:NSStringFromClass(self)
+            owner:controller
+            topLevelObjects:nil];
+    return (loaded) ? controller : nil;
+}
+
 - (void) setServerStatusArray:(NSArray<XGAServerStatus *> *)serverStatusArray {
     @synchronized(self) {
         _serverStatusArray = serverStatusArray;
         self.arrayController.content = _serverStatusArray;
-        self.representedObject = _serverStatusArray;
     }
 }
 
@@ -62,19 +71,14 @@
     }
 }
 
-- (void)viewDidLoad {
+- (void)awakeFromNib {
     [super viewDidLoad];
     [self.tableView setDoubleAction:@selector(doubleClickRow:)];
-
+    self.window = self.view.window;
     XGAServerStatus *status = [XGAServerStatus new];
     status.statusSummary = @"< Refreshing >";
     self.serverStatusArray = @[ status ];
     [self startStatusUpdates];
-}
-
-- (void)setRepresentedObject:(id)representedObject {
-    [super setRepresentedObject:representedObject];
-    BNCPerformBlockOnMainThreadAsync(^{ [self.tableView reloadData]; });
 }
 
 - (void) doubleClickRow:(id)sender {

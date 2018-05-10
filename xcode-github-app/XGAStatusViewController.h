@@ -9,4 +9,6 @@
 #import <Cocoa/Cocoa.h>
 
 @interface XGAStatusViewController : NSViewController
++ (instancetype) loadController;
+@property (strong) IBOutlet NSWindow*window;
 @end

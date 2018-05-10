@@ -1,0 +1,26 @@
+#!/bin/bash
+set -euo pipefail
+
+imagefile="$1"
+imagefile="$(resolvepath "$imagefile")"
+pathname="$(dirname "$imagefile")"
+name="$(basename "$imagefile")"
+name="${name%.*}"
+
+function resizeImage() {
+    local size=$1
+    sips --resampleHeightWidth $size $size \
+        --setProperty dpiHeight 72.0 \
+        --setProperty dpiWidth 72.0 \
+        --setProperty format png \
+        "${imagefile}" \
+        --out "${pathname}"/"${name}""@"${size}.png &>/dev/null
+}
+
+resizeImage 16
+resizeImage 32
+resizeImage 64
+resizeImage 128
+resizeImage 256
+resizeImage 512
+resizeImage 1024

@@ -3,7 +3,7 @@
 ## To Do
 ```
 * [x] Update bot status detail message strings.
-* [ ] Make log window.
+* [x] Make log window.
 * [ ] Make preferences dialog: 'Observe' only mode.
 * [ ] Make "Add Server" flow.
 * [ ] Make "Add GitHub Token" flow.

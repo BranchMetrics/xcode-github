@@ -7,18 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "BNCLog.h"
 
-#pragma mark XGALogRow
-
-@interface XGALogRow : NSObject
-@property (nonatomic, strong) NSDate*date;
-@property (nonatomic, assign) BNCLogLevel logLevel;
-@property (nonatomic, strong) NSString*logMessage;
-@end
-
-#pragma mark - XGALogViewController
+NS_ASSUME_NONNULL_BEGIN
 
 @interface XGALogViewController : NSViewController
-@property (strong) NSMutableArray<XGALogRow*>*logArray;
++ (void) startLog;
++ (instancetype) loadController;
+@property (strong) IBOutlet NSWindow*window;
 @end
+
+NS_ASSUME_NONNULL_END
