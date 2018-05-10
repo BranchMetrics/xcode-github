@@ -20,6 +20,7 @@
 @interface XGAServerStatus : NSObject
 @property NSString *serverName;
 @property NSString *botName;
+@property NSImage  *statusImage;
 @property NSString *statusSummary;
 @property APFormattedString *statusDetail;
 @end
@@ -210,6 +211,7 @@
         XGAServerStatus *status = [XGAServerStatus new];
         status.serverName = serverName;
         status.statusSummary = @"Server Error";
+        status.statusImage = [NSImage imageNamed:@"RoundAlert"];
         status.statusDetail = [APFormattedString plainText:error.localizedDescription];
         [statusArray addObject:status];
     } else {
@@ -234,6 +236,31 @@
     status.serverName = botStatus.serverName;
     status.botName = ([XGXcodeBot gitHubPRNameFromString:botStatus.botName]) ?: botStatus.botName;
     status.statusSummary = botStatus.summaryString;
+
+    NSString *result = [botStatus.result lowercaseString];
+    if ([botStatus.currentStep containsString:@"completed"]) {
+
+        NSString*imageName = @"RoundRed";
+        if ([result containsString:@"succeeded"])
+            imageName = @"RoundGreen";
+        else
+        if ([result containsString:@"unknown"])
+            imageName = @"RoundAlert";
+        else
+        if ([result containsString:@"warning"])
+            imageName = @"RoundYellow";
+        else
+        if ([result containsString:@"unknown"])
+            imageName = @"RoundAlert";
+
+        status.statusImage = [NSImage imageNamed:imageName];
+
+    } else
+    if ([botStatus.currentStep containsString:@"pending"]) {
+        status.statusImage = [NSImage imageNamed:@"RoundGrey"];
+    } else
+        status.statusImage = [NSImage imageNamed:@"RoundBlue"];
+
     status.statusDetail = botStatus.formattedDetailString;
     return status;
 }

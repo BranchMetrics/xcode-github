@@ -99,13 +99,13 @@ void XGALogFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Null
         static NSArray*logIcons = nil;
         if (!logIcons) {
             logIcons = @[
-                [NSImage imageNamed:@"RoundGreen"], // 0 = BNCLogLevelDebugSDK
-                [NSImage imageNamed:@"RoundGreen"],
-                [NSImage imageNamed:@"RoundGreen"],
-                [NSImage imageNamed:@"RoundGreen"],
-                [NSImage imageNamed:@"RoundGreen"],
-                [NSImage imageNamed:@"RoundGreen"], // 5 = Assert
-                [NSImage imageNamed:@"RoundGreen"],
+                [NSImage imageNamed:@"RoundDebug"],  // 0 = BNCLogLevelDebugSDK
+                [NSImage imageNamed:@"RoundDebug"],
+                [NSImage imageNamed:@"RoundDebug"],
+                [NSImage imageNamed:@"RoundYellow"], // 3 = BNCLogLevelWarning
+                [NSImage imageNamed:@"RoundRed"],
+                [NSImage imageNamed:@"RoundAlert"],  // 5 = Assert
+                [NSImage imageNamed:@"RoundBlue"],
             ];
         }
         return logIcons[level];
