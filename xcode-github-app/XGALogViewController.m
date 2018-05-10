@@ -28,6 +28,7 @@ NSString*const XGALogUpdateNotification = @"XGALogUpdatedNotification";
 
 @interface XGALogViewController ()
 + (NSMutableArray<XGALogRow*>*) logArray;
++ (NSImage*) imageForLogLevel:(BNCLogLevel)level;
 @property (strong) IBOutlet NSArrayController *arrayController;
 @property (weak)   IBOutlet NSTableView*tableView;
 @end
@@ -38,7 +39,7 @@ void XGALogFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Null
     XGALogRow*row = [[XGALogRow alloc] init];
     row.date = timestamp;
     row.logLevel = level;
-    row.logLevelImage = [NSImage imageNamed:@"RoundGreen"];
+    row.logLevelImage = [XGALogViewController imageForLogLevel:level];
     row.logMessage = message;
     [[XGALogViewController logArray] addObject:row];
     [[NSNotificationCenter defaultCenter]
@@ -77,6 +78,38 @@ void XGALogFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Null
             owner:controller
             topLevelObjects:nil];
     return (loaded) ? controller : nil;
+}
+
++ (NSImage*) imageForLogLevel:(BNCLogLevel)level {
+    /*
+    typedef NS_ENUM(NSInteger, BNCLogLevel) {
+        BNCLogLevelAll = 0,
+        BNCLogLevelDebugSDK = BNCLogLevelAll,
+        BNCLogLevelBreakPoint,
+        BNCLogLevelDebug,
+        BNCLogLevelWarning,
+        BNCLogLevelError,
+        BNCLogLevelAssert,
+        BNCLogLevelLog,
+        BNCLogLevelNone,
+        BNCLogLevelMax
+    };
+    */
+    @synchronized(self) {
+        static NSArray*logIcons = nil;
+        if (!logIcons) {
+            logIcons = @[
+                [NSImage imageNamed:@"RoundGreen"], // 0 = BNCLogLevelDebugSDK
+                [NSImage imageNamed:@"RoundGreen"],
+                [NSImage imageNamed:@"RoundGreen"],
+                [NSImage imageNamed:@"RoundGreen"],
+                [NSImage imageNamed:@"RoundGreen"],
+                [NSImage imageNamed:@"RoundGreen"], // 5 = Assert
+                [NSImage imageNamed:@"RoundGreen"],
+            ];
+        }
+        return logIcons[level];
+    }
 }
 
 - (void)awakeFromNib {

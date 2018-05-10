@@ -3,9 +3,11 @@ set -euo pipefail
 
 imagefile="$1"
 imagefile="$(resolvepath "$imagefile")"
-pathname="$(dirname "$imagefile")"
+pathname="$(dirname "$imagefile")"/Build
 name="$(basename "$imagefile")"
 name="${name%.*}"
+
+mkdir -p "$pathname"
 
 function resizeImage() {
     local size=$1

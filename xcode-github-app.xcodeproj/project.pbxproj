@@ -18,6 +18,7 @@
 		4D7661782057565300216B72 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D7661772057565300216B72 /* main.m */; };
 		4D790E352095A43C008A9492 /* APFormattedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D790E342095A43C008A9492 /* APFormattedString.m */; };
 		4D8352C620A3F30A00184259 /* XGAStatusViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D8352C520A3F30A00184259 /* XGAStatusViewController.xib */; };
+		4D8352CC20A4F93A00184259 /* XGAStatusLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D8352CB20A4F93A00184259 /* XGAStatusLineView.m */; };
 		4DED4891209BDFCC008DE877 /* BNCGeometry.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DED4890209BDFCC008DE877 /* BNCGeometry.m */; };
 		4DF0F57C208F91A90015D1F7 /* XGXcodeBot.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF0F578208F91A90015D1F7 /* XGXcodeBot.m */; };
 		4DF0F57D208F91A90015D1F7 /* XGGitHubPullRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF0F579208F91A90015D1F7 /* XGGitHubPullRequest.m */; };
@@ -49,6 +50,8 @@
 		4D790E332095A43C008A9492 /* APFormattedString.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APFormattedString.h; sourceTree = "<group>"; };
 		4D790E342095A43C008A9492 /* APFormattedString.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APFormattedString.m; sourceTree = "<group>"; };
 		4D8352C520A3F30A00184259 /* XGAStatusViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = XGAStatusViewController.xib; sourceTree = "<group>"; };
+		4D8352CA20A4F93A00184259 /* XGAStatusLineView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGAStatusLineView.h; sourceTree = "<group>"; };
+		4D8352CB20A4F93A00184259 /* XGAStatusLineView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGAStatusLineView.m; sourceTree = "<group>"; };
 		4DED488F209BDFCC008DE877 /* BNCGeometry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BNCGeometry.h; sourceTree = "<group>"; };
 		4DED4890209BDFCC008DE877 /* BNCGeometry.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BNCGeometry.m; sourceTree = "<group>"; };
 		4DF0F576208F91A90015D1F7 /* XGGitHubPullRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XGGitHubPullRequest.h; path = "xcode-github/XGGitHubPullRequest.h"; sourceTree = SOURCE_ROOT; };
@@ -117,6 +120,8 @@
 				4D76616E2057565200216B72 /* XGAStatusViewController.h */,
 				4D76616F2057565200216B72 /* XGAStatusViewController.m */,
 				4D8352C520A3F30A00184259 /* XGAStatusViewController.xib */,
+				4D8352CA20A4F93A00184259 /* XGAStatusLineView.h */,
+				4D8352CB20A4F93A00184259 /* XGAStatusLineView.m */,
 			);
 			path = "xcode-github-app";
 			sourceTree = "<group>";
@@ -249,6 +254,7 @@
 				4DF0F58E208F923E0015D1F7 /* BNCThreads.m in Sources */,
 				4DF0F594209000B80015D1F7 /* XGCommand.m in Sources */,
 				4D12BA0D20A252CE00E5B1DB /* XGALogViewController.m in Sources */,
+				4D8352CC20A4F93A00184259 /* XGAStatusLineView.m in Sources */,
 				4D5CC05E2090CAB60042E98B /* BNCKeyChain.m in Sources */,
 				4DF0F57D208F91A90015D1F7 /* XGGitHubPullRequest.m in Sources */,
 				4DF0F57E208F91A90015D1F7 /* XGCommandOptions.m in Sources */,
