@@ -19,6 +19,8 @@
 		4D790E352095A43C008A9492 /* APFormattedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D790E342095A43C008A9492 /* APFormattedString.m */; };
 		4D8352C620A3F30A00184259 /* XGAStatusViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D8352C520A3F30A00184259 /* XGAStatusViewController.xib */; };
 		4D8352CC20A4F93A00184259 /* XGAStatusLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D8352CB20A4F93A00184259 /* XGAStatusLineView.m */; };
+		4D8352D020A516A200184259 /* XGAPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D8352CE20A516A200184259 /* XGAPreferencesViewController.m */; };
+		4D8352D120A516A200184259 /* XGAPreferencesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D8352CF20A516A200184259 /* XGAPreferencesViewController.xib */; };
 		4DED4891209BDFCC008DE877 /* BNCGeometry.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DED4890209BDFCC008DE877 /* BNCGeometry.m */; };
 		4DF0F57C208F91A90015D1F7 /* XGXcodeBot.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF0F578208F91A90015D1F7 /* XGXcodeBot.m */; };
 		4DF0F57D208F91A90015D1F7 /* XGGitHubPullRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF0F579208F91A90015D1F7 /* XGGitHubPullRequest.m */; };
@@ -52,6 +54,9 @@
 		4D8352C520A3F30A00184259 /* XGAStatusViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = XGAStatusViewController.xib; sourceTree = "<group>"; };
 		4D8352CA20A4F93A00184259 /* XGAStatusLineView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGAStatusLineView.h; sourceTree = "<group>"; };
 		4D8352CB20A4F93A00184259 /* XGAStatusLineView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGAStatusLineView.m; sourceTree = "<group>"; };
+		4D8352CD20A516A200184259 /* XGAPreferencesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGAPreferencesViewController.h; sourceTree = "<group>"; };
+		4D8352CE20A516A200184259 /* XGAPreferencesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGAPreferencesViewController.m; sourceTree = "<group>"; };
+		4D8352CF20A516A200184259 /* XGAPreferencesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = XGAPreferencesViewController.xib; sourceTree = "<group>"; };
 		4DED488F209BDFCC008DE877 /* BNCGeometry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BNCGeometry.h; sourceTree = "<group>"; };
 		4DED4890209BDFCC008DE877 /* BNCGeometry.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BNCGeometry.m; sourceTree = "<group>"; };
 		4DF0F576208F91A90015D1F7 /* XGGitHubPullRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XGGitHubPullRequest.h; path = "xcode-github/XGGitHubPullRequest.h"; sourceTree = SOURCE_ROOT; };
@@ -115,13 +120,16 @@
 				4D12BA0A20A252CE00E5B1DB /* XGALogViewController.h */,
 				4D12BA0B20A252CE00E5B1DB /* XGALogViewController.m */,
 				4D12BA0C20A252CE00E5B1DB /* XGALogViewController.xib */,
+				4D8352CD20A516A200184259 /* XGAPreferencesViewController.h */,
+				4D8352CE20A516A200184259 /* XGAPreferencesViewController.m */,
+				4D8352CF20A516A200184259 /* XGAPreferencesViewController.xib */,
 				4DF0F5952090474D0015D1F7 /* XGASettings.h */,
 				4DF0F5962090474D0015D1F7 /* XGASettings.m */,
+				4D8352CA20A4F93A00184259 /* XGAStatusLineView.h */,
+				4D8352CB20A4F93A00184259 /* XGAStatusLineView.m */,
 				4D76616E2057565200216B72 /* XGAStatusViewController.h */,
 				4D76616F2057565200216B72 /* XGAStatusViewController.m */,
 				4D8352C520A3F30A00184259 /* XGAStatusViewController.xib */,
-				4D8352CA20A4F93A00184259 /* XGAStatusLineView.h */,
-				4D8352CB20A4F93A00184259 /* XGAStatusLineView.m */,
 			);
 			path = "xcode-github-app";
 			sourceTree = "<group>";
@@ -235,6 +243,7 @@
 			files = (
 				4D0DD54520597FE6001721C1 /* xcode-github-app.md in Resources */,
 				4D7661722057565200216B72 /* Assets.xcassets in Resources */,
+				4D8352D120A516A200184259 /* XGAPreferencesViewController.xib in Resources */,
 				4D12BA0E20A252CE00E5B1DB /* XGALogViewController.xib in Resources */,
 				4D8352C620A3F30A00184259 /* XGAStatusViewController.xib in Resources */,
 				4D7661752057565200216B72 /* Main.storyboard in Resources */,
@@ -260,6 +269,7 @@
 				4DF0F57E208F91A90015D1F7 /* XGCommandOptions.m in Sources */,
 				4D7661702057565200216B72 /* XGAStatusViewController.m in Sources */,
 				4DF0F58C208F923E0015D1F7 /* BNCNetworkService.m in Sources */,
+				4D8352D020A516A200184259 /* XGAPreferencesViewController.m in Sources */,
 				4D7661782057565300216B72 /* main.m in Sources */,
 				4DF0F57C208F91A90015D1F7 /* XGXcodeBot.m in Sources */,
 				4D76616D2057565200216B72 /* XGAAppDelegate.m in Sources */,
@@ -331,7 +341,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -382,7 +392,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 			};

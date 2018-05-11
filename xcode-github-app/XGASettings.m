@@ -127,19 +127,45 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
         [task setGitHubRepo:@"BranchMetrics:xcode-github"
             gitHubToken:@"13e499f7d9ba4fca42e4715558d1e5bc30a6a4e9"];
         [self.serverGitHubSyncTasks addObject:task];
+
+        NSUserDefaults*defaults = [NSUserDefaults standardUserDefaults];
+        self.firstTimeRun = ![defaults boolForKey:@"firstTimeRun"];
+        if (self.firstTimeRun) {
+            [self setInitialDefaults];
+            return;
+        }
+        self.dryRun = [defaults boolForKey:@"dryRun"];
+        self.refreshSeconds = [defaults doubleForKey:@"refreshSeconds"];
+        [self validate];
     }
 }
 
 #endif
 
+- (void) validate {
+    self.refreshSeconds = MAX(15.0, MIN(self.refreshSeconds, 60.0*60.0*24.0*1.0));
+}
+
+- (void) setInitialDefaults {
+    self.firstTimeRun = NO;
+    self.dryRun = NO;
+    self.refreshSeconds = 30;
+    [self validate];
+}
+
 - (void) save {
     @synchronized(self) {
+        [self validate];
         NSMutableArray*array = [NSMutableArray new];
         for (XGAServerGitHubSyncTask*task in self.serverGitHubSyncTasks) {
             NSDictionary *d = task.dictionary;
             [array addObject:d];
         }
-        [[NSUserDefaults standardUserDefaults] setObject:array forKey:@"serverGitHubSyncTasks"];
+        NSUserDefaults*defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:array forKey:@"serverGitHubSyncTasks"];
+        [defaults setBool:self.dryRun forKey:@"dryRun"];
+        [defaults setBool:self.firstTimeRun forKey:@"firstTimeRun"];
+        [defaults setDouble:self.refreshSeconds forKey:@"refreshSeconds"];
     }
 }
 

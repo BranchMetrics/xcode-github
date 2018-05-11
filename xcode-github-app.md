@@ -5,6 +5,7 @@
 * [x] Update bot status detail message strings.
 * [x] Make log window.
 * [x] Add icon to status window.
+* [x] Add icon to status line.
 * [ ] Make preferences dialog: 'Observe' only mode.
 * [ ] Make "Add Server" flow.
 * [ ] Make "Add GitHub Token" flow.

@@ -15,7 +15,79 @@
 #import "BNCLog.h"
 #import <stdatomic.h>
 
-#pragma mark XGAServerStatus
+#pragma mark NSAttributedString (APP)
+
+NSData*_Nullable XGAImagePNGRepresentation(NSImage*image) {
+//    NSAffineTransform *r = [[NSAffineTransform alloc] init];
+//    [r rotateByDegrees:90.0];
+//    NSDictionary*hints = @{
+//        NSImageHintCTM: r,
+//    };
+    CGImageRef cgRef = [image CGImageForProposedRect:NULL context:nil hints:@{}];
+    NSBitmapImageRep *newRep = [[NSBitmapImageRep alloc] initWithCGImage:cgRef];
+    //  setSize:[image size]];   // if you want the same resolution
+    newRep.size = NSMakeSize(image.size.width, image.size.height);
+    NSData *pngData = [newRep representationUsingType:NSPNGFileType properties:@{}];
+    return pngData;
+}
+
+NSData*_Nullable XGAImageTIFFRepresentation(NSImage*image) {
+    NSData*data = [image TIFFRepresentation];
+    return data;
+}
+
+@interface NSAttributedString (XGA)
++ (NSAttributedString*) stringWithImage:(NSImage*)image rect:(NSRect)rect;
++ (NSMutableAttributedString*) stringWithStrings:(NSAttributedString*)string, ... NS_REQUIRES_NIL_TERMINATION;
++ (NSAttributedString*) stringWithFormat:(NSString*)format, ... NS_FORMAT_FUNCTION(1,2);
+@end
+
+@implementation NSAttributedString (APP)
+
++ (NSAttributedString*) stringWithImage:(NSImage*)image rect:(NSRect)rect {
+    NSData*imageData = XGAImageTIFFRepresentation(image);
+    NSTextAttachment*a =
+        [[NSTextAttachment alloc]
+            initWithData:imageData
+            ofType:(__bridge NSString*)kUTTypeTIFF];
+    a.image = image;
+    if (NSEqualRects(rect, NSZeroRect))
+        rect = CGRectMake(0.0, 0.0, image.size.width, image.size.height);
+    a.bounds = rect;
+    NSAttributedString *string = [NSAttributedString attributedStringWithAttachment:a];
+    return string;
+}
+
++ (NSMutableAttributedString*) stringWithStrings:(NSAttributedString*)string, ... {
+    va_list list;
+    va_start(list, string);
+
+    NSMutableAttributedString *result = [NSMutableAttributedString new];
+    while (string) {
+        if ([string isKindOfClass:NSString.class])
+            [result appendAttributedString:[[NSAttributedString alloc] initWithString:(NSString*)string]];
+        else
+        if ([string isKindOfClass:NSAttributedString.class])
+            [result appendAttributedString:string];
+        string = va_arg(list, NSAttributedString*);
+    }
+
+    va_end(list);
+    return result;
+}
+
++ (NSAttributedString*) stringWithFormat:(NSString *)format, ... {
+    va_list argList;
+    va_start(argList, format);
+    NSString*s = [[NSString alloc] initWithFormat:format arguments:argList];
+    NSAttributedString *as = [[NSAttributedString alloc] initWithString:s];
+    va_end(argList);
+    return as;
+}
+@end
+
+
+#pragma mark - XGAServerStatus
 
 @interface XGAServerStatus : NSObject
 @property NSString *serverName;
@@ -194,10 +266,14 @@
         options.dryRun = YES;
         error = XGUpdateXcodeBotsWithGitHub(options);
         if (error) {
-            NSString *message = [NSString stringWithFormat:@"%@:%@    —    %@",
-                options.xcodeServerName, options.templateBotName, error.localizedDescription];
+            NSMutableAttributedString*message =
+                [NSAttributedString stringWithStrings:
+                    [NSAttributedString stringWithImage:[NSImage imageNamed:@"RoundAlert"] rect:CGRectMake(0, -2, 12, 12)],
+                    [NSAttributedString stringWithFormat:@" %@:%@    —    %@",
+                        options.xcodeServerName, options.templateBotName, error.localizedDescription],
+                    nil];
             BNCPerformBlockOnMainThreadAsync(^{
-                self.statusTextField.stringValue = message;
+                self.statusTextField.attributedStringValue = message;
             });
         }
     }

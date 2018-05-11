@@ -40,6 +40,12 @@ void XGALogFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Null
     row.date = timestamp;
     row.logLevel = level;
     row.logLevelImage = [XGALogViewController imageForLogLevel:level];
+    if (YES) {
+        // Make the message pretty:
+        NSRange range = [message rangeOfString:@": "];
+        if (range.location != NSNotFound && range.location+2 < message.length)
+            message = [message substringFromIndex:range.location+2];
+    }
     row.logMessage = message;
     [[XGALogViewController logArray] addObject:row];
     [[NSNotificationCenter defaultCenter]
