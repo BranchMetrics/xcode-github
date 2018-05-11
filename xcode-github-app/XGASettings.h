@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (XGASettings*) shared;
 - (void) save;
 @property (assign) BOOL dryRun;
-@property (assign) BOOL firstTimeRun;
+@property (assign) BOOL hasRunBefore;
 @property (assign) NSTimeInterval refreshSeconds;
 @property (strong) NSMutableArray<XGAServerGitHubSyncTask*>*serverGitHubSyncTasks;
 @end

@@ -34,4 +34,8 @@
     self.settings = [XGASettings shared];
 }
 
+- (IBAction)valueChanged:(id)sender {
+    [self.settings save];
+}
+
 @end

@@ -17,6 +17,7 @@
 		4D7661752057565200216B72 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D7661732057565200216B72 /* Main.storyboard */; };
 		4D7661782057565300216B72 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D7661772057565300216B72 /* main.m */; };
 		4D790E352095A43C008A9492 /* APFormattedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D790E342095A43C008A9492 /* APFormattedString.m */; };
+		4D7D249A20A617DB0086FA59 /* NSAttributedString+App.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D7D249920A617DB0086FA59 /* NSAttributedString+App.m */; };
 		4D8352C620A3F30A00184259 /* XGAStatusViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D8352C520A3F30A00184259 /* XGAStatusViewController.xib */; };
 		4D8352CC20A4F93A00184259 /* XGAStatusLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D8352CB20A4F93A00184259 /* XGAStatusLineView.m */; };
 		4D8352D020A516A200184259 /* XGAPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D8352CE20A516A200184259 /* XGAPreferencesViewController.m */; };
@@ -51,6 +52,8 @@
 		4D7661792057565300216B72 /* xcode-github-app.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "xcode-github-app.entitlements"; sourceTree = "<group>"; };
 		4D790E332095A43C008A9492 /* APFormattedString.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APFormattedString.h; sourceTree = "<group>"; };
 		4D790E342095A43C008A9492 /* APFormattedString.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APFormattedString.m; sourceTree = "<group>"; };
+		4D7D249820A617DB0086FA59 /* NSAttributedString+App.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSAttributedString+App.h"; path = "Vendor/Branch/NSAttributedString+App.h"; sourceTree = SOURCE_ROOT; };
+		4D7D249920A617DB0086FA59 /* NSAttributedString+App.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSAttributedString+App.m"; path = "Vendor/Branch/NSAttributedString+App.m"; sourceTree = SOURCE_ROOT; };
 		4D8352C520A3F30A00184259 /* XGAStatusViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = XGAStatusViewController.xib; sourceTree = "<group>"; };
 		4D8352CA20A4F93A00184259 /* XGAStatusLineView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGAStatusLineView.h; sourceTree = "<group>"; };
 		4D8352CB20A4F93A00184259 /* XGAStatusLineView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGAStatusLineView.m; sourceTree = "<group>"; };
@@ -160,6 +163,8 @@
 		4DF0F580208F923E0015D1F7 /* Branch */ = {
 			isa = PBXGroup;
 			children = (
+				4D7D249820A617DB0086FA59 /* NSAttributedString+App.h */,
+				4D7D249920A617DB0086FA59 /* NSAttributedString+App.m */,
 				4D790E332095A43C008A9492 /* APFormattedString.h */,
 				4D790E342095A43C008A9492 /* APFormattedString.m */,
 				4DED488F209BDFCC008DE877 /* BNCGeometry.h */,
@@ -258,6 +263,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D790E352095A43C008A9492 /* APFormattedString.m in Sources */,
+				4D7D249A20A617DB0086FA59 /* NSAttributedString+App.m in Sources */,
 				4DED4891209BDFCC008DE877 /* BNCGeometry.m in Sources */,
 				4DF0F58B208F923E0015D1F7 /* BNCLog.m in Sources */,
 				4DF0F58E208F923E0015D1F7 /* BNCThreads.m in Sources */,

@@ -93,7 +93,8 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
         if ([array isKindOfClass:NSArray.class]) {
             for (NSDictionary *d in array) {
                 if (![d isKindOfClass:NSDictionary.class]) continue;
-                XGAServerGitHubSyncTask*task = [XGAServerGitHubSyncTask serverGitHubSyncTaskWithDictionary:d];
+                XGAServerGitHubSyncTask*task =
+                    [XGAServerGitHubSyncTask serverGitHubSyncTaskWithDictionary:d];
                 if (task) [self.serverGitHubSyncTasks addObject:task];
             }
         }
@@ -129,11 +130,8 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
         [self.serverGitHubSyncTasks addObject:task];
 
         NSUserDefaults*defaults = [NSUserDefaults standardUserDefaults];
-        self.firstTimeRun = ![defaults boolForKey:@"firstTimeRun"];
-        if (self.firstTimeRun) {
-            [self setInitialDefaults];
-            return;
-        }
+        self.hasRunBefore = [defaults boolForKey:@"hasRunBefore"];
+        if (!self.hasRunBefore) [self setInitialDefaults];
         self.dryRun = [defaults boolForKey:@"dryRun"];
         self.refreshSeconds = [defaults doubleForKey:@"refreshSeconds"];
         [self validate];
@@ -147,10 +145,10 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
 }
 
 - (void) setInitialDefaults {
-    self.firstTimeRun = NO;
+    self.hasRunBefore = YES;
     self.dryRun = NO;
     self.refreshSeconds = 30;
-    [self validate];
+    [self save];
 }
 
 - (void) save {
@@ -164,7 +162,7 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
         NSUserDefaults*defaults = [NSUserDefaults standardUserDefaults];
         [defaults setObject:array forKey:@"serverGitHubSyncTasks"];
         [defaults setBool:self.dryRun forKey:@"dryRun"];
-        [defaults setBool:self.firstTimeRun forKey:@"firstTimeRun"];
+        [defaults setBool:self.hasRunBefore forKey:@"hasRunBefore"];
         [defaults setDouble:self.refreshSeconds forKey:@"refreshSeconds"];
     }
 }
