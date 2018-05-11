@@ -1,5 +1,5 @@
 /**
- @file          APFormattedString.m
+ @file          APPFormattedString.m
  @package       xcode-github
  @brief         A generalized formatted string that can render multiple formats.
 
@@ -8,24 +8,24 @@
  @copyright     Copyright © 2018 Branch. All rights reserved.
 */
 
-#import "APFormattedString.h"
+#import "APPFormattedString.h"
 #import <CoreText/CoreText.h>
 
-#pragma mark APFormattedString
+#pragma mark APPFormattedString
 
-@interface APFormattedString ()
-@property (strong) NSMutableArray<APFormattedStringBuilder*>*builderArray;
+@interface APPFormattedString ()
+@property (strong) NSMutableArray<APPFormattedStringBuilder*>*builderArray;
 @end
 
-#pragma mark - APFormattedStringBuilder
+#pragma mark - APPFormattedStringBuilder
 
-@interface APFormattedStringBuilder ()
-@property (strong) APFormattedString*formattedString;
+@interface APPFormattedStringBuilder ()
+@property (strong) APPFormattedString*formattedString;
 @end
 
-@implementation APFormattedStringBuilder
+@implementation APPFormattedStringBuilder
 
-- (instancetype) initWithFormattedString:(APFormattedString*)formattedString {
+- (instancetype) initWithFormattedString:(APPFormattedString*)formattedString {
     self = [super init];
     if (!self) return self;
     self.formattedString = formattedString;
@@ -35,66 +35,66 @@
 #define createBuilder \
     va_list argList; \
     va_start(argList, format); \
-    APFormattedStringBuilder* builder = [[APFormattedStringBuilder alloc] init]; \
+    APPFormattedStringBuilder* builder = [[APPFormattedStringBuilder alloc] init]; \
     builder.string = [[NSString alloc] initWithFormat:format arguments:argList]; \
     [self.formattedString.builderArray addObject:builder]; \
     va_end(argList);
 
 - (instancetype) appendPlain:(NSString*)format, ... {
     createBuilder;
-    builder.style = APFormattedStringFormatPlain;
+    builder.style = APPFormattedStringFormatPlain;
     return self;
 }
 
 - (instancetype) appendBold:(NSString*)format, ... {
     createBuilder;
-    builder.style = APFormattedStringFormatBold;
+    builder.style = APPFormattedStringFormatBold;
     return self;
 }
 
 - (instancetype) appendItalic:(NSString*)format, ... {
     createBuilder;
-    builder.style = APFormattedStringFormatItalic;
+    builder.style = APPFormattedStringFormatItalic;
     return self;
 }
 
 - (instancetype) appendLine {
-    APFormattedStringBuilder* builder = [[APFormattedStringBuilder alloc] init];
-    builder.style = APFormattedStringFormatLine;
+    APPFormattedStringBuilder* builder = [[APPFormattedStringBuilder alloc] init];
+    builder.style = APPFormattedStringFormatLine;
     builder.string = @"\n";
     [self.formattedString.builderArray addObject:builder];
     return self;
 }
 
-- (APFormattedString*) build {
+- (APPFormattedString*) build {
     return self.formattedString;
 }
 
 @end
 
-#pragma mark - APFormattedString
+#pragma mark - APPFormattedString
 
-@implementation APFormattedString
+@implementation APPFormattedString
 
-+ (APFormattedStringBuilder*) builder {
-    APFormattedString* formattedString = [[APFormattedString alloc] init];
++ (APPFormattedStringBuilder*) builder {
+    APPFormattedString* formattedString = [[APPFormattedString alloc] init];
     return [formattedString builder];
 }
 
-- (APFormattedStringBuilder*) builder {
+- (APPFormattedStringBuilder*) builder {
     if (!self.builderArray) self.builderArray = [NSMutableArray new];
-    APFormattedStringBuilder*builder =
-        [[APFormattedStringBuilder alloc] initWithFormattedString:self];
+    APPFormattedStringBuilder*builder =
+        [[APPFormattedStringBuilder alloc] initWithFormattedString:self];
     return builder;
 }
 
-+ (APFormattedString*) plainText:(NSString*)text {
-   return [[[APFormattedString builder] appendPlain:@"%@", text] build];
++ (APPFormattedString*) plainText:(NSString*)text {
+   return [[[APPFormattedString builder] appendPlain:@"%@", text] build];
 }
 
 - (NSString*) renderText {
     NSMutableString*string = [NSMutableString new];
-    for (APFormattedStringBuilder*builder in self.builderArray) {
+    for (APPFormattedStringBuilder*builder in self.builderArray) {
         [string appendString:builder.string];
     }
     return string;
@@ -102,19 +102,19 @@
 
 - (NSString*) renderMarkDown {
     NSMutableString*string = [NSMutableString new];
-    for (APFormattedStringBuilder*builder in self.builderArray) {
+    for (APPFormattedStringBuilder*builder in self.builderArray) {
         switch (builder.style) {
         default:
-        case APFormattedStringFormatPlain:
+        case APPFormattedStringFormatPlain:
             [string appendString:builder.string];
             break;
-        case APFormattedStringFormatBold:
+        case APPFormattedStringFormatBold:
             [string appendFormat:@"**%@**", builder.string];
             break;
-        case APFormattedStringFormatItalic:
+        case APPFormattedStringFormatItalic:
             [string appendFormat:@"*%@*", builder.string];
             break;
-        case APFormattedStringFormatLine:
+        case APPFormattedStringFormatLine:
             [string appendString:@"\n---\n"];
             break;
         }
@@ -136,26 +136,26 @@
     UIFont*italicFont = [UIFont fontWithDescriptor:descriptor size:0.0];
 
     NSMutableAttributedString*string = [NSMutableAttributedString new];
-    for (APFormattedStringBuilder*builder in self.builderArray) {
+    for (APPFormattedStringBuilder*builder in self.builderArray) {
         NSDictionary*attributes = @{};
         switch (builder.style) {
         default:
-        case APFormattedStringFormatPlain:
+        case APPFormattedStringFormatPlain:
             attributes = @{
                 (__bridge NSString*) kCTFontAttributeName: font,
             };
             break;
-        case APFormattedStringFormatBold:
+        case APPFormattedStringFormatBold:
             attributes = @{
                 (__bridge NSString*) kCTFontAttributeName: boldFont,
             };
             break;
-        case APFormattedStringFormatItalic:
+        case APPFormattedStringFormatItalic:
             attributes = @{
                 (__bridge NSString*) kCTFontAttributeName: italicFont,
             };
             break;
-        case APFormattedStringFormatLine:
+        case APPFormattedStringFormatLine:
             break;
         }
         NSAttributedString*as =
@@ -179,26 +179,26 @@
     NSFont*italicFont = [NSFont fontWithDescriptor:descriptor size:0.0];
 
     NSMutableAttributedString*string = [NSMutableAttributedString new];
-    for (APFormattedStringBuilder*builder in self.builderArray) {
+    for (APPFormattedStringBuilder*builder in self.builderArray) {
         NSDictionary*attributes = @{};
         switch (builder.style) {
         default:
-        case APFormattedStringFormatPlain:
+        case APPFormattedStringFormatPlain:
             attributes = @{
                 (__bridge NSString*) kCTFontAttributeName: font,
             };
             break;
-        case APFormattedStringFormatBold:
+        case APPFormattedStringFormatBold:
             attributes = @{
                 (__bridge NSString*) kCTFontAttributeName: boldFont,
             };
             break;
-        case APFormattedStringFormatItalic:
+        case APPFormattedStringFormatItalic:
             attributes = @{
                 (__bridge NSString*) kCTFontAttributeName: italicFont,
             };
             break;
-        case APFormattedStringFormatLine:
+        case APPFormattedStringFormatLine:
             break;
         }
         NSAttributedString*as =

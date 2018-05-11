@@ -23,7 +23,7 @@
 @property NSString *botName;
 @property NSImage  *statusImage;
 @property NSString *statusSummary;
-@property APFormattedString *statusDetail;
+@property APPFormattedString *statusDetail;
 @end
 
 @implementation XGAServerStatus
@@ -217,7 +217,7 @@
         status.serverName = serverName;
         status.statusSummary = @"Server Error";
         status.statusImage = [NSImage imageNamed:@"RoundAlert"];
-        status.statusDetail = [APFormattedString plainText:error.localizedDescription];
+        status.statusDetail = [APPFormattedString plainText:error.localizedDescription];
         [statusArray addObject:status];
     } else {
         for (XGXcodeBot *bot in bots.objectEnumerator) {

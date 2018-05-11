@@ -1,5 +1,5 @@
 /**
- @file          APFormattedString.h
+ @file          APPFormattedString.h
  @package       xcode-github
  @brief         A generalized formatted string that can render multiple formats.
 
@@ -31,19 +31,19 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NS_ENUM(NSInteger, APFormattedStringStyle) {
-    APFormattedStringFormatPlain,
-    APFormattedStringFormatBold,
-    APFormattedStringFormatItalic,
-    APFormattedStringFormatLine,
+typedef NS_ENUM(NSInteger, APPFormattedStringStyle) {
+    APPFormattedStringFormatPlain,
+    APPFormattedStringFormatBold,
+    APPFormattedStringFormatItalic,
+    APPFormattedStringFormatLine,
 };
 
-@class APFormattedString;
+@class APPFormattedString;
 
-#pragma mark - APFormattedStringBuilder
+#pragma mark - APPFormattedStringBuilder
 
-@interface APFormattedStringBuilder : NSObject
-@property (assign) APFormattedStringStyle style;
+@interface APPFormattedStringBuilder : NSObject
+@property (assign) APPFormattedStringStyle style;
 @property (strong) NSString*_Nonnull string;
 
 - (instancetype) appendPlain:(NSString*)format, ... NS_FORMAT_FUNCTION(1,2);
@@ -51,17 +51,17 @@ typedef NS_ENUM(NSInteger, APFormattedStringStyle) {
 - (instancetype) appendItalic:(NSString*)format, ... NS_FORMAT_FUNCTION(1,2);
 - (instancetype) appendLine;
 
-- (APFormattedString*) build;
+- (APPFormattedString*) build;
 @end
 
-#pragma mark - APFormattedString
+#pragma mark - APPFormattedString
 
-@interface APFormattedString : NSObject
+@interface APPFormattedString : NSObject
 
-+ (APFormattedStringBuilder*) builder;
-- (APFormattedStringBuilder*) builder;
++ (APPFormattedStringBuilder*) builder;
+- (APPFormattedStringBuilder*) builder;
 
-+ (APFormattedString*) plainText:(NSString*)text;
++ (APPFormattedString*) plainText:(NSString*)text;
 
 - (NSString*) renderText;
 - (NSString*) renderMarkDown;

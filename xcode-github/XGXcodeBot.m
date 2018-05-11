@@ -9,7 +9,7 @@
 #import "XGXcodeBot.h"
 #import "BNCLog.h"
 #import "BNCNetworkService.h"
-#import "APFormattedString.h"
+#import "APPFormattedString.h"
 
 #pragma mark Helper Functions
 
@@ -145,12 +145,12 @@ NSString* XGDurationStringFromTimeInterval(NSTimeInterval timeInterval) {
     return summary;
 }
 
-- (APFormattedString*) formattedDetailString {
+- (APPFormattedString*) formattedDetailString {
     NSTimeInterval duration = [self.endedDate timeIntervalSinceDate:self.startedDate];
     NSString*durationString = XGDurationStringFromTimeInterval(duration);
 
-    APFormattedString *apstring =
-        [[[[[[APFormattedString builder]
+    APPFormattedString *apstring =
+        [[[[[[APPFormattedString builder]
             appendBold:@"Result of Integration %@\n", self.integrationNumber]
             appendLine]
             appendItalic:@"Duration"]

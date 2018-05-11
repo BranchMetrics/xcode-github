@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4D447E1E2050557900A72842 /* XGCommandOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D447E1D2050557900A72842 /* XGCommandOptions.m */; };
-		4D7335482097CFFB00A0D416 /* APFormattedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D7335472097CFFA00A0D416 /* APFormattedString.m */; };
+		4D7335482097CFFB00A0D416 /* APPFormattedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D7335472097CFFA00A0D416 /* APPFormattedString.m */; };
 		4D744C072047A53B002CA796 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D744C062047A53B002CA796 /* main.m */; };
 		4D744C162047BA5F002CA796 /* BNCLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D744C112047BA5F002CA796 /* BNCLog.m */; };
 		4D744C172047BA5F002CA796 /* BNCNetworkService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D744C122047BA5F002CA796 /* BNCNetworkService.m */; };
@@ -33,8 +33,8 @@
 		4D447E1C2050557900A72842 /* XGCommandOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGCommandOptions.h; sourceTree = "<group>"; };
 		4D447E1D2050557900A72842 /* XGCommandOptions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGCommandOptions.m; sourceTree = "<group>"; };
 		4D7335452097CF6700A0D416 /* xcode-github.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "xcode-github.md"; sourceTree = "<group>"; };
-		4D7335462097CFFA00A0D416 /* APFormattedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APFormattedString.h; sourceTree = "<group>"; };
-		4D7335472097CFFA00A0D416 /* APFormattedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APFormattedString.m; sourceTree = "<group>"; };
+		4D7335462097CFFA00A0D416 /* APPFormattedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPFormattedString.h; sourceTree = "<group>"; };
+		4D7335472097CFFA00A0D416 /* APPFormattedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPFormattedString.m; sourceTree = "<group>"; };
 		4D744C032047A53B002CA796 /* xcode-github */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "xcode-github"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D744C062047A53B002CA796 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4D744C112047BA5F002CA796 /* BNCLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCLog.m; sourceTree = "<group>"; };
@@ -107,8 +107,8 @@
 		4D744C0F2047BA5F002CA796 /* Branch */ = {
 			isa = PBXGroup;
 			children = (
-				4D7335462097CFFA00A0D416 /* APFormattedString.h */,
-				4D7335472097CFFA00A0D416 /* APFormattedString.m */,
+				4D7335462097CFFA00A0D416 /* APPFormattedString.h */,
+				4D7335472097CFFA00A0D416 /* APPFormattedString.m */,
 				4D744C132047BA5F002CA796 /* BNCLog.h */,
 				4D744C112047BA5F002CA796 /* BNCLog.m */,
 				4D744C152047BA5F002CA796 /* BNCNetworkService.h */,
@@ -178,7 +178,7 @@
 				4D744C212047C9E1002CA796 /* XGGitHubPullRequest.m in Sources */,
 				4D744C072047A53B002CA796 /* main.m in Sources */,
 				4DF0F591208FE64E0015D1F7 /* XGCommand.m in Sources */,
-				4D7335482097CFFB00A0D416 /* APFormattedString.m in Sources */,
+				4D7335482097CFFB00A0D416 /* APPFormattedString.m in Sources */,
 				4D447E1E2050557900A72842 /* XGCommandOptions.m in Sources */,
 				4D744C1E2047C652002CA796 /* XGXcodeBot.m in Sources */,
 				4D744C172047BA5F002CA796 /* BNCNetworkService.m in Sources */,

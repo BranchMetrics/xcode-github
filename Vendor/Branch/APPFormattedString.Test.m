@@ -1,7 +1,7 @@
 /**
- @file          APFormattedString.Test.m
+ @file          APPFormattedString.Test.m
  @package       xcode-github-app
- @brief         Tests for APFormattedString.
+ @brief         Tests for APPFormattedString.
 
  @author        Edward Smith
  @date          April 2018
@@ -9,16 +9,16 @@
 */
 
 #import "BNCTestCase.h"
-#import "APFormattedString.h"
+#import "APPFormattedString.h"
 
-@interface APFormattedStringTest : BNCTestCase
+@interface APPFormattedStringTest : BNCTestCase
 @end
 
-@implementation APFormattedStringTest
+@implementation APPFormattedStringTest
 
-- (APFormattedString*) createTestString {
-    APFormattedString *string =
-        [[[[[APFormattedString builder]
+- (APPFormattedString*) createTestString {
+    APPFormattedString *string =
+        [[[[[APPFormattedString builder]
             appendPlain:@"Ten: %ld.", (long) 10]
             appendBold:@" Bold text."]
             appendPlain:@" Normal text."]
@@ -27,13 +27,13 @@
 }
 
 - (void) testText {
-    APFormattedString *string = [self createTestString];
+    APPFormattedString *string = [self createTestString];
     NSString* result = [string renderText];
     XCTAssertEqualObjects(result, @"Ten: 10. Bold text. Normal text.");
 }
 
 - (void) testMarkDown {
-    APFormattedString *string = [self createTestString];
+    APPFormattedString *string = [self createTestString];
     NSString* result = [string renderMarkDown];
     XCTAssertEqualObjects(result, @"Ten: 10.** Bold text.** Normal text.");
 }
