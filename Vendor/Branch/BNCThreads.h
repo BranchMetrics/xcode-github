@@ -17,6 +17,10 @@
 ///@group Blocks and Threads
 #pragma mark - Blocks and Threads
 
+static inline uint64_t BNCNanoSecondsFromTimeInterval(NSTimeInterval interval) {
+    return interval * ((NSTimeInterval) NSEC_PER_SEC);
+}
+
 static inline dispatch_time_t BNCDispatchTimeFromSeconds(NSTimeInterval seconds) {
 	return dispatch_time(DISPATCH_TIME_NOW, seconds * NSEC_PER_SEC);
 }
@@ -29,8 +33,11 @@ static inline void BNCPerformBlockOnMainThreadAsync(dispatch_block_t block) {
     dispatch_async(dispatch_get_main_queue(), block);
 }
 
-static inline uint64_t BNCNanoSecondsFromTimeInterval(NSTimeInterval interval) {
-    return interval * ((NSTimeInterval) NSEC_PER_SEC);
+static inline void BNCPerformBlockOnMainThreadSync(dispatch_block_t block) {
+    if ([NSThread isMainThread])
+        block();
+    else
+        dispatch_sync(dispatch_get_main_queue(), block);
 }
 
 static inline void BNCSleepForTimeInterval(NSTimeInterval seconds) {
