@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" titleVisibility="hidden" id="QvC-M9-y7g" customClass="XGAStatusPanel">
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="240" width="480" height="270"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <view key="contentView" wantsLayer="YES" focusRingType="none" id="EiT-Mj-1SZ">
+                <rect key="frame" x="0.0" y="0.0" width="480" height="77"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <customView focusRingType="none" translatesAutoresizingMaskIntoConstraints="NO" id="Fqu-gG-MvA">
+                        <rect key="frame" x="12" y="12" width="456" height="53"/>
+                        <subviews>
+                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="M5A-zz-lLC">
+                                <rect key="frame" x="28" y="33" width="430" height="17"/>
+                                <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" title="Summary" id="gnx-Mm-ESt">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qrK-5o-GaV">
+                                <rect key="frame" x="0.0" y="29" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="24" id="V3i-tB-Owc"/>
+                                    <constraint firstAttribute="width" constant="24" id="jLJ-rO-pxD"/>
+                                </constraints>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="RoundBlue" id="8hx-E5-oZg"/>
+                            </imageView>
+                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="UjJ-dt-JxK">
+                                <rect key="frame" x="-2" y="8" width="460" height="17"/>
+                                <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" title="Detail" id="BxM-aP-Dam">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="M5A-zz-lLC" firstAttribute="top" secondItem="qrK-5o-GaV" secondAttribute="top" constant="3" id="85y-SA-pey"/>
+                            <constraint firstItem="qrK-5o-GaV" firstAttribute="top" secondItem="Fqu-gG-MvA" secondAttribute="top" id="Fn2-IU-JCy"/>
+                            <constraint firstAttribute="trailing" secondItem="UjJ-dt-JxK" secondAttribute="trailing" id="G0e-lQ-Bdm"/>
+                            <constraint firstItem="M5A-zz-lLC" firstAttribute="leading" secondItem="qrK-5o-GaV" secondAttribute="trailing" constant="6" id="HLd-2X-41N"/>
+                            <constraint firstItem="UjJ-dt-JxK" firstAttribute="leading" secondItem="Fqu-gG-MvA" secondAttribute="leading" id="S1S-Qa-3pZ"/>
+                            <constraint firstAttribute="bottom" secondItem="UjJ-dt-JxK" secondAttribute="bottom" constant="8" id="aGY-Br-UrN"/>
+                            <constraint firstItem="qrK-5o-GaV" firstAttribute="leading" secondItem="Fqu-gG-MvA" secondAttribute="leading" id="c3C-4C-lP9"/>
+                            <constraint firstAttribute="trailing" secondItem="M5A-zz-lLC" secondAttribute="trailing" id="kxq-a3-jxP"/>
+                            <constraint firstItem="UjJ-dt-JxK" firstAttribute="top" secondItem="M5A-zz-lLC" secondAttribute="bottom" constant="8" id="ojW-Oi-CaA"/>
+                        </constraints>
+                    </customView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="Fqu-gG-MvA" secondAttribute="trailing" constant="12" id="DTq-f4-vyt"/>
+                    <constraint firstAttribute="bottom" secondItem="Fqu-gG-MvA" secondAttribute="bottom" constant="12" id="Rh8-qJ-cP4"/>
+                    <constraint firstItem="Fqu-gG-MvA" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="12" id="T2M-m4-eOM"/>
+                    <constraint firstItem="Fqu-gG-MvA" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="12" id="woh-bY-Prq"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="detailTextField" destination="UjJ-dt-JxK" id="5qX-IW-N22"/>
+                <outlet property="imageView" destination="qrK-5o-GaV" id="aV5-8O-MjX"/>
+                <outlet property="summaryTextField" destination="M5A-zz-lLC" id="eN6-2h-3PG"/>
+            </connections>
+            <point key="canvasLocation" x="-220" y="-20"/>
+        </window>
+    </objects>
+    <resources>
+        <image name="RoundBlue" width="12" height="12"/>
+    </resources>
+</document>

@@ -133,6 +133,7 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
         self.hasRunBefore = [defaults boolForKey:@"hasRunBefore"];
         if (!self.hasRunBefore) [self setInitialDefaults];
         self.dryRun = [defaults boolForKey:@"dryRun"];
+        self.showDebugMessages = [defaults boolForKey:@"showDebugMessages"];
         self.refreshSeconds = [defaults doubleForKey:@"refreshSeconds"];
         [self validate];
     }
@@ -164,6 +165,7 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
         [defaults setBool:self.dryRun forKey:@"dryRun"];
         [defaults setBool:self.hasRunBefore forKey:@"hasRunBefore"];
         [defaults setDouble:self.refreshSeconds forKey:@"refreshSeconds"];
+        [defaults setBool:self.showDebugMessages forKey:@"showDebugMessages"];
     }
 }
 

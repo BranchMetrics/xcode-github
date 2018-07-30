@@ -22,6 +22,9 @@
 		4D8352CC20A4F93A00184259 /* XGAStatusLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D8352CB20A4F93A00184259 /* XGAStatusLineView.m */; };
 		4D8352D020A516A200184259 /* XGAPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D8352CE20A516A200184259 /* XGAPreferencesViewController.m */; };
 		4D8352D120A516A200184259 /* XGAPreferencesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D8352CF20A516A200184259 /* XGAPreferencesViewController.xib */; };
+		4DDC1811210E99080090DFFA /* APPArrowPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DDC1810210E99080090DFFA /* APPArrowPanel.m */; };
+		4DDC1814210EABA70090DFFA /* XGAStatusPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DDC1813210EABA70090DFFA /* XGAStatusPanel.m */; };
+		4DDC1816210EAD070090DFFA /* XGAStatusPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DDC1815210EAD070090DFFA /* XGAStatusPanel.xib */; };
 		4DED4891209BDFCC008DE877 /* BNCGeometry.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DED4890209BDFCC008DE877 /* BNCGeometry.m */; };
 		4DF0F57C208F91A90015D1F7 /* XGXcodeBot.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF0F578208F91A90015D1F7 /* XGXcodeBot.m */; };
 		4DF0F57D208F91A90015D1F7 /* XGGitHubPullRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF0F579208F91A90015D1F7 /* XGGitHubPullRequest.m */; };
@@ -60,6 +63,11 @@
 		4D8352CD20A516A200184259 /* XGAPreferencesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGAPreferencesViewController.h; sourceTree = "<group>"; };
 		4D8352CE20A516A200184259 /* XGAPreferencesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGAPreferencesViewController.m; sourceTree = "<group>"; };
 		4D8352CF20A516A200184259 /* XGAPreferencesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = XGAPreferencesViewController.xib; sourceTree = "<group>"; };
+		4DDC180F210E99080090DFFA /* APPArrowPanel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APPArrowPanel.h; sourceTree = "<group>"; };
+		4DDC1810210E99080090DFFA /* APPArrowPanel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APPArrowPanel.m; sourceTree = "<group>"; };
+		4DDC1812210EABA70090DFFA /* XGAStatusPanel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGAStatusPanel.h; sourceTree = "<group>"; };
+		4DDC1813210EABA70090DFFA /* XGAStatusPanel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGAStatusPanel.m; sourceTree = "<group>"; };
+		4DDC1815210EAD070090DFFA /* XGAStatusPanel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = XGAStatusPanel.xib; sourceTree = "<group>"; };
 		4DED488F209BDFCC008DE877 /* BNCGeometry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BNCGeometry.h; sourceTree = "<group>"; };
 		4DED4890209BDFCC008DE877 /* BNCGeometry.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BNCGeometry.m; sourceTree = "<group>"; };
 		4DF0F576208F91A90015D1F7 /* XGGitHubPullRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XGGitHubPullRequest.h; path = "xcode-github/XGGitHubPullRequest.h"; sourceTree = SOURCE_ROOT; };
@@ -130,6 +138,9 @@
 				4DF0F5962090474D0015D1F7 /* XGASettings.m */,
 				4D8352CA20A4F93A00184259 /* XGAStatusLineView.h */,
 				4D8352CB20A4F93A00184259 /* XGAStatusLineView.m */,
+				4DDC1812210EABA70090DFFA /* XGAStatusPanel.h */,
+				4DDC1813210EABA70090DFFA /* XGAStatusPanel.m */,
+				4DDC1815210EAD070090DFFA /* XGAStatusPanel.xib */,
 				4D76616E2057565200216B72 /* XGAStatusViewController.h */,
 				4D76616F2057565200216B72 /* XGAStatusViewController.m */,
 				4D8352C520A3F30A00184259 /* XGAStatusViewController.xib */,
@@ -163,8 +174,8 @@
 		4DF0F580208F923E0015D1F7 /* Branch */ = {
 			isa = PBXGroup;
 			children = (
-				4D7D249820A617DB0086FA59 /* NSAttributedString+App.h */,
-				4D7D249920A617DB0086FA59 /* NSAttributedString+App.m */,
+				4DDC180F210E99080090DFFA /* APPArrowPanel.h */,
+				4DDC1810210E99080090DFFA /* APPArrowPanel.m */,
 				4D790E332095A43C008A9492 /* APPFormattedString.h */,
 				4D790E342095A43C008A9492 /* APPFormattedString.m */,
 				4DED488F209BDFCC008DE877 /* BNCGeometry.h */,
@@ -177,6 +188,8 @@
 				4DF0F584208F923E0015D1F7 /* BNCNetworkService.m */,
 				4DF0F582208F923E0015D1F7 /* BNCThreads.h */,
 				4DF0F588208F923E0015D1F7 /* BNCThreads.m */,
+				4D7D249820A617DB0086FA59 /* NSAttributedString+App.h */,
+				4D7D249920A617DB0086FA59 /* NSAttributedString+App.m */,
 			);
 			name = Branch;
 			path = Vendor/Branch;
@@ -249,6 +262,7 @@
 				4D0DD54520597FE6001721C1 /* xcode-github-app.md in Resources */,
 				4D7661722057565200216B72 /* Assets.xcassets in Resources */,
 				4D8352D120A516A200184259 /* XGAPreferencesViewController.xib in Resources */,
+				4DDC1816210EAD070090DFFA /* XGAStatusPanel.xib in Resources */,
 				4D12BA0E20A252CE00E5B1DB /* XGALogViewController.xib in Resources */,
 				4D8352C620A3F30A00184259 /* XGAStatusViewController.xib in Resources */,
 				4D7661752057565200216B72 /* Main.storyboard in Resources */,
@@ -267,7 +281,9 @@
 				4DED4891209BDFCC008DE877 /* BNCGeometry.m in Sources */,
 				4DF0F58B208F923E0015D1F7 /* BNCLog.m in Sources */,
 				4DF0F58E208F923E0015D1F7 /* BNCThreads.m in Sources */,
+				4DDC1811210E99080090DFFA /* APPArrowPanel.m in Sources */,
 				4DF0F594209000B80015D1F7 /* XGCommand.m in Sources */,
+				4DDC1814210EABA70090DFFA /* XGAStatusPanel.m in Sources */,
 				4D12BA0D20A252CE00E5B1DB /* XGALogViewController.m in Sources */,
 				4D8352CC20A4F93A00184259 /* XGAStatusLineView.m in Sources */,
 				4D5CC05E2090CAB60042E98B /* BNCKeyChain.m in Sources */,

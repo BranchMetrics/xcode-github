@@ -33,6 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) save;
 @property (assign) BOOL dryRun;
 @property (assign) BOOL hasRunBefore;
+@property (assign) BOOL showDebugMessages;
 @property (assign) NSTimeInterval refreshSeconds;
 @property (strong) NSMutableArray<XGAServerGitHubSyncTask*>*serverGitHubSyncTasks;
 @end

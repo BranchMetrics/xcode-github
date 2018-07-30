@@ -9,6 +9,7 @@
 #import "XGALogViewController.h"
 #import "BNCLog.h"
 #import "BNCThreads.h"
+#import "XGASettings.h"
 
 NSString*const XGALogUpdateNotification = @"XGALogUpdatedNotification";
 
@@ -83,7 +84,9 @@ void XGALogFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Null
             loadNibNamed:NSStringFromClass(self)
             owner:controller
             topLevelObjects:nil];
-    return (loaded) ? controller : nil;
+    if (!loaded) return nil;
+    [controller startObservers];
+    return controller;
 }
 
 + (NSImage*) imageForLogLevel:(BNCLogLevel)level {
@@ -118,8 +121,7 @@ void XGALogFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Null
     }
 }
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
+- (void) startObservers {
     [self.tableView setDoubleAction:@selector(doubleClickRow:)];
     [[NSNotificationCenter defaultCenter]
         addObserver:self
@@ -127,17 +129,43 @@ void XGALogFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Null
         name:XGALogUpdateNotification
         object:nil];
     self.arrayController.content = self.class.logArray;
+    [[XGASettings shared]
+        addObserver:self
+        forKeyPath:@"showDebugMessages"
+        options:0
+        context:NULL];
+}
+
+- (void) dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[XGASettings shared] removeObserver:self forKeyPath:@"showDebugMessages"];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+        ofObject:(id)object
+        change:(NSDictionary<NSKeyValueChangeKey, id> *)change
+        context:(void *)context {
+    NSLog(@"Hey!");
+    if ([XGASettings shared].showDebugMessages) {
+        self.arrayController.filterPredicate = nil;
+    } else {
+        self.arrayController.filterPredicate =
+            [NSPredicate predicateWithFormat:@"logLevel > 2"];
+    }
 }
 
 - (void)logUpdatedNotification:(NSNotification*)notification {
     BNCPerformBlockOnMainThreadAsync(^{
         NSRect visibleRect = self.tableView.enclosingScrollView.documentVisibleRect;
         NSRect contentRect = self.tableView.enclosingScrollView.documentView.frame;
+        // NSLog(@"Logging v: %@ c: %@.", NSStringFromRect(visibleRect), NSStringFromRect(contentRect));
         [self.arrayController rearrangeObjects];
-        if ((visibleRect.origin.y + visibleRect.size.height) >=
-            (contentRect.origin.y + contentRect.size.height)) {
-                NSInteger rowIdx = [self.arrayController.arrangedObjects count] - 1;
-                if (rowIdx >= 0) [self.tableView scrollRowToVisible:rowIdx];
+        if ((visibleRect.origin.y + visibleRect.size.height) >= contentRect.size.height) {
+                NSInteger rowIdx = self.tableView.numberOfRows - 1;
+                if (rowIdx >= 0) {
+                    // NSLog(@"Scroll to bottom: %ld.", rowIdx);
+                    [self.tableView scrollRowToVisible:rowIdx];
+                }
         }
     });
 }

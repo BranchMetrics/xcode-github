@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -103,7 +103,7 @@
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
-                                                                <binding destination="NBb-IA-dak" name="value" keyPath="objectValue.statusSummary" id="os7-tJ-uWf"/>
+                                                                <binding destination="NBb-IA-dak" name="value" keyPath="objectValue.statusSummary.description" id="dDa-Ip-3M8"/>
                                                             </connections>
                                                         </textField>
                                                     </subviews>
@@ -198,7 +198,7 @@
                             </subviews>
                             <nil key="backgroundColor"/>
                         </clipView>
-                        <scroller key="horizontalScroller" verticalHuggingPriority="750" doubleValue="0.0082644628099173556" horizontal="YES" id="fq7-S2-E0z">
+                        <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="fq7-S2-E0z">
                             <rect key="frame" x="0.0" y="264" width="480" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>

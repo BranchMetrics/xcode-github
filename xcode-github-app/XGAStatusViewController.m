@@ -10,6 +10,8 @@
 #import "XGXcodeBot.h"
 #import "XGCommand.h"
 #import "XGASettings.h"
+#import "XGAStatusPanel.h"
+#import "APPArrowPanel.h"
 #import "BNCThreads.h"
 #import "BNCNetworkService.h"
 #import "BNCLog.h"
@@ -22,8 +24,8 @@
 @property NSString *serverName;
 @property NSString *botName;
 @property NSImage  *statusImage;
-@property NSString *statusSummary;
-@property APPFormattedString *statusDetail;
+@property (strong) APPFormattedString *statusSummary;
+@property (strong) APPFormattedString *statusDetail;
 @end
 
 @implementation XGAServerStatus
@@ -74,30 +76,31 @@
 
 - (void)awakeFromNib {
     [super viewDidLoad];
-    [self.tableView setDoubleAction:@selector(doubleClickRow:)];
+    [self.tableView setAction:@selector(showStatusPanelAction:)];
     self.window = self.view.window;
     XGAServerStatus *status = [XGAServerStatus new];
-    status.statusSummary = @"< Refreshing >";
+    status.statusSummary = [APPFormattedString boldText:@"< Refreshing >"];
     self.serverStatusArray = @[ status ];
     [self startStatusUpdates];
 }
 
-- (void) doubleClickRow:(id)sender {
-    /*
-    XGAServerStatus *status = self.arrayController.selectedObjects.firstObject;
-    if (!status) return;
-    */
+- (void) showStatusPanelAction:(id)sender {
     NSInteger idx = self.tableView.selectedRow;
     if (idx < 0 || idx >= [self.arrayController.arrangedObjects count]) return;
     XGAServerStatus *status = [self.arrayController.arrangedObjects objectAtIndex:idx];
     if (![status isKindOfClass:XGAServerStatus.class]) return;
-    
-    NSAlert *alert = [[NSAlert alloc] init];
-    [alert addButtonWithTitle:@"OK"];
-    alert.messageText = status.statusSummary;
-    alert.informativeText = [status.statusDetail renderText];
-    alert.alertStyle = NSAlertStyleWarning;
-    [alert runModal];
+
+    // Show the status panel:
+    XGAStatusPanel*panel = [XGAStatusPanel loadPanel];
+    NSFont*font = [NSFont systemFontOfSize:[NSFont systemFontSize]];
+    panel.summaryTextField.attributedStringValue = [status.statusSummary renderAttributedStringWithFont:font];
+    panel.detailTextField.attributedStringValue = [status.statusDetail renderAttributedStringWithFont:font];
+    panel.imageView.image = status.statusImage;
+    NSRect r = [self.tableView rectOfRow:idx];
+    r = [self.tableView convertRect:r toView:nil];
+    r = [self.window convertRectToScreen:r];
+    panel.arrowPoint = NSMakePoint(r.size.width/2.0+r.origin.x, r.origin.y);
+    [panel show];
 }
 
 #pragma mark - Status Updates
@@ -215,7 +218,7 @@
     if (error) {
         XGAServerStatus *status = [XGAServerStatus new];
         status.serverName = serverName;
-        status.statusSummary = @"Server Error";
+        status.statusSummary = [APPFormattedString boldText:@"Server Error"];
         status.statusImage = [NSImage imageNamed:@"RoundAlert"];
         status.statusDetail = [APPFormattedString plainText:error.localizedDescription];
         [statusArray addObject:status];
@@ -228,7 +231,7 @@
     }
     if (statusArray.count == 0) {
         XGAServerStatus *status = [XGAServerStatus new];
-        status.statusSummary = @"< No Xcode servers yet >";
+        status.statusSummary = [APPFormattedString boldText:@"< No Xcode servers yet >"];
     }
     BNCPerformBlockOnMainThreadAsync(^{
         self.serverStatusArray = statusArray;
@@ -240,7 +243,7 @@
     XGAServerStatus *status = [XGAServerStatus new];
     status.serverName = botStatus.serverName;
     status.botName = ([XGXcodeBot gitHubPRNameFromString:botStatus.botName]) ?: botStatus.botName;
-    status.statusSummary = botStatus.summaryString;
+    status.statusSummary = [APPFormattedString boldText:botStatus.summaryString];
 
     NSString *result = [botStatus.result lowercaseString];
     if ([botStatus.currentStep containsString:@"completed"]) {

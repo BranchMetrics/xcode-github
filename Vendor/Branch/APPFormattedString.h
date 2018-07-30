@@ -62,6 +62,7 @@ typedef NS_ENUM(NSInteger, APPFormattedStringStyle) {
 - (APPFormattedStringBuilder*) builder;
 
 + (APPFormattedString*) plainText:(NSString*)text;
++ (APPFormattedString*) boldText:(NSString*)text;
 
 - (NSString*) renderText;
 - (NSString*) renderMarkDown;

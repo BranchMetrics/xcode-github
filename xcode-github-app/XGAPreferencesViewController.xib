@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,16 +16,16 @@
         <window title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" frameAutosaveName="" animationBehavior="default" id="GJD-mm-6or">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="377" y="693" width="480" height="84"/>
+            <rect key="contentRect" x="377" y="693" width="450" height="105"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
-            <value key="minSize" type="size" width="480" height="84"/>
-            <value key="maxSize" type="size" width="480" height="84"/>
+            <value key="minSize" type="size" width="450" height="105"/>
+            <value key="maxSize" type="size" width="450" height="105"/>
             <view key="contentView" id="9lr-Zd-a11">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="84"/>
+                <rect key="frame" x="0.0" y="0.0" width="450" height="105"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l6h-7u-oxM">
-                        <rect key="frame" x="20" y="20" width="54" height="22"/>
+                        <rect key="frame" x="17" y="66" width="54" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" drawsBackground="YES" id="hqh-Q3-9ZT">
                             <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" lenient="YES" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="x9S-89-6UL">
@@ -48,7 +48,7 @@
                         </connections>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zN5-A4-6gK">
-                        <rect key="frame" x="76" y="23" width="380" height="17"/>
+                        <rect key="frame" x="73" y="68" width="380" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Refresh seconds" id="WVV-AW-E6W">
                             <font key="font" metaFont="system"/>
@@ -57,7 +57,7 @@
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g28-HK-FSY">
-                        <rect key="frame" x="56" y="48" width="406" height="18"/>
+                        <rect key="frame" x="54" y="41" width="379" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Only monitor repos - don't create new bots." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="RoA-Ed-c90">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -65,7 +65,18 @@
                         </buttonCell>
                         <connections>
                             <action selector="valueChanged:" target="-2" id="Fc8-BU-uIJ"/>
-                            <binding destination="-2" name="value" keyPath="self.settings.dryRun" id="dRT-xT-xYd">
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FRz-yi-gKD">
+                        <rect key="frame" x="54" y="17" width="379" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="check" title="Show debug log messages." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="cCo-lJ-pTF">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="valueChanged:" target="-2" id="CRN-Pp-L61"/>
+                            <binding destination="-2" name="value" keyPath="self.settings.showDebugMessages" id="mFg-Vj-3SV">
                                 <dictionary key="options">
                                     <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     <bool key="NSConditionallySetsEnabled" value="NO"/>
@@ -75,7 +86,7 @@
                     </button>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="-503" y="0.0"/>
+            <point key="canvasLocation" x="-660.5" y="-97"/>
         </window>
     </objects>
 </document>

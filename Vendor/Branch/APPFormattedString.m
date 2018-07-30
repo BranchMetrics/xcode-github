@@ -92,6 +92,10 @@
    return [[[APPFormattedString builder] appendPlain:@"%@", text] build];
 }
 
++ (APPFormattedString*) boldText:(NSString*)text {
+   return [[[APPFormattedString builder] appendBold:@"%@", text] build];
+}
+
 - (NSString*) renderText {
     NSMutableString*string = [NSMutableString new];
     for (APPFormattedStringBuilder*builder in self.builderArray) {
@@ -209,5 +213,9 @@
 }
 
 #endif
+
+- (NSString*) description {
+    return [self renderText];
+}
 
 @end

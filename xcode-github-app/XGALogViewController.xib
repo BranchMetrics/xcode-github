@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -27,7 +27,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="480" height="300"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GKP-mx-fUu">
+                    <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="GKP-mx-fUu">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="300"/>
                         <clipView key="contentView" id="FuI-aF-rX1">
                             <rect key="frame" x="1" y="0.0" width="478" height="299"/>
@@ -94,7 +94,7 @@
                                             </textFieldCell>
                                             <prototypeCellViews>
                                                 <tableCellView id="m2h-kP-grJ">
-                                                    <rect key="frame" x="129" y="1" width="25" height="17"/>
+                                                    <rect key="frame" x="129" y="1" width="21" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xJz-Bz-4Xz">
@@ -172,8 +172,8 @@
                                 </tableView>
                             </subviews>
                         </clipView>
-                        <scroller key="horizontalScroller" verticalHuggingPriority="750" doubleValue="0.41666666666666669" horizontal="YES" id="WUg-jd-ZZ5">
-                            <rect key="frame" x="1" y="283" width="478" height="16"/>
+                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="WUg-jd-ZZ5">
+                            <rect key="frame" x="-100" y="-100" width="478" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="sl0-4s-4Pg">
@@ -193,7 +193,7 @@
                     <constraint firstAttribute="trailing" secondItem="GKP-mx-fUu" secondAttribute="trailing" id="rV3-v9-UIF"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="179" y="190"/>
+            <point key="canvasLocation" x="-62" y="213"/>
         </window>
         <arrayController id="PPI-nO-arw"/>
     </objects>
