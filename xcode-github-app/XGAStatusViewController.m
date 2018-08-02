@@ -87,18 +87,19 @@
 - (void) showStatusPanelAction:(id)sender {
     NSInteger idx = self.tableView.selectedRow;
     if (idx < 0 || idx >= [self.arrayController.arrangedObjects count]) return;
-    XGAServerStatus *status = [self.arrayController.arrangedObjects objectAtIndex:idx];
+    XGAServerStatus*status = [self.arrayController.arrangedObjects objectAtIndex:idx];
     if (![status isKindOfClass:XGAServerStatus.class]) return;
+
+    NSRect r = [self.tableView rectOfRow:idx];
+    r = [self.tableView convertRect:r toView:nil];
+    r = [self.window convertRectToScreen:r];
 
     // Show the status panel:
     XGAStatusPanel*panel = [XGAStatusPanel loadPanel];
     NSFont*font = [NSFont systemFontOfSize:[NSFont systemFontSize]];
-    panel.summaryTextField.attributedStringValue = [status.statusSummary renderAttributedStringWithFont:font];
+    panel.titleTextField.attributedStringValue = [status.statusSummary renderAttributedStringWithFont:font];
     panel.detailTextField.attributedStringValue = [status.statusDetail renderAttributedStringWithFont:font];
     panel.imageView.image = status.statusImage;
-    NSRect r = [self.tableView rectOfRow:idx];
-    r = [self.tableView convertRect:r toView:nil];
-    r = [self.window convertRectToScreen:r];
     panel.arrowPoint = NSMakePoint(r.size.width/2.0+r.origin.x, r.origin.y);
     [panel show];
 }

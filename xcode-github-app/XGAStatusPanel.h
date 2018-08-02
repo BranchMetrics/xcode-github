@@ -9,10 +9,7 @@
 #import "APPArrowPanel.h"
 
 @interface XGAStatusPanel : APPArrowPanel
-+ (instancetype) loadPanel;
-@property (strong) IBOutlet NSTextField*summaryTextField;
+@property (strong) IBOutlet NSTextField*titleTextField;
 @property (strong) IBOutlet NSTextField*detailTextField;
 @property (strong) IBOutlet NSImageView*imageView;
-- (void) show;
-- (void) dismiss;
 @end

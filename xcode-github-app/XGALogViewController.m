@@ -9,7 +9,9 @@
 #import "XGALogViewController.h"
 #import "BNCLog.h"
 #import "BNCThreads.h"
+#import "APPFormattedString.h"
 #import "XGASettings.h"
+#import "XGAStatusPanel.h"
 
 NSString*const XGALogUpdateNotification = @"XGALogUpdatedNotification";
 
@@ -30,6 +32,7 @@ NSString*const XGALogUpdateNotification = @"XGALogUpdatedNotification";
 @interface XGALogViewController ()
 + (NSMutableArray<XGALogRow*>*) logArray;
 + (NSImage*) imageForLogLevel:(BNCLogLevel)level;
+@property (strong) NSDateFormatter*dateFormatter;
 @property (strong) IBOutlet NSArrayController *arrayController;
 @property (weak)   IBOutlet NSTableView*tableView;
 @end
@@ -89,6 +92,19 @@ void XGALogFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Null
     return controller;
 }
 
++ (NSString*) stringForLogLevel:(BNCLogLevel)level {
+    NSArray<NSString*>*names = @[
+        @"Debug SDK",
+        @"Break Point",
+        @"Debug",
+        @"Warning",
+        @"Error",
+        @"Assert",
+        @"Information"
+    ];
+    return names[level];
+}
+
 + (NSImage*) imageForLogLevel:(BNCLogLevel)level {
     /*
     typedef NS_ENUM(NSInteger, BNCLogLevel) {
@@ -122,7 +138,13 @@ void XGALogFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Null
 }
 
 - (void) startObservers {
-    [self.tableView setDoubleAction:@selector(doubleClickRow:)];
+    if (!self.dateFormatter) {
+        self.dateFormatter = [[NSDateFormatter alloc] init];
+        self.dateFormatter.dateStyle = NSDateFormatterShortStyle;
+        self.dateFormatter.timeStyle = NSDateFormatterShortStyle;
+    }
+
+    [self.tableView setAction:@selector(showStatusPanelAction:)];
     [[NSNotificationCenter defaultCenter]
         addObserver:self
         selector:@selector(logUpdatedNotification:)
@@ -145,7 +167,6 @@ void XGALogFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Null
         ofObject:(id)object
         change:(NSDictionary<NSKeyValueChangeKey, id> *)change
         context:(void *)context {
-    NSLog(@"Hey!");
     if ([XGASettings shared].showDebugMessages) {
         self.arrayController.filterPredicate = nil;
     } else {
@@ -170,17 +191,30 @@ void XGALogFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Null
     });
 }
 
-- (void) doubleClickRow:(id)sender {
+- (void) showStatusPanelAction:(id)sender {
     NSInteger idx = self.tableView.selectedRow;
     if (idx < 0 || idx >= [self.arrayController.arrangedObjects count]) return;
     XGALogRow *row = [self.arrayController.arrangedObjects objectAtIndex:idx];
     if (![row isKindOfClass:XGALogRow.class]) return;
 
-    NSAlert *alert = [[NSAlert alloc] init];
-    [alert addButtonWithTitle:@"OK"];
-    alert.informativeText = row.logMessage;
-    alert.alertStyle = NSAlertStyleWarning;
-    [alert runModal];
+    NSRect r = [self.tableView rectOfRow:idx];
+    r = [self.tableView convertRect:r toView:nil];
+    r = [self.window convertRectToScreen:r];
+
+    APPFormattedString*title =
+        [[[[[APPFormattedString builder]
+            appendBold:@"%@", [XGALogViewController stringForLogLevel:row.logLevel]]
+            appendPlain:@"     "]
+            appendItalic:@"%@", [self.dateFormatter stringFromDate:row.date]]
+                build];
+
+    XGAStatusPanel*panel = [XGAStatusPanel loadPanel];
+    NSFont*font = [NSFont systemFontOfSize:[NSFont systemFontSize]];
+    panel.imageView.image = [XGALogViewController imageForLogLevel:row.logLevel];
+    panel.titleTextField.attributedStringValue = [title renderAttributedStringWithFont:font];
+    panel.detailTextField.stringValue = row.logMessage;
+    panel.arrowPoint = NSMakePoint(r.size.width/2.0+r.origin.x, r.origin.y);
+    [panel show];
 }
 
 @end

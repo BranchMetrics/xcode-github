@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D0B75362110B94700A06D97 /* XGAView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D0B75352110B94700A06D97 /* XGAView.m */; };
 		4D0DD54520597FE6001721C1 /* xcode-github-app.md in Resources */ = {isa = PBXBuildFile; fileRef = 4D0DD54420597FE6001721C1 /* xcode-github-app.md */; };
 		4D12BA0D20A252CE00E5B1DB /* XGALogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D12BA0B20A252CE00E5B1DB /* XGALogViewController.m */; };
 		4D12BA0E20A252CE00E5B1DB /* XGALogViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D12BA0C20A252CE00E5B1DB /* XGALogViewController.xib */; };
@@ -37,6 +38,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4D0B75342110B94700A06D97 /* XGAView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGAView.h; sourceTree = "<group>"; };
+		4D0B75352110B94700A06D97 /* XGAView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGAView.m; sourceTree = "<group>"; };
 		4D0DD54420597FE6001721C1 /* xcode-github-app.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "xcode-github-app.md"; sourceTree = "<group>"; };
 		4D12BA0A20A252CE00E5B1DB /* XGALogViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGALogViewController.h; sourceTree = "<group>"; };
 		4D12BA0B20A252CE00E5B1DB /* XGALogViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGALogViewController.m; sourceTree = "<group>"; };
@@ -144,6 +147,8 @@
 				4D76616E2057565200216B72 /* XGAStatusViewController.h */,
 				4D76616F2057565200216B72 /* XGAStatusViewController.m */,
 				4D8352C520A3F30A00184259 /* XGAStatusViewController.xib */,
+				4D0B75342110B94700A06D97 /* XGAView.h */,
+				4D0B75352110B94700A06D97 /* XGAView.m */,
 			);
 			path = "xcode-github-app";
 			sourceTree = "<group>";
@@ -289,6 +294,7 @@
 				4D5CC05E2090CAB60042E98B /* BNCKeyChain.m in Sources */,
 				4DF0F57D208F91A90015D1F7 /* XGGitHubPullRequest.m in Sources */,
 				4DF0F57E208F91A90015D1F7 /* XGCommandOptions.m in Sources */,
+				4D0B75362110B94700A06D97 /* XGAView.m in Sources */,
 				4D7661702057565200216B72 /* XGAStatusViewController.m in Sources */,
 				4DF0F58C208F923E0015D1F7 /* BNCNetworkService.m in Sources */,
 				4D8352D020A516A200184259 /* XGAPreferencesViewController.m in Sources */,

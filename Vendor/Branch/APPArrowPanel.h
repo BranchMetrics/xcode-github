@@ -11,9 +11,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface APPArrowPanel : NSPanel
-+ (instancetype) windowWithContentViewController:(NSViewController *)contentViewController
-                                      arrowPoint:(CGPoint)point;
 @property (assign) CGPoint arrowPoint;
++ (instancetype) loadPanel;
+- (void) show;
+- (void) dismiss;
 @end
 
 NS_ASSUME_NONNULL_END
