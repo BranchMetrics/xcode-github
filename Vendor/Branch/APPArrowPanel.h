@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface APPArrowPanel : NSPanel
 @property (assign) CGPoint arrowPoint;
+@property (assign, readonly) BOOL isShowing;
 + (instancetype) loadPanel;
 - (void) show;
 - (void) dismiss;

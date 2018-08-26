@@ -24,7 +24,7 @@ NSMutableDictionary*_Nonnull XGMutableDictionaryWithDictionary(NSDictionary*_Nul
         return [NSMutableDictionary new];
 }
 
-/**
+/*
     NSUserDefaults.standardUserDefaults.githubStatus
 
     dictionary[repoOwner][repoName][branch][sha] = statusString

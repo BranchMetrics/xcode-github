@@ -40,6 +40,7 @@
 @property (strong) dispatch_source_t statusTimer;
 @property (assign) _Atomic(BOOL) statusIsInProgress;
 @property (strong) NSArray<XGAServerStatus*> *serverStatusArray;
+@property (strong) XGAStatusPanel*statusPanel;
 @property (weak)   IBOutlet NSTableView *tableView;
 @property (strong) IBOutlet NSArrayController *arrayController;
 
@@ -76,7 +77,7 @@
 
 - (void)awakeFromNib {
     [super viewDidLoad];
-    [self.tableView setAction:@selector(showStatusPanelAction:)];
+    [self.tableView setDoubleAction:@selector(showStatusPanelAction:)];
     self.window = self.view.window;
     XGAServerStatus *status = [XGAServerStatus new];
     status.statusSummary = [APPFormattedString boldText:@"< Refreshing >"];
@@ -84,9 +85,18 @@
     [self startStatusUpdates];
 }
 
+- (void)tableViewSelectionDidChange:(NSNotification *)notification {
+    if (self.statusPanel)
+        [self showStatusPanelAction:self];
+}
+
 - (void) showStatusPanelAction:(id)sender {
     NSInteger idx = self.tableView.selectedRow;
-    if (idx < 0 || idx >= [self.arrayController.arrangedObjects count]) return;
+    if (idx < 0 || idx >= [self.arrayController.arrangedObjects count]) {
+        [self.statusPanel dismiss];
+        self.statusPanel = nil;
+        return;
+    }
     XGAServerStatus*status = [self.arrayController.arrangedObjects objectAtIndex:idx];
     if (![status isKindOfClass:XGAServerStatus.class]) return;
 

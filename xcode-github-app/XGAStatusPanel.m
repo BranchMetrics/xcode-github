@@ -7,12 +7,6 @@
 //
 
 #import "XGAStatusPanel.h"
-#import "BNCGeometry.h"
-
-#pragma XGAStatusPanel
-
-@interface XGAStatusPanel ()
-@end
 
 @implementation XGAStatusPanel
 @end

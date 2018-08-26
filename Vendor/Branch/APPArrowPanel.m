@@ -62,17 +62,18 @@
     self.contentView.layer.backgroundColor =
         [NSColor colorWithSRGBRed:1.0 green:1.0 blue:1.0 alpha:0.85].CGColor;
     self.contentView.layer.cornerRadius = 3.0;
-
     self.contentView.needsLayout = YES;
     [self.contentView layoutSubtreeIfNeeded];
     NSRect r = NSInsetRect(self.contentView.frame, -24.0, -24.0);
+//  r.size.width = 600.0;
     r = BNCCenterRectOverPoint(r, self.arrowPoint);
     r.origin.y = self.arrowPoint.y - r.size.height;
     [self setFrame:r display:YES animate:NO];
-    [self makeKeyAndOrderFront:self];
     [self setIsVisible:YES];
+    [self makeKeyAndOrderFront:self];
     [self update];
     self.selfReference = self;
+    if (self.eventMonitor) [NSEvent removeMonitor:self.eventMonitor];
     self.eventMonitor =
         [NSEvent addLocalMonitorForEventsMatchingMask:NSEventTypeLeftMouseDown|NSEventTypeRightMouseDown
             handler:^ NSEvent * _Nullable (NSEvent*event) {
@@ -85,13 +86,28 @@
         ];
 }
 
+- (void) dealloc {
+    if (self.eventMonitor) [NSEvent removeMonitor:self.eventMonitor];
+    self.eventMonitor = nil;
+}
+
 - (void) dismiss {
     if (self.eventMonitor) [NSEvent removeMonitor:self.eventMonitor];
     self.eventMonitor = nil;
     [self setIsVisible:NO];
-    [self close];
     [self orderOut:self];
     self.selfReference = nil;
+}
+
+- (void) close {
+    if (self.eventMonitor) [NSEvent removeMonitor:self.eventMonitor];
+    self.eventMonitor = nil;
+    self.selfReference = nil;
+    [super close];
+}
+
+- (BOOL) isShowing {
+    return self.isVisible;
 }
 
 @end

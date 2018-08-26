@@ -35,6 +35,7 @@ NSString*const XGALogUpdateNotification = @"XGALogUpdatedNotification";
 @property (strong) NSDateFormatter*dateFormatter;
 @property (strong) IBOutlet NSArrayController *arrayController;
 @property (weak)   IBOutlet NSTableView*tableView;
+@property (strong) XGAStatusPanel*statusPanel;
 @end
 
 #pragma mark - Log Function
@@ -144,7 +145,7 @@ void XGALogFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Null
         self.dateFormatter.timeStyle = NSDateFormatterShortStyle;
     }
 
-    [self.tableView setAction:@selector(showStatusPanelAction:)];
+    [self.tableView setDoubleAction:@selector(showStatusPanelAction:)];
     [[NSNotificationCenter defaultCenter]
         addObserver:self
         selector:@selector(logUpdatedNotification:)
@@ -159,6 +160,8 @@ void XGALogFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Null
 }
 
 - (void) dealloc {
+    [self.statusPanel dismiss];
+    self.statusPanel = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[XGASettings shared] removeObserver:self forKeyPath:@"showDebugMessages"];
 }
@@ -191,9 +194,18 @@ void XGALogFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Null
     });
 }
 
+- (void)tableViewSelectionDidChange:(NSNotification *)notification {
+    if (self.statusPanel)
+        [self showStatusPanelAction:self];
+}
+
 - (void) showStatusPanelAction:(id)sender {
     NSInteger idx = self.tableView.selectedRow;
-    if (idx < 0 || idx >= [self.arrayController.arrangedObjects count]) return;
+    if (idx < 0 || idx >= [self.arrayController.arrangedObjects count]) {
+        [self.statusPanel dismiss];
+        self.statusPanel = nil;
+        return;
+    }
     XGALogRow *row = [self.arrayController.arrangedObjects objectAtIndex:idx];
     if (![row isKindOfClass:XGALogRow.class]) return;
 
@@ -208,13 +220,13 @@ void XGALogFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Null
             appendItalic:@"%@", [self.dateFormatter stringFromDate:row.date]]
                 build];
 
-    XGAStatusPanel*panel = [XGAStatusPanel loadPanel];
+    if (!self.statusPanel) self.statusPanel = [XGAStatusPanel loadPanel];
     NSFont*font = [NSFont systemFontOfSize:[NSFont systemFontSize]];
-    panel.imageView.image = [XGALogViewController imageForLogLevel:row.logLevel];
-    panel.titleTextField.attributedStringValue = [title renderAttributedStringWithFont:font];
-    panel.detailTextField.stringValue = row.logMessage;
-    panel.arrowPoint = NSMakePoint(r.size.width/2.0+r.origin.x, r.origin.y);
-    [panel show];
+    self.statusPanel.imageView.image = [XGALogViewController imageForLogLevel:row.logLevel];
+    self.statusPanel.titleTextField.attributedStringValue = [title renderAttributedStringWithFont:font];
+    self.statusPanel.detailTextField.stringValue = row.logMessage;
+    self.statusPanel.arrowPoint = NSMakePoint(r.size.width/2.0+r.origin.x, r.origin.y);
+    [self.statusPanel show];
 }
 
 @end
