@@ -110,7 +110,7 @@ NS_ASSUME_NONNULL_BEGIN
                      gitHubBranchName:(NSString*_Nonnull)branchName
                                 error:(NSError*__autoreleasing _Nullable*_Nullable)error;
 
-- (NSError*) startIntegration;
+- (NSError*_Nullable) startIntegration;
 - (XGXcodeBotStatus*_Nonnull) status;
 - (NSError*_Nullable) removeFromServer;
 @end

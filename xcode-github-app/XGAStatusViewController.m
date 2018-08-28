@@ -59,7 +59,8 @@
             loadNibNamed:NSStringFromClass(self)
             owner:controller
             topLevelObjects:nil];
-    return (loaded) ? controller : nil;
+    NSAssert(loaded, @"%@ nib didn't load!", NSStringFromClass(self.class));
+    return controller;
 }
 
 - (void) setServerStatusArray:(NSArray<XGAServerStatus *> *)serverStatusArray {

@@ -17,7 +17,7 @@ typedef NS_ENUM(NSInteger, XGPullRequestStatus) {
     XGPullRequestStatusSuccess,
  };
 
-extern NSString*_Nonnull NSStringFromXGPullRequestStatus(XGPullRequestStatus status);
+FOUNDATION_EXPORT NSString*_Nonnull NSStringFromXGPullRequestStatus(XGPullRequestStatus status);
 
 @interface XGGitHubPullRequest : NSObject
 @property (strong, readonly) NSString*_Nullable repoOwner;

@@ -9,4 +9,4 @@
 #import <Foundation/Foundation.h>
 #import "XGCommandOptions.h"
 
-extern NSError*_Nullable XGUpdateXcodeBotsWithGitHub(XGCommandOptions*_Nonnull options);
+FOUNDATION_EXPORT NSError*_Nullable XGUpdateXcodeBotsWithGitHub(XGCommandOptions*_Nonnull options);

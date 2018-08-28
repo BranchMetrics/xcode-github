@@ -88,7 +88,7 @@ void XGALogFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Null
             loadNibNamed:NSStringFromClass(self)
             owner:controller
             topLevelObjects:nil];
-    if (!loaded) return nil;
+    NSAssert(loaded, @"%@ nib didn't load!", NSStringFromClass(self.class));
     [controller startObservers];
     return controller;
 }
