@@ -26,6 +26,7 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
 
 + (XGAServerGitHubSyncTask*_Nonnull) serverGitHubSyncTaskWithDictionary:(NSDictionary*_Nonnull)dictionary {
     XGAServerGitHubSyncTask*task = [XGAServerGitHubSyncTask new];
+    if (!task) return task;
     task->_xcodeServerName = dictionary[@"xcodeServerName"];
     task->_gitHubRepo = dictionary[@"gitHubRepo"];
     task->_templateBotName = dictionary[@"templateBotName"];
@@ -33,32 +34,38 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
 }
 
 - (void) setXcodeServerName:(NSString*)serverName userPassword:(NSString*)userPassword {
-    self->_xcodeServerName = serverName;
-    if (!serverName) return;
-    NSError *error =
-        [BNCKeyChain storeValue:userPassword
-            forService:kXGAServiceName
-            key:serverName
-            cloudAccessGroup:nil];
-    if (error) BNCLogError(@"Error saving password for Xcode server '%@': %@.", serverName, error);
+    @synchronized(self) {
+        self->_xcodeServerName = serverName;
+        if (!serverName) return;
+        NSError *error =
+            [BNCKeyChain storeValue:userPassword
+                forService:kXGAServiceName
+                key:serverName
+                cloudAccessGroup:nil];
+        if (error) BNCLogError(@"Error saving password for Xcode server '%@': %@.", serverName, error);
+    }
 }
 
 - (void) setGitHubRepo:(NSString*)gitHubRepo gitHubToken:(NSString*)token {
-    self->_gitHubRepo = gitHubRepo;
-    if (!gitHubRepo) return;
-    NSError *error =
-        [BNCKeyChain storeValue:token
-            forService:kXGAServiceName
-            key:gitHubRepo
-            cloudAccessGroup:nil];
-    if (error) BNCLogError(@"Error saving token for GitHub repo '%@': %@.", gitHubRepo, error);
+    @synchronized(self) {
+        self->_gitHubRepo = gitHubRepo;
+        if (!gitHubRepo) return;
+        NSError *error =
+            [BNCKeyChain storeValue:token
+                forService:kXGAServiceName
+                key:gitHubRepo
+                cloudAccessGroup:nil];
+        if (error) BNCLogError(@"Error saving token for GitHub repo '%@': %@.", gitHubRepo, error);
+    }
 }
 
 - (NSString*) xcodeServerUserPassword {
-    NSError*error = nil;
-    NSString *userPassword =
-        [BNCKeyChain retrieveValueForService:kXGAServiceName key:self.xcodeServerName error:&error];
-    return (error) ? nil : userPassword;
+    @synchronized(self) {
+        NSError*error = nil;
+        NSString *userPassword =
+            [BNCKeyChain retrieveValueForService:kXGAServiceName key:self.xcodeServerName error:&error];
+        return (error) ? nil : userPassword;
+    }
 }
 
 - (NSString*) gitHubToken {

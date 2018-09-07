@@ -10,51 +10,8 @@
 #import "BNCLog.h"
 #import "XGXcodeBot.h"
 #import "XGGitHubPullRequest.h"
+#import "XGSettings.h"
 #include <sysexits.h>
-
-#pragma mark Settings
-
-NSMutableDictionary*_Nonnull XGMutableDictionaryWithDictionary(NSDictionary*_Nullable dictionary) {
-    if ([dictionary isKindOfClass:NSMutableDictionary.class])
-        return (NSMutableDictionary*) dictionary;
-    else
-    if ([dictionary isKindOfClass:NSDictionary.class])
-        return [NSMutableDictionary dictionaryWithDictionary:dictionary];
-    else
-        return [NSMutableDictionary new];
-}
-
-/*
-    NSUserDefaults.standardUserDefaults.githubStatus
-
-    dictionary[repoOwner][repoName][branch][sha] = statusString
-*/
-NSMutableDictionary*_Nonnull XGGitHubStatusDictionaryWithPR(XGGitHubPullRequest*_Nonnull pr) {
-    NSMutableDictionary*dictionary = [[NSUserDefaults standardUserDefaults] objectForKey:@"githubStatus"];
-    dictionary = XGMutableDictionaryWithDictionary(dictionary);
-    dictionary[pr.repoOwner] =
-        XGMutableDictionaryWithDictionary(dictionary[pr.repoOwner]);
-    dictionary[pr.repoOwner][pr.repoName] =
-        XGMutableDictionaryWithDictionary(dictionary[pr.repoOwner][pr.repoName]);
-    dictionary[pr.repoOwner][pr.repoName][pr.branch] =
-        XGMutableDictionaryWithDictionary(dictionary[pr.repoOwner][pr.repoName][pr.branch]);
-    return dictionary;
-}
-
-void XGSetGitHubStatusDictionaryWithPR(XGGitHubPullRequest*_Nonnull pr, NSDictionary*_Nonnull dictionary) {
-    [[NSUserDefaults standardUserDefaults] setObject:dictionary forKey:@"githubStatus"];
-}
-
-void XGDeleteGitHubStatusDictionaryWithBot(XGXcodeBot*_Nonnull bot) {
-    NSMutableDictionary*dictionary = [[NSUserDefaults standardUserDefaults] objectForKey:@"githubStatus"];
-    dictionary = XGMutableDictionaryWithDictionary(dictionary);
-    dictionary[bot.repoOwner] =
-        XGMutableDictionaryWithDictionary(dictionary[bot.repoOwner]);
-    dictionary[bot.repoOwner][bot.repoName] =
-        XGMutableDictionaryWithDictionary(dictionary[bot.repoOwner][bot.repoName]);
-    dictionary[bot.repoOwner][bot.repoName][bot.branch] = nil;
-    [[NSUserDefaults standardUserDefaults] setObject:dictionary forKey:@"githubStatus"];
-}
 
 #pragma mark - Bot Functions
 
@@ -101,11 +58,10 @@ NSError*_Nullable XGDeleteBotWithOptions(
         );
         return error;
     }
-    XGDeleteGitHubStatusDictionaryWithBot(bot);
     return error;
 }
 
-NSError*_Nullable XGUpdatePRStatus(
+NSError*_Nullable XGUpdatePRStatusOnGitHub(
         XGCommandOptions*_Nonnull options,
         XGGitHubPullRequest*_Nonnull pr,
         XGXcodeBotStatus*_Nonnull botStatus
@@ -160,8 +116,7 @@ NSError*_Nullable XGUpdatePRStatus(
     NSString*statusHash = [NSString stringWithFormat:@"%@:%@",
         NSStringFromXGPullRequestStatus(status), message];
 
-    NSMutableDictionary*statusDictionary = XGGitHubStatusDictionaryWithPR(pr);
-    NSString*lastStatusHash = statusDictionary[pr.repoOwner][pr.repoName][pr.branch][pr.sha];
+    NSString*lastStatusHash = [[XGSettings sharedSettings] gitHubStatusForPR:pr];
     if ([lastStatusHash isEqualToString:statusHash])
         return nil;
 
@@ -171,8 +126,7 @@ NSError*_Nullable XGUpdatePRStatus(
         authToken:options.githubAuthToken];
     if (error) return error;
 
-    statusDictionary[pr.repoOwner][pr.repoName][pr.branch][pr.sha] = statusHash;
-    XGSetGitHubStatusDictionaryWithPR(pr, statusDictionary);
+    [[XGSettings sharedSettings] setGitHubStatus:statusHash forPR:pr];
 
     // Send a completion message:
     if ([botStatus.currentStep isEqualToString:@"completed"]) {
@@ -226,7 +180,7 @@ NSError*_Nullable XGUpdateXcodeBotsWithGitHub(XGCommandOptions*_Nonnull options)
             XGXcodeBot *bot = bots[newBotName];
             if ([pr.state isEqualToString:@"open"]) {
                 if (bot) {
-                    error = XGUpdatePRStatus(options, pr, bot.status);
+                    error = XGUpdatePRStatusOnGitHub(options, pr, bot.status);
                 } else {
                     error = XGCreateBotWithOptions(options, pr, templateBot, newBotName);
                 }

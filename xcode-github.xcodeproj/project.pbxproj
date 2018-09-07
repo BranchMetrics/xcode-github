@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4D447E1E2050557900A72842 /* XGCommandOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D447E1D2050557900A72842 /* XGCommandOptions.m */; };
+		4D5303D8214205B8006E8A7B /* XGSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D5303D7214205B8006E8A7B /* XGSettings.m */; };
 		4D7335482097CFFB00A0D416 /* APPFormattedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D7335472097CFFA00A0D416 /* APPFormattedString.m */; };
 		4D744C072047A53B002CA796 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D744C062047A53B002CA796 /* main.m */; };
 		4D744C162047BA5F002CA796 /* BNCLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D744C112047BA5F002CA796 /* BNCLog.m */; };
@@ -32,6 +33,8 @@
 /* Begin PBXFileReference section */
 		4D447E1C2050557900A72842 /* XGCommandOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGCommandOptions.h; sourceTree = "<group>"; };
 		4D447E1D2050557900A72842 /* XGCommandOptions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGCommandOptions.m; sourceTree = "<group>"; };
+		4D5303D6214205B8006E8A7B /* XGSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGSettings.h; sourceTree = "<group>"; };
+		4D5303D7214205B8006E8A7B /* XGSettings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGSettings.m; sourceTree = "<group>"; };
 		4D7335452097CF6700A0D416 /* xcode-github.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "xcode-github.md"; sourceTree = "<group>"; };
 		4D7335462097CFFA00A0D416 /* APPFormattedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPFormattedString.h; sourceTree = "<group>"; };
 		4D7335472097CFFA00A0D416 /* APPFormattedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPFormattedString.m; sourceTree = "<group>"; };
@@ -90,6 +93,8 @@
 				4D447E1D2050557900A72842 /* XGCommandOptions.m */,
 				4D744C1F2047C9E1002CA796 /* XGGitHubPullRequest.h */,
 				4D744C202047C9E1002CA796 /* XGGitHubPullRequest.m */,
+				4D5303D6214205B8006E8A7B /* XGSettings.h */,
+				4D5303D7214205B8006E8A7B /* XGSettings.m */,
 				4D744C1C2047C652002CA796 /* XGXcodeBot.h */,
 				4D744C1D2047C652002CA796 /* XGXcodeBot.m */,
 			);
@@ -178,6 +183,7 @@
 				4D744C212047C9E1002CA796 /* XGGitHubPullRequest.m in Sources */,
 				4D744C072047A53B002CA796 /* main.m in Sources */,
 				4DF0F591208FE64E0015D1F7 /* XGCommand.m in Sources */,
+				4D5303D8214205B8006E8A7B /* XGSettings.m in Sources */,
 				4D7335482097CFFB00A0D416 /* APPFormattedString.m in Sources */,
 				4D447E1E2050557900A72842 /* XGCommandOptions.m in Sources */,
 				4D744C1E2047C652002CA796 /* XGXcodeBot.m in Sources */,

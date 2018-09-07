@@ -83,12 +83,10 @@ void XGALogFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Null
 
 + (instancetype) loadController {
     XGALogViewController*controller = [[XGALogViewController alloc] init];
-    BOOL loaded =
-        [[NSBundle mainBundle]
-            loadNibNamed:NSStringFromClass(self)
-            owner:controller
-            topLevelObjects:nil];
-    NSAssert(loaded, @"%@ nib didn't load!", NSStringFromClass(self.class));
+    [[NSBundle mainBundle]
+        loadNibNamed:NSStringFromClass(self)
+        owner:controller
+        topLevelObjects:nil];
     [controller startObservers];
     return controller;
 }

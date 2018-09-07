@@ -10,6 +10,8 @@
 * [ ] Make "Add Server" flow.
 * [ ] Make "Add GitHub Token" flow.
 * [ ] Add help.
+* [ ] Add tests?
+* [ ] Clean up code. 
 ```
  
 ## Menus

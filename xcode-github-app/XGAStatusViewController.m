@@ -38,7 +38,7 @@
 }
 @property (strong) dispatch_queue_t asyncQueue;
 @property (strong) dispatch_source_t statusTimer;
-@property (assign) _Atomic(BOOL) statusIsInProgress;
+@property (assign, nonatomic) _Atomic(BOOL) statusIsInProgress;
 @property (strong) NSArray<XGAServerStatus*> *serverStatusArray;
 @property (strong) XGAStatusPanel*statusPanel;
 @property (weak)   IBOutlet NSTableView *tableView;
@@ -54,12 +54,10 @@
 
 + (instancetype) loadController {
     XGAStatusViewController*controller = [[XGAStatusViewController alloc] init];
-    BOOL loaded =
-        [[NSBundle mainBundle]
-            loadNibNamed:NSStringFromClass(self)
-            owner:controller
-            topLevelObjects:nil];
-    NSAssert(loaded, @"%@ nib didn't load!", NSStringFromClass(self.class));
+    [[NSBundle mainBundle]
+        loadNibNamed:NSStringFromClass(self)
+        owner:controller
+        topLevelObjects:nil];
     return controller;
 }
 
