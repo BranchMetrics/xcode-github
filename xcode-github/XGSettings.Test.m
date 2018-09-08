@@ -21,47 +21,32 @@
     XCTAssertNotNil(settings);
 
     // Status1
-    NSString*kStatus1 = @"status1";
-    XGGitHubPullRequest*pr1 = [[XGGitHubPullRequest alloc] initWithDictionary:@{
-        @"head": @{
-            @"ref": @"pr1",
-            @"repo": @{
-                @"full_name": @"owner/name"
-            }
-        }
-    }];
-    XCTAssertEqualObjects(pr1.repoOwner, @"owner");
-    XCTAssertEqualObjects(pr1.repoName,  @"name");
-    XCTAssertEqualObjects(pr1.branch,    @"pr1");
-
-    [settings setGitHubStatus:kStatus1 forPR:pr1];
-    NSString*test = [settings gitHubStatusForPR:pr1];
-    XCTAssertEqualObjects(test, kStatus1);
+    [settings setGitHubStatus:@"Status1" forRepoOwner:@"owner" repoName:@"name1" branch:@"pr1"];
+    NSString*test = [settings gitHubStatusForRepoOwner:@"owner" repoName:@"name1" branch:@"pr1"];
+    XCTAssertEqualObjects(test, @"Status1");
 
     // Status2
-    NSString*kStatus2 = @"status2";
-    XGGitHubPullRequest*pr2 = [[XGGitHubPullRequest alloc] initWithDictionary:@{
-        @"head": @{
-            @"ref": @"pr2",
-            @"repo": @{
-                @"full_name": @"owner/name2"
-            }
-        }
-    }];
-    XCTAssertEqualObjects(pr2.repoOwner, @"owner");
-    XCTAssertEqualObjects(pr2.repoName,  @"name2");
-    XCTAssertEqualObjects(pr2.branch,    @"pr2");
+    [settings setGitHubStatus:@"Status2" forRepoOwner:@"owner" repoName:@"name2" branch:@"pr2"];
+    test = [settings gitHubStatusForRepoOwner:@"owner" repoName:@"name2" branch:@"pr2"];
+    XCTAssertEqualObjects(test, @"Status2");
 
-    [settings setGitHubStatus:kStatus2 forPR:pr2];
-    test = [settings gitHubStatusForPR:pr2];
-    XCTAssertEqualObjects(test, kStatus2);
-
-    test = [settings gitHubStatusForPR:pr1];
-    XCTAssertEqualObjects(test, kStatus1);
+    test = [settings gitHubStatusForRepoOwner:@"owner" repoName:@"name1" branch:@"pr1"];
+    XCTAssertEqualObjects(test, @"Status1");
 }
 
 - (void) testExpiration {
-    XCTAssert(NO, @"TODO: Test data expiration.");
+    XGSettings*settings = [XGSettings sharedSettings];
+    XCTAssertNotNil(settings);
+
+    // Set & check Status1
+    [settings setGitHubStatus:@"Status1" forRepoOwner:@"owner" repoName:@"name1" branch:@"pr1"];
+    NSString*test = [settings gitHubStatusForRepoOwner:@"owner" repoName:@"name1" branch:@"pr1"];
+    XCTAssertEqualObjects(test, @"Status1");
+
+    settings.dataExpirationSeconds = 5.0;
+    sleep(7);
+    test = [settings gitHubStatusForRepoOwner:@"owner" repoName:@"name1" branch:@"pr1"];
+    XCTAssertNil(test);
 }
 
 @end

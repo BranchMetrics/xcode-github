@@ -9,16 +9,28 @@
 */
 
 #import <Foundation/Foundation.h>
-#import "XGGitHubPullRequest.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface XGSettings : NSObject
 
 + (XGSettings*) sharedSettings;
-- (NSString*_Nullable) gitHubStatusForPR:(XGGitHubPullRequest*)pr;
-- (void) setGitHubStatus:(NSString*)sha forPR:(XGGitHubPullRequest*)pr;
 
+- (NSString*_Nullable) gitHubStatusForRepoOwner:(NSString*)repoOwner
+    repoName:(NSString*)repoName
+    branch:(NSString*)branch;
+
+- (void) setGitHubStatus:(NSString*)status
+    forRepoOwner:(NSString*)repoOwner
+    repoName:(NSString*)repoName
+    branch:(NSString*)branch;
+
+- (void) deleteGitHubStatusForRepoOwner:(NSString*)repoOwner
+    repoName:(NSString*)repoName
+    branch:(NSString*)branch;
+
+/// Time in seconds to expire old entries. Defaults 30 days.
+@property (assign) NSTimeInterval dataExpirationSeconds;
 @end
 
 NS_ASSUME_NONNULL_END

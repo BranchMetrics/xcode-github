@@ -1,7 +1,7 @@
 /**
  @file          main.m
  @package       xcode-github
- @brief         Main body of the xcode-github app.
+ @brief         Command line interface for the xcode-github app.
 
  @author        Edward Smith
  @date          February 28, 2018
@@ -34,6 +34,9 @@ NSString *helpString =
  "  -h, --help\n"
  "      Print this help information.\n"
  "\n"
+ "  -r, --repeat\n"
+ "      Repeat updating the status forever, waiting 60 seconds between updates.\n"
+ "\n"
  "  -s, --status\n"
  "      Only print the status of the xcode server bots and quit.\n"
  "\n"
@@ -51,6 +54,25 @@ NSString *helpString =
  "      The network name of the xcode server.\n"
  "\n"
  ;
+
+static BNCLogLevel global_logLevel = BNCLogLevelWarning;
+
+void LogOutputFunction(
+        NSDate*_Nonnull timestamp,
+        BNCLogLevel level,
+        NSString *_Nullable message
+    ) {
+    if (level < global_logLevel || !message) return;
+    NSRange range = [message rangeOfString:@") "];
+    if (range.location != NSNotFound) {
+        message = [message substringFromIndex:range.location+2];
+    }
+    NSData *data = [message dataUsingEncoding:NSNEXTSTEPStringEncoding];
+    if (!data) return;
+    int descriptor = (level == BNCLogLevelLog) ? STDOUT_FILENO : STDERR_FILENO;
+    write(descriptor, data.bytes, data.length);
+    write(descriptor, "\n   ", sizeof('\n'));
+}
 
 NSError *showBotStatus(NSString* xcodeServerName) {
     // Update the bots and display the results:
@@ -79,10 +101,15 @@ NSError *showBotStatus(NSString* xcodeServerName) {
 
 int main(int argc, char*const argv[]) {
     int returnCode = EXIT_FAILURE;
+    BOOL repeatForever = NO;
+
+start:
     @autoreleasepool {
+        BNCLogSetOutputFunction(LogOutputFunction);
         BNCLogSetDisplayLevel(BNCLogLevelWarning);
-        // XGCommandLineOptions *options = [XGCommandLineOptions testWithBranchLabs];
+
         XGCommandOptions *options = [XGCommandOptions testWithBranchSDK];
+        // XGCommandLineOptions *options = [XGCommandLineOptions testWithBranchLabs];
         // XGCommandLineOptions *options = [[XGCommandLineOptions alloc] initWithArgc:argc argv:argv];
         if (options.badOptionsError) {
             returnCode = EX_USAGE;
@@ -95,8 +122,8 @@ int main(int argc, char*const argv[]) {
             returnCode = EXIT_SUCCESS;
             goto exit;
         }
-        BNCLogLevel logLevel = MIN(MAX(BNCLogLevelWarning - options.verbosity, BNCLogLevelAll), BNCLogLevelNone);
-        BNCLogSetDisplayLevel(logLevel);
+        global_logLevel = MIN(MAX(BNCLogLevelWarning - options.verbosity, BNCLogLevelAll), BNCLogLevelNone);
+        BNCLogSetDisplayLevel(global_logLevel);
         
         if (options.showVersion) {
             BNCLog(@"xcode-github version %@(%@).",
@@ -124,8 +151,15 @@ int main(int argc, char*const argv[]) {
 
         error = showBotStatus(options.xcodeServerName);
         if (error == nil) returnCode = EXIT_SUCCESS;
+
+        repeatForever = options.repeatForever;
     }
-    
+
+    if (repeatForever) {
+        sleep(60);
+        goto start;
+    }
+
 exit:
     BNCLogFlushMessages();
     return returnCode;

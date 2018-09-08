@@ -1,10 +1,12 @@
-//
-//  XGGitHubPullRequest.h
-//  xcode-github
-//
-//  Created by Edward on 2/28/18.
-//  Copyright © 2018 Branch. All rights reserved.
-//
+/**
+ @file          XGGitHubPullRequest.h
+ @package       xcode-github
+ @brief         A class for working with GitHub PR statuses.
+
+ @author        Edward Smith
+ @date          February 28, 2018
+ @copyright     Copyright © 2018 Branch. All rights reserved.
+*/
 
 #import <Foundation/Foundation.h>
 

@@ -1,10 +1,12 @@
-//
-//  XGXcodeBot.m
-//  xcode-github
-//
-//  Created by Edward on 2/28/18.
-//  Copyright © 2018 Branch. All rights reserved.
-//
+/**
+ @file          XGXcodeBot.m
+ @package       xcode-github
+ @brief         A class for working with Xcode bot statuses.
+
+ @author        Edward Smith
+ @date          February 28, 2018
+ @copyright     Copyright © 2018 Branch. All rights reserved.
+*/
 
 #import "XGXcodeBot.h"
 #import "BNCLog.h"

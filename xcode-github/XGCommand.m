@@ -1,10 +1,12 @@
-//
-//  XGCommand.m
-//  xcode-github
-//
-//  Created by Edward on 4/24/18.
-//  Copyright © 2018 Branch. All rights reserved.
-//
+/**
+ @file          XGCommand.m
+ @package       xcode-github
+ @brief         Main body of the xcode-github app.
+
+ @author        Edward Smith
+ @date          April 24, 2018
+ @copyright     Copyright © 2018 Branch. All rights reserved.
+*/
 
 #import "XGCommand.h"
 #import "BNCLog.h"
@@ -58,6 +60,10 @@ NSError*_Nullable XGDeleteBotWithOptions(
         );
         return error;
     }
+    [[XGSettings sharedSettings]
+        deleteGitHubStatusForRepoOwner:bot.repoOwner
+        repoName:bot.repoName
+        branch:bot.branch];
     return error;
 }
 
@@ -116,7 +122,11 @@ NSError*_Nullable XGUpdatePRStatusOnGitHub(
     NSString*statusHash = [NSString stringWithFormat:@"%@:%@",
         NSStringFromXGPullRequestStatus(status), message];
 
-    NSString*lastStatusHash = [[XGSettings sharedSettings] gitHubStatusForPR:pr];
+    NSString*lastStatusHash =
+        [[XGSettings sharedSettings]
+            gitHubStatusForRepoOwner:pr.repoOwner
+            repoName:pr.repoName
+            branch:pr.branch];
     if ([lastStatusHash isEqualToString:statusHash])
         return nil;
 
@@ -126,7 +136,11 @@ NSError*_Nullable XGUpdatePRStatusOnGitHub(
         authToken:options.githubAuthToken];
     if (error) return error;
 
-    [[XGSettings sharedSettings] setGitHubStatus:statusHash forPR:pr];
+    [[XGSettings sharedSettings]
+        setGitHubStatus:statusHash
+        forRepoOwner:pr.repoOwner
+        repoName:pr.repoName
+        branch:pr.branch];
 
     // Send a completion message:
     if ([botStatus.currentStep isEqualToString:@"completed"]) {

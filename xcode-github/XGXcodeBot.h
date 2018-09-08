@@ -1,10 +1,12 @@
-//
-//  XGXcodeBot.h
-//  xcode-github
-//
-//  Created by Edward on 2/28/18.
-//  Copyright © 2018 Branch. All rights reserved.
-//
+/**
+ @file          XGXcodeBot.h
+ @package       xcode-github
+ @brief         A class for working with Xcode bot statuses.
+
+ @author        Edward Smith
+ @date          February 28, 2018
+ @copyright     Copyright © 2018 Branch. All rights reserved.
+*/
 
 #import <Foundation/Foundation.h>
 #import "APPFormattedString.h"
@@ -91,13 +93,17 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, readonly) NSString*_Nonnull repoName;
 @property (strong, readonly) NSString*_Nonnull branch;
 
++ (instancetype _Nonnull) new NS_UNAVAILABLE;
+
+- (instancetype _Nonnull) init NS_UNAVAILABLE;
+
 - (instancetype _Nonnull) initWithServerName:(NSString*_Nullable)serverName
                                   dictionary:(NSDictionary*_Nullable)dictionary
                                   NS_DESIGNATED_INITIALIZER;
 
 /// @param xcodeServerName  The network name of the Xcode server.
 /// @param error            If not nil, any error encountered is returned here.
-/// @returns    A dictionary with a key of the bot name and value of the bot status.
+/// @return A dictionary with a key of the bot name and value of the bot status.
 + (NSDictionary<NSString*, XGXcodeBot*>*_Nullable) botsForServer:(NSString*_Nonnull)xcodeServerName
                                                            error:(NSError*__autoreleasing _Nullable*_Nullable)error;
 

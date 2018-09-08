@@ -42,6 +42,11 @@ exit:
 
 #pragma mark - XGSettings
 
+@interface XGSettings () {
+    NSTimeInterval _dataExpirationSeconds;
+}
+@end
+
 static NSString*const kGitHubStatusKey = @"githubStatus";
 
 @implementation XGSettings
@@ -55,16 +60,35 @@ static NSString*const kGitHubStatusKey = @"githubStatus";
     return _sharedSettings;
 }
 
+- (instancetype) init {
+    self = [super init];
+    if (!self) return self;
+    self.dataExpirationSeconds = 60.0*60.0*24.0*30.0;
+    return self;
+}
+
+- (NSTimeInterval) dataExpirationSeconds {
+    @synchronized(self) {
+        return _dataExpirationSeconds;
+    }
+}
+
+- (void) setDataExpirationSeconds:(NSTimeInterval)dataExpirationSeconds_ {
+    @synchronized(self) {
+        _dataExpirationSeconds = - fabs(dataExpirationSeconds_);
+    }
+}
+
 - (void) expireOldData {
     @synchronized(self) {
         NSMutableArray*deletions = [NSMutableArray new];
         NSMutableDictionary*dictionary =
             [NSMutableDictionary mutableDeepCopy:
                 [[NSUserDefaults standardUserDefaults] objectForKey:kGitHubStatusKey]];
-        NSTimeInterval kOneDay = 24.0*60.0*60.0;
+        NSTimeInterval age = self.dataExpirationSeconds;
         for (NSString*key in dictionary.keyEnumerator) {
             NSDate*date = dictionary[key][@"date"];
-            if (!date || [date timeIntervalSinceNow] < - kOneDay) {
+            if (!date || [date timeIntervalSinceNow] < age) {
                 [deletions addObject:key];
             }
         }
@@ -73,18 +97,24 @@ static NSString*const kGitHubStatusKey = @"githubStatus";
     }
 }
 
-- (NSString*) keyForPR:(XGGitHubPullRequest *)pr {
-    return [NSString stringWithFormat:@"%@-%@-%@", pr.repoOwner, pr.repoName, pr.branch];
+- (NSString*) keyForRepoOwner:(NSString*)repoOwner
+        repoName:(NSString*)repoName
+        branch:(NSString*)branch {
+    return [NSString stringWithFormat:@"%@-%@-%@", repoOwner, repoName, branch];
 }
 
-- (void) setGitHubStatus:(NSString*)status forPR:(XGGitHubPullRequest *)pr {
+- (void) setGitHubStatus:(NSString*)status
+        forRepoOwner:(NSString*)repoOwner
+        repoName:(NSString*)repoName
+        branch:(NSString*)branch {
     @synchronized(self) {
         [self expireOldData];
         if (!status) return;
         NSMutableDictionary*dictionary =
             [NSMutableDictionary mutableDeepCopy:
-                [[NSUserDefaults standardUserDefaults] dictionaryForKey:kGitHubStatusKey]];
-        dictionary[[self keyForPR:pr]] = @{
+                [[NSUserDefaults standardUserDefaults]
+                    dictionaryForKey:kGitHubStatusKey]];
+        dictionary[[self keyForRepoOwner:repoOwner repoName:repoName branch:branch]] = @{
             @"date":    [NSDate date],
             @"status":  status
         };
@@ -92,22 +122,28 @@ static NSString*const kGitHubStatusKey = @"githubStatus";
     }
 }
 
-- (NSString*) gitHubStatusForPR:(XGGitHubPullRequest *)pr {
+- (NSString*_Nullable) gitHubStatusForRepoOwner:(NSString*)repoOwner
+        repoName:(NSString*)repoName
+        branch:(NSString*)branch {
     @synchronized(self) {
         [self expireOldData];
-        NSMutableDictionary*dictionary = [[NSUserDefaults standardUserDefaults] objectForKey:kGitHubStatusKey];
-        return dictionary[[self keyForPR:pr]][@"status"];
+        NSDictionary*dictionary = [[NSUserDefaults standardUserDefaults] dictionaryForKey:kGitHubStatusKey];
+        return dictionary[[self keyForRepoOwner:repoOwner repoName:repoName branch:branch]][@"status"];
     }
 }
 
-NSMutableDictionary*_Nonnull XGMutableDictionaryWithDictionary(NSDictionary*_Nullable dictionary) {
-    if ([dictionary isKindOfClass:NSMutableDictionary.class])
-        return (NSMutableDictionary*) dictionary;
-    else
-    if ([dictionary isKindOfClass:NSDictionary.class])
-        return [NSMutableDictionary dictionaryWithDictionary:dictionary];
-    else
-        return [NSMutableDictionary new];
+- (void) deleteGitHubStatusForRepoOwner:(NSString*)repoOwner
+        repoName:(NSString*)repoName
+        branch:(NSString*)branch {
+    @synchronized(self) {
+        [self expireOldData];
+        NSMutableDictionary*dictionary =
+            [NSMutableDictionary mutableDeepCopy:
+                [[NSUserDefaults standardUserDefaults]
+                    dictionaryForKey:kGitHubStatusKey]];
+        dictionary[[self keyForRepoOwner:repoOwner repoName:repoName branch:branch]] = nil;
+        [[NSUserDefaults standardUserDefaults] setObject:dictionary forKey:kGitHubStatusKey];
+    }
 }
 
 @end

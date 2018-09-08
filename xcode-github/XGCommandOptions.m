@@ -1,10 +1,12 @@
-//
-//  XGCommandOptions.m
-//  xcode-github
-//
-//  Created by Edward on 3/7/18.
-//  Copyright © 2018 Branch. All rights reserved.
-//
+/**
+ @file          XGCommandOptions.m
+ @package       xcode-github
+ @brief         Command options for the xcode-github app.
+
+ @author        Edward Smith
+ @date          March 7, 2018
+ @copyright     Copyright © 2018 Branch. All rights reserved.
+*/
 
 #import "XGCommandOptions.h"
 #include <getopt.h>
@@ -19,6 +21,7 @@
         {"dryrun",      no_argument,        NULL, 'd'},
         {"github",      required_argument,  NULL, 'g'},
         {"help",        no_argument,        NULL, 'h'},
+        {"repeat",      no_argument,        NULL, 'r'},
         {"status",      no_argument,        NULL, 's'},
         {"template",    required_argument,  NULL, 't'},
         {"verbose",     no_argument,        NULL, 'v'},
@@ -36,6 +39,7 @@
         case 'd':   self.dryRun = YES; break;
         case 'g':   self.githubAuthToken = [self.class stringFromParameter]; break;
         case 'h':   self.showHelp = YES; break;
+        case 'r':   self.repeatForever = YES; break;
         case 's':   self.showStatusOnly = YES; break;
         case 't':   self.templateBotName = [self.class stringFromParameter]; break;
         case 'v':   self.verbosity++; break;
