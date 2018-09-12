@@ -1,10 +1,12 @@
-//
-//  XGAPreferencesViewController.m
-//  xcode-github-app
-//
-//  Created by Edward on 5/10/18.
-//  Copyright © 2018 Branch. All rights reserved.
-//
+/**
+ @file          XGAPreferencesViewController.m
+ @package       xcode-github-app
+ @brief         The preferences window view controller.
+
+ @author        Edward Smith
+ @date          May 2018
+ @copyright     Copyright © 2018 Branch. All rights reserved.
+*/
 
 #import "XGAPreferencesViewController.h"
 #import "XGASettings.h"

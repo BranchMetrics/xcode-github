@@ -25,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (assign) BOOL repeatForever;
 
 - (instancetype _Nonnull) initWithArgc:(int)argc argv:(char*const _Nullable[_Nullable])argv;
++ (NSString*) helpString;
 + (instancetype _Nonnull) testWithBranchSDK;
 + (instancetype _Nonnull) testWithBranchLabs;
 @end

@@ -1,10 +1,12 @@
-//
-//  main.m
-//  XcodeGitHub
-//
-//  Created by Edward on 3/12/18.
-//  Copyright © 2018 Branch. All rights reserved.
-//
+/**
+ @file          main.m
+ @package       xcode-github-app
+ @brief         The main entry point for the xcode-github-app.
+
+ @author        Edward Smith
+ @date          March 2018
+ @copyright     Copyright © 2018 Branch. All rights reserved.
+*/
 
 #import <Cocoa/Cocoa.h>
 #import "XGALogViewController.h"

@@ -1,10 +1,12 @@
-//
-//  AppDelegate.m
-//  XcodeGitHub
-//
-//  Created by Edward on 3/12/18.
-//  Copyright © 2018 Branch. All rights reserved.
-//
+/**
+ @file          XGAAppDelegate.m
+ @package       xcode-github-app
+ @brief         The xcode-github-app app delegate.
+
+ @author        Edward Smith
+ @date          March 2018
+ @copyright     Copyright © 2018 Branch. All rights reserved.
+*/
 
 #import "XGAAppDelegate.h"
 #import "XGALogViewController.h"

@@ -1,10 +1,12 @@
-//
-//  XGAView.m
-//  xcode-github-app
-//
-//  Created by Edward on 7/31/18.
-//  Copyright © 2018 Branch. All rights reserved.
-//
+/**
+ @file          XGAView.m
+ @package       xcode-github-app
+ @brief         A view with some convenient options.
+
+ @author        Edward Smith
+ @date          July 2018
+ @copyright     Copyright © 2018 Branch. All rights reserved.
+*/
 
 #import "XGAView.h"
 

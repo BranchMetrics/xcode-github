@@ -1,10 +1,12 @@
-//
-//  XGAStatusPanel.m
-//  xcode-github-app
-//
-//  Created by Edward on 7/29/18.
-//  Copyright © 2018 Branch. All rights reserved.
-//
+/**
+ @file          XGAStatusPanel.m
+ @package       xcode-github-app
+ @brief         A status heads-up window for the status and log windows.
+
+ @author        Edward Smith
+ @date          July 2018
+ @copyright     Copyright © 2018 Branch. All rights reserved.
+*/
 
 #import "XGAStatusPanel.h"
 

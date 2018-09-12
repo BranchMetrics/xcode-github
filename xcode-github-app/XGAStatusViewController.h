@@ -1,10 +1,12 @@
-//
-//  ViewController.h
-//  XcodeGitHub
-//
-//  Created by Edward on 3/12/18.
-//  Copyright © 2018 Branch. All rights reserved.
-//
+/**
+ @file          XGAStatusViewController.h
+ @package       xcode-github-app
+ @brief         The view controller for the status window.
+
+ @author        Edward Smith
+ @date          March 2018
+ @copyright     Copyright © 2018 Branch. All rights reserved.
+*/
 
 #import <Cocoa/Cocoa.h>
 

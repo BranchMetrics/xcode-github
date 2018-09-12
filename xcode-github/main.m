@@ -9,51 +9,10 @@
 */
 
 @import Foundation;
-#import "XGXcodeBot.h"
-#import "XGGitHubPullRequest.h"
 #import "XGCommandOptions.h"
-#import "BNCLog.h"
-#import "BNCNetworkService.h"
 #import "XGCommand.h"
+#import "BNCLog.h"
 #include <sysexits.h>
-
-NSString *helpString =
-@"xcode-github - Creates an Xcode test bots for new GitHub PRs.\n"
- "\n"
- "usage: xcode-github [-dhsVv] -g <github-auth-token>\n"
- "                 -t <bot-template> -x <xcode-server-domain-name>\n"
- "\n"
- "\n"
- "  -d, --dryrun\n"
- "      Dry run. Print what would be done.\n"
- "\n"
- "  -g, --github <github-auth-token>\n"
- "      A GitHub auth token that allows checking the status of a repo\n"
- "      and change a PR's status.\n"
- "\n"
- "  -h, --help\n"
- "      Print this help information.\n"
- "\n"
- "  -r, --repeat\n"
- "      Repeat updating the status forever, waiting 60 seconds between updates.\n"
- "\n"
- "  -s, --status\n"
- "      Only print the status of the xcode server bots and quit.\n"
- "\n"
- "  -t --template <bot-template>\n"
- "      An existing bot on the xcode server that is used as a template\n"
- "      for the new GitHub PR bots.\n"
- "\n"
- "  -V, --version\n"
- "      Show version and exit.\n"
- "\n"
- "  -v, --verbose\n"
- "      Verbose. Extra 'v' increases the verbosity.\n"
- "\n"
- "  -x, --xcodeserver <xcode-server-domain-name>\n"
- "      The network name of the xcode server.\n"
- "\n"
- ;
 
 static BNCLogLevel global_logLevel = BNCLogLevelWarning;
 
@@ -74,31 +33,6 @@ void LogOutputFunction(
     write(descriptor, "\n   ", sizeof('\n'));
 }
 
-NSError *showBotStatus(NSString* xcodeServerName) {
-    // Update the bots and display the results:
-
-    BNCLogDebug(@"Refreshing Xcode bot status...");
-    NSError *error = nil;
-    NSDictionary<NSString*, XGXcodeBot*> *bots =
-        [XGXcodeBot botsForServer:xcodeServerName error:&error];
-    if (error) {
-        BNCLogError(@"Can't retrieve Xcode bot information from '%@': %@.",
-            xcodeServerName, error);
-        return error;
-    }
-
-    if (bots.count == 0) {
-        BNCLog(@"Xcode bot status: No Xcode bots.");
-    } else {
-        BNCLog(@"Xcode bot status:");
-        for (XGXcodeBot *bot in bots.objectEnumerator) {
-            XGXcodeBotStatus *status = [bot status];
-            BNCLog(@"%@", status);
-        }
-    }
-    return nil;
-}
-
 int main(int argc, char*const argv[]) {
     int returnCode = EXIT_FAILURE;
     BOOL repeatForever = NO;
@@ -117,7 +51,7 @@ start:
         }
 
         if (options.showHelp) {
-            NSData *data = [helpString dataUsingEncoding:NSUTF8StringEncoding];
+            NSData *data = [[XGCommandOptions helpString] dataUsingEncoding:NSUTF8StringEncoding];
             write(STDOUT_FILENO, data.bytes, data.length);
             returnCode = EXIT_SUCCESS;
             goto exit;
@@ -134,11 +68,8 @@ start:
             goto exit;
         }
 
-        // Allow self-signed certs from the xcode server:
-        [[BNCNetworkService shared].anySSLCertHosts addObject:options.xcodeServerName];
-
         if (options.showStatusOnly) {
-            if (showBotStatus(options.xcodeServerName) == nil)
+            if (XGShowXcodeBotStatus(options.xcodeServerName) == nil)
                 returnCode = EXIT_SUCCESS;
             goto exit;
         }
@@ -149,7 +80,7 @@ start:
             goto exit;
         }
 
-        error = showBotStatus(options.xcodeServerName);
+        error = XGShowXcodeBotStatus(options.xcodeServerName);
         if (error == nil) returnCode = EXIT_SUCCESS;
 
         repeatForever = options.repeatForever;

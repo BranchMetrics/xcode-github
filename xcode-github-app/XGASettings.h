@@ -1,10 +1,12 @@
-//
-//  XGASettings.h
-//  xcode-github-app
-//
-//  Created by Edward on 4/24/18.
-//  Copyright © 2018 Branch. All rights reserved.
-//
+/**
+ @file          XGASettings.h
+ @package       xcode-github-app
+ @brief         The persistent settings store for the app.
+
+ @author        Edward Smith
+ @date          April 2018
+ @copyright     Copyright © 2018 Branch. All rights reserved.
+*/
 
 #import <Foundation/Foundation.h>
 

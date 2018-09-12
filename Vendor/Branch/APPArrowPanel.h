@@ -1,10 +1,12 @@
-//
-//  APPArrowPanel.h
-//  xcode-github-app
-//
-//  Created by Edward on 7/29/18.
-//  Copyright © 2018 Branch. All rights reserved.
-//
+/**
+ @file          APPArrowPanel.h
+ @package       xcode-github-app
+ @brief         A heads-up panel that draws an indicator arrow at the indicated place.
+
+ @author        Edward Smith
+ @date          July 2018
+ @copyright     Copyright © 2018 Branch. All rights reserved.
+*/
 
 #import <Cocoa/Cocoa.h>
 

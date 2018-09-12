@@ -1,10 +1,12 @@
-//
-//  ViewController.m
-//  XcodeGitHub
-//
-//  Created by Edward on 3/12/18.
-//  Copyright © 2018 Branch. All rights reserved.
-//
+/**
+ @file          XGAStatusViewController.m
+ @package       xcode-github-app
+ @brief         The view controller for the status window.
+
+ @author        Edward Smith
+ @date          March 2018
+ @copyright     Copyright © 2018 Branch. All rights reserved.
+*/
 
 #import "XGAStatusViewController.h"
 #import "XGXcodeBot.h"
@@ -16,7 +18,6 @@
 #import "BNCNetworkService.h"
 #import "BNCLog.h"
 #import "NSAttributedString+App.h"
-#import <stdatomic.h>
 
 #pragma mark - XGAServerStatus
 
@@ -170,8 +171,10 @@
         return;
 
     // Prevent double status getting:
-    BOOL statusIsInProgress = atomic_exchange(&self->_statusIsInProgress, YES);
-    if (statusIsInProgress) return;
+    @synchronized(self) {
+        if (self.statusIsInProgress) return;
+        self.statusIsInProgress = YES;
+    }
 
     BNCLogDebug(@"Start updateStatus.");
     BNCPerformBlockOnMainThreadAsync(^{ self.statusTextField.stringValue = @""; });
@@ -192,7 +195,7 @@
     BNCPerformBlockOnMainThreadAsync(^ { self.updateProgessIndictor.doubleValue = 0.0; });
 
     // Release status lock:
-    atomic_exchange(&self->_statusIsInProgress, NO);
+    self.statusIsInProgress = NO;
 }
 
 - (void) updateSyncBots:(XGAServerGitHubSyncTask*)syncTask {

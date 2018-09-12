@@ -1,10 +1,12 @@
-//
-//  XGALogViewController.h
-//  xcode-github-app
-//
-//  Created by Edward on 5/8/18.
-//  Copyright © 2018 Branch. All rights reserved.
-//
+/**
+ @file          XGALogViewController.h
+ @package       xcode-github-app
+ @brief         The log window view controller.
+
+ @author        Edward Smith
+ @date          May 2018
+ @copyright     Copyright © 2018 Branch. All rights reserved.
+*/
 
 #import <Cocoa/Cocoa.h>
 

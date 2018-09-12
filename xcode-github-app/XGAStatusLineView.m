@@ -1,10 +1,12 @@
-//
-//  XGAStatusLineView.m
-//  xcode-github-app
-//
-//  Created by Edward on 5/10/18.
-//  Copyright © 2018 Branch. All rights reserved.
-//
+/**
+ @file          XGAStatusLineView.m
+ @package       xcode-github-app
+ @brief         The status line view for the status window.
+
+ @author        Edward Smith
+ @date          May 2018
+ @copyright     Copyright © 2018 Branch. All rights reserved.
+*/
 
 #import "XGAStatusLineView.h"
 

@@ -9,13 +9,14 @@
 */
 
 #import "XGCommand.h"
-#import "BNCLog.h"
 #import "XGXcodeBot.h"
 #import "XGGitHubPullRequest.h"
 #import "XGSettings.h"
+#import "BNCLog.h"
+#import "BNCNetworkService.h"
 #include <sysexits.h>
 
-#pragma mark - Bot Functions
+#pragma mark Bot Functions
 
 NSError*_Nullable XGCreateBotWithOptions(
         XGCommandOptions*_Nonnull options,
@@ -152,10 +153,43 @@ NSError*_Nullable XGUpdatePRStatusOnGitHub(
     return nil;
 }
 
+NSError *XGShowXcodeBotStatus(NSString* xcodeServerName) {
+    // Update the bots and display the results:
+
+    // Allow self-signed certs from the xcode server:
+    [[BNCNetworkService shared].anySSLCertHosts addObject:xcodeServerName];
+
+    BNCLogDebug(@"Refreshing Xcode bot status...");
+    NSError *error = nil;
+    NSDictionary<NSString*, XGXcodeBot*> *bots =
+        [XGXcodeBot botsForServer:xcodeServerName error:&error];
+    if (error) {
+        BNCLogError(@"Can't retrieve Xcode bot information from '%@': %@.",
+            xcodeServerName, error);
+        return error;
+    }
+
+    if (bots.count == 0) {
+        BNCLog(@"Xcode bot status: No Xcode bots.");
+    } else {
+        BNCLog(@"Xcode bot status:");
+        for (XGXcodeBot *bot in bots.objectEnumerator) {
+            XGXcodeBotStatus *status = [bot status];
+            BNCLog(@"%@", status);
+        }
+    }
+    return nil;
+}
+
+#pragma mark - Main Function
+
 NSError*_Nullable XGUpdateXcodeBotsWithGitHub(XGCommandOptions*_Nonnull options) {
     NSError *error = nil;
     int returnCode = EXIT_FAILURE;
     {
+        // Allow self-signed certs from the xcode server:
+        [[BNCNetworkService shared].anySSLCertHosts addObject:options.xcodeServerName];
+
         BNCLogDebug(@"Getting Xcode bots on '%@'...", options.xcodeServerName);
 
         NSDictionary<NSString*, XGXcodeBot*> *bots =

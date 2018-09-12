@@ -56,6 +56,47 @@
     return [NSString stringWithCString:optarg encoding:NSUTF8StringEncoding];
 }
 
++ (NSString*) helpString {
+    NSString *kHelpString =
+        @"xcode-github - Creates an Xcode test bots for new GitHub PRs.\n"
+         "\n"
+         "usage: xcode-github [-dhsVv] -g <github-auth-token>\n"
+         "                 -t <bot-template> -x <xcode-server-domain-name>\n"
+         "\n"
+         "\n"
+         "  -d, --dryrun\n"
+         "      Dry run. Print what would be done.\n"
+         "\n"
+         "  -g, --github <github-auth-token>\n"
+         "      A GitHub auth token that allows checking the status of a repo\n"
+         "      and change a PR's status.\n"
+         "\n"
+         "  -h, --help\n"
+         "      Print this help information.\n"
+         "\n"
+         "  -r, --repeat\n"
+         "      Repeat updating the status forever, waiting 60 seconds between updates.\n"
+         "\n"
+         "  -s, --status\n"
+         "      Only print the status of the xcode server bots and quit.\n"
+         "\n"
+         "  -t --template <bot-template>\n"
+         "      An existing bot on the xcode server that is used as a template\n"
+         "      for the new GitHub PR bots.\n"
+         "\n"
+         "  -V, --version\n"
+         "      Show version and exit.\n"
+         "\n"
+         "  -v, --verbose\n"
+         "      Verbose. Extra 'v' increases the verbosity.\n"
+         "\n"
+         "  -x, --xcodeserver <xcode-server-domain-name>\n"
+         "      The network name of the xcode server.\n"
+         "\n"
+         ;
+    return kHelpString;
+}
+
 + (instancetype _Nonnull) testWithBranchSDK {
     XGCommandOptions*options = [[XGCommandOptions alloc] init];
     options.xcodeServerName = @"esmith.local";
