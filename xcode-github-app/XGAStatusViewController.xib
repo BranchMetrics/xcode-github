@@ -18,7 +18,7 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <window title="Status" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" frameAutosaveName="" animationBehavior="default" id="RZ1-8e-KVW">
+        <window title="Status" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" frameAutosaveName="" animationBehavior="default" tabbingMode="disallowed" id="RZ1-8e-KVW">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="113" y="498" width="480" height="300"/>
@@ -193,6 +193,7 @@
                                     </tableColumns>
                                     <connections>
                                         <binding destination="cGa-aF-L8a" name="content" keyPath="arrangedObjects" id="niU-ZZ-fA9"/>
+                                        <outlet property="menu" destination="HcQ-Df-cNa" id="31N-AL-QOj"/>
                                     </connections>
                                 </tableView>
                             </subviews>
@@ -225,6 +226,29 @@
             <point key="canvasLocation" x="419" y="-89"/>
         </window>
         <arrayController id="cGa-aF-L8a"/>
+        <menu id="HcQ-Df-cNa">
+            <items>
+                <menuItem title="Info" id="NCs-9a-HS3">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="showInfo:" target="-2" id="PFt-V8-58A"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Clone" id="UUl-ub-dpc">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="clone:" target="-2" id="lvU-Hf-u4V"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Delete" id="IKy-Sz-f9z">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="delete:" target="-2" id="1bp-XN-ztm"/>
+                    </connections>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="846" y="-140"/>
+        </menu>
     </objects>
     <resources>
         <image name="NSActionTemplate" width="14" height="14"/>

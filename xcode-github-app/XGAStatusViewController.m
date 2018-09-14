@@ -77,7 +77,7 @@
 
 - (void)awakeFromNib {
     [super viewDidLoad];
-    [self.tableView setDoubleAction:@selector(showStatusPanelAction:)];
+    [self.tableView setDoubleAction:@selector(showInfo:)];
     self.window = self.view.window;
     XGAServerStatus *status = [XGAServerStatus new];
     status.statusSummary = [APPFormattedString boldText:@"< Refreshing >"];
@@ -87,10 +87,12 @@
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification {
     if (self.statusPanel)
-        [self showStatusPanelAction:self];
+        [self showInfo:self];
 }
 
-- (void) showStatusPanelAction:(id)sender {
+#pragma mark - Selection Actions
+
+- (IBAction) showInfo:(id)sender {
     NSInteger idx = self.tableView.selectedRow;
     if (idx < 0 || idx >= [self.arrayController.arrangedObjects count]) {
         [self.statusPanel dismiss];
@@ -107,11 +109,42 @@
     // Show the status panel:
     XGAStatusPanel*panel = [XGAStatusPanel loadPanel];
     NSFont*font = [NSFont systemFontOfSize:[NSFont systemFontSize]];
-    panel.titleTextField.attributedStringValue = [status.statusSummary renderAttributedStringWithFont:font];
+    panel.titleTextField.attributedStringValue =
+        [[[[APPFormattedString builder]
+            appendBold:@"%@", status.botName]
+                build] renderAttributedStringWithFont:font];
+    panel.statusImageView.image = status.statusImage;
+    panel.statusTextField.attributedStringValue = [status.statusSummary renderAttributedStringWithFont:font];
     panel.detailTextField.attributedStringValue = [status.statusDetail renderAttributedStringWithFont:font];
-    panel.imageView.image = status.statusImage;
     panel.arrowPoint = NSMakePoint(r.size.width/2.0+r.origin.x, r.origin.y);
     [panel show];
+}
+
+- (IBAction) clone:(id)sender {
+}
+
+- (IBAction) delete:(id)sender {
+}
+
+- (BOOL) itemIsSelected {
+    NSInteger idx = self.tableView.clickedRow;
+    if (idx >= 0 && idx < [self.arrayController.arrangedObjects count]) {
+        [self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:idx] byExtendingSelection:NO];
+        return YES;
+    }
+    idx = self.tableView.selectedRow;
+    if (idx >= 0 && idx < [self.arrayController.arrangedObjects count])
+        return YES;
+    return NO;
+}
+
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem {
+    if (menuItem.action == @selector(showInfo:) ||
+        menuItem.action == @selector(clone:) ||
+        menuItem.action == @selector(delete:)) {
+        return ([self itemIsSelected]);
+    }
+    return NO;
 }
 
 #pragma mark - Status Updates

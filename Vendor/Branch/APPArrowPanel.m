@@ -62,12 +62,13 @@
 
 - (void) show {
     self.contentView.layer.backgroundColor =
-        [NSColor colorWithSRGBRed:1.0 green:1.0 blue:1.0 alpha:0.85].CGColor;
+        [NSColor colorWithSRGBRed:1.0 green:1.0 blue:1.0 alpha:0.87].CGColor;
     self.contentView.layer.cornerRadius = 3.0;
+    self.contentView.layer.borderWidth = 0.5;
+    self.contentView.layer.borderColor = NSColor.lightGrayColor.CGColor;
     self.contentView.needsLayout = YES;
     [self.contentView layoutSubtreeIfNeeded];
     NSRect r = NSInsetRect(self.contentView.frame, -24.0, -24.0);
-//  r.size.width = 600.0;
     r = BNCCenterRectOverPoint(r, self.arrowPoint);
     r.origin.y = self.arrowPoint.y - r.size.height;
     [self setFrame:r display:YES animate:NO];

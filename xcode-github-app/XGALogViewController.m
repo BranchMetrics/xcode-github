@@ -222,7 +222,7 @@ void XGALogFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Null
 
     if (!self.statusPanel) self.statusPanel = [XGAStatusPanel loadPanel];
     NSFont*font = [NSFont systemFontOfSize:[NSFont systemFontSize]];
-    self.statusPanel.imageView.image = [XGALogViewController imageForLogLevel:row.logLevel];
+    self.statusPanel.statusImageView.image = [XGALogViewController imageForLogLevel:row.logLevel];
     self.statusPanel.titleTextField.attributedStringValue = [title renderAttributedStringWithFont:font];
     self.statusPanel.detailTextField.stringValue = row.logMessage;
     self.statusPanel.arrowPoint = NSMakePoint(r.size.width/2.0+r.origin.x, r.origin.y);

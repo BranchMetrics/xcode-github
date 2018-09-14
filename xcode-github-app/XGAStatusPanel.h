@@ -12,6 +12,7 @@
 
 @interface XGAStatusPanel : APPArrowPanel
 @property (strong) IBOutlet NSTextField*titleTextField;
+@property (strong) IBOutlet NSImageView*statusImageView;
+@property (strong) IBOutlet NSTextField*statusTextField;
 @property (strong) IBOutlet NSTextField*detailTextField;
-@property (strong) IBOutlet NSImageView*imageView;
 @end
