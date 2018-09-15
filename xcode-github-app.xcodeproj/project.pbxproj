@@ -24,6 +24,8 @@
 		4D8352CC20A4F93A00184259 /* XGAStatusLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D8352CB20A4F93A00184259 /* XGAStatusLineView.m */; };
 		4D8352D020A516A200184259 /* XGAPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D8352CE20A516A200184259 /* XGAPreferencesViewController.m */; };
 		4D8352D120A516A200184259 /* XGAPreferencesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D8352CF20A516A200184259 /* XGAPreferencesViewController.xib */; };
+		4DAA4666214CBEFF007A39EB /* XGAAddServerPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DAA4664214CBEFF007A39EB /* XGAAddServerPanel.m */; };
+		4DAA4667214CBEFF007A39EB /* XGAAddServerPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DAA4665214CBEFF007A39EB /* XGAAddServerPanel.xib */; };
 		4DDC1811210E99080090DFFA /* APPArrowPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DDC1810210E99080090DFFA /* APPArrowPanel.m */; };
 		4DDC1814210EABA70090DFFA /* XGAStatusPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DDC1813210EABA70090DFFA /* XGAStatusPanel.m */; };
 		4DDC1816210EAD070090DFFA /* XGAStatusPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DDC1815210EAD070090DFFA /* XGAStatusPanel.xib */; };
@@ -69,6 +71,9 @@
 		4D8352CD20A516A200184259 /* XGAPreferencesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGAPreferencesViewController.h; sourceTree = "<group>"; };
 		4D8352CE20A516A200184259 /* XGAPreferencesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGAPreferencesViewController.m; sourceTree = "<group>"; };
 		4D8352CF20A516A200184259 /* XGAPreferencesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = XGAPreferencesViewController.xib; sourceTree = "<group>"; };
+		4DAA4663214CBEFF007A39EB /* XGAAddServerPanel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGAAddServerPanel.h; sourceTree = "<group>"; };
+		4DAA4664214CBEFF007A39EB /* XGAAddServerPanel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGAAddServerPanel.m; sourceTree = "<group>"; };
+		4DAA4665214CBEFF007A39EB /* XGAAddServerPanel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = XGAAddServerPanel.xib; sourceTree = "<group>"; };
 		4DDC180F210E99080090DFFA /* APPArrowPanel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APPArrowPanel.h; sourceTree = "<group>"; };
 		4DDC1810210E99080090DFFA /* APPArrowPanel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APPArrowPanel.m; sourceTree = "<group>"; };
 		4DDC1812210EABA70090DFFA /* XGAStatusPanel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGAStatusPanel.h; sourceTree = "<group>"; };
@@ -132,6 +137,9 @@
 				4DF0F57F208F92140015D1F7 /* Vendor */,
 				4DF0F575208F910C0015D1F7 /* xcode-github */,
 				4D7661792057565300216B72 /* xcode-github-app.entitlements */,
+				4DAA4663214CBEFF007A39EB /* XGAAddServerPanel.h */,
+				4DAA4664214CBEFF007A39EB /* XGAAddServerPanel.m */,
+				4DAA4665214CBEFF007A39EB /* XGAAddServerPanel.xib */,
 				4D76616B2057565200216B72 /* XGAAppDelegate.h */,
 				4D76616C2057565200216B72 /* XGAAppDelegate.m */,
 				4D12BA0A20A252CE00E5B1DB /* XGALogViewController.h */,
@@ -275,6 +283,7 @@
 				4DDC1816210EAD070090DFFA /* XGAStatusPanel.xib in Resources */,
 				4D12BA0E20A252CE00E5B1DB /* XGALogViewController.xib in Resources */,
 				4D8352C620A3F30A00184259 /* XGAStatusViewController.xib in Resources */,
+				4DAA4667214CBEFF007A39EB /* XGAAddServerPanel.xib in Resources */,
 				4D7661752057565200216B72 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -300,6 +309,7 @@
 				4DF0F57D208F91A90015D1F7 /* XGGitHubPullRequest.m in Sources */,
 				4DF0F57E208F91A90015D1F7 /* XGCommandOptions.m in Sources */,
 				4D0B75362110B94700A06D97 /* XGAView.m in Sources */,
+				4DAA4666214CBEFF007A39EB /* XGAAddServerPanel.m in Sources */,
 				4D7661702057565200216B72 /* XGAStatusViewController.m in Sources */,
 				4DF0F58C208F923E0015D1F7 /* BNCNetworkService.m in Sources */,
 				4D8352D020A516A200184259 /* XGAPreferencesViewController.m in Sources */,

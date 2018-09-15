@@ -10,14 +10,16 @@
 
 #import "XGAPreferencesViewController.h"
 #import "XGASettings.h"
+#import "XGAAddServerPanel.h"
 
 @interface XGAPreferencesViewController ()
 @property (strong) IBOutlet XGASettings*settings;
+@property (strong) XGAAddServerPanel *addServerPanel;
 @end
 
 @implementation XGAPreferencesViewController
 
-+ (instancetype) loadController {
++ (instancetype) new {
     XGAPreferencesViewController*controller = [[XGAPreferencesViewController alloc] init];
     BOOL loaded =
         [[NSBundle mainBundle]
@@ -38,6 +40,13 @@
 
 - (IBAction)valueChanged:(id)sender {
     [self.settings save];
+}
+
+- (IBAction)addServerAction:(id)sender {
+    self.addServerPanel = [XGAAddServerPanel new];
+    [self.window beginSheet:self.addServerPanel completionHandler:^(NSModalResponse returnCode) {
+        self.addServerPanel = nil;
+    }];
 }
 
 @end

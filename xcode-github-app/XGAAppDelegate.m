@@ -22,8 +22,8 @@
 @implementation XGAAppDelegate
 
 - (void)awakeFromNib {
-    self.logController = [XGALogViewController loadController];
-    self.statusController = [XGAStatusViewController loadController];
+    self.logController = [XGALogViewController new];
+    self.statusController = [XGAStatusViewController new];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
@@ -42,7 +42,7 @@
 
 - (IBAction)showPreferences:(id)sender {
     if (!self.preferencesController) {
-        self.preferencesController = [XGAPreferencesViewController loadController];
+        self.preferencesController = [XGAPreferencesViewController new];
     }
     self.preferencesController.window.delegate = self;
     [self.preferencesController.window makeKeyAndOrderFront:self];

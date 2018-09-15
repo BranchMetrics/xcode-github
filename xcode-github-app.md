@@ -8,6 +8,7 @@
 * [x] Add icon to status line.
 * [x] Make preferences dialog: 'Observe' only mode, refresh interval.
 * [ ] Make "Add Server" flow.
+* [ ] NSPopover?
 * [ ] Make "Add GitHub Token" flow.
 * [ ] Add help.
 * [ ] Add tests?

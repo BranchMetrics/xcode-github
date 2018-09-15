@@ -53,7 +53,7 @@
 
 @implementation XGAStatusViewController
 
-+ (instancetype) loadController {
++ (instancetype) new {
     XGAStatusViewController*controller = [[XGAStatusViewController alloc] init];
     [[NSBundle mainBundle]
         loadNibNamed:NSStringFromClass(self)
@@ -120,7 +120,7 @@
     [panel show];
 }
 
-- (IBAction) clone:(id)sender {
+- (IBAction) monitorForNewPRs:(id)sender {
 }
 
 - (IBAction) delete:(id)sender {
@@ -140,7 +140,7 @@
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem {
     if (menuItem.action == @selector(showInfo:) ||
-        menuItem.action == @selector(clone:) ||
+        menuItem.action == @selector(monitorForNewPRs:) ||
         menuItem.action == @selector(delete:)) {
         return ([self itemIsSelected]);
     }

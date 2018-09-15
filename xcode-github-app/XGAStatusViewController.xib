@@ -223,7 +223,7 @@
                     <constraint firstItem="ifZ-K6-x8v" firstAttribute="leading" secondItem="vWG-l8-hki" secondAttribute="leading" id="vOC-k4-GLa"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="419" y="-89"/>
+            <point key="canvasLocation" x="885" y="-92"/>
         </window>
         <arrayController id="cGa-aF-L8a"/>
         <menu id="HcQ-Df-cNa">
@@ -234,10 +234,13 @@
                         <action selector="showInfo:" target="-2" id="PFt-V8-58A"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Clone" id="UUl-ub-dpc">
+                <menuItem title="Show in Xcode" id="tZw-ZC-F0p">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="Monitor GitHub PRs" state="on" id="UUl-ub-dpc">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="clone:" target="-2" id="lvU-Hf-u4V"/>
+                        <action selector="monitorForNewPRs:" target="-1" id="Z5n-sO-Yzy"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Delete" id="IKy-Sz-f9z">
@@ -247,7 +250,7 @@
                     </connections>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="846" y="-140"/>
+            <point key="canvasLocation" x="1275" y="-212"/>
         </menu>
     </objects>
     <resources>

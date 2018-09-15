@@ -348,7 +348,7 @@ NSString* XGDurationStringFromTimeInterval(NSTimeInterval timeInterval) {
 }
 
 + (NSDictionary<NSString*, XGXcodeBot*>*_Nullable) botsForServer:(NSString*_Nonnull)xcodeServerName
-error:(NSError*__autoreleasing _Nullable*_Nullable)error {
+        error:(NSError*__autoreleasing _Nullable*_Nullable)error {
 
     NSError *localError = nil;
     NSMutableDictionary<NSString*, XGXcodeBot*>* bots = nil;
