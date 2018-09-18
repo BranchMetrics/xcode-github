@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface XGALogViewController : NSViewController
 + (void) startLog;
-+ (instancetype) loadController;
++ (instancetype) new;
 @property (strong) IBOutlet NSWindow*window;
 @end
 

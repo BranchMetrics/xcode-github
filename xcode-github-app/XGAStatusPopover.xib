@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="XGAStatusPopover">
+            <connections>
+                <outlet property="detailTextField" destination="03f-nu-r28" id="ylg-Zu-2bT"/>
+                <outlet property="popover" destination="Eaz-WC-T3R" id="hkU-ZO-KXz"/>
+                <outlet property="statusImageView" destination="UZ3-h6-SXv" id="g4X-Kc-rbh"/>
+                <outlet property="statusTextField" destination="h09-u9-CoG" id="xJ3-aa-cFX"/>
+                <outlet property="titleTextField" destination="hpT-hu-uue" id="mCz-k3-cnM"/>
+                <outlet property="view" destination="LKa-LI-ccx" id="yZ4-00-eeK"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <viewController id="NoM-LW-rnZ" userLabel="Popover View Controller" customClass="XGAStatusPopover">
+            <connections>
+                <outlet property="detailTextField" destination="03f-nu-r28" id="R2F-Wf-Wsm"/>
+                <outlet property="popover" destination="Eaz-WC-T3R" id="wys-nr-bdO"/>
+                <outlet property="statusImageView" destination="UZ3-h6-SXv" id="Yxp-55-Lr8"/>
+                <outlet property="statusTextField" destination="h09-u9-CoG" id="lpr-o0-E2r"/>
+                <outlet property="titleTextField" destination="hpT-hu-uue" id="5wi-Ry-Z2n"/>
+                <outlet property="view" destination="LKa-LI-ccx" id="DGu-y3-WZ4"/>
+            </connections>
+        </viewController>
+        <popover behavior="t" id="Eaz-WC-T3R">
+            <connections>
+                <outlet property="contentViewController" destination="-2" id="6tC-SX-8Jg"/>
+            </connections>
+        </popover>
+        <view wantsLayer="YES" focusRingType="none" id="LKa-LI-ccx" customClass="XGAView">
+            <rect key="frame" x="0.0" y="0.0" width="93" height="72"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <customView focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="yFh-TD-feW" customClass="XGAView">
+                    <rect key="frame" x="12" y="12" width="69" height="48"/>
+                    <subviews>
+                        <textField horizontalHuggingPriority="900" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h09-u9-CoG">
+                            <rect key="frame" x="28" y="25" width="43" height="17"/>
+                            <textFieldCell key="cell" controlSize="mini" selectable="YES" sendsActionOnEndEditing="YES" title="Status" id="ju3-lm-nya">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <imageView horizontalHuggingPriority="751" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="UZ3-h6-SXv">
+                            <rect key="frame" x="0.0" y="21" width="24" height="24"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="24" id="LKy-Qn-O8O"/>
+                                <constraint firstAttribute="height" constant="24" id="bX6-KN-ipq"/>
+                            </constraints>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="RoundBlue" id="TyO-xb-afW"/>
+                        </imageView>
+                        <textField horizontalHuggingPriority="751" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="03f-nu-r28" customClass="XGALabel">
+                            <rect key="frame" x="-2" y="0.0" width="73" height="17"/>
+                            <textFieldCell key="cell" controlSize="mini" selectable="YES" sendsActionOnEndEditing="YES" title="Detail" id="GMX-AO-rfj">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField horizontalHuggingPriority="750" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" placeholderIntrinsicWidth="69" placeholderIntrinsicHeight="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="hpT-hu-uue" customClass="XGALabel">
+                            <rect key="frame" x="-2" y="48" width="73" height="0.0"/>
+                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Title" usesSingleLineMode="YES" id="yAE-A6-5dC">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="03f-nu-r28" secondAttribute="bottom" id="117-yh-9Jf"/>
+                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="650" id="2Jy-7U-j4m"/>
+                        <constraint firstItem="03f-nu-r28" firstAttribute="top" secondItem="h09-u9-CoG" secondAttribute="bottom" constant="8" id="30P-Rb-1rt"/>
+                        <constraint firstItem="hpT-hu-uue" firstAttribute="top" secondItem="yFh-TD-feW" secondAttribute="top" id="7OM-Ui-L8T"/>
+                        <constraint firstItem="UZ3-h6-SXv" firstAttribute="leading" secondItem="yFh-TD-feW" secondAttribute="leading" id="Bqj-Aj-t2U"/>
+                        <constraint firstItem="UZ3-h6-SXv" firstAttribute="top" secondItem="hpT-hu-uue" secondAttribute="bottom" constant="3" id="FiF-4S-9hm"/>
+                        <constraint firstItem="h09-u9-CoG" firstAttribute="leading" secondItem="UZ3-h6-SXv" secondAttribute="trailing" constant="6" id="d0B-n9-Tc6"/>
+                        <constraint firstAttribute="trailing" secondItem="hpT-hu-uue" secondAttribute="trailing" id="eWh-Mh-X8S"/>
+                        <constraint firstItem="hpT-hu-uue" firstAttribute="leading" secondItem="yFh-TD-feW" secondAttribute="leading" id="hrY-24-Hui"/>
+                        <constraint firstItem="h09-u9-CoG" firstAttribute="top" secondItem="UZ3-h6-SXv" secondAttribute="top" constant="3" id="hxg-Mz-2jC"/>
+                        <constraint firstAttribute="trailing" secondItem="03f-nu-r28" secondAttribute="trailing" id="nW1-rC-QND"/>
+                        <constraint firstAttribute="trailing" secondItem="h09-u9-CoG" secondAttribute="trailing" id="v13-YK-lVs"/>
+                        <constraint firstItem="03f-nu-r28" firstAttribute="leading" secondItem="yFh-TD-feW" secondAttribute="leading" id="z0z-Hq-t3I"/>
+                    </constraints>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="yFh-TD-feW" firstAttribute="leading" secondItem="LKa-LI-ccx" secondAttribute="leading" constant="12" id="0ra-gJ-UvE"/>
+                <constraint firstAttribute="trailing" secondItem="yFh-TD-feW" secondAttribute="trailing" constant="12" id="9g5-nb-9Zv"/>
+                <constraint firstItem="yFh-TD-feW" firstAttribute="top" secondItem="LKa-LI-ccx" secondAttribute="top" constant="12" id="EOk-Pu-Vod"/>
+                <constraint firstAttribute="bottom" secondItem="yFh-TD-feW" secondAttribute="bottom" constant="12" id="Ixt-HM-dlL"/>
+            </constraints>
+            <point key="canvasLocation" x="-449.5" y="-362.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="RoundBlue" width="12" height="12"/>
+    </resources>
+</document>

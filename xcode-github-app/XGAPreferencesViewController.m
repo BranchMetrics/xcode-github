@@ -14,6 +14,10 @@
 
 @interface XGAPreferencesViewController ()
 @property (strong) IBOutlet XGASettings*settings;
+@property (strong) IBOutlet NSArrayController*serverArrayController;
+@property (strong) IBOutlet NSTextField*gitHubTokenTextField;
+@property (strong) IBOutlet NSButton *removeButton;
+@property (strong) IBOutlet NSTableView *tableView;
 @property (strong) XGAAddServerPanel *addServerPanel;
 @end
 
@@ -36,15 +40,28 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     self.settings = [XGASettings shared];
+    self.removeButton.enabled = NO;
 }
 
 - (IBAction)valueChanged:(id)sender {
     [self.settings save];
 }
 
+- (void)tableViewSelectionDidChange:(NSNotification *)notification {
+    NSInteger idx = self.tableView.selectedRow;
+    self.removeButton.enabled = (idx >= 0 && idx < [self.serverArrayController.arrangedObjects count]);
+}
+
 - (IBAction)addServerAction:(id)sender {
     self.addServerPanel = [XGAAddServerPanel new];
     [self.window beginSheet:self.addServerPanel completionHandler:^(NSModalResponse returnCode) {
+        if (returnCode == NSModalResponseOK) {
+            XGAServerSetting*server = [[XGAServerSetting alloc] init];
+            server.server = self.addServerPanel.serverName;
+            server.user = self.addServerPanel.userName;
+            server.password = self.addServerPanel.password;
+            [self.settings.servers addObject:server];
+        }
         self.addServerPanel = nil;
     }];
 }

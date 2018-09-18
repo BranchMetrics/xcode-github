@@ -161,8 +161,7 @@ NSError *XGShowXcodeBotStatus(NSString* xcodeServerName) {
 
     BNCLogDebug(@"Refreshing Xcode bot status...");
     NSError *error = nil;
-    NSDictionary<NSString*, XGXcodeBot*> *bots =
-        [XGXcodeBot botsForServer:xcodeServerName error:&error];
+    NSDictionary<NSString*, XGXcodeBot*> *bots = [XGXcodeBot botsForServer:xcodeServerName error:&error];
     if (error) {
         BNCLogError(@"Can't retrieve Xcode bot information from '%@': %@.",
             xcodeServerName, error);

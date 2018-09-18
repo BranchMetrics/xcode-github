@@ -408,6 +408,12 @@ NSString* XGDurationStringFromTimeInterval(NSTimeInterval timeInterval) {
     }
 
 exit:
+    if (localError.code == -999) {
+        localError = [NSError errorWithDomain:NSURLErrorDomain
+            code:NSURLErrorUserAuthenticationRequired userInfo:@{
+                NSLocalizedDescriptionKey: @"User authentication is required."
+        }];
+    }
     if (error) *error = localError;
     return bots;
 }

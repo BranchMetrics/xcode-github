@@ -236,7 +236,7 @@
     [operation.sessionTask resume];
 }
 
-#pragma mark - The gorey details
+#pragma mark - Gorey Details
 
 - (NSError*) pinSessionToPublicSecKeyRefs:(NSArray/**<SecKeyRef>*/*)publicKeys {
     @synchronized (self) {

@@ -12,8 +12,7 @@
 #import "XGXcodeBot.h"
 #import "XGCommand.h"
 #import "XGASettings.h"
-#import "XGAStatusPanel.h"
-#import "APPArrowPanel.h"
+#import "XGAStatusPopover.h"
 #import "BNCThreads.h"
 #import "BNCNetworkService.h"
 #import "BNCLog.h"
@@ -41,7 +40,7 @@
 @property (strong) dispatch_source_t statusTimer;
 @property (assign, nonatomic) _Atomic(BOOL) statusIsInProgress;
 @property (strong) NSArray<XGAServerStatus*> *serverStatusArray;
-@property (strong) XGAStatusPanel*statusPanel;
+@property (strong) XGAStatusPopover*statusPopover;
 @property (weak)   IBOutlet NSTableView *tableView;
 @property (strong) IBOutlet NSArrayController *arrayController;
 
@@ -80,13 +79,14 @@
     [self.tableView setDoubleAction:@selector(showInfo:)];
     self.window = self.view.window;
     XGAServerStatus *status = [XGAServerStatus new];
+    status.statusImage = [NSImage imageNamed:@"RoundBlue"];
     status.statusSummary = [APPFormattedString boldText:@"< Refreshing >"];
     self.serverStatusArray = @[ status ];
     [self startStatusUpdates];
 }
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification {
-    if (self.statusPanel)
+    if (self.statusPopover)
         [self showInfo:self];
 }
 
@@ -95,29 +95,30 @@
 - (IBAction) showInfo:(id)sender {
     NSInteger idx = self.tableView.selectedRow;
     if (idx < 0 || idx >= [self.arrayController.arrangedObjects count]) {
-        [self.statusPanel dismiss];
-        self.statusPanel = nil;
+        [self.statusPopover close];
+        self.statusPopover = nil;
         return;
     }
     XGAServerStatus*status = [self.arrayController.arrangedObjects objectAtIndex:idx];
     if (![status isKindOfClass:XGAServerStatus.class]) return;
 
-    NSRect r = [self.tableView rectOfRow:idx];
-    r = [self.tableView convertRect:r toView:nil];
-    r = [self.window convertRectToScreen:r];
-
     // Show the status panel:
-    XGAStatusPanel*panel = [XGAStatusPanel loadPanel];
+    if (!self.statusPopover) self.statusPopover = [[XGAStatusPopover alloc] init];
     NSFont*font = [NSFont systemFontOfSize:[NSFont systemFontSize]];
-    panel.titleTextField.attributedStringValue =
-        [[[[APPFormattedString builder]
-            appendBold:@"%@", status.botName]
-                build] renderAttributedStringWithFont:font];
-    panel.statusImageView.image = status.statusImage;
-    panel.statusTextField.attributedStringValue = [status.statusSummary renderAttributedStringWithFont:font];
-    panel.detailTextField.attributedStringValue = [status.statusDetail renderAttributedStringWithFont:font];
-    panel.arrowPoint = NSMakePoint(r.size.width/2.0+r.origin.x, r.origin.y);
-    [panel show];
+    if (status.botName.length > 0) {
+        self.statusPopover.titleTextField.attributedStringValue =
+            [[[[APPFormattedString builder]
+                appendBold:@"%@", status.botName]
+                    build] renderAttributedStringWithFont:font];
+    }
+    self.statusPopover.statusImageView.image = status.statusImage;
+    self.statusPopover.statusTextField.attributedStringValue =
+        [status.statusSummary renderAttributedStringWithFont:font];
+    self.statusPopover.detailTextField.attributedStringValue =
+        [status.statusDetail renderAttributedStringWithFont:font];
+
+    NSRect r = [self.tableView rectOfRow:idx];
+    [self.statusPopover showRelativeToRect:r ofView:self.tableView preferredEdge:NSRectEdgeMaxY];
 }
 
 - (IBAction) monitorForNewPRs:(id)sender {
@@ -214,13 +215,16 @@
     NSMutableSet *statusServers = [NSMutableSet new];
     NSArray<XGAServerGitHubSyncTask*>* syncTasks = [XGASettings shared].serverGitHubSyncTasks;
     for (XGAServerGitHubSyncTask*task in syncTasks) {
-        if (task.xcodeServerName.length == 0) continue;
-        [[BNCNetworkService shared].anySSLCertHosts addObject:task.xcodeServerName];
+        if (task.xcodeServer.length == 0) continue;
+        [[BNCNetworkService shared].anySSLCertHosts addObject:task.xcodeServer];
         [self updateSyncBots:task];
-        [statusServers addObject:task.xcodeServerName];
+        [statusServers addObject:task.xcodeServer];
     }
     for (NSString*serverName in statusServers) {
         [self updateXcodeServerStatus:serverName];
+    }
+    if (syncTasks.count == 0 && statusServers.count == 0) {
+        [self updateXcodeServerStatus:nil];
     }
     BNCLogDebug(@"End updateStatus.");
 
@@ -233,11 +237,11 @@
 
 - (void) updateSyncBots:(XGAServerGitHubSyncTask*)syncTask {
     NSError*error = nil;
-    if (syncTask.xcodeServerName.length &&
+    if (syncTask.xcodeServer.length &&
         syncTask.gitHubRepo.length &&
         syncTask.templateBotName.length) {
         XGCommandOptions*options = [XGCommandOptions new];
-        options.xcodeServerName = syncTask.xcodeServerName;
+        options.xcodeServerName = syncTask.xcodeServer;
         options.templateBotName = syncTask.templateBotName;
         options.githubAuthToken = syncTask.gitHubToken;
         options.dryRun = YES;
@@ -260,24 +264,28 @@
 - (void) updateXcodeServerStatus:(NSString*)serverName {
     NSError*error = nil;
     NSMutableArray *statusArray = [NSMutableArray new];
-    NSDictionary<NSString*, XGXcodeBot*>* bots = [XGXcodeBot botsForServer:serverName error:&error];
-    if (error) {
-        XGAServerStatus *status = [XGAServerStatus new];
-        status.serverName = serverName;
-        status.statusSummary = [APPFormattedString boldText:@"Server Error"];
-        status.statusImage = [NSImage imageNamed:@"RoundAlert"];
-        status.statusDetail = [APPFormattedString plainText:error.localizedDescription];
-        [statusArray addObject:status];
-    } else {
-        for (XGXcodeBot *bot in bots.objectEnumerator) {
-            XGXcodeBotStatus*botStatus = [bot status];
-            XGAServerStatus*status = [self statusWithBotStatus:botStatus];
-            if (status) [statusArray addObject:status];
+    if (serverName.length > 0) {
+        NSDictionary<NSString*, XGXcodeBot*>* bots = [XGXcodeBot botsForServer:serverName error:&error];
+        if (error) {
+            XGAServerStatus *status = [XGAServerStatus new];
+            status.serverName = serverName;
+            status.statusSummary = [APPFormattedString boldText:@"Server Error"];
+            status.statusImage = [NSImage imageNamed:@"RoundAlert"];
+            status.statusDetail = [APPFormattedString plainText:error.localizedDescription];
+            [statusArray addObject:status];
+        } else {
+            for (XGXcodeBot *bot in bots.objectEnumerator) {
+                XGXcodeBotStatus*botStatus = [bot status];
+                XGAServerStatus*status = [self statusWithBotStatus:botStatus];
+                if (status) [statusArray addObject:status];
+            }
         }
     }
     if (statusArray.count == 0) {
         XGAServerStatus *status = [XGAServerStatus new];
-        status.statusSummary = [APPFormattedString boldText:@"< No Xcode servers yet >"];
+        status.statusImage = [NSImage imageNamed:@"RoundBlue"];
+        status.statusSummary = [APPFormattedString boldText:@"< No Xcode servers added yet >"];
+        [statusArray addObject:status];
     }
     BNCPerformBlockOnMainThreadAsync(^{
         self.serverStatusArray = statusArray;

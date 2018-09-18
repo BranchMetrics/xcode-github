@@ -14,13 +14,16 @@
 
 NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
 
+@implementation XGAServerSetting
+@end
+
 #pragma mark XGAServerGitHubSyncTask
 
 @implementation XGAServerGitHubSyncTask
 
 - (NSDictionary*_Nonnull) dictionary {
     NSMutableDictionary *d = [NSMutableDictionary new];
-    d[@"xcodeServerName"] = self.xcodeServerName;
+    d[@"xcodeServer"] = self.xcodeServer;
     d[@"gitHubRepo"] = self.gitHubRepo;
     d[@"templateBotName"] = self.templateBotName;
     return d;
@@ -29,7 +32,7 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
 + (XGAServerGitHubSyncTask*_Nonnull) serverGitHubSyncTaskWithDictionary:(NSDictionary*_Nonnull)dictionary {
     XGAServerGitHubSyncTask*task = [XGAServerGitHubSyncTask new];
     if (!task) return task;
-    task->_xcodeServerName = dictionary[@"xcodeServerName"];
+    task->_xcodeServer = dictionary[@"xcodeServer"];
     task->_gitHubRepo = dictionary[@"gitHubRepo"];
     task->_templateBotName = dictionary[@"templateBotName"];
     return task;
@@ -37,7 +40,7 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
 
 - (void) setXcodeServerName:(NSString*)serverName userPassword:(NSString*)userPassword {
     @synchronized(self) {
-        self->_xcodeServerName = serverName;
+        self->_xcodeServer = serverName;
         if (!serverName) return;
         NSError *error =
             [BNCKeyChain storeValue:userPassword
@@ -65,7 +68,7 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
     @synchronized(self) {
         NSError*error = nil;
         NSString *userPassword =
-            [BNCKeyChain retrieveValueForService:kXGAServiceName key:self.xcodeServerName error:&error];
+            [BNCKeyChain retrieveValueForService:kXGAServiceName key:self.xcodeServer error:&error];
         return (error) ? nil : userPassword;
     }
 }
@@ -131,13 +134,15 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
             gitHubToken:@"13e499f7d9ba4fca42e4715558d1e5bc30a6a4e9"];
         [self.serverGitHubSyncTasks addObject:task];
 */
+
+/*
         task = [XGAServerGitHubSyncTask new];
         [task setXcodeServerName:@"esmith.local" userPassword:nil];
         task.templateBotName = @"xcode-github-tests master";
         [task setGitHubRepo:@"BranchMetrics:xcode-github"
             gitHubToken:@"13e499f7d9ba4fca42e4715558d1e5bc30a6a4e9"];
         [self.serverGitHubSyncTasks addObject:task];
-
+*/
         NSUserDefaults*defaults = [NSUserDefaults standardUserDefaults];
         self.hasRunBefore = [defaults boolForKey:@"hasRunBefore"];
         if (!self.hasRunBefore) [self setInitialDefaults];

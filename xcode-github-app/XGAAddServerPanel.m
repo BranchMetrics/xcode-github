@@ -1,15 +1,15 @@
-//
 /**
  @file          XGAAddServerPanel.m
  @package       xcode-github-app
- @brief         < A brief description of the file function. >
+ @brief         A panel to select a server.
 
- @author        Edward
- @date          2018
+ @author        Edward Smith
+ @date          September 2018
  @copyright     Copyright © 2018 Branch. All rights reserved.
 */
 
 #import "XGAAddServerPanel.h"
+#import "XGXcodeBot.h"
 #import "BNCThreads.h"
 
 NSTimeInterval const kNetworkRefreshInterval = 7.0;
@@ -51,31 +51,12 @@ NSTimeInterval const kNetworkRefreshInterval = 7.0;
 
 - (void) awakeFromNib {
     [super awakeFromNib];
+    self.addButton.enabled = NO;
     [self startNetworkLookup];
 }
 
 -(BOOL) canBecomeKeyWindow {
     return YES;
-}
-
-- (IBAction)tableRowAction:(id)sender {
-    NSInteger idx = self.serverTableView.selectedRow;
-    if (idx < 0 || idx >= [self.serverArrayController.arrangedObjects count]) return;
-    NSString*server = [self.serverArrayController.arrangedObjects objectAtIndex:idx];
-    if (server) {
-        self.serverTextField.stringValue = server;
-        [self.userTextField becomeFirstResponder];
-    }
-}
-
-- (IBAction)add:(id)sender {
-    [self stopNetworkLookup];
-    [self.sheetParent endSheet:self returnCode:NSModalResponseOK];
-}
-
-- (IBAction)cancel:(id)sender {
-    [self stopNetworkLookup];
-    [self.sheetParent endSheet:self returnCode:NSModalResponseCancel];
 }
 
 - (NSString*) serverName {
@@ -88,6 +69,44 @@ NSTimeInterval const kNetworkRefreshInterval = 7.0;
 
 - (NSString*) password {
     return self.passwordTextField.stringValue;
+}
+
+- (IBAction)tableRowAction:(id)sender {
+    NSInteger idx = self.serverTableView.selectedRow;
+    if (idx < 0 || idx >= [self.serverArrayController.arrangedObjects count]) return;
+    NSString*server = [self.serverArrayController.arrangedObjects objectAtIndex:idx];
+    if (server) {
+        self.serverTextField.stringValue = server;
+        self.addButton.enabled = (self.serverTextField.stringValue.length > 0);
+        [self.userTextField becomeFirstResponder];
+    }
+}
+
+- (IBAction)cancel:(id)sender {
+    [self stopNetworkLookup];
+    [self.sheetParent endSheet:self returnCode:NSModalResponseCancel];
+}
+
+- (void) controlTextDidChange:(NSNotification *)obj {
+    self.addButton.enabled = (self.serverTextField.stringValue.length > 0);
+}
+
+- (IBAction)add:(id)sender {
+    NSString*server = [self.serverTextField.stringValue copy];
+    if (server.length <= 0) return;
+    [self stopNetworkLookup];
+
+    NSError*error = nil;
+    [XGXcodeBot botsForServer:server error:&error];
+    if (error) {
+        NSAlert*alert = [[NSAlert alloc] init];
+        alert.messageText = [NSString stringWithFormat:@"Can't connect to %@", server];
+        alert.informativeText = [error localizedDescription];
+        alert.alertStyle = NSAlertStyleCritical;
+        [alert beginSheetModalForWindow:self completionHandler:nil];
+    } else {
+        [self.sheetParent endSheet:self returnCode:NSModalResponseOK];
+    }
 }
 
 #pragma mark - Networking
@@ -112,12 +131,11 @@ NSTimeInterval const kNetworkRefreshInterval = 7.0;
 
 - (void) updateNetworkSpinner {
     NSTimeInterval t = [self.networkLookupDate timeIntervalSinceNow];
-    if (t <= 0) {
+    if (t <= 0.0) {
         [self startNetworkLookup];
         return;
     }
-    t = (1.0 - (t / kNetworkRefreshInterval)) * 100.0f;
-    //NSLog(@"updateNetworkSpinnerL %f.", t);
+    t = (1.0f - (t / kNetworkRefreshInterval)) * 100.0f;
     self.activityWheel.doubleValue = t;
     [self.activityWheel setNeedsDisplay:YES];
 }

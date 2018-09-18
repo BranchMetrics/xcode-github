@@ -29,6 +29,7 @@ This command line tool creates a new Xcode test bot when a new PR on a GitHub re
 When a new PR is created, this app creates a new Xcode test bot on an Xcode server based on an existing template bot and schedules it to run. The bot will report the test status back on GitHub.
 
 ## Command Line and Help
+
 [Standard command line parsers.](https://stackoverflow.com/questions/9642732/parsing-command-line-arguments)
 
 ```

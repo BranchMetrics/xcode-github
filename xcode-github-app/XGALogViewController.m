@@ -13,7 +13,7 @@
 #import "BNCThreads.h"
 #import "APPFormattedString.h"
 #import "XGASettings.h"
-#import "XGAStatusPanel.h"
+#import "XGAStatusPopover.h"
 
 NSString*const XGALogUpdateNotification = @"XGALogUpdatedNotification";
 
@@ -37,7 +37,7 @@ NSString*const XGALogUpdateNotification = @"XGALogUpdatedNotification";
 @property (strong) NSDateFormatter*dateFormatter;
 @property (strong) IBOutlet NSArrayController *arrayController;
 @property (weak)   IBOutlet NSTableView*tableView;
-@property (strong) XGAStatusPanel*statusPanel;
+@property (strong) XGAStatusPopover*statusPopover;
 @end
 
 #pragma mark - Log Function
@@ -83,7 +83,7 @@ void XGALogFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Null
     return logArray;
 }
 
-+ (instancetype) loadController {
++ (instancetype) new {
     XGALogViewController*controller = [[XGALogViewController alloc] init];
     [[NSBundle mainBundle]
         loadNibNamed:NSStringFromClass(self)
@@ -145,7 +145,7 @@ void XGALogFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Null
         self.dateFormatter.timeStyle = NSDateFormatterShortStyle;
     }
 
-    [self.tableView setDoubleAction:@selector(showStatusPanelAction:)];
+    [self.tableView setDoubleAction:@selector(showstatusPopoverAction:)];
     [[NSNotificationCenter defaultCenter]
         addObserver:self
         selector:@selector(logUpdatedNotification:)
@@ -160,8 +160,7 @@ void XGALogFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Null
 }
 
 - (void) dealloc {
-    [self.statusPanel dismiss];
-    self.statusPanel = nil;
+    [self.statusPopover close];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[XGASettings shared] removeObserver:self forKeyPath:@"showDebugMessages"];
 }
@@ -195,38 +194,34 @@ void XGALogFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Null
 }
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification {
-    if (self.statusPanel)
-        [self showStatusPanelAction:self];
+    if (self.statusPopover)
+        [self showstatusPopoverAction:self];
 }
 
-- (void) showStatusPanelAction:(id)sender {
+- (void) showstatusPopoverAction:(id)sender {
     NSInteger idx = self.tableView.selectedRow;
     if (idx < 0 || idx >= [self.arrayController.arrangedObjects count]) {
-        [self.statusPanel dismiss];
-        self.statusPanel = nil;
+        [self.statusPopover close];
         return;
     }
     XGALogRow *row = [self.arrayController.arrangedObjects objectAtIndex:idx];
     if (![row isKindOfClass:XGALogRow.class]) return;
 
-    NSRect r = [self.tableView rectOfRow:idx];
-    r = [self.tableView convertRect:r toView:nil];
-    r = [self.window convertRectToScreen:r];
-
-    APPFormattedString*title =
+    APPFormattedString*status =
         [[[[[APPFormattedString builder]
             appendBold:@"%@", [XGALogViewController stringForLogLevel:row.logLevel]]
             appendPlain:@"     "]
             appendItalic:@"%@", [self.dateFormatter stringFromDate:row.date]]
                 build];
 
-    if (!self.statusPanel) self.statusPanel = [XGAStatusPanel loadPanel];
+    if (!self.statusPopover) self.statusPopover = [[XGAStatusPopover alloc] init];
     NSFont*font = [NSFont systemFontOfSize:[NSFont systemFontSize]];
-    self.statusPanel.statusImageView.image = [XGALogViewController imageForLogLevel:row.logLevel];
-    self.statusPanel.titleTextField.attributedStringValue = [title renderAttributedStringWithFont:font];
-    self.statusPanel.detailTextField.stringValue = row.logMessage;
-    self.statusPanel.arrowPoint = NSMakePoint(r.size.width/2.0+r.origin.x, r.origin.y);
-    [self.statusPanel show];
+    self.statusPopover.statusImageView.image = [XGALogViewController imageForLogLevel:row.logLevel];
+    self.statusPopover.statusTextField.attributedStringValue = [status renderAttributedStringWithFont:font];
+    self.statusPopover.detailTextField.stringValue = row.logMessage;
+
+    NSRect r = [self.tableView rectOfRow:idx];
+    [self.statusPopover showRelativeToRect:r ofView:self.tableView preferredEdge:NSRectEdgeMaxY];
 }
 
 @end
