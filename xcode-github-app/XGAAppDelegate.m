@@ -12,6 +12,7 @@
 #import "XGALogViewController.h"
 #import "XGAStatusViewController.h"
 #import "XGAPreferencesViewController.h"
+#import "BNCNetworkService.h"
 
 @interface XGAAppDelegate () <NSWindowDelegate>
 @property (nonatomic, strong) IBOutlet XGALogViewController*logController;
@@ -22,6 +23,7 @@
 @implementation XGAAppDelegate
 
 - (void)awakeFromNib {
+    [BNCNetworkService shared].allowAnySSLCert = YES;
     self.logController = [XGALogViewController new];
     self.statusController = [XGAStatusViewController new];
 }

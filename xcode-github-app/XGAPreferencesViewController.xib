@@ -51,6 +51,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="removeServerAction:" target="-2" id="oUQ-vC-CAs"/>
+                                </connections>
                             </button>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m3O-1F-jYg">
                                 <rect key="frame" x="0.0" y="21" width="434" height="114"/>
@@ -90,6 +93,13 @@
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
+                                                                    <connections>
+                                                                        <binding destination="z7D-c1-n7T" name="value" keyPath="objectValue.server" id="Pk7-3x-3st">
+                                                                            <dictionary key="options">
+                                                                                <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                                                            </dictionary>
+                                                                        </binding>
+                                                                    </connections>
                                                                 </textField>
                                                             </subviews>
                                                             <connections>
@@ -123,6 +133,13 @@
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
+                                                                    <connections>
+                                                                        <binding destination="eih-jm-NR2" name="value" keyPath="objectValue.user" id="ApG-yk-5mr">
+                                                                            <dictionary key="options">
+                                                                                <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                                                            </dictionary>
+                                                                        </binding>
+                                                                    </connections>
                                                                 </textField>
                                                             </subviews>
                                                             <connections>
@@ -133,6 +150,7 @@
                                                 </tableColumn>
                                             </tableColumns>
                                             <connections>
+                                                <binding destination="KdM-cZ-U5K" name="content" keyPath="arrangedObjects" id="Eec-vd-5o2"/>
                                                 <outlet property="delegate" destination="-2" id="8Zv-VG-jBt"/>
                                             </connections>
                                         </tableView>

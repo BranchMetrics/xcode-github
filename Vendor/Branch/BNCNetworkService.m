@@ -289,6 +289,8 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
         SecTrustEvaluate(serverTrust, &trustResult);
         switch (trustResult) {
         case kSecTrustResultRecoverableTrustFailure:
+            if (self.allowAnySSLCert)
+                break;            
             if ([localAllowedHosts containsObject:challenge.protectionSpace.host])
                 break;
             else

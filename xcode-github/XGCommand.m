@@ -157,7 +157,7 @@ NSError *XGShowXcodeBotStatus(NSString* xcodeServerName) {
     // Update the bots and display the results:
 
     // Allow self-signed certs from the xcode server:
-    [[BNCNetworkService shared].anySSLCertHosts addObject:xcodeServerName];
+    [BNCNetworkService shared].allowAnySSLCert = YES;
 
     BNCLogDebug(@"Refreshing Xcode bot status...");
     NSError *error = nil;
@@ -187,7 +187,7 @@ NSError*_Nullable XGUpdateXcodeBotsWithGitHub(XGCommandOptions*_Nonnull options)
     int returnCode = EXIT_FAILURE;
     {
         // Allow self-signed certs from the xcode server:
-        [[BNCNetworkService shared].anySSLCertHosts addObject:options.xcodeServerName];
+        [BNCNetworkService shared].allowAnySSLCert = YES;
 
         BNCLogDebug(@"Getting Xcode bots on '%@'...", options.xcodeServerName);
 

@@ -20,9 +20,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong) NSString*password;
 @end
 
-#pragma mark XGAServerGitHubSyncTask
+#pragma mark XGGitHubSyncTask
 
-@interface XGAServerGitHubSyncTask : NSObject
+@interface XGAGitHubSyncTask : NSObject
 @property (strong, readonly) NSString*xcodeServer;
 @property (strong, readonly) NSString*xcodeUser;
 @property (strong, readonly) NSString*xcodePassword;
@@ -35,7 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) setGitHubRepo:(NSString*)gitHubRepo gitHubToken:(NSString*_Nullable)token;
 
 - (NSDictionary*) dictionary;
-+ (XGAServerGitHubSyncTask*) serverGitHubSyncTaskWithDictionary:(NSDictionary*)dictionary;
++ (XGAGitHubSyncTask*) gitHubSyncTaskWithDictionary:(NSDictionary*)dictionary;
 @end
 
 #pragma mark - XGASettings
@@ -47,8 +47,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (assign) BOOL hasRunBefore;
 @property (assign) BOOL showDebugMessages;
 @property (assign) NSTimeInterval refreshSeconds;
-@property (strong) NSMutableArray<XGAServerSetting*>*servers;
-@property (strong) NSMutableArray<XGAServerGitHubSyncTask*>*serverGitHubSyncTasks;
+@property (strong, null_resettable) NSMutableArray<XGAServerSetting*>*servers;
+@property (strong, null_resettable) NSMutableArray<XGAGitHubSyncTask*>*gitHubSyncTasks;
 @end
 
 NS_ASSUME_NONNULL_END

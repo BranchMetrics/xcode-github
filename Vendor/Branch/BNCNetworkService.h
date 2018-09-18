@@ -52,6 +52,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// An array of host domains that we will allow with a self-signed SSL cert.
 @property (strong) NSMutableSet<NSString*>*_Nullable anySSLCertHosts;
+
+/// Allow self-signed certs from any host. Trumps `anySSLCertHosts`.
+@property (assign) BOOL allowAnySSLCert;
 @end
 
 NS_ASSUME_NONNULL_END

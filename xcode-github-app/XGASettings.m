@@ -17,9 +17,9 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
 @implementation XGAServerSetting
 @end
 
-#pragma mark XGAServerGitHubSyncTask
+#pragma mark XGAGitHubSyncTask
 
-@implementation XGAServerGitHubSyncTask
+@implementation XGAGitHubSyncTask
 
 - (NSDictionary*_Nonnull) dictionary {
     NSMutableDictionary *d = [NSMutableDictionary new];
@@ -29,8 +29,8 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
     return d;
 }
 
-+ (XGAServerGitHubSyncTask*_Nonnull) serverGitHubSyncTaskWithDictionary:(NSDictionary*_Nonnull)dictionary {
-    XGAServerGitHubSyncTask*task = [XGAServerGitHubSyncTask new];
++ (XGAGitHubSyncTask*_Nonnull) gitHubSyncTaskWithDictionary:(NSDictionary*_Nonnull)dictionary {
+    XGAGitHubSyncTask*task = [XGAGitHubSyncTask new];
     if (!task) return task;
     task->_xcodeServer = dictionary[@"xcodeServer"];
     task->_gitHubRepo = dictionary[@"gitHubRepo"];
@@ -84,6 +84,12 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
 
 #pragma mark - XGASettings
 
+@interface XGASettings () {
+    NSMutableArray<XGAServerSetting*>*_servers;
+    NSMutableArray<XGAGitHubSyncTask*>*_gitHubSyncTasks;
+}
+@end
+
 @implementation XGASettings
 
 + (XGASettings*_Nonnull) shared {
@@ -117,8 +123,8 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
 
 - (void) load {
     @synchronized(self) {
-        XGAServerGitHubSyncTask*task = nil;
-        self.serverGitHubSyncTasks = [NSMutableArray new];
+        XGAGitHubSyncTask*task = nil;
+        self.gitHubSyncTasks = [NSMutableArray new];
 /*
         task = [XGAServerGitHubSyncTask new];
         [task setXcodeServerName:@"esmith.local" userPassword:nil];
@@ -155,6 +161,36 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
 
 #endif
 
+#pragma mark - Setters/Getters
+
+- (NSMutableArray<XGAServerSetting*>*) servers {
+    @synchronized (self) {
+        if (_servers == nil) _servers = [NSMutableArray new];
+        return _servers;
+    }
+}
+
+- (void) setServers:(NSMutableArray<XGAServerSetting*>*)servers_ {
+    @synchronized (self) {
+        _servers = servers_;
+    }
+}
+
+- (NSMutableArray<XGAGitHubSyncTask*>*) gitHubSyncTasks {
+    @synchronized (self) {
+        if (_gitHubSyncTasks == nil) _gitHubSyncTasks = [NSMutableArray new];
+        return _gitHubSyncTasks;
+    }
+}
+
+- (void) setGitHubSyncTasks:(NSMutableArray<XGAGitHubSyncTask*>*)gitHubSyncTasks_ {
+    @synchronized (self) {
+        _gitHubSyncTasks = gitHubSyncTasks_;
+    }
+}
+
+NSMutableArray<XGAGitHubSyncTask*>*gitHubSyncTasks;
+
 - (void) validate {
     self.refreshSeconds = MAX(15.0, MIN(self.refreshSeconds, 60.0*60.0*24.0*1.0));
 }
@@ -170,12 +206,12 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
     @synchronized(self) {
         [self validate];
         NSMutableArray*array = [NSMutableArray new];
-        for (XGAServerGitHubSyncTask*task in self.serverGitHubSyncTasks) {
+        for (XGAGitHubSyncTask*task in self.gitHubSyncTasks) {
             NSDictionary *d = task.dictionary;
             [array addObject:d];
         }
         NSUserDefaults*defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setObject:array forKey:@"serverGitHubSyncTasks"];
+        [defaults setObject:array forKey:@"gitHubSyncTasks"];
         [defaults setBool:self.dryRun forKey:@"dryRun"];
         [defaults setBool:self.hasRunBefore forKey:@"hasRunBefore"];
         [defaults setDouble:self.refreshSeconds forKey:@"refreshSeconds"];

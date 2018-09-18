@@ -41,6 +41,7 @@
     [super awakeFromNib];
     self.settings = [XGASettings shared];
     self.removeButton.enabled = NO;
+    self.serverArrayController.content = self.settings.servers;
 }
 
 - (IBAction)valueChanged:(id)sender {
@@ -60,10 +61,17 @@
             server.server = self.addServerPanel.serverName;
             server.user = self.addServerPanel.userName;
             server.password = self.addServerPanel.password;
-            [self.settings.servers addObject:server];
+            [self.serverArrayController addObject:server];
         }
         self.addServerPanel = nil;
     }];
+}
+
+- (IBAction)removeServerAction:(id)sender {
+    NSInteger idx = self.tableView.selectedRow;
+    if (idx >= 0 && idx < [self.serverArrayController.arrangedObjects count]) {
+        [self.serverArrayController removeObjectAtArrangedObjectIndex:idx];
+    }
 }
 
 @end

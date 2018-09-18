@@ -213,10 +213,9 @@
     BNCLogDebug(@"Start updateStatus.");
     BNCPerformBlockOnMainThreadAsync(^{ self.statusTextField.stringValue = @""; });
     NSMutableSet *statusServers = [NSMutableSet new];
-    NSArray<XGAServerGitHubSyncTask*>* syncTasks = [XGASettings shared].serverGitHubSyncTasks;
-    for (XGAServerGitHubSyncTask*task in syncTasks) {
+    NSArray<XGAGitHubSyncTask*>* syncTasks = [XGASettings shared].gitHubSyncTasks;
+    for (XGAGitHubSyncTask*task in syncTasks) {
         if (task.xcodeServer.length == 0) continue;
-        [[BNCNetworkService shared].anySSLCertHosts addObject:task.xcodeServer];
         [self updateSyncBots:task];
         [statusServers addObject:task.xcodeServer];
     }
@@ -235,7 +234,7 @@
     self.statusIsInProgress = NO;
 }
 
-- (void) updateSyncBots:(XGAServerGitHubSyncTask*)syncTask {
+- (void) updateSyncBots:(XGAGitHubSyncTask*)syncTask {
     NSError*error = nil;
     if (syncTask.xcodeServer.length &&
         syncTask.gitHubRepo.length &&
