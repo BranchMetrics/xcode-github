@@ -14,28 +14,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark XGAServerSetting
 
-@interface XGAServerSetting : NSObject
-@property (strong) NSString*server;
-@property (strong) NSString*user;
-@property (strong) NSString*password;
+@interface XGAServerSetting : NSObject <NSSecureCoding>
+@property (strong) NSString*_Nullable server;
+@property (strong) NSString*_Nullable user;
+@property (strong) NSString*_Nullable password;
 @end
 
 #pragma mark XGGitHubSyncTask
 
-@interface XGAGitHubSyncTask : NSObject
-@property (strong, readonly) NSString*xcodeServer;
-@property (strong, readonly) NSString*xcodeUser;
-@property (strong, readonly) NSString*xcodePassword;
-
-@property (strong, readonly) NSString*gitHubRepo;
-@property (strong, readonly) NSString*gitHubToken;
-@property (strong)           NSString*templateBotName;
-
-- (void) setXcodeServerName:(NSString*)serverName userPassword:(NSString*_Nullable)userPassword;
-- (void) setGitHubRepo:(NSString*)gitHubRepo gitHubToken:(NSString*_Nullable)token;
-
-- (NSDictionary*) dictionary;
-+ (XGAGitHubSyncTask*) gitHubSyncTaskWithDictionary:(NSDictionary*)dictionary;
+@interface XGAGitHubSyncTask : NSObject <NSSecureCoding>
+@property (strong) XGAServerSetting*xcodeServer;
+@property (strong) NSString*gitHubToken;
+@property (strong) NSString*templateBotName;
 @end
 
 #pragma mark - XGASettings

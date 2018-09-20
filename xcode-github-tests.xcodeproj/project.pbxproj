@@ -30,6 +30,8 @@
 		4D99819C209260D400F2633A /* OCMock.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 4D99819B209260D400F2633A /* OCMock.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4DB6561D209253FC00D1FA25 /* BNCTestCase.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB6561C209253FC00D1FA25 /* BNCTestCase.Test.m */; };
 		4DED4894209BE450008DE877 /* BNCThreads.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DED4893209BE450008DE877 /* BNCThreads.m */; };
+		4DF6563721545EA300380FD0 /* BNCEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF6563421545EA300380FD0 /* BNCEncoder.m */; };
+		4DF6563821545EA300380FD0 /* BNCEncoder.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF6563621545EA300380FD0 /* BNCEncoder.Test.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +95,9 @@
 		4DB6561E20925A0300D1FA25 /* xcode-github-info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "xcode-github-info.plist"; sourceTree = "<group>"; };
 		4DED4892209BE450008DE877 /* BNCThreads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BNCThreads.h; path = Vendor/Branch/BNCThreads.h; sourceTree = SOURCE_ROOT; };
 		4DED4893209BE450008DE877 /* BNCThreads.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BNCThreads.m; path = Vendor/Branch/BNCThreads.m; sourceTree = SOURCE_ROOT; };
+		4DF6563421545EA300380FD0 /* BNCEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BNCEncoder.m; path = Vendor/Branch/BNCEncoder.m; sourceTree = SOURCE_ROOT; };
+		4DF6563521545EA300380FD0 /* BNCEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BNCEncoder.h; path = Vendor/Branch/BNCEncoder.h; sourceTree = SOURCE_ROOT; };
+		4DF6563621545EA300380FD0 /* BNCEncoder.Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BNCEncoder.Test.m; path = Vendor/Branch/BNCEncoder.Test.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +146,9 @@
 				4D262C7C2091234100DD80F4 /* BNCDebug.h */,
 				4D262C7E2091234100DD80F4 /* BNCDebug.m */,
 				4D262C7D2091234100DD80F4 /* BNCDebug.Test.m */,
+				4DF6563521545EA300380FD0 /* BNCEncoder.h */,
+				4DF6563421545EA300380FD0 /* BNCEncoder.m */,
+				4DF6563621545EA300380FD0 /* BNCEncoder.Test.m */,
 				4D262C672090FED300DD80F4 /* BNCKeyChain.h */,
 				4D262C632090FED300DD80F4 /* BNCKeyChain.m */,
 				4D262C6A2090FED300DD80F4 /* BNCKeyChain.Test.m */,
@@ -309,10 +317,12 @@
 				4D54C09320A76FC600C76496 /* BNCThreads.Test.m in Sources */,
 				4DED4894209BE450008DE877 /* BNCThreads.m in Sources */,
 				4D4E19E020923EAB00397575 /* NSString+Branch.Test.m in Sources */,
+				4DF6563721545EA300380FD0 /* BNCEncoder.m in Sources */,
 				4D790E3A2095ADB7008A9492 /* APPFormattedString.Test.m in Sources */,
 				4D262C6D2090FED300DD80F4 /* BNCLog.Test.m in Sources */,
 				4D262C802091234100DD80F4 /* BNCDebug.Test.m in Sources */,
 				4D262C6E2090FED300DD80F4 /* BNCTestCase.m in Sources */,
+				4DF6563821545EA300380FD0 /* BNCEncoder.Test.m in Sources */,
 				4DB6561D209253FC00D1FA25 /* BNCTestCase.Test.m in Sources */,
 				4D5303DE2142EA1F006E8A7B /* XGSettings.Test.m in Sources */,
 			);

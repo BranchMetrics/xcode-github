@@ -125,7 +125,6 @@ NSTimeInterval const kNetworkRefreshInterval = 7.0;
         [self.networkBrowser searchForServicesOfType:@"_xcs2p._tcp." inDomain:@""];
         self.activityWheel.indeterminate = YES;
         [self.activityWheel startAnimation:nil];
-        [self.activityWheel setNeedsDisplay:YES];
     }
 }
 

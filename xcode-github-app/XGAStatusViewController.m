@@ -215,7 +215,7 @@
     NSMutableSet *statusServers = [NSMutableSet new];
     NSArray<XGAGitHubSyncTask*>* syncTasks = [XGASettings shared].gitHubSyncTasks;
     for (XGAGitHubSyncTask*task in syncTasks) {
-        if (task.xcodeServer.length == 0) continue;
+        if (task.xcodeServer.server.length == 0) continue;
         [self updateSyncBots:task];
         [statusServers addObject:task.xcodeServer];
     }
@@ -236,11 +236,10 @@
 
 - (void) updateSyncBots:(XGAGitHubSyncTask*)syncTask {
     NSError*error = nil;
-    if (syncTask.xcodeServer.length &&
-        syncTask.gitHubRepo.length &&
+    if (syncTask.xcodeServer.server.length &&
         syncTask.templateBotName.length) {
         XGCommandOptions*options = [XGCommandOptions new];
-        options.xcodeServerName = syncTask.xcodeServer;
+        options.xcodeServerName = syncTask.xcodeServer.server;
         options.templateBotName = syncTask.templateBotName;
         options.githubAuthToken = syncTask.gitHubToken;
         options.dryRun = YES;

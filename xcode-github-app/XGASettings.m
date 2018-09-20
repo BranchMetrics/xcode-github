@@ -10,74 +10,78 @@
 
 #import "XGASettings.h"
 #import "BNCKeyChain.h"
+#import "BNCEncoder.h"
 #import "BNCLog.h"
 
 NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
 
 @implementation XGAServerSetting
+
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
+
+- (instancetype) initWithCoder:(NSCoder *)aDecoder {
+    self = [super init];
+    if (!self) return self;
+    NSError*error = [BNCEncoder decodeInstance:self withCoder:aDecoder ignoring:@[@"_password"]];
+    if (error) BNCLogError(@"Can't decode %@: %@", NSStringFromClass(self.class), error);
+    return self;
+}
+
+- (void) encodeWithCoder:(NSCoder *)aCoder {
+    @synchronized (self) {
+        NSError*error = [BNCEncoder encodeInstance:self withCoder:aCoder ignoring:@[@"_password"]];
+        if (error) BNCLogError(@"Can't encode %@: %@", NSStringFromClass(self.class), error);
+    }
+}
+
+- (NSString*) password {
+    @synchronized (self) {
+        NSString *password = nil;
+        if (self.server.length) {
+            NSError*error = nil;
+                [BNCKeyChain retrieveValueForService:kXGAServiceName key:self.server error:&error];
+            if (error) BNCLog(@"Can't retrieve password: %@.", error);
+        }
+        return password;
+    }
+}
+
+- (void) setPassword:(NSString *)password {
+    @synchronized (self) {
+        if (self.server.length) {
+            NSError *error =
+                [BNCKeyChain storeValue:password
+                    forService:kXGAServiceName
+                    key:self.server
+                    cloudAccessGroup:nil];
+            if (error) BNCLog(@"Can't save password: %@.", error);
+        }
+    }
+}
+
 @end
 
 #pragma mark XGAGitHubSyncTask
 
 @implementation XGAGitHubSyncTask
 
-- (NSDictionary*_Nonnull) dictionary {
-    NSMutableDictionary *d = [NSMutableDictionary new];
-    d[@"xcodeServer"] = self.xcodeServer;
-    d[@"gitHubRepo"] = self.gitHubRepo;
-    d[@"templateBotName"] = self.templateBotName;
-    return d;
++ (BOOL) supportsSecureCoding {
+    return YES;
 }
 
-+ (XGAGitHubSyncTask*_Nonnull) gitHubSyncTaskWithDictionary:(NSDictionary*_Nonnull)dictionary {
-    XGAGitHubSyncTask*task = [XGAGitHubSyncTask new];
-    if (!task) return task;
-    task->_xcodeServer = dictionary[@"xcodeServer"];
-    task->_gitHubRepo = dictionary[@"gitHubRepo"];
-    task->_templateBotName = dictionary[@"templateBotName"];
-    return task;
+- (instancetype) initWithCoder:(NSCoder *)aDecoder {
+    self = [super init];
+    if (!self) return self;
+    NSError*error = [BNCEncoder decodeInstance:self withCoder:aDecoder ignoring:@[@"_password"]];
+    if (error) BNCLogError(@"Can't decode %@: %@", NSStringFromClass(self.class), error);
+    return self;
 }
 
-- (void) setXcodeServerName:(NSString*)serverName userPassword:(NSString*)userPassword {
-    @synchronized(self) {
-        self->_xcodeServer = serverName;
-        if (!serverName) return;
-        NSError *error =
-            [BNCKeyChain storeValue:userPassword
-                forService:kXGAServiceName
-                key:serverName
-                cloudAccessGroup:nil];
-        if (error) BNCLogError(@"Error saving password for Xcode server '%@': %@.", serverName, error);
-    }
-}
-
-- (void) setGitHubRepo:(NSString*)gitHubRepo gitHubToken:(NSString*)token {
-    @synchronized(self) {
-        self->_gitHubRepo = gitHubRepo;
-        if (!gitHubRepo) return;
-        NSError *error =
-            [BNCKeyChain storeValue:token
-                forService:kXGAServiceName
-                key:gitHubRepo
-                cloudAccessGroup:nil];
-        if (error) BNCLogError(@"Error saving token for GitHub repo '%@': %@.", gitHubRepo, error);
-    }
-}
-
-- (NSString*) xcodeServerUserPassword {
-    @synchronized(self) {
-        NSError*error = nil;
-        NSString *userPassword =
-            [BNCKeyChain retrieveValueForService:kXGAServiceName key:self.xcodeServer error:&error];
-        return (error) ? nil : userPassword;
-    }
-}
-
-- (NSString*) gitHubToken {
-    NSError*error = nil;
-    NSString *token =
-        [BNCKeyChain retrieveValueForService:kXGAServiceName key:self.gitHubRepo error:&error];
-    return (error) ? nil : token;
+- (void) encodeWithCoder:(NSCoder *)aCoder {
+    NSError*error = [BNCEncoder encodeInstance:self withCoder:aCoder ignoring:@[@"_password"]];
+    if (error) BNCLogError(@"Can't encode %@: %@", NSStringFromClass(self.class), error);
 }
 
 @end
@@ -123,7 +127,7 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
 
 - (void) load {
     @synchronized(self) {
-        XGAGitHubSyncTask*task = nil;
+        //XGAGitHubSyncTask*task = nil;
         self.gitHubSyncTasks = [NSMutableArray new];
 /*
         task = [XGAServerGitHubSyncTask new];
@@ -189,8 +193,6 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
     }
 }
 
-NSMutableArray<XGAGitHubSyncTask*>*gitHubSyncTasks;
-
 - (void) validate {
     self.refreshSeconds = MAX(15.0, MIN(self.refreshSeconds, 60.0*60.0*24.0*1.0));
 }
@@ -205,13 +207,9 @@ NSMutableArray<XGAGitHubSyncTask*>*gitHubSyncTasks;
 - (void) save {
     @synchronized(self) {
         [self validate];
-        NSMutableArray*array = [NSMutableArray new];
-        for (XGAGitHubSyncTask*task in self.gitHubSyncTasks) {
-            NSDictionary *d = task.dictionary;
-            [array addObject:d];
-        }
         NSUserDefaults*defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setObject:array forKey:@"gitHubSyncTasks"];
+        [defaults setObject:self.servers forKey:@"servers"];
+        [defaults setObject:self.gitHubSyncTasks forKey:@"gitHubSyncTasks"];
         [defaults setBool:self.dryRun forKey:@"dryRun"];
         [defaults setBool:self.hasRunBefore forKey:@"hasRunBefore"];
         [defaults setDouble:self.refreshSeconds forKey:@"refreshSeconds"];
