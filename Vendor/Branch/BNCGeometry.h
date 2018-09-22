@@ -8,19 +8,7 @@
  @copyright     Copyright © 2018 Branch. All rights reserved.
 */
 
-#if __has_feature(modules)
-@import Foundation;
-#else
 #import <Foundation/Foundation.h>
-#endif
-
-#if TARGET_OS_IOS
-    #if __has_feature(modules)
-    @import UIKit;
-    #else
-    #import <UIKit/UIKit.h>
-    #endif
-#endif
 
 ///@group Geometric Functions
 #pragma mark Geometric Functions

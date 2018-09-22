@@ -8,7 +8,7 @@
  @copyright     Copyright © 2018 Branch. All rights reserved.
 */
 
-@import Foundation;
+#import <Foundation/Foundation.h>
 #import "XGCommandOptions.h"
 #import "XGCommand.h"
 #import "BNCLog.h"

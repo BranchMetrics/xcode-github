@@ -18,14 +18,17 @@
 #import "BNCLog.h"
 #import "NSAttributedString+App.h"
 
-#pragma mark - XGAServerStatus
+#pragma mark XGAServerStatus
 
 @interface XGAServerStatus : NSObject
-@property NSString *serverName;
-@property NSString *botName;
-@property NSImage  *statusImage;
+@property (strong) XGAServerSetting *server;
+@property (copy)   NSString *botName;
+@property (strong) NSImage  *statusImage;
 @property (strong) APPFormattedString *statusSummary;
 @property (strong) APPFormattedString *statusDetail;
+@property (copy)   NSString *botID;
+@property (copy)   NSString *botTinyID;
+@property (copy)   NSString *integrationID;
 @end
 
 @implementation XGAServerStatus
@@ -49,6 +52,8 @@
 @property (strong) NSDate *lastUpdateDate;
 @property (weak) IBOutlet NSTextField *statusTextField;
 @end
+
+#pragma mark - XGAStatusViewController
 
 @implementation XGAStatusViewController
 
@@ -90,7 +95,19 @@
         [self showInfo:self];
 }
 
-#pragma mark - Selection Actions
+- (XGAServerStatus*) selectedTableItem {
+    NSInteger idx = self.tableView.clickedRow;
+    if (idx >= 0 && idx < [self.arrayController.arrangedObjects count]) {
+        [self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:idx] byExtendingSelection:NO];
+        return [self.arrayController.arrangedObjects objectAtIndex:idx];
+    }
+    idx = self.tableView.selectedRow;
+    if (idx >= 0 && idx < [self.arrayController.arrangedObjects count])
+        return [self.arrayController.arrangedObjects objectAtIndex:idx];;
+    return nil;
+}
+
+#pragma mark - Actions
 
 - (IBAction) showInfo:(id)sender {
     NSInteger idx = self.tableView.selectedRow;
@@ -110,6 +127,9 @@
             [[[[APPFormattedString builder]
                 appendBold:@"%@", status.botName]
                     build] renderAttributedStringWithFont:font];
+        [self.statusPopover.titleTextField setNeedsUpdateConstraints:YES];
+    } else {
+        self.statusPopover.titleTextField.stringValue = @"";
     }
     self.statusPopover.statusImageView.image = status.statusImage;
     self.statusPopover.statusTextField.attributedStringValue =
@@ -121,30 +141,95 @@
     [self.statusPopover showRelativeToRect:r ofView:self.tableView preferredEdge:NSRectEdgeMaxY];
 }
 
-- (IBAction) monitorForNewPRs:(id)sender {
+- (IBAction) monitorRepo:(id)sender {
+    __auto_type status = [self selectedTableItem];
+    __auto_type task = [XGAGitHubSyncTask new];
+    task.xcodeServer = status.server;
+    task.gitHubToken = [XGASettings shared].gitHubToken;
+    task.templateBotName = status.botName;
+    [XGASettings.shared.gitHubSyncTasks addObject:task];
+    [XGASettings.shared save];
 }
 
 - (IBAction) delete:(id)sender {
+    XGAServerStatus*status = [self selectedTableItem];
+    if (!status) return;
+    __auto_type alert = [[NSAlert alloc] init];
+    alert.messageText = [NSString stringWithFormat:@"Delete '%@'?", status.botName];
+    alert.informativeText =
+        [NSString stringWithFormat:@"Are you sure you want to delete the bot '%@'?", status.botName];
+    alert.alertStyle = NSAlertStyleInformational;
+    [[alert addButtonWithTitle:@"Delete"] setTag:NSModalResponseOK];
+    [[alert addButtonWithTitle:@"Cancel"] setTag:NSModalResponseCancel];
+    [alert beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse returnCode) {
+        if (returnCode == NSModalResponseOK) {
+            __auto_type*bot = [[XGXcodeBot alloc] initWithServerName:status.server.server botID:status.botID];
+            NSError*error = [bot removeFromServer];
+            if (error) {
+                __auto_type ea = [[NSAlert alloc] init];
+                ea.messageText = [NSString stringWithFormat:@"Error deleting '%@'.", status.botName];
+                ea.informativeText = error.localizedDescription;
+                ea.alertStyle = NSAlertStyleCritical;
+                [ea beginSheetModalForWindow:self.window completionHandler:nil];
+            } else {
+                [self updateStatusNow];
+            }
+        }
+    }];
 }
 
-- (BOOL) itemIsSelected {
-    NSInteger idx = self.tableView.clickedRow;
-    if (idx >= 0 && idx < [self.arrayController.arrangedObjects count]) {
-        [self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:idx] byExtendingSelection:NO];
-        return YES;
+- (IBAction) showInXcode:(id)sender {
+    XGAServerStatus*status = [self selectedTableItem];
+    if (!status) return;
+    NSString*string = nil;
+    if (status.integrationID) {
+        string = [NSString stringWithFormat:@"xcbot://%@/botID/%@/integrationID/%@",
+            status.server.server, status.botID, status.integrationID];
+    } else {
+        string = [NSString stringWithFormat:@"xcbot://%@/botID/%@",
+            status.server.server, status.botID];
     }
-    idx = self.tableView.selectedRow;
-    if (idx >= 0 && idx < [self.arrayController.arrangedObjects count])
-        return YES;
-    return NO;
+    NSURL*URL = [NSURL URLWithString:string];
+    [[NSWorkspace sharedWorkspace] openURL:URL];
+}
+
+- (IBAction) showInBrowser:(id)sender {
+    XGAServerStatus*status = [self selectedTableItem];
+    if (!status) return;
+    NSString*string =
+        [NSString stringWithFormat:@"https://%@/xcode/bots/%@", status.server.server, status.botTinyID];
+    NSURL*URL = [NSURL URLWithString:string];
+    [[NSWorkspace sharedWorkspace] openURL:URL];
+}
+
+- (IBAction) downloadAssets:(id)sender {
+    XGAServerStatus*status = [self selectedTableItem];
+    if (!status) return;
+    NSString*string =
+        [NSString stringWithFormat:@"https://%@/xcode/internal/api/integrations/%@/assets",
+            status.server.server, status.integrationID];
+    NSURL*URL = [NSURL URLWithString:string];
+    [[NSWorkspace sharedWorkspace] openURL:URL];
+}
+
+- (IBAction)reload:(id)sender {
+    [self updateStatusNow];
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem {
-    if (menuItem.action == @selector(showInfo:) ||
-        menuItem.action == @selector(monitorForNewPRs:) ||
-        menuItem.action == @selector(delete:)) {
-        return ([self itemIsSelected]);
-    }
+    if (menuItem.action == @selector(reload:)) return YES;
+    SEL contextMenuItems[] = {
+        @selector(showInfo:),
+        @selector(monitorRepo:),
+        @selector(delete:),
+        @selector(showInXcode:),
+        @selector(showInBrowser:),
+        @selector(downloadAssets:),
+        NULL
+    };
+    SEL*item = contextMenuItems;
+    while (*item && *item != menuItem.action) ++item;
+    if (*item) return ([self selectedTableItem] != nil);
     return NO;
 }
 
@@ -190,13 +275,20 @@
         if (self.statusTimer) {
             dispatch_source_cancel(self.statusTimer);
             self.statusTimer = nil;
+            self.lastUpdateDate = nil;
         }
+    }
+}
+
+- (void) updateStatusNow {
+    @synchronized (self) {
+        self.lastUpdateDate = nil;
+        [self updateStatus];
     }
 }
 
 - (void) updateStatus {
     NSTimeInterval kStatusRefreshInterval = [XGASettings shared].refreshSeconds;
-
     NSTimeInterval elapsed = - [self.lastUpdateDate timeIntervalSinceNow];
     BNCPerformBlockOnMainThreadAsync(^{
         self.updateProgessIndictor.doubleValue = elapsed / kStatusRefreshInterval * 100.0;
@@ -212,15 +304,15 @@
 
     BNCLogDebug(@"Start updateStatus.");
     BNCPerformBlockOnMainThreadAsync(^{ self.statusTextField.stringValue = @""; });
-    NSMutableSet *statusServers = [NSMutableSet new];
-    NSArray<XGAGitHubSyncTask*>* syncTasks = [XGASettings shared].gitHubSyncTasks;
+    NSMutableSet *statusServers = [[NSMutableSet alloc] initWithArray:XGASettings.shared.servers];
+    NSArray<XGAGitHubSyncTask*>* syncTasks = XGASettings.shared.gitHubSyncTasks;
     for (XGAGitHubSyncTask*task in syncTasks) {
         if (task.xcodeServer.server.length == 0) continue;
         [self updateSyncBots:task];
         [statusServers addObject:task.xcodeServer];
     }
-    for (NSString*serverName in statusServers) {
-        [self updateXcodeServerStatus:serverName];
+    for (XGAServerSetting*server in statusServers) {
+        [self updateXcodeServerStatus:server];
     }
     if (syncTasks.count == 0 && statusServers.count == 0) {
         [self updateXcodeServerStatus:nil];
@@ -259,14 +351,14 @@
     }
 }
 
-- (void) updateXcodeServerStatus:(NSString*)serverName {
+- (void) updateXcodeServerStatus:(XGAServerSetting*)server {
     NSError*error = nil;
     NSMutableArray *statusArray = [NSMutableArray new];
-    if (serverName.length > 0) {
-        NSDictionary<NSString*, XGXcodeBot*>* bots = [XGXcodeBot botsForServer:serverName error:&error];
+    if (server.server.length > 0) {
+        NSDictionary<NSString*, XGXcodeBot*>* bots = [XGXcodeBot botsForServer:server.server error:&error];
         if (error) {
             XGAServerStatus *status = [XGAServerStatus new];
-            status.serverName = serverName;
+            status.server = server;
             status.statusSummary = [APPFormattedString boldText:@"Server Error"];
             status.statusImage = [NSImage imageNamed:@"RoundAlert"];
             status.statusDetail = [APPFormattedString plainText:error.localizedDescription];
@@ -293,9 +385,18 @@
 - (XGAServerStatus*) statusWithBotStatus:(XGXcodeBotStatus*)botStatus {
     if (botStatus == nil) return nil;
     XGAServerStatus *status = [XGAServerStatus new];
-    status.serverName = botStatus.serverName;
+    for (XGAServerSetting*ss in XGASettings.shared.servers) {
+        if ([ss.server isEqualToString:botStatus.serverName]) {
+            status.server = ss;
+            break;
+        }
+    }
+    if (status.server == nil) return nil;
     status.botName = ([XGXcodeBot gitHubPRNameFromString:botStatus.botName]) ?: botStatus.botName;
     status.statusSummary = [APPFormattedString boldText:botStatus.summaryString];
+    status.botID = botStatus.botID;
+    status.botTinyID = botStatus.botTinyID;
+    status.integrationID = botStatus.integrationID;
 
     NSString *result = [botStatus.result lowercaseString];
     if ([botStatus.currentStep containsString:@"completed"]) {

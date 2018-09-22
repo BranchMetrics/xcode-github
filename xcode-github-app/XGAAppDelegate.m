@@ -28,12 +28,6 @@
     self.statusController = [XGAStatusViewController new];
 }
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-}
-
-- (void)applicationWillTerminate:(NSNotification *)aNotification {
-}
-
 - (IBAction)showStatusWindow:(id)sender {
     [self.statusController.window makeKeyAndOrderFront:self];
 }

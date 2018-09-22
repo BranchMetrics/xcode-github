@@ -8,26 +8,8 @@
  @copyright     Copyright © 2018 Branch. All rights reserved.
 */
 
-#if __has_feature(modules)
-@import Foundation;
-#else
 #import <Foundation/Foundation.h>
-#endif
-
-#if TARGET_OS_IOS
-    #if __has_feature(modules)
-    @import UIKit;
-    #else
-    #import <UIKit/UIKit.h>
-    #endif
-    typedef UIFont APFont;
-#elif TARGET_OS_OSX
-    #if __has_feature(modules)
-    @import AppKit;
-    #else
-    #import <AppKit/AppKit.h>
-    #endif
-#endif
+#import <AppKit/AppKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

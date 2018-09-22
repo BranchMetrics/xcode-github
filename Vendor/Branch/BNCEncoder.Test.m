@@ -32,7 +32,7 @@
 
 - (instancetype) initWithCoder:(NSCoder *)aDecoder {
     self = [super init];
-    [BNCEncoder decodeInstance:self withCoder:aDecoder ignoring:nil];
+    [BNCEncoder decodeInstance:self withCoder:aDecoder classes:nil ignoring:nil];
     return self;
 }
 
@@ -114,7 +114,7 @@
 
     TestClass*v = [[TestClass alloc] init];
     NSKeyedUnarchiver*decoder = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-    error = [BNCEncoder decodeInstance:v withCoder:decoder ignoring:nil];
+    error = [BNCEncoder decodeInstance:v withCoder:decoder classes:nil ignoring:nil];
     XCTAssert(error == nil);
     XCTAssertTrue([t isEqual:v]);
 }
@@ -132,7 +132,7 @@
 
     TestClass*v = [[TestClass alloc] init];
     NSKeyedUnarchiver*decoder = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-    error = [BNCEncoder decodeInstance:v withCoder:decoder ignoring:nil];
+    error = [BNCEncoder decodeInstance:v withCoder:decoder classes:nil ignoring:nil];
     XCTAssert(error == nil);
     XCTAssertTrue([t isEqual:v]);
 }
@@ -147,7 +147,7 @@
 
     TestClass*v = [[TestClass alloc] init];
     NSKeyedUnarchiver*decoder = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-    error = [BNCEncoder decodeInstance:v withCoder:decoder ignoring:nil];
+    error = [BNCEncoder decodeInstance:v withCoder:decoder classes:nil ignoring:nil];
     XCTAssert(error == nil);
 
     t.ignored = nil;
@@ -164,7 +164,7 @@
 
     TestClass*v = [[TestClass alloc] init];
     NSKeyedUnarchiver*decoder = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-    error = [BNCEncoder decodeInstance:v withCoder:decoder ignoring:@[@"_ignored"]];
+    error = [BNCEncoder decodeInstance:v withCoder:decoder classes:nil ignoring:@[@"_ignored"]];
     XCTAssert(error == nil);
 
     t.ignored = nil;

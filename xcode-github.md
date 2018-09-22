@@ -24,7 +24,7 @@ The command line tool that creates new Xcode bots when a new PR is created on an
 
 ## Overview
 
-This command line tool creates a new Xcode test bot when a new PR on a GitHub repo is created.
+This command line tool creates a new Xcode bot when a new PR on a GitHub repo is created.
 
 When a new PR is created, this app creates a new Xcode test bot on an Xcode server based on an existing template bot and schedules it to run. The bot will report the test status back on GitHub.
 
@@ -48,7 +48,10 @@ usage: xcode-github [-dhsVv] -g <github-auth-token>
 
   -h, --help
       Print this help information.
-
+      
+  -r, --repeat
+      Repeat forever.
+      
   -s, --status
       Only print the status of the xcode server bots and quit.
 
@@ -95,7 +98,17 @@ GitHub "Close PR" Event -> xcode-github deletes Xcode Bot
 
 ### Xcode Bot Documentation
 
-[Xcode Bot Documentation](https://developer.apple.com/library/content/documentation/Xcode/Conceptual/XcodeServerAPIReference/Bots.html)
+* [Xcode Bot Documentation](https://developer.apple.com/library/content/documentation/Xcode/Conceptual/XcodeServerAPIReference/Bots.html)
+
+#### Xcode Schemes
+* [Xcode URI Scheme Examples](https://cocoaengineering.com/2018/01/01/some-useful-url-schemes-in-xcode-9/)
+* Xcode Schemes
+ - Show Bot: xcbot://esmith.local/botID/2528555354d7cc4acb1c4a14ed000cbd
+ - Show Integration: xcbot://esmith.local/botID/2528555354d7cc4acb1c4a14ed000cbd/integrationID/a2bb9e8c4524ca99e430970b4c000fa3
+* In Browser (HTTPS)
+  - Download integration assets: https://esmith.local/xcode/internal/api/integrations/a2bb9e8c4524ca99e430970b4c000fa3/assets
+  - All Bots: https://esmith.local/xcode/bots/latest
+  - View Bot:  https://esmith.local/xcode/bots/675B1B9
 
 #### List All Bots
 
@@ -179,4 +192,3 @@ Integration Link in Status Message:
     =>
   xcbot://qabot.stage.branch.io/botID/f58eba9902ec5f7f8dd96c518f88b617/integrationID/fe902cbba44b59ff95b81a640158bc6f
 ```
-

@@ -16,14 +16,18 @@
 
 + (NSError*_Nullable) decodeInstance:(id)instance
         withCoder:(NSCoder*)coder
-        ignoring:(NSArray<NSString*>*_Nullable)ignoreIvarsArray {
+        classes:(NSSet<Class>*)classes_
+        ignoring:(NSArray<NSString*>*_Nullable)ignoreIvars_ {
 
     NSSet*ignoreIvars = nil;
-    if (ignoreIvarsArray)
-        ignoreIvars = [NSSet setWithArray:ignoreIvarsArray];
+    if (ignoreIvars_)
+        ignoreIvars = [NSSet setWithArray:ignoreIvars_];
+
+    NSMutableSet*classes = classes_ ? [classes_ mutableCopy] : [NSMutableSet new];
 
     uint count = 0;
-    Class class = object_getClass(instance);
+    //Class class = object_getClass(instance); // Will return proxy class!
+    Class class = [instance class];
     Ivar *ivars = class_copyIvarList(class, &count);
     for (uint i = 0; ivars && i < count; ++i) {
         Ivar ivar = ivars[i];
@@ -51,7 +55,9 @@
                 className = [className substringFromIndex:2];
             if ([className hasSuffix:@"\""])
                 className = [className substringToIndex:className.length-1];
-            id value = [coder decodeObjectOfClass:NSClassFromString(className) forKey:key];
+            //id value = [coder decodeObjectOfClass:NSClassFromString(className) forKey:key];
+            [classes addObject:NSClassFromString(className)];
+            id value = [coder decodeObjectOfClasses:classes forKey:key];
             object_setIvar(instance, ivar, value);
         }
         else if (isTypeOf(BOOL)) {
@@ -88,7 +94,8 @@
         ignoreIvars = [NSSet setWithArray:ignoreIvarsArray];
 
     uint count = 0;
-    Class class = object_getClass(instance);
+    //Class class = object_getClass(instance); // return the non-proxied object.
+    Class class = [instance class];
     Ivar *ivars = class_copyIvarList(class, &count);
     for (uint i = 0; ivars && i < count; ++i) {
         const char* encoding = ivar_getTypeEncoding(ivars[i]);
@@ -140,13 +147,13 @@
     return nil;
 }
 
-+ (NSData*) dataFromObject:(NSObject*)object ignoringIvars:(NSArray*)ignoreIvarsArray error:(NSError**)error_ {
++ (NSData*) dataFromObject:(NSObject*)object ignoringIvars:(NSArray*)ignoreIvars error:(NSError**)error_ {
     NSError*error = nil;
     NSMutableData*data = nil;
     @try {
         data = [[NSMutableData alloc] init];
         NSKeyedArchiver*archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
-        [BNCEncoder encodeInstance:object withCoder:archiver ignoring:ignoreIvarsArray];
+        [BNCEncoder encodeInstance:object withCoder:archiver ignoring:ignoreIvars];
         [archiver finishEncoding];
     }
     @catch (id e) {
@@ -156,6 +163,29 @@
     }
     if (error_) *error_ = error;
     return data;
+}
+
++ (NSError*_Nullable) decodeObject:(NSObject*)object
+        fromData:(NSData*)data
+        classes:(NSSet<Class>*)classes
+        ignoringIvars:(NSArray*_Nullable)ignoreIvars {
+    NSError*error = nil;
+    if (!object || !data) {
+        return [NSError errorWithDomain:NSCocoaErrorDomain code:1 userInfo:@{
+            NSLocalizedDescriptionKey: @"No object or data"
+        }];
+    }
+    @try {
+        NSKeyedUnarchiver*unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+        unarchiver.requiresSecureCoding = YES;
+        [BNCEncoder decodeInstance:object withCoder:unarchiver classes:classes ignoring:ignoreIvars];
+    }
+    @catch(id e) {
+        NSString*message = [NSString stringWithFormat:@"Can't decode '%@': %@.", object, e];
+        BNCLogError(@"%@", message);
+        error = [NSError errorWithDomain:NSCocoaErrorDomain code:1 userInfo:@{NSLocalizedDescriptionKey: message}];
+    }
+    return error;
 }
 
 + (NSError*) copyInstance:(id)toInstance
@@ -169,7 +199,7 @@
         [archiver finishEncoding];
         NSKeyedUnarchiver*unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
         unarchiver.requiresSecureCoding = YES;
-        [BNCEncoder decodeInstance:toInstance withCoder:unarchiver ignoring:ignoreIvarsArray];
+        [BNCEncoder decodeInstance:toInstance withCoder:unarchiver classes:nil ignoring:ignoreIvarsArray];
     }
     @catch (id e) {
         NSString*message = [NSString stringWithFormat:@"Can't copy '%@': %@.", fromInstance, e];
@@ -177,6 +207,35 @@
         error = [NSError errorWithDomain:NSCocoaErrorDomain code:1 userInfo:@{NSLocalizedDescriptionKey: message}];
     }
     return error;
+}
+
+@end
+
+#pragma mark - BNCCoding
+
+@implementation BNCCoding
+
++ (NSArray<NSString*>*) ignoreIvars {
+    return @[];
+}
+
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
+
+- (instancetype) initWithCoder:(NSCoder *)aDecoder {
+    self = [super init];
+    if (!self) return self;
+    NSError*error = [BNCEncoder decodeInstance:self withCoder:aDecoder classes:nil ignoring:self.class.ignoreIvars];
+    if (error) BNCLogError(@"Can't decode %@: %@", NSStringFromClass(self.class), error);
+    return self;
+}
+
+- (void) encodeWithCoder:(NSCoder *)aCoder {
+    @synchronized (self) {
+        NSError*error = [BNCEncoder encodeInstance:self withCoder:aCoder ignoring:self.class.ignoreIvars];
+        if (error) BNCLogError(@"Can't encode %@: %@", NSStringFromClass(self.class), error);
+    }
 }
 
 @end

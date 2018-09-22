@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -18,7 +18,7 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <window title="Status" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" frameAutosaveName="" animationBehavior="default" tabbingMode="disallowed" id="RZ1-8e-KVW">
+        <window title="Status" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" frameAutosaveName="" animationBehavior="default" tabbingMode="disallowed" id="RZ1-8e-KVW">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="113" y="498" width="480" height="300"/>
@@ -69,7 +69,7 @@
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn identifier="" width="120" minWidth="20" maxWidth="300" id="wzr-3L-lTR">
+                                        <tableColumn width="120" minWidth="20" maxWidth="300" id="wzr-3L-lTR">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Status">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -114,7 +114,7 @@
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn identifier="" width="116" minWidth="40" maxWidth="1000" id="Whk-qc-hCH">
+                                        <tableColumn width="116" minWidth="40" maxWidth="1000" id="Whk-qc-hCH">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Xcode Server">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -140,7 +140,7 @@
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
-                                                                <binding destination="cEg-Xo-ncp" name="value" keyPath="objectValue.serverName" id="314-lA-wrk">
+                                                                <binding destination="cEg-Xo-ncp" name="value" keyPath="objectValue.server.server" id="iCp-Wx-ykT">
                                                                     <dictionary key="options">
                                                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                                                     </dictionary>
@@ -154,7 +154,7 @@
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn identifier="" width="356" minWidth="40" maxWidth="1000" id="vvp-2l-lmv">
+                                        <tableColumn width="356" minWidth="40" maxWidth="1000" id="vvp-2l-lmv">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Bot Name">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -236,11 +236,26 @@
                 </menuItem>
                 <menuItem title="Show in Xcode" id="tZw-ZC-F0p">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="showInXcode:" target="-2" id="dtz-OI-AFn"/>
+                    </connections>
                 </menuItem>
-                <menuItem title="Monitor GitHub PRs" state="on" id="UUl-ub-dpc">
+                <menuItem title="Show in Browser" id="6Mw-Vp-tJJ">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="monitorForNewPRs:" target="-1" id="Z5n-sO-Yzy"/>
+                        <action selector="showInBrowser:" target="-2" id="rIg-H3-pnK"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Download Details" id="ROY-hH-sT7">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="downloadAssets:" target="-2" id="OiF-Nq-Tdk"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Monitor GitHub Repo" state="on" id="UUl-ub-dpc">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="monitorRepo:" target="-2" id="ufv-JG-XnI"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Delete" id="IKy-Sz-f9z">

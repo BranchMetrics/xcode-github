@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface XGXcodeBotStatus : NSObject
 @property (strong, readonly) NSString*_Nullable botID;
+@property (strong, readonly) NSString*_Nullable botTinyID;
 @property (strong, readonly) NSString*_Nullable botName;
 @property (strong, readonly) NSString*_Nullable serverName;
 @property (strong, readonly) NSString*_Nullable integrationID;
@@ -100,6 +101,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype _Nonnull) initWithServerName:(NSString*_Nullable)serverName
                                   dictionary:(NSDictionary*_Nullable)dictionary
                                   NS_DESIGNATED_INITIALIZER;
+
+- (instancetype _Nonnull) initWithServerName:(NSString*)serverName
+                                       botID:(NSString*)botID
+                                       NS_DESIGNATED_INITIALIZER;
 
 /// @param xcodeServerName  The network name of the Xcode server.
 /// @param error            If not nil, any error encountered is returned here.

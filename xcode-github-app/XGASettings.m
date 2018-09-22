@@ -17,23 +17,8 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
 
 @implementation XGAServerSetting
 
-+ (BOOL) supportsSecureCoding {
-    return YES;
-}
-
-- (instancetype) initWithCoder:(NSCoder *)aDecoder {
-    self = [super init];
-    if (!self) return self;
-    NSError*error = [BNCEncoder decodeInstance:self withCoder:aDecoder ignoring:@[@"_password"]];
-    if (error) BNCLogError(@"Can't decode %@: %@", NSStringFromClass(self.class), error);
-    return self;
-}
-
-- (void) encodeWithCoder:(NSCoder *)aCoder {
-    @synchronized (self) {
-        NSError*error = [BNCEncoder encodeInstance:self withCoder:aCoder ignoring:@[@"_password"]];
-        if (error) BNCLogError(@"Can't encode %@: %@", NSStringFromClass(self.class), error);
-    }
++ (NSArray<NSString*>*) ignoreIvars {
+    return @[ @"_password" ];
 }
 
 - (NSString*) password {
@@ -66,24 +51,6 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
 #pragma mark XGAGitHubSyncTask
 
 @implementation XGAGitHubSyncTask
-
-+ (BOOL) supportsSecureCoding {
-    return YES;
-}
-
-- (instancetype) initWithCoder:(NSCoder *)aDecoder {
-    self = [super init];
-    if (!self) return self;
-    NSError*error = [BNCEncoder decodeInstance:self withCoder:aDecoder ignoring:@[@"_password"]];
-    if (error) BNCLogError(@"Can't decode %@: %@", NSStringFromClass(self.class), error);
-    return self;
-}
-
-- (void) encodeWithCoder:(NSCoder *)aCoder {
-    NSError*error = [BNCEncoder encodeInstance:self withCoder:aCoder ignoring:@[@"_password"]];
-    if (error) BNCLogError(@"Can't encode %@: %@", NSStringFromClass(self.class), error);
-}
-
 @end
 
 #pragma mark - XGASettings
@@ -96,74 +63,21 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
 
 @implementation XGASettings
 
+- (instancetype) init {
+    self = [super init];
+    if (!self) return self;
+    self.refreshSeconds = 60.0;
+    return self;
+}
+
 + (XGASettings*_Nonnull) shared {
     static dispatch_once_t onceToken = 0;
     static XGASettings* sharedSettings = nil;
     dispatch_once(&onceToken, ^ {
-        sharedSettings = [XGASettings new];
-        [sharedSettings load];
+        sharedSettings = [XGASettings loadSettings];
     });
     return sharedSettings;
 }
-
-#if 0 // eDebug - Set some testing values:
-
-- (void) load {
-    @synchronized(self) {
-        self.serverGitHubSyncTasks = [NSMutableArray new];
-        NSArray* array = [[NSUserDefaults standardUserDefaults] objectForKey:@"serverGitHubSyncTasks"];
-        if ([array isKindOfClass:NSArray.class]) {
-            for (NSDictionary *d in array) {
-                if (![d isKindOfClass:NSDictionary.class]) continue;
-                XGAServerGitHubSyncTask*task =
-                    [XGAServerGitHubSyncTask serverGitHubSyncTaskWithDictionary:d];
-                if (task) [self.serverGitHubSyncTasks addObject:task];
-            }
-        }
-    }
-}
-
-#else
-
-- (void) load {
-    @synchronized(self) {
-        //XGAGitHubSyncTask*task = nil;
-        self.gitHubSyncTasks = [NSMutableArray new];
-/*
-        task = [XGAServerGitHubSyncTask new];
-        [task setXcodeServerName:@"esmith.local" userPassword:nil];
-        task.templateBotName = @"Branch-TestBed Test Bot";
-        [task setGitHubRepo:@"BranchMetrics:ios-branch-deep-linking"
-            gitHubToken:@"13e499f7d9ba4fca42e4715558d1e5bc30a6a4e9"];
-        [self.serverGitHubSyncTasks addObject:task];
-
-        task = [XGAServerGitHubSyncTask new];
-        [task setXcodeServerName:@"esmith.local" userPassword:nil];
-        task.templateBotName = @"BranchLabs Bot";
-        [task setGitHubRepo:@"BranchMetrics:BranchLabs-iOS"
-            gitHubToken:@"13e499f7d9ba4fca42e4715558d1e5bc30a6a4e9"];
-        [self.serverGitHubSyncTasks addObject:task];
-*/
-
-/*
-        task = [XGAServerGitHubSyncTask new];
-        [task setXcodeServerName:@"esmith.local" userPassword:nil];
-        task.templateBotName = @"xcode-github-tests master";
-        [task setGitHubRepo:@"BranchMetrics:xcode-github"
-            gitHubToken:@"13e499f7d9ba4fca42e4715558d1e5bc30a6a4e9"];
-        [self.serverGitHubSyncTasks addObject:task];
-*/
-        NSUserDefaults*defaults = [NSUserDefaults standardUserDefaults];
-        self.hasRunBefore = [defaults boolForKey:@"hasRunBefore"];
-        if (!self.hasRunBefore) [self setInitialDefaults];
-        self.dryRun = [defaults boolForKey:@"dryRun"];
-        self.showDebugMessages = [defaults boolForKey:@"showDebugMessages"];
-        self.refreshSeconds = [defaults doubleForKey:@"refreshSeconds"];
-        [self validate];
-    }
-}
-
-#endif
 
 #pragma mark - Setters/Getters
 
@@ -193,27 +107,40 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
     }
 }
 
+#pragma mark - Save and Load Settings
+
 - (void) validate {
     self.refreshSeconds = MAX(15.0, MIN(self.refreshSeconds, 60.0*60.0*24.0*1.0));
 }
 
-- (void) setInitialDefaults {
-    self.hasRunBefore = YES;
-    self.dryRun = NO;
-    self.refreshSeconds = 30;
-    [self save];
++ (instancetype) loadSettings {
+    NSError*error = nil;
+    XGASettings* settings = nil;
+    NSData*data = [[NSUserDefaults standardUserDefaults] objectForKey:@"settings"];
+    if (data) {
+        settings = [[XGASettings alloc] init];
+        error =
+            [BNCEncoder decodeObject:settings
+                fromData:data
+                classes:[NSSet setWithObjects:XGAServerSetting.class, XGAGitHubSyncTask.class, nil]
+                ignoringIvars:nil];
+        if (!error && [settings isKindOfClass:XGASettings.class]) {
+            [settings validate];
+            return settings;
+        }
+    }
+    if (error) BNCLogError(@"Can't load settings: %@.", error);
+    settings = [[XGASettings alloc] init];
+    return settings;
 }
 
 - (void) save {
     @synchronized(self) {
         [self validate];
-        NSUserDefaults*defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setObject:self.servers forKey:@"servers"];
-        [defaults setObject:self.gitHubSyncTasks forKey:@"gitHubSyncTasks"];
-        [defaults setBool:self.dryRun forKey:@"dryRun"];
-        [defaults setBool:self.hasRunBefore forKey:@"hasRunBefore"];
-        [defaults setDouble:self.refreshSeconds forKey:@"refreshSeconds"];
-        [defaults setBool:self.showDebugMessages forKey:@"showDebugMessages"];
+        NSError*error = nil;
+        NSData*data = [BNCEncoder dataFromObject:self ignoringIvars:nil error:&error];
+        if (error) BNCLogError(@"Error saving settings: %@.", error);
+        if (data) [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"settings"];
     }
 }
 

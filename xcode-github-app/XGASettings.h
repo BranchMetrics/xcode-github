@@ -9,12 +9,13 @@
 */
 
 #import <Foundation/Foundation.h>
+#import "BNCEncoder.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark XGAServerSetting
 
-@interface XGAServerSetting : NSObject <NSSecureCoding>
+@interface XGAServerSetting : BNCCoding <NSSecureCoding>
 @property (strong) NSString*_Nullable server;
 @property (strong) NSString*_Nullable user;
 @property (strong) NSString*_Nullable password;
@@ -22,21 +23,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark XGGitHubSyncTask
 
-@interface XGAGitHubSyncTask : NSObject <NSSecureCoding>
+@interface XGAGitHubSyncTask : BNCCoding <NSSecureCoding>
 @property (strong) XGAServerSetting*xcodeServer;
-@property (strong) NSString*gitHubToken;
-@property (strong) NSString*templateBotName;
+@property (copy)   NSString*gitHubToken;
+@property (copy)   NSString*templateBotName;
 @end
 
 #pragma mark - XGASettings
 
-@interface XGASettings : NSObject
-+ (XGASettings*) shared;
+@interface XGASettings : BNCCoding <NSSecureCoding>
 - (void) save;
++ (XGASettings*) shared;
 @property (assign) BOOL dryRun;
-@property (assign) BOOL hasRunBefore;
 @property (assign) BOOL showDebugMessages;
 @property (assign) NSTimeInterval refreshSeconds;
+@property (strong) NSString*gitHubToken;
 @property (strong, null_resettable) NSMutableArray<XGAServerSetting*>*servers;
 @property (strong, null_resettable) NSMutableArray<XGAGitHubSyncTask*>*gitHubSyncTasks;
 @end

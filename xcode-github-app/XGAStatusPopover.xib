@@ -33,12 +33,12 @@
                 <outlet property="contentViewController" destination="-2" id="6tC-SX-8Jg"/>
             </connections>
         </popover>
-        <view wantsLayer="YES" focusRingType="none" id="LKa-LI-ccx" customClass="XGAView">
-            <rect key="frame" x="0.0" y="0.0" width="93" height="72"/>
+        <view wantsLayer="YES" focusRingType="none" id="LKa-LI-ccx">
+            <rect key="frame" x="0.0" y="0.0" width="93" height="89"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <customView focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="yFh-TD-feW" customClass="XGAView">
-                    <rect key="frame" x="12" y="12" width="69" height="48"/>
+                <customView wantsLayer="YES" focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="yFh-TD-feW">
+                    <rect key="frame" x="12" y="12" width="69" height="65"/>
                     <subviews>
                         <textField horizontalHuggingPriority="900" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h09-u9-CoG">
                             <rect key="frame" x="28" y="25" width="43" height="17"/>
@@ -58,15 +58,15 @@
                         </imageView>
                         <textField horizontalHuggingPriority="751" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="03f-nu-r28" customClass="XGALabel">
                             <rect key="frame" x="-2" y="0.0" width="73" height="17"/>
-                            <textFieldCell key="cell" controlSize="mini" selectable="YES" sendsActionOnEndEditing="YES" title="Detail" id="GMX-AO-rfj">
+                            <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Detail" id="GMX-AO-rfj">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField horizontalHuggingPriority="750" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" placeholderIntrinsicWidth="69" placeholderIntrinsicHeight="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="hpT-hu-uue" customClass="XGALabel">
-                            <rect key="frame" x="-2" y="48" width="73" height="0.0"/>
-                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Title" usesSingleLineMode="YES" id="yAE-A6-5dC">
+                        <textField horizontalHuggingPriority="751" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hpT-hu-uue" customClass="XGALabel">
+                            <rect key="frame" x="-2" y="48" width="73" height="17"/>
+                            <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Title" id="yAE-A6-5dC">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -96,7 +96,7 @@
                 <constraint firstItem="yFh-TD-feW" firstAttribute="top" secondItem="LKa-LI-ccx" secondAttribute="top" constant="12" id="EOk-Pu-Vod"/>
                 <constraint firstAttribute="bottom" secondItem="yFh-TD-feW" secondAttribute="bottom" constant="12" id="Ixt-HM-dlL"/>
             </constraints>
-            <point key="canvasLocation" x="-449.5" y="-362.5"/>
+            <point key="canvasLocation" x="-449.5" y="-383.5"/>
         </view>
     </objects>
     <resources>

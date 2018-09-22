@@ -9,7 +9,7 @@
 */
 
 #import "BNCLog.h"
-#import <stdatomic.h> // import not available in Xcode 7
+#import <stdatomic.h>
 
 #define _countof(array)  (sizeof(array)/sizeof(array[0]))
 static NSNumber *bnc_LogIsInitialized = nil;

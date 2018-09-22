@@ -8,14 +8,13 @@
  @copyright     Copyright © 2017 Branch. All rights reserved.
 */
 
-@import Foundation;
+#import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark BNCNetworkOperation
 
 @interface BNCNetworkOperation : NSObject
-
 @property (readonly) NSURLSessionTaskState  sessionState;
 @property (readonly) NSMutableURLRequest*_Nullable request;
 @property (readonly) NSInteger              HTTPStatusCode;

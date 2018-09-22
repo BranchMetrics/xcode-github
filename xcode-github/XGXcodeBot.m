@@ -100,6 +100,7 @@ NSString* XGDurationStringFromTimeInterval(NSTimeInterval timeInterval) {
     _dictionary = dictionary;
     _botID = _dictionary[@"bot"][@"_id"];
     _botName = _dictionary[@"bot"][@"name"];
+    _botTinyID = _dictionary[@"bot"][@"tinyID"];
     _integrationID = _dictionary[@"_id"];
     _integrationNumber = _dictionary[@"number"];
     _result = _dictionary[@"result"];
@@ -273,8 +274,13 @@ NSString* XGDurationStringFromTimeInterval(NSTimeInterval timeInterval) {
 
 @implementation XGXcodeBot
 
-- (instancetype) init {
-    return [self initWithServerName:nil dictionary:nil];
+- (instancetype) initWithServerName:(NSString*)serverName_
+                              botID:(NSString*)botID_ {
+    self = [super init];
+    if (!self) return self;
+    _serverName = [serverName_ copy];
+    _botID = [botID_ copy];
+    return self;
 }
 
 - (instancetype) initWithServerName:(NSString *)serverName dictionary:(NSDictionary *)dictionary {
@@ -502,11 +508,12 @@ exit:
             completion:^(BNCNetworkOperation *operation) {
                 dispatch_semaphore_signal(semaphore);
         }];
+    operation.request.HTTPMethod = @"DELETE";
     [operation start];
     dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
     if (operation.error) return operation.error;
 
-    if (operation.HTTPStatusCode != 200) {
+    if (operation.HTTPStatusCode < 200 || operation.HTTPStatusCode >= 300) {
         localError = [NSError errorWithDomain:NSNetServicesErrorDomain
             code:NSNetServicesInvalidError userInfo:@{NSLocalizedDescriptionKey:
                 [NSString stringWithFormat:@"HTTP Status %ld", (long) operation.HTTPStatusCode]}];

@@ -178,9 +178,15 @@ NSTimeInterval const kNetworkRefreshInterval = 7.0;
 - (void)netServiceBrowser:(NSNetServiceBrowser *)browser
            didFindService:(NSNetService *)service
                moreComing:(BOOL)moreComing {
-    if (service.name.length > 0 &&
-        ![self.serverArrayController.arrangedObjects containsObject:service.name]) {
-        [self.serverArrayController addObject:service.name];
+    if (service.name.length > 0) {
+        NSString*server = [service.name stringByReplacingOccurrencesOfString:@" " withString:@"-"];
+        if (service.domain.length > 0)
+            server = [NSString stringWithFormat:@"%@.%@", server, service.domain];
+        server =
+            [server stringByTrimmingCharactersInSet:
+                [NSCharacterSet characterSetWithCharactersInString:@"."]];
+        if (![self.serverArrayController.arrangedObjects containsObject:server])
+            [self.serverArrayController addObject:server];
     }
     if (!moreComing) {
         BNCAfterSecondsPerformBlockOnMainThread(2.0, ^{

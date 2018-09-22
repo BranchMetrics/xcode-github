@@ -33,10 +33,6 @@
     return (loaded) ? controller : nil;
 }
 
-- (void) dealloc {
-    [self.settings save];
-}
-
 - (void)awakeFromNib {
     [super awakeFromNib];
     self.settings = [XGASettings shared];
@@ -62,6 +58,7 @@
             server.user = self.addServerPanel.userName;
             server.password = self.addServerPanel.password;
             [self.serverArrayController addObject:server];
+            [self.settings save];
         }
         self.addServerPanel = nil;
     }];
@@ -71,6 +68,7 @@
     NSInteger idx = self.tableView.selectedRow;
     if (idx >= 0 && idx < [self.serverArrayController.arrangedObjects count]) {
         [self.serverArrayController removeObjectAtArrangedObjectIndex:idx];
+        [self.settings save];
     }
 }
 

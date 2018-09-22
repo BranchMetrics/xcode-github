@@ -16,7 +16,7 @@
 @implementation XGALabel
 
 - (NSSize) intrinsicContentSize {
-    return NSMakeSize(0.0, 0.0);
+    return (self.stringValue.length > 0) ? [super intrinsicContentSize] : NSMakeSize(0.0, 0.0);
 }
 
 @end
