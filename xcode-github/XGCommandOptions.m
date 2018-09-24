@@ -125,4 +125,18 @@
     return options;
 }
 
++ (instancetype _Nonnull) testWithXcodeGitHub {
+    XGCommandOptions*options = [[XGCommandOptions alloc] init];
+    options.xcodeServerName = @"esmith.local";
+    options.templateBotName = @"BranchLabs Bot";
+    options.githubAuthToken = @"45dad6fcdb737e2110d066bd9c5c14b0e37562b7";
+    options.dryRun = YES;
+    options.showHelp = NO;
+    options.showStatusOnly = YES;
+    options.verbosity = 0; // 10;
+    options.showVersion = NO;
+    options.badOptionsError = 0;
+    return options;
+}
+
 @end

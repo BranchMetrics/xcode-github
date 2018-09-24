@@ -13,9 +13,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface XGCommandOptions : NSObject
-@property (strong) NSString*_Nullable xcodeServerName;
-@property (strong) NSString*_Nullable templateBotName;
-@property (strong) NSString*_Nullable githubAuthToken;
+@property (copy)   NSString*_Nullable xcodeServerName;
+@property (copy)   NSString*_Nullable templateBotName;
+@property (copy)   NSString*_Nullable githubAuthToken;
 @property (assign) int  verbosity;
 @property (assign) BOOL dryRun;
 @property (assign) BOOL showStatusOnly;
@@ -28,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString*) helpString;
 + (instancetype _Nonnull) testWithBranchSDK;
 + (instancetype _Nonnull) testWithBranchLabs;
++ (instancetype _Nonnull) testWithXcodeGitHub;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -6,10 +6,21 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-2" userLabel="File's Owner" customClass="XGAAddServerPanel">
+            <connections>
+                <outlet property="activityWheel" destination="2Zm-Pj-te9" id="bbs-3b-4te"/>
+                <outlet property="addButton" destination="RpP-oj-ysb" id="eDy-1q-LGd"/>
+                <outlet property="panel" destination="lfh-gx-SLa" id="S0t-ED-TVK"/>
+                <outlet property="passwordTextField" destination="OzI-2I-2o5" id="dPT-fb-Z4Q"/>
+                <outlet property="serverArrayController" destination="E0F-xU-Hu8" id="CXw-hX-bz6"/>
+                <outlet property="serverTableView" destination="siG-bz-0dO" id="v1X-7B-Zhs"/>
+                <outlet property="serverTextField" destination="ca6-xt-sX4" id="o5k-Ea-Mih"/>
+                <outlet property="userTextField" destination="KW8-Y8-vLH" id="YBf-XJ-pQZ"/>
+            </connections>
+        </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <window title="Add Server" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="lfh-gx-SLa" customClass="XGAAddServerPanel">
+        <window title="Add Server" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="lfh-gx-SLa" customClass="XGAAddServerPanel">
             <windowStyleMask key="styleMask" utility="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="0.0" y="0.0" width="432" height="338"/>
@@ -32,7 +43,8 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                                 <connections>
-                                    <outlet property="delegate" destination="lfh-gx-SLa" id="RyU-oT-93U"/>
+                                    <binding destination="-2" name="value" keyPath="self.server.server" id="Lxt-z2-by0"/>
+                                    <outlet property="delegate" destination="-2" id="v8S-Ed-UGZ"/>
                                     <outlet property="nextKeyView" destination="KW8-Y8-vLH" id="suf-qe-ADF"/>
                                 </connections>
                             </textField>
@@ -44,6 +56,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                                 <connections>
+                                    <binding destination="-2" name="value" keyPath="self.server.user" id="MlI-uz-QsF"/>
                                     <outlet property="nextKeyView" destination="OzI-2I-2o5" id="odR-t9-ngT"/>
                                 </connections>
                             </textField>
@@ -58,6 +71,7 @@
                                     </allowedInputSourceLocales>
                                 </secureTextFieldCell>
                                 <connections>
+                                    <binding destination="-2" name="value" keyPath="self.server.password" id="IRj-hf-5dl"/>
                                     <outlet property="nextKeyView" destination="RpP-oj-ysb" id="P2A-Q5-D4H"/>
                                 </connections>
                             </secureTextField>
@@ -71,7 +85,7 @@ DQ
 </string>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="add:" target="lfh-gx-SLa" id="BqK-Fv-GAb"/>
+                                    <action selector="add:" target="-2" id="4p6-Ad-Eep"/>
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9yR-AO-bJX">
@@ -87,7 +101,7 @@ Gw
 </string>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="cancel:" target="lfh-gx-SLa" id="RFF-Yp-xD6"/>
+                                    <action selector="cancel:" target="-2" id="Uyu-Qp-Ek2"/>
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9lq-yi-dwJ">
@@ -164,7 +178,7 @@ Gw
                                                 </tableColumn>
                                             </tableColumns>
                                             <connections>
-                                                <action selector="tableRowAction:" target="lfh-gx-SLa" id="yRB-3V-YA9"/>
+                                                <action selector="tableRowAction:" target="-2" id="489-EN-TSU"/>
                                                 <binding destination="E0F-xU-Hu8" name="content" keyPath="arrangedObjects" id="ebk-gd-f0S"/>
                                             </connections>
                                         </tableView>
@@ -240,14 +254,7 @@ Gw
                 </constraints>
             </view>
             <connections>
-                <outlet property="activityWheel" destination="2Zm-Pj-te9" id="wFY-ZV-nJJ"/>
-                <outlet property="addButton" destination="RpP-oj-ysb" id="cre-U4-RKu"/>
-                <outlet property="initialFirstResponder" destination="siG-bz-0dO" id="mRH-Rl-ti2"/>
-                <outlet property="passwordTextField" destination="OzI-2I-2o5" id="4qH-Bx-jUf"/>
-                <outlet property="serverArrayController" destination="E0F-xU-Hu8" id="IiC-mI-LxR"/>
-                <outlet property="serverTableView" destination="siG-bz-0dO" id="o4G-Tl-nlf"/>
-                <outlet property="serverTextField" destination="ca6-xt-sX4" id="KQ1-qJ-d7l"/>
-                <outlet property="userTextField" destination="KW8-Y8-vLH" id="ooz-zg-CIK"/>
+                <outlet property="delegate" destination="-2" id="f30-Pz-h8P"/>
             </connections>
             <point key="canvasLocation" x="316" y="-284"/>
         </window>

@@ -25,7 +25,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface XGAGitHubSyncTask : BNCCoding <NSSecureCoding>
 @property (strong) XGAServerSetting*xcodeServer;
-@property (copy)   NSString*gitHubToken;
 @property (copy)   NSString*templateBotName;
 @end
 
@@ -33,6 +32,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface XGASettings : BNCCoding <NSSecureCoding>
 - (void) save;
+- (void) clear;
+- (void) validate;
 + (XGASettings*) shared;
 @property (assign) BOOL dryRun;
 @property (assign) BOOL showDebugMessages;

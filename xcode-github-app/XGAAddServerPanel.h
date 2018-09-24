@@ -9,10 +9,10 @@
 */
 
 #import <Cocoa/Cocoa.h>
+#import "XGASettings.h"
 
 @interface XGAAddServerPanel : NSPanel
 + (instancetype) new;
-@property (readonly) NSString*serverName;
-@property (readonly) NSString*userName;
-@property (readonly) NSString*password;
+@property (strong) IBOutlet NSPanel *panel;
+@property (strong) XGAServerSetting*server;
 @end

@@ -89,6 +89,7 @@ void XGALogFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Null
         loadNibNamed:NSStringFromClass(self)
         owner:controller
         topLevelObjects:nil];
+    controller.window.excludedFromWindowsMenu = YES;
     [controller startObservers];
     return controller;
 }

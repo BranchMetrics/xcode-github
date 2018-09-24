@@ -15,11 +15,11 @@
 NSTimeInterval const kNetworkRefreshInterval = 7.0;
 
 @interface XGAAddServerPanel () <NSNetServiceBrowserDelegate>
-@property (strong) IBOutlet NSArrayController*serverArrayController;
-@property (strong) IBOutlet NSTableView *serverTableView;
 @property (strong) IBOutlet NSTextField *serverTextField;
 @property (strong) IBOutlet NSTextField *userTextField;
 @property (strong) IBOutlet NSSecureTextField *passwordTextField;
+@property (strong) IBOutlet NSArrayController*serverArrayController;
+@property (strong) IBOutlet NSTableView *serverTableView;
 @property (strong) IBOutlet NSProgressIndicator *activityWheel;
 @property (strong) IBOutlet NSButton *addButton;
 
@@ -32,16 +32,13 @@ NSTimeInterval const kNetworkRefreshInterval = 7.0;
 @implementation XGAAddServerPanel
 
 + (instancetype) new {
-    NSArray*objects = nil;
+    XGAAddServerPanel*panel = [[XGAAddServerPanel alloc] init];
+    panel.server = [[XGAServerSetting alloc] init];
     [[NSBundle mainBundle]
         loadNibNamed:NSStringFromClass(self)
-        owner:nil
-        topLevelObjects:&objects];
-    for (XGAAddServerPanel*panel in objects) {
-        if ([panel isKindOfClass:XGAAddServerPanel.class])
-            return panel;
-    }
-    return nil;
+        owner:panel
+        topLevelObjects:NULL];
+    return panel;
 }
 
 - (void) dealloc {
@@ -59,16 +56,12 @@ NSTimeInterval const kNetworkRefreshInterval = 7.0;
     return YES;
 }
 
-- (NSString*) serverName {
-    return self.serverTextField.stringValue;
+- (void) controlTextDidChange:(NSNotification *)obj {
+    self.addButton.enabled = (self.serverTextField.stringValue.length > 0);
 }
 
-- (NSString*) userName {
-    return self.userTextField.stringValue;
-}
-
-- (NSString*) password {
-    return self.passwordTextField.stringValue;
+- (void)windowDidBecomeKey:(NSNotification *)notification {
+    [self controlTextDidChange:notification];
 }
 
 - (IBAction)tableRowAction:(id)sender {
@@ -84,15 +77,16 @@ NSTimeInterval const kNetworkRefreshInterval = 7.0;
 
 - (IBAction)cancel:(id)sender {
     [self stopNetworkLookup];
-    [self.sheetParent endSheet:self returnCode:NSModalResponseCancel];
-}
-
-- (void) controlTextDidChange:(NSNotification *)obj {
-    self.addButton.enabled = (self.serverTextField.stringValue.length > 0);
+    self.serverArrayController = nil;
+    [self.panel.sheetParent endSheet:self.panel returnCode:NSModalResponseCancel];
+    self.panel = nil;
 }
 
 - (IBAction)add:(id)sender {
     NSString*server = [self.serverTextField.stringValue copy];
+    server =
+        [server stringByTrimmingCharactersInSet:
+            [NSCharacterSet whitespaceAndNewlineCharacterSet]];
     if (server.length <= 0) return;
     [self stopNetworkLookup];
 
@@ -103,9 +97,11 @@ NSTimeInterval const kNetworkRefreshInterval = 7.0;
         alert.messageText = [NSString stringWithFormat:@"Can't connect to %@", server];
         alert.informativeText = [error localizedDescription];
         alert.alertStyle = NSAlertStyleCritical;
-        [alert beginSheetModalForWindow:self completionHandler:nil];
+        [alert beginSheetModalForWindow:self.panel completionHandler:nil];
     } else {
-        [self.sheetParent endSheet:self returnCode:NSModalResponseOK];
+        self.serverArrayController = nil;
+        [self.panel.sheetParent endSheet:self.panel returnCode:NSModalResponseOK];
+        self.panel = nil;
     }
 }
 
@@ -158,7 +154,8 @@ NSTimeInterval const kNetworkRefreshInterval = 7.0;
 - (void) stopNetworkLookup {
     @synchronized(self) {
         [self.networkBrowser stop];
-
+        self.networkBrowser.delegate = nil;
+        
         [self.networkTimer invalidate];
         self.networkTimer = nil;
         self.isSearchingNetwork = NO;

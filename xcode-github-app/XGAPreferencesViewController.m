@@ -49,15 +49,26 @@
     self.removeButton.enabled = (idx >= 0 && idx < [self.serverArrayController.arrangedObjects count]);
 }
 
+
 - (IBAction)addServerAction:(id)sender {
+    [self showServer:nil];
+}
+
+- (IBAction)serverDoubleAction:(id)sender {
+    NSInteger idx = self.tableView.selectedRow;
+    if (idx >= 0 && idx < [self.serverArrayController.arrangedObjects count]) {
+        XGAServerSetting*server = [self.serverArrayController.arrangedObjects objectAtIndex:idx];
+        [self showServer:server];
+    }
+}
+
+- (void) showServer:(XGAServerSetting*)server {
+    if (!server) server = [[XGAServerSetting alloc] init];
     self.addServerPanel = [XGAAddServerPanel new];
-    [self.window beginSheet:self.addServerPanel completionHandler:^(NSModalResponse returnCode) {
+    self.addServerPanel.server = server;
+    [self.window beginSheet:self.addServerPanel.panel completionHandler:^(NSModalResponse returnCode) {
         if (returnCode == NSModalResponseOK) {
-            XGAServerSetting*server = [[XGAServerSetting alloc] init];
-            server.server = self.addServerPanel.serverName;
-            server.user = self.addServerPanel.userName;
-            server.password = self.addServerPanel.password;
-            [self.serverArrayController addObject:server];
+            if (server.server.length) [self.serverArrayController addObject:server];
             [self.settings save];
         }
         self.addServerPanel = nil;
@@ -70,6 +81,12 @@
         [self.serverArrayController removeObjectAtArrangedObjectIndex:idx];
         [self.settings save];
     }
+}
+
+- (IBAction) resetSettingsAction:(id)sender {
+    [self.settings clear];
+    [self.settings save];
+    self.serverArrayController.content = self.settings.servers;
 }
 
 @end

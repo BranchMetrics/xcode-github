@@ -66,7 +66,7 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
 - (instancetype) init {
     self = [super init];
     if (!self) return self;
-    self.refreshSeconds = 60.0;
+    [self clear];
     return self;
 }
 
@@ -109,10 +109,6 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
 
 #pragma mark - Save and Load Settings
 
-- (void) validate {
-    self.refreshSeconds = MAX(15.0, MIN(self.refreshSeconds, 60.0*60.0*24.0*1.0));
-}
-
 + (instancetype) loadSettings {
     NSError*error = nil;
     XGASettings* settings = nil;
@@ -142,6 +138,36 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
         if (error) BNCLogError(@"Error saving settings: %@.", error);
         if (data) [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"settings"];
     }
+}
+
+- (void) clear {
+    self.dryRun = YES;
+    self.showDebugMessages = YES;
+    self.refreshSeconds = 60.0;
+    self.gitHubToken = @"";
+    [self.servers removeAllObjects];
+    [self.gitHubSyncTasks removeAllObjects];
+}
+
+- (void) validate {
+    self.refreshSeconds = MAX(15.0, MIN(self.refreshSeconds, 60.0*60.0*24.0*1.0));
+
+    __auto_type indexSet = [NSMutableIndexSet new];
+    for (NSInteger i = 0; i < self.servers.count; i++) {
+        self.servers[i].server =
+            [self.servers[i].server stringByTrimmingCharactersInSet:
+                [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        if (self.servers[i].server.length <= 0) {
+            [indexSet addIndex:i];
+            continue;
+        }
+        for (NSInteger j = i+1; j < self.servers.count; j++) {
+            if ([self.servers[i].server isEqualToString:self.servers[j].server]) {
+                [indexSet addIndex:i];
+            }
+        }
+    }
+    [self.servers removeObjectsAtIndexes:indexSet];
 }
 
 @end

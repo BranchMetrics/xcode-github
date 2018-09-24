@@ -8,21 +8,20 @@
 * [x] Add icon to status line.
 * [x] Make preferences dialog: 'Observe' only mode, refresh interval.
 * [x] Change to use NSPopover from APArrowPanel
-* [ ] Make "Add Server" flow.
-* [ ] Make "Add GitHub Token" flow.
-* [ ] Add help.
-* [ ] Add tests?
+* [x] Make "Add Server" flow.
+* [x] Make "Add GitHub Token" flow.
+* [x] Add tests.
+* [ ] Change status from table to tree. 
 * [ ] Clean up code. 
+* [ ] Add help.
 ```
  
 ## Menus
 * New Server
-* New GitHub Repo Token
 * New Bot
 * View Status
-* View GitHub Repo Tokens
-* View Servers
 * View Log Window
+* View Servers
 * Help
 
 ## Windows
@@ -37,7 +36,10 @@ Status view: a table with columns
 * Button: Start / Stop Button
 * Button: Download logs
 
-### Configure Window
-
+### Settings Window
+* Add server
+* Add GitHub Token
+* Dry run, show debug messages, refresh time
+ 
 ### Log Window
 Shows the xcode-github log messages.

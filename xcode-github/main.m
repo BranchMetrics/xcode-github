@@ -42,7 +42,8 @@ start:
         BNCLogSetOutputFunction(LogOutputFunction);
         BNCLogSetDisplayLevel(BNCLogLevelWarning);
 
-        XGCommandOptions *options = [XGCommandOptions testWithBranchSDK];
+        // XGCommandOptions *options = [XGCommandOptions testWithBranchSDK];
+        XGCommandOptions *options = [XGCommandOptions testWithXcodeGitHub];
         // XGCommandLineOptions *options = [XGCommandLineOptions testWithBranchLabs];
         // XGCommandLineOptions *options = [[XGCommandLineOptions alloc] initWithArgc:argc argv:argv];
         if (options.badOptionsError) {

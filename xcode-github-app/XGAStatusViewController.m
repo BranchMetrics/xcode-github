@@ -63,6 +63,7 @@
         loadNibNamed:NSStringFromClass(self)
         owner:controller
         topLevelObjects:nil];
+    controller.window.excludedFromWindowsMenu = YES;
     return controller;
 }
 
@@ -145,7 +146,6 @@
     __auto_type status = [self selectedTableItem];
     __auto_type task = [XGAGitHubSyncTask new];
     task.xcodeServer = status.server;
-    task.gitHubToken = [XGASettings shared].gitHubToken;
     task.templateBotName = status.botName;
     [XGASettings.shared.gitHubSyncTasks addObject:task];
     [XGASettings.shared save];
@@ -333,7 +333,7 @@
         XGCommandOptions*options = [XGCommandOptions new];
         options.xcodeServerName = syncTask.xcodeServer.server;
         options.templateBotName = syncTask.templateBotName;
-        options.githubAuthToken = syncTask.gitHubToken;
+        options.githubAuthToken = XGASettings.shared.gitHubToken;
         options.dryRun = YES;
         error = XGUpdateXcodeBotsWithGitHub(options);
         if (error) {

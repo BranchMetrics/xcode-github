@@ -125,6 +125,19 @@ NSString*_Nonnull NSStringFromXGPullRequestStatus(XGPullRequestStatus status) {
             localError = operation.error;
             goto exit;
         }
+        if (operation.HTTPStatusCode != 200) {
+            NSString*message = nil;
+            NSDictionary*dictionary = (id) operation.responseData;
+            if ([dictionary isKindOfClass:NSDictionary.class]) {
+                message = dictionary[@"message"];
+            }
+            if (!message)
+                message = [NSString stringWithFormat:@"GitHub response code %ld.", operation.HTTPStatusCode];
+            localError = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorUnknown userInfo:@{
+                NSLocalizedDescriptionKey: message
+            }];
+            goto exit;
+        }
         NSArray *array = (id) operation.responseData;
         if (![array isKindOfClass:NSArray.class]) {
             NSString *message = operation.stringFromResponseData;
