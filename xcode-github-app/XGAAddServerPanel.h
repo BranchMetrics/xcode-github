@@ -11,8 +11,10 @@
 #import <Cocoa/Cocoa.h>
 #import "XGASettings.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface XGAAddServerPanel : NSPanel
-+ (instancetype) new;
-@property (strong) IBOutlet NSPanel *panel;
-@property (strong) XGAServerSetting*server;
+@property (strong) IBOutlet XGAServer*server;
 @end
+
+NS_ASSUME_NONNULL_END

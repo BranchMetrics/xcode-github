@@ -37,6 +37,7 @@
 		4DF0F594209000B80015D1F7 /* XGCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF0F593209000B80015D1F7 /* XGCommand.m */; };
 		4DF0F5972090474D0015D1F7 /* XGASettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF0F5962090474D0015D1F7 /* XGASettings.m */; };
 		4DF656312153620100380FD0 /* BNCEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF6562F2153620100380FD0 /* BNCEncoder.m */; };
+		4DFB5308215DCD6700DB1209 /* XGANetworkServiceBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DFB5307215DCD6700DB1209 /* XGANetworkServiceBrowser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -94,6 +95,8 @@
 		4DF0F5962090474D0015D1F7 /* XGASettings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGASettings.m; sourceTree = "<group>"; };
 		4DF6562F2153620100380FD0 /* BNCEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCEncoder.m; sourceTree = "<group>"; };
 		4DF656302153620100380FD0 /* BNCEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCEncoder.h; sourceTree = "<group>"; };
+		4DFB5306215DCD6700DB1209 /* XGANetworkServiceBrowser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGANetworkServiceBrowser.h; sourceTree = "<group>"; };
+		4DFB5307215DCD6700DB1209 /* XGANetworkServiceBrowser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGANetworkServiceBrowser.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +145,8 @@
 				4D12BA0A20A252CE00E5B1DB /* XGALogViewController.h */,
 				4D12BA0B20A252CE00E5B1DB /* XGALogViewController.m */,
 				4D12BA0C20A252CE00E5B1DB /* XGALogViewController.xib */,
+				4DFB5306215DCD6700DB1209 /* XGANetworkServiceBrowser.h */,
+				4DFB5307215DCD6700DB1209 /* XGANetworkServiceBrowser.m */,
 				4D8352CD20A516A200184259 /* XGAPreferencesViewController.h */,
 				4D8352CE20A516A200184259 /* XGAPreferencesViewController.m */,
 				4D8352CF20A516A200184259 /* XGAPreferencesViewController.xib */,
@@ -294,6 +299,7 @@
 				4D7D249A20A617DB0086FA59 /* NSAttributedString+App.m in Sources */,
 				4DED4891209BDFCC008DE877 /* BNCGeometry.m in Sources */,
 				4DF0F58B208F923E0015D1F7 /* BNCLog.m in Sources */,
+				4DFB5308215DCD6700DB1209 /* XGANetworkServiceBrowser.m in Sources */,
 				4DF0F58E208F923E0015D1F7 /* BNCThreads.m in Sources */,
 				4DF0F594209000B80015D1F7 /* XGCommand.m in Sources */,
 				4D12BA0D20A252CE00E5B1DB /* XGALogViewController.m in Sources */,

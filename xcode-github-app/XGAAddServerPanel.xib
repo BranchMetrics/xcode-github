@@ -6,18 +6,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="XGAAddServerPanel">
-            <connections>
-                <outlet property="activityWheel" destination="2Zm-Pj-te9" id="bbs-3b-4te"/>
-                <outlet property="addButton" destination="RpP-oj-ysb" id="eDy-1q-LGd"/>
-                <outlet property="panel" destination="lfh-gx-SLa" id="S0t-ED-TVK"/>
-                <outlet property="passwordTextField" destination="OzI-2I-2o5" id="dPT-fb-Z4Q"/>
-                <outlet property="serverArrayController" destination="E0F-xU-Hu8" id="CXw-hX-bz6"/>
-                <outlet property="serverTableView" destination="siG-bz-0dO" id="v1X-7B-Zhs"/>
-                <outlet property="serverTextField" destination="ca6-xt-sX4" id="o5k-Ea-Mih"/>
-                <outlet property="userTextField" destination="KW8-Y8-vLH" id="YBf-XJ-pQZ"/>
-            </connections>
-        </customObject>
+        <customObject id="-2" userLabel="File's Owner" customClass="XGAAddServerPanel"/>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="Add Server" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="lfh-gx-SLa" customClass="XGAAddServerPanel">
@@ -43,8 +32,8 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                                 <connections>
-                                    <binding destination="-2" name="value" keyPath="self.server.server" id="Lxt-z2-by0"/>
-                                    <outlet property="delegate" destination="-2" id="v8S-Ed-UGZ"/>
+                                    <binding destination="CkP-Sw-9Wm" name="value" keyPath="server" id="tMJ-Ve-k0y"/>
+                                    <outlet property="delegate" destination="lfh-gx-SLa" id="pKk-1s-j7t"/>
                                     <outlet property="nextKeyView" destination="KW8-Y8-vLH" id="suf-qe-ADF"/>
                                 </connections>
                             </textField>
@@ -56,7 +45,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                                 <connections>
-                                    <binding destination="-2" name="value" keyPath="self.server.user" id="MlI-uz-QsF"/>
+                                    <binding destination="CkP-Sw-9Wm" name="value" keyPath="user" id="Ly0-Xb-FmH"/>
                                     <outlet property="nextKeyView" destination="OzI-2I-2o5" id="odR-t9-ngT"/>
                                 </connections>
                             </textField>
@@ -71,8 +60,8 @@
                                     </allowedInputSourceLocales>
                                 </secureTextFieldCell>
                                 <connections>
-                                    <binding destination="-2" name="value" keyPath="self.server.password" id="IRj-hf-5dl"/>
-                                    <outlet property="nextKeyView" destination="RpP-oj-ysb" id="P2A-Q5-D4H"/>
+                                    <binding destination="CkP-Sw-9Wm" name="value" keyPath="password" id="LUa-mZ-gmp"/>
+                                    <outlet property="nextKeyView" destination="9yR-AO-bJX" id="LR2-Gp-HM7"/>
                                 </connections>
                             </secureTextField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RpP-oj-ysb">
@@ -85,7 +74,7 @@ DQ
 </string>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="add:" target="-2" id="4p6-Ad-Eep"/>
+                                    <action selector="add:" target="lfh-gx-SLa" id="gGw-dw-MuU"/>
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9yR-AO-bJX">
@@ -101,7 +90,8 @@ Gw
 </string>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="cancel:" target="-2" id="Uyu-Qp-Ek2"/>
+                                    <action selector="cancel:" target="lfh-gx-SLa" id="P3l-Bk-iOC"/>
+                                    <outlet property="nextKeyView" destination="RpP-oj-ysb" id="Sfi-4p-ekQ"/>
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9lq-yi-dwJ">
@@ -127,7 +117,7 @@ Gw
                                 <rect key="frame" x="0.0" y="147" width="392" height="129"/>
                                 <clipView key="contentView" id="u7o-Lk-v0e">
                                     <rect key="frame" x="1" y="1" width="390" height="127"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" id="siG-bz-0dO">
                                             <rect key="frame" x="0.0" y="0.0" width="390" height="127"/>
@@ -178,7 +168,7 @@ Gw
                                                 </tableColumn>
                                             </tableColumns>
                                             <connections>
-                                                <action selector="tableRowAction:" target="-2" id="489-EN-TSU"/>
+                                                <action selector="tableRowAction:" target="lfh-gx-SLa" id="I2l-rE-gXt"/>
                                                 <binding destination="E0F-xU-Hu8" name="content" keyPath="arrangedObjects" id="ebk-gd-f0S"/>
                                             </connections>
                                         </tableView>
@@ -254,10 +244,19 @@ Gw
                 </constraints>
             </view>
             <connections>
-                <outlet property="delegate" destination="-2" id="f30-Pz-h8P"/>
+                <outlet property="activityWheel" destination="2Zm-Pj-te9" id="mm7-WA-tas"/>
+                <outlet property="addButton" destination="RpP-oj-ysb" id="KH3-Of-FzH"/>
+                <outlet property="initialFirstResponder" destination="siG-bz-0dO" id="N6b-yk-tfp"/>
+                <outlet property="passwordTextField" destination="OzI-2I-2o5" id="mS9-aa-Fpn"/>
+                <outlet property="server" destination="CkP-Sw-9Wm" id="zhh-QY-NQH"/>
+                <outlet property="serverArrayController" destination="E0F-xU-Hu8" id="PHZ-YT-ZAm"/>
+                <outlet property="serverTableView" destination="siG-bz-0dO" id="2tA-Rg-Oku"/>
+                <outlet property="serverTextField" destination="ca6-xt-sX4" id="ekM-QR-KLz"/>
+                <outlet property="userTextField" destination="KW8-Y8-vLH" id="9Nt-sn-ECA"/>
             </connections>
             <point key="canvasLocation" x="316" y="-284"/>
         </window>
         <arrayController objectClassName="NSMutableArray" avoidsEmptySelection="NO" automaticallyRearrangesObjects="YES" id="E0F-xU-Hu8"/>
+        <customObject id="CkP-Sw-9Wm" customClass="XGAServer"/>
     </objects>
 </document>

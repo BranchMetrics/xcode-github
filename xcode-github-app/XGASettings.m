@@ -13,14 +13,36 @@
 #import "BNCEncoder.h"
 #import "BNCLog.h"
 
+
+#pragma mark XGAServer
+
 NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
 
-@implementation XGAServerSetting
+@implementation XGAServer
 
 + (NSArray<NSString*>*) ignoreIvars {
     return @[ @"_password" ];
 }
 
+- (instancetype) init {
+    self = [super init];
+    if (!self) return self;
+    _server = @"";
+    _user = @"";
+    return self;
+}
+
+- (NSString*) description {
+    NSString *pass = self.password.length ? @"••••" : @"nil";
+    return [NSString stringWithFormat:@"<%@ %p %@ %@ %@>",
+        NSStringFromClass(self.class),
+        (void*)self,
+        self.server,
+        self.user,
+        pass];
+}
+
+/*
 - (NSString*) password {
     @synchronized (self) {
         NSString *password = nil;
@@ -45,6 +67,7 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
         }
     }
 }
+*/
 
 @end
 
@@ -56,7 +79,7 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
 #pragma mark - XGASettings
 
 @interface XGASettings () {
-    NSMutableArray<XGAServerSetting*>*_servers;
+    NSMutableArray<XGAServer*>*_servers;
     NSMutableArray<XGAGitHubSyncTask*>*_gitHubSyncTasks;
 }
 @end
@@ -81,14 +104,14 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
 
 #pragma mark - Setters/Getters
 
-- (NSMutableArray<XGAServerSetting*>*) servers {
+- (NSMutableArray<XGAServer*>*) servers {
     @synchronized (self) {
         if (_servers == nil) _servers = [NSMutableArray new];
         return _servers;
     }
 }
 
-- (void) setServers:(NSMutableArray<XGAServerSetting*>*)servers_ {
+- (void) setServers:(NSMutableArray<XGAServer*>*)servers_ {
     @synchronized (self) {
         _servers = servers_;
     }
@@ -118,7 +141,7 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
         error =
             [BNCEncoder decodeObject:settings
                 fromData:data
-                classes:[NSSet setWithObjects:XGAServerSetting.class, XGAGitHubSyncTask.class, nil]
+                classes:[NSSet setWithObjects:XGAServer.class, XGAGitHubSyncTask.class, nil]
                 ignoringIvars:nil];
         if (!error && [settings isKindOfClass:XGASettings.class]) {
             [settings validate];

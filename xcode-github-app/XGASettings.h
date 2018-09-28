@@ -13,18 +13,18 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#pragma mark XGAServerSetting
+#pragma mark XGAServer
 
-@interface XGAServerSetting : BNCCoding <NSSecureCoding>
-@property (strong) NSString*_Nullable server;
-@property (strong) NSString*_Nullable user;
-@property (strong) NSString*_Nullable password;
+@interface XGAServer : BNCCoding <NSSecureCoding>
+@property (strong) NSString*server;
+@property (strong) NSString*user;
+@property (strong) NSString*password;
 @end
 
-#pragma mark XGGitHubSyncTask
+#pragma mark - XGGitHubSyncTask
 
 @interface XGAGitHubSyncTask : BNCCoding <NSSecureCoding>
-@property (strong) XGAServerSetting*xcodeServer;
+@property (strong) XGAServer*xcodeServer;
 @property (copy)   NSString*templateBotName;
 @end
 
@@ -39,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (assign) BOOL showDebugMessages;
 @property (assign) NSTimeInterval refreshSeconds;
 @property (strong) NSString*gitHubToken;
-@property (strong, null_resettable) NSMutableArray<XGAServerSetting*>*servers;
+@property (strong, null_resettable) NSMutableArray<XGAServer*>*servers;
 @property (strong, null_resettable) NSMutableArray<XGAGitHubSyncTask*>*gitHubSyncTasks;
 @end
 

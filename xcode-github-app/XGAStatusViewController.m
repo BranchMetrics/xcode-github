@@ -21,7 +21,7 @@
 #pragma mark XGAServerStatus
 
 @interface XGAServerStatus : NSObject
-@property (strong) XGAServerSetting *server;
+@property (strong) XGAServer *server;
 @property (copy)   NSString *botName;
 @property (strong) NSImage  *statusImage;
 @property (strong) APPFormattedString *statusSummary;
@@ -311,7 +311,7 @@
         [self updateSyncBots:task];
         [statusServers addObject:task.xcodeServer];
     }
-    for (XGAServerSetting*server in statusServers) {
+    for (XGAServer*server in statusServers) {
         [self updateXcodeServerStatus:server];
     }
     if (syncTasks.count == 0 && statusServers.count == 0) {
@@ -351,7 +351,7 @@
     }
 }
 
-- (void) updateXcodeServerStatus:(XGAServerSetting*)server {
+- (void) updateXcodeServerStatus:(XGAServer*)server {
     NSError*error = nil;
     NSMutableArray *statusArray = [NSMutableArray new];
     if (server.server.length > 0) {
@@ -385,7 +385,7 @@
 - (XGAServerStatus*) statusWithBotStatus:(XGXcodeBotStatus*)botStatus {
     if (botStatus == nil) return nil;
     XGAServerStatus *status = [XGAServerStatus new];
-    for (XGAServerSetting*ss in XGASettings.shared.servers) {
+    for (XGAServer*ss in XGASettings.shared.servers) {
         if ([ss.server isEqualToString:botStatus.serverName]) {
             status.server = ss;
             break;

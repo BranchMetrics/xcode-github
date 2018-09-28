@@ -28,13 +28,18 @@
 
 ### Status - Main Window
 Status view: a table with columns
-
 * Test status: Blue: Building, Yellow: Warnings, Red: Error, Green: Success, Grey: Unknown
 * Xcode Server Host
 * Pull Request Name
 * Status Summary
 * Button: Start / Stop Button
 * Button: Download logs
+
+- or - 
+
+Tree:
+| Server | Project |  
+
 
 ### Settings Window
 * Add server

@@ -57,18 +57,19 @@
 - (IBAction)serverDoubleAction:(id)sender {
     NSInteger idx = self.tableView.selectedRow;
     if (idx >= 0 && idx < [self.serverArrayController.arrangedObjects count]) {
-        XGAServerSetting*server = [self.serverArrayController.arrangedObjects objectAtIndex:idx];
+        XGAServer*server = [self.serverArrayController.arrangedObjects objectAtIndex:idx];
         [self showServer:server];
     }
 }
 
-- (void) showServer:(XGAServerSetting*)server {
-    if (!server) server = [[XGAServerSetting alloc] init];
+- (void) showServer:(XGAServer*)server {
+    if (!server) server = [[XGAServer alloc] init];
     self.addServerPanel = [XGAAddServerPanel new];
     self.addServerPanel.server = server;
-    [self.window beginSheet:self.addServerPanel.panel completionHandler:^(NSModalResponse returnCode) {
-        if (returnCode == NSModalResponseOK) {
-            if (server.server.length) [self.serverArrayController addObject:server];
+    [self.window beginSheet:self.addServerPanel completionHandler:^(NSModalResponse returnCode) {
+        __auto_type result = self.addServerPanel.server;
+        if (returnCode == NSModalResponseOK && result.server.length) {
+            [self.serverArrayController addObject:server];
             [self.settings save];
         }
         self.addServerPanel = nil;
@@ -80,6 +81,7 @@
     if (idx >= 0 && idx < [self.serverArrayController.arrangedObjects count]) {
         [self.serverArrayController removeObjectAtArrangedObjectIndex:idx];
         [self.settings save];
+        [self tableViewSelectionDidChange:nil];
     }
 }
 

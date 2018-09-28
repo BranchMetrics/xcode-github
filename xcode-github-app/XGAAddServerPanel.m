@@ -10,58 +10,65 @@
 
 #import "XGAAddServerPanel.h"
 #import "XGXcodeBot.h"
+#import "XGANetworkServiceBrowser.h"
 #import "BNCThreads.h"
+#import "BNCLog.h"
 
 NSTimeInterval const kNetworkRefreshInterval = 7.0;
 
-@interface XGAAddServerPanel () <NSNetServiceBrowserDelegate>
+@interface XGAAddServerPanel () <XGANetworkServiceBrowserDelegate>
 @property (strong) IBOutlet NSTextField *serverTextField;
 @property (strong) IBOutlet NSTextField *userTextField;
 @property (strong) IBOutlet NSSecureTextField *passwordTextField;
-@property (strong) IBOutlet NSArrayController*serverArrayController;
+@property (strong) IBOutlet NSArrayController *serverArrayController;
 @property (strong) IBOutlet NSTableView *serverTableView;
 @property (strong) IBOutlet NSProgressIndicator *activityWheel;
 @property (strong) IBOutlet NSButton *addButton;
 
 @property (assign) BOOL isSearchingNetwork;
-@property (strong) NSNetServiceBrowser*networkBrowser;
 @property (strong) NSTimer*networkTimer;
 @property (strong) NSDate*networkLookupDate;
+@property (strong) XGANetworkServiceBrowser*networkBrowser;
 @end
 
 @implementation XGAAddServerPanel
 
 + (instancetype) new {
-    XGAAddServerPanel*panel = [[XGAAddServerPanel alloc] init];
-    panel.server = [[XGAServerSetting alloc] init];
+    NSArray*objects = nil;
     [[NSBundle mainBundle]
-        loadNibNamed:NSStringFromClass(self)
-        owner:panel
-        topLevelObjects:NULL];
-    return panel;
+        loadNibNamed:NSStringFromClass(self.class)
+        owner:nil
+        topLevelObjects:&objects];
+    for (XGAAddServerPanel*panel in objects) {
+        if ([panel isKindOfClass:XGAAddServerPanel.class]) {
+            return panel;
+        }
+    }
+    return [[XGAAddServerPanel alloc] init];
 }
 
 - (void) dealloc {
-    self.networkBrowser.delegate = nil;
     [self stopNetworkLookup];
 }
 
-- (void) awakeFromNib {
-    [super awakeFromNib];
-    self.addButton.enabled = NO;
-    [self startNetworkLookup];
+- (BOOL) canBecomeKeyWindow {
+    return YES;
 }
 
--(BOOL) canBecomeKeyWindow {
-    return YES;
+- (void)becomeKeyWindow {
+    [super becomeKeyWindow];
+    [self startNetworkLookup];
+    if (self.server.server.length) {
+        self.addButton.title = @"Update";
+        self.addButton.enabled = YES;
+    } else {
+        self.addButton.title = @"Add";
+        self.addButton.enabled = NO;
+    }
 }
 
 - (void) controlTextDidChange:(NSNotification *)obj {
     self.addButton.enabled = (self.serverTextField.stringValue.length > 0);
-}
-
-- (void)windowDidBecomeKey:(NSNotification *)notification {
-    [self controlTextDidChange:notification];
 }
 
 - (IBAction)tableRowAction:(id)sender {
@@ -78,47 +85,58 @@ NSTimeInterval const kNetworkRefreshInterval = 7.0;
 - (IBAction)cancel:(id)sender {
     [self stopNetworkLookup];
     self.serverArrayController = nil;
-    [self.panel.sheetParent endSheet:self.panel returnCode:NSModalResponseCancel];
-    self.panel = nil;
+    [self.sheetParent endSheet:self returnCode:NSModalResponseCancel];
+}
+
+- (NSString*) cleanString:(NSString*)string {
+    if (string == nil) string = @"";
+    return [string stringByTrimmingCharactersInSet:
+            [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+}
+
+- (void) showAlertWithError:(NSError*)error {
+    NSAlert*alert = [[NSAlert alloc] init];
+    alert.messageText = [NSString stringWithFormat:@"Can't connect to '%@'", self.server.server];
+    alert.informativeText = [error localizedDescription];
+    alert.alertStyle = NSAlertStyleCritical;
+    [alert beginSheetModalForWindow:self completionHandler:nil];
 }
 
 - (IBAction)add:(id)sender {
-    NSString*server = [self.serverTextField.stringValue copy];
-    server =
-        [server stringByTrimmingCharactersInSet:
-            [NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    if (server.length <= 0) return;
-    [self stopNetworkLookup];
+    self.server.server = [self cleanString:self.serverTextField.stringValue];
+    self.server.user = [self cleanString:self.userTextField.stringValue];
+    self.server.password = [self cleanString:self.passwordTextField.stringValue];
+    if (self.server.server.length <= 0) return;
 
     NSError*error = nil;
-    [XGXcodeBot botsForServer:server error:&error];
+    [XGXcodeBot botsForServer:self.server.server error:&error];
     if (error) {
-        NSAlert*alert = [[NSAlert alloc] init];
-        alert.messageText = [NSString stringWithFormat:@"Can't connect to %@", server];
-        alert.informativeText = [error localizedDescription];
-        alert.alertStyle = NSAlertStyleCritical;
-        [alert beginSheetModalForWindow:self.panel completionHandler:nil];
-    } else {
-        self.serverArrayController = nil;
-        [self.panel.sheetParent endSheet:self.panel returnCode:NSModalResponseOK];
-        self.panel = nil;
+        [self showAlertWithError:error];
+        return;
     }
+    self.serverArrayController = nil;
+    [self.sheetParent endSheet:self returnCode:NSModalResponseOK];
 }
 
 #pragma mark - Networking
 
+    /*
+        if (![self.serverArrayController.arrangedObjects containsObject:server])
+            [self.serverArrayController addObject:server];
+        if (!moreComing) {
+            BNCAfterSecondsPerformBlockOnMainThread(2.0, ^{
+                [self restartNetworkLookup];
+            });
+        }
+    */
+
 - (void) startNetworkLookup {
     @synchronized(self) {
-        if (self.isSearchingNetwork) return;
-        NSLog(@"startNetworkLookup");
         [self stopNetworkLookup];
         self.isSearchingNetwork = YES;
-        if (!self.networkBrowser) {
-            self.networkBrowser = [[NSNetServiceBrowser alloc] init];
-            self.networkBrowser.delegate = self;
-            self.networkBrowser.includesPeerToPeer = YES;
-        }
-        [self.networkBrowser searchForServicesOfType:@"_xcs2p._tcp." inDomain:@""];
+        self.networkBrowser = [[XGANetworkServiceBrowser alloc] initWithDomain:@"" service:@"_xcs2p._tcp."];
+        self.networkBrowser.delegate = self;
+        [self.networkBrowser startDiscovery];
         self.activityWheel.indeterminate = YES;
         [self.activityWheel startAnimation:nil];
     }
@@ -153,43 +171,25 @@ NSTimeInterval const kNetworkRefreshInterval = 7.0;
 
 - (void) stopNetworkLookup {
     @synchronized(self) {
-        [self.networkBrowser stop];
-        self.networkBrowser.delegate = nil;
-        
         [self.networkTimer invalidate];
         self.networkTimer = nil;
         self.isSearchingNetwork = NO;
-
         self.activityWheel.doubleValue = 0.0;
         self.activityWheel.indeterminate = YES;
         [self.activityWheel stopAnimation:nil];
     }
 }
 
-- (void)netServiceBrowser:(NSNetServiceBrowser *)browser
-             didNotSearch:(NSDictionary<NSString *,NSNumber *> *)errorDict {
-    NSLog(@"NSNetServiceBrowser error: %@.", errorDict);
-    [self restartNetworkLookup];
+#pragma mark XGANetworkServiceBrowser Delegate
+
+- (void) browser:(XGANetworkServiceBrowser *)browser discoveredHost:(XGANetworkServiceHost *)host {
+    NSString*server = host.names.firstObject;
+    if (![self.serverArrayController.arrangedObjects containsObject:server])
+        [self.serverArrayController addObject:server];
 }
 
-- (void)netServiceBrowser:(NSNetServiceBrowser *)browser
-           didFindService:(NSNetService *)service
-               moreComing:(BOOL)moreComing {
-    if (service.name.length > 0) {
-        NSString*server = [service.name stringByReplacingOccurrencesOfString:@" " withString:@"-"];
-        if (service.domain.length > 0)
-            server = [NSString stringWithFormat:@"%@.%@", server, service.domain];
-        server =
-            [server stringByTrimmingCharactersInSet:
-                [NSCharacterSet characterSetWithCharactersInString:@"."]];
-        if (![self.serverArrayController.arrangedObjects containsObject:server])
-            [self.serverArrayController addObject:server];
-    }
-    if (!moreComing) {
-        BNCAfterSecondsPerformBlockOnMainThread(2.0, ^{
-            [self restartNetworkLookup];
-        });
-    }
+- (void) browser:(XGANetworkServiceBrowser *)browser finishedWithError:(NSError *)error {
+    [self restartNetworkLookup];
 }
 
 @end
