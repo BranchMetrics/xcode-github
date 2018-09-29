@@ -11,112 +11,129 @@
 #import "APPFormattedString.h"
 #import <CoreText/CoreText.h>
 
-#pragma mark APPFormattedString
+typedef NS_ENUM(NSInteger, APPFormattedStringStyle) {
+    APPFormattedStringFormatPlain,
+    APPFormattedStringFormatBold,
+    APPFormattedStringFormatItalic,
+    APPFormattedStringFormatLine,
+};
 
-@interface APPFormattedString ()
-@property (strong) NSMutableArray<APPFormattedStringBuilder*>*builderArray;
+#pragma mark APPFormattedStringPart
+
+@interface APPFormattedStringPart : NSObject
+@property (assign) APPFormattedStringStyle style;
+@property (strong) NSString*_Nonnull string;
 @end
 
-#pragma mark - APPFormattedStringBuilder
-
-@interface APPFormattedStringBuilder ()
-@property (strong) APPFormattedString*formattedString;
-@end
-
-@implementation APPFormattedStringBuilder
-
-- (instancetype) initWithFormattedString:(APPFormattedString*)formattedString {
-    self = [super init];
-    if (!self) return self;
-    self.formattedString = formattedString;
-    return self;
-}
-
-#define createBuilder \
-    va_list argList; \
-    va_start(argList, format); \
-    APPFormattedStringBuilder* builder = [[APPFormattedStringBuilder alloc] init]; \
-    builder.string = [[NSString alloc] initWithFormat:format arguments:argList]; \
-    [self.formattedString.builderArray addObject:builder]; \
-    va_end(argList);
-
-- (instancetype) appendPlain:(NSString*)format, ... {
-    createBuilder;
-    builder.style = APPFormattedStringFormatPlain;
-    return self;
-}
-
-- (instancetype) appendBold:(NSString*)format, ... {
-    createBuilder;
-    builder.style = APPFormattedStringFormatBold;
-    return self;
-}
-
-- (instancetype) appendItalic:(NSString*)format, ... {
-    createBuilder;
-    builder.style = APPFormattedStringFormatItalic;
-    return self;
-}
-
-- (instancetype) appendLine {
-    APPFormattedStringBuilder* builder = [[APPFormattedStringBuilder alloc] init];
-    builder.style = APPFormattedStringFormatLine;
-    builder.string = @"\n";
-    [self.formattedString.builderArray addObject:builder];
-    return self;
-}
-
-- (APPFormattedString*) build {
-    return self.formattedString;
-}
-
+@implementation APPFormattedStringPart
 @end
 
 #pragma mark - APPFormattedString
 
+@interface APPFormattedString ()
+@property (strong) NSMutableArray<APPFormattedStringPart*>*partArray;
+@end
+
 @implementation APPFormattedString
 
-+ (APPFormattedStringBuilder*) builder {
-    APPFormattedString* formattedString = [[APPFormattedString alloc] init];
-    return [formattedString builder];
+- (instancetype) init {
+    self = [super init];
+    if (!self) return self;
+    self.partArray = [NSMutableArray new];
+    return self;
 }
 
-- (APPFormattedStringBuilder*) builder {
-    if (!self.builderArray) self.builderArray = [NSMutableArray new];
-    APPFormattedStringBuilder*builder =
-        [[APPFormattedStringBuilder alloc] initWithFormattedString:self];
-    return builder;
+#define createPart \
+    va_list argList; \
+    va_start(argList, format); \
+    __auto_type part = [[APPFormattedStringPart alloc] init]; \
+    part.string = [[NSString alloc] initWithFormat:format arguments:argList]; \
+    [self.partArray addObject:part]; \
+    va_end(argList);
+
+- (instancetype) plainText:(NSString*)format, ... {
+    createPart;
+    part.style = APPFormattedStringFormatPlain;
+    return self;
 }
 
-+ (APPFormattedString*) plainText:(NSString*)text {
-   return [[[APPFormattedString builder] appendPlain:@"%@", text] build];
+- (instancetype) boldText:(NSString*)format, ... {
+    createPart;
+    part.style = APPFormattedStringFormatBold;
+    return self;
 }
 
-+ (APPFormattedString*) boldText:(NSString*)text {
-   return [[[APPFormattedString builder] appendBold:@"%@", text] build];
+- (instancetype) italicText:(NSString*)format, ... {
+    createPart;
+    part.style = APPFormattedStringFormatItalic;
+    return self;
+}
+
+- (instancetype) line {
+    __auto_type part = [[APPFormattedStringPart alloc] init];
+    part.style = APPFormattedStringFormatLine;
+    part.string = @"\n";
+    [self.partArray addObject:part];
+    return self;
+}
+
+- (instancetype) append:(APPFormattedString *)string {
+    [self.partArray addObjectsFromArray:string.partArray];
+    return self;
+}
+
+#define createFormattedString \
+    va_list argList; \
+    va_start(argList, format); \
+    __auto_type formattedString = [APPFormattedString new]; \
+    __auto_type part = [[APPFormattedStringPart alloc] init]; \
+    part.string = [[NSString alloc] initWithFormat:format arguments:argList]; \
+    [formattedString.partArray addObject:part]; \
+    va_end(argList);
+
++ (instancetype) plainText:(NSString*)format, ... {
+    createFormattedString;
+    part.style = APPFormattedStringFormatPlain;
+    return formattedString;
+}
+
++ (instancetype) boldText:(NSString*)format, ... {
+    createFormattedString;
+    part.style = APPFormattedStringFormatBold;
+    return formattedString;
+}
+
++ (instancetype) italicText:(NSString*)format, ... {
+    createFormattedString;
+    part.style = APPFormattedStringFormatItalic;
+    return formattedString;
+}
+
++ (instancetype) line {
+    return [[APPFormattedString new] line];
 }
 
 - (NSString*) renderText {
     NSMutableString*string = [NSMutableString new];
-    for (APPFormattedStringBuilder*builder in self.builderArray) {
-        [string appendString:builder.string];
+    for (APPFormattedStringPart*part in self.partArray) {
+        [string appendString:part.string];
     }
     return string;
 }
 
 - (NSString*) renderMarkDown {
     NSMutableString*string = [NSMutableString new];
-    for (APPFormattedStringBuilder*builder in self.builderArray) {
-        switch (builder.style) {
+    for (APPFormattedStringPart*part in self.partArray) {
+        switch (part.style) {
         default:
         case APPFormattedStringFormatPlain:
-            [string appendString:builder.string];
+            [string appendString:part.string];
             break;
         case APPFormattedStringFormatBold:
-            [string appendFormat:@"**%@**", builder.string];
+            [string appendFormat:@"**%@**", part.string];
             break;
         case APPFormattedStringFormatItalic:
-            [string appendFormat:@"*%@*", builder.string];
+            [string appendFormat:@"*%@*", part.string];
             break;
         case APPFormattedStringFormatLine:
             [string appendString:@"\n---\n"];
@@ -140,9 +157,9 @@
     UIFont*italicFont = [UIFont fontWithDescriptor:descriptor size:0.0];
 
     NSMutableAttributedString*string = [NSMutableAttributedString new];
-    for (APPFormattedStringBuilder*builder in self.builderArray) {
+    for (APPFormattedStringPart*part in self.partArray) {
         NSDictionary*attributes = @{};
-        switch (builder.style) {
+        switch (part.style) {
         default:
         case APPFormattedStringFormatPlain:
             attributes = @{
@@ -163,7 +180,7 @@
             break;
         }
         NSAttributedString*as =
-            [[NSAttributedString alloc] initWithString:builder.string attributes:attributes];
+            [[NSAttributedString alloc] initWithString:part.string attributes:attributes];
         [string appendAttributedString:as];
     }
     return string;
@@ -183,9 +200,9 @@
     NSFont*italicFont = [NSFont fontWithDescriptor:descriptor size:0.0];
 
     NSMutableAttributedString*string = [NSMutableAttributedString new];
-    for (APPFormattedStringBuilder*builder in self.builderArray) {
+    for (APPFormattedStringPart*part in self.partArray) {
         NSDictionary*attributes = @{};
-        switch (builder.style) {
+        switch (part.style) {
         default:
         case APPFormattedStringFormatPlain:
             attributes = @{
@@ -206,7 +223,7 @@
             break;
         }
         NSAttributedString*as =
-            [[NSAttributedString alloc] initWithString:builder.string attributes:attributes];
+            [[NSAttributedString alloc] initWithString:part.string attributes:attributes];
         [string appendAttributedString:as];
     }
     return string;

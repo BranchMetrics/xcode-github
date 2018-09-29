@@ -11,7 +11,10 @@
 * [x] Make "Add Server" flow.
 * [x] Make "Add GitHub Token" flow.
 * [x] Add tests.
-* [ ] Change status from table to tree. 
+* [-] Change status from table to tree.
+* [x] Add smart sort - by repository then by branchOrPR
+* [ ] Create new bot flow.
+* [ ] Fix security.
 * [ ] Clean up code. 
 * [ ] Add help.
 ```
@@ -26,20 +29,28 @@
 
 ## Windows
 
-### Status - Main Window
-Status view: a table with columns
-* Test status: Blue: Building, Yellow: Warnings, Red: Error, Green: Success, Grey: Unknown
+### Status View - Main Window
+
+#### Table with Columns
+
+* Status 
+  - Icon: Test status: Blue: Building, Yellow: Warnings, Red: Error, Green: Success, Grey: Unknown
+  - Status Summary
 * Xcode Server Host
-* Pull Request Name
-* Status Summary
-* Button: Start / Stop Button
-* Button: Download logs
+* Repository
+* Branch or Pull Request Name
+* Maybe: Button: Start / Stop Button
+* Maybe: Button: Download logs
 
 - or - 
 
-Tree:
-| Server | Project |  
+#### Tree with Columns
 
+| Server | Repo | PRs | Status |
+
+Server
+   +------ Repo
+                 +----- PR -- Status
 
 ### Settings Window
 * Add server

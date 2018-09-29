@@ -153,116 +153,99 @@ NSString* XGDurationStringFromTimeInterval(NSTimeInterval timeInterval) {
     NSString*durationString = XGDurationStringFromTimeInterval(duration);
 
     APPFormattedString *apstring =
-        [[[[[[APPFormattedString builder]
-            appendBold:@"Result of Integration %@\n", self.integrationNumber]
-            appendLine]
-            appendItalic:@"Duration"]
-            appendPlain:@": %@\n", durationString]
-                build];
+        [[[[[APPFormattedString new]
+            boldText:@"Result of Integration %@\n", self.integrationNumber]
+            line]
+            italicText:@"Duration"]
+            plainText:@": %@\n", durationString];
 
     if ([self.result isEqualToString:@"canceled"]) {
-        [[[[[apstring builder]
-            appendPlain:@"Build was "]
-            appendBold:@"**manually canceled**"]
-            appendPlain:@"."]
-                build];
+        [[[apstring
+            plainText:@"Build was "]
+            boldText:@"**manually canceled**"]
+            plainText:@"."];
         return apstring;
     }
     
-    [[[[apstring builder]
-        appendItalic:@"Result"]
-        appendPlain:@": "]
-            build];
+    [[apstring
+        italicText:@"Result"]
+        plainText:@": "];
 
     if ([self.errorCount integerValue] > 0) {
-        [[[apstring builder]
-            appendBold:@"%@ errors, failing state: %@", self.errorCount, self.summaryString]
-                build];
+        [apstring boldText:@"%@ errors, failing state: %@", self.errorCount, self.summaryString];
         return apstring;
     }
 
     if ([self.testFailureCount integerValue] > 0) {
-        [[[[apstring builder]
-            appendBold:@"Build failed %@ tests", self.testFailureCount]
-            appendPlain:@" out of %@", self.testsCount]
-                build];
+        [[apstring boldText:@"Build failed %@ tests", self.testFailureCount]
+            plainText:@" out of %@", self.testsCount];
         return apstring;
     }
 
     if ([self.testsCount integerValue] > 0 &&
         [self.warningCount integerValue] > 0 &&
         [self.analyzerWarningCount integerValue] > 0) {
-        [[[[[[[apstring builder]
-            appendPlain:@"All %@ tests passed, but please ", self.testsCount]
-            appendBold:@"fix %@ warnings", self.warningCount]
-            appendPlain:@" and "]
-            appendBold:@"%@ analyzer warnings", self.analyzerWarningCount]
-            appendPlain:@"."]
-                build];
+        [[[[[apstring
+            plainText:@"All %@ tests passed, but please ", self.testsCount]
+            boldText:@"fix %@ warnings", self.warningCount]
+            plainText:@" and "]
+            boldText:@"%@ analyzer warnings", self.analyzerWarningCount]
+            plainText:@"."];
         if ([self.codeCoveragePercentage doubleValue] > 0) {
-            [[[[apstring builder]
-                appendItalic:@"\nTest Coverage"]
-                appendPlain:@": %@%%", self.codeCoveragePercentage]
-                    build];
+            [[apstring
+                italicText:@"\nTest Coverage"]
+                plainText:@": %@%%", self.codeCoveragePercentage];
         }
         return apstring;
     }
 
     if ([self.testsCount integerValue] > 0 &&
         [self.warningCount integerValue] > 0) {
-        [[[[apstring builder]
-            appendPlain:@"All %@ tests passed, but please ", self.testsCount]
-            appendBold:@"fix %@ warnings.", self.warningCount]
-                build];
+        [[apstring
+            plainText:@"All %@ tests passed, but please ", self.testsCount]
+            boldText:@"fix %@ warnings.", self.warningCount];
         if ([self.codeCoveragePercentage doubleValue] > 0) {
-            [[[[apstring builder]
-                appendItalic:@"\nTest Coverage"]
-                appendPlain:@": %@%%", self.codeCoveragePercentage]
-                    build];
+            [[apstring
+                italicText:@"\nTest Coverage"]
+                plainText:@": %@%%", self.codeCoveragePercentage];
         }
         return apstring;
     }
 
     if ([self.testsCount integerValue] > 0 &&
         [self.analyzerWarningCount integerValue] > 0) {
-        [[[[apstring builder]
-            appendPlain:@"All %@ tests passed, but please ", self.testsCount]
-            appendBold:@"fix %@ analyzer warnings.", self.analyzerWarningCount]
-                build];
+        [[apstring
+            plainText:@"All %@ tests passed, but please ", self.testsCount]
+            boldText:@"fix %@ analyzer warnings.", self.analyzerWarningCount];
         if ([self.codeCoveragePercentage doubleValue] > 0) {
-            [[[[apstring builder]
-                appendItalic:@"\nTest Coverage"]
-                appendPlain:@": %@%%", self.codeCoveragePercentage]
-                    build];
+            [[apstring
+                italicText:@"\nTest Coverage"]
+                plainText:@": %@%%", self.codeCoveragePercentage];
         }
         return apstring;
     }
 
     if ([self.errorCount integerValue] == 0 &&
         [self.result isEqualToString:@"succeeded"]) {
-        [[[apstring builder] appendBold:@"Perfect build! 👍"] build];
+        [apstring boldText:@"Perfect build! 👍"];
 
         if ([self.testsCount integerValue] > 0) {
             if ([self.codeCoveragePercentage doubleValue] > 0.0) {
-                [[[[apstring builder]
-                    appendItalic:@"\nTest Coverage"]
-                    appendPlain:@": %@%% (%@ tests).", self.codeCoveragePercentage, self.testsCount]
-                        build];
+                [[apstring
+                    italicText:@"\nTest Coverage"]
+                    plainText:@": %@%% (%@ tests).", self.codeCoveragePercentage, self.testsCount];
             } else {
-                [[[apstring builder]
-                    appendItalic:@"\nAll %@ tests passed.", self.testsCount]
-                        build];
+                [apstring italicText:@"\nAll %@ tests passed.", self.testsCount];
             }
         }
 
         return apstring;
     }
 
-    [[[apstring builder] appendBold:@"Failing state: %@.", self.summaryString] build];
+    [apstring boldText:@"Failing state: %@.", self.summaryString];
     if ([self.tags containsObject:@"xcs-upgrade"]) {
-        [[[apstring builder]
-            appendItalic:@"\nThe current configuration may not be supported by the Xcode upgrade."]
-                build];
+        [apstring
+            italicText:@"\nThe current configuration may not be supported by the Xcode upgrade."];
     }
 
     return apstring;
@@ -347,7 +330,7 @@ NSString* XGDurationStringFromTimeInterval(NSTimeInterval timeInterval) {
     return newTitle;
 }
 
-+ (NSString*_Nullable) gitHubPRNameFromString:(NSString*_Nullable)string {
++ (NSString*_Nullable) gitHubPRNameFromBotName:(NSString*_Nullable)string {
     if ([string hasPrefix:@"xcode-github PR#"])
         return [string substringFromIndex:13];
     return nil;

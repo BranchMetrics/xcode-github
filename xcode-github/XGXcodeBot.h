@@ -114,7 +114,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSString*_Nonnull) botNameFromPRNumber:(NSString*_Nonnull)number title:(NSString*_Nonnull)title;
 
-+ (NSString*_Nullable) gitHubPRNameFromString:(NSString*_Nullable)string;
++ (NSString*_Nullable) gitHubPRNameFromBotName:(NSString*_Nullable)string;
 
 + (XGXcodeBot*_Nullable) duplicateBot:(XGXcodeBot*_Nonnull)templateBot
                           withNewName:(NSString*_Nonnull)newBotName

@@ -209,11 +209,10 @@ void XGALogFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Null
     if (![row isKindOfClass:XGALogRow.class]) return;
 
     APPFormattedString*status =
-        [[[[[APPFormattedString builder]
-            appendBold:@"%@", [XGALogViewController stringForLogLevel:row.logLevel]]
-            appendPlain:@"     "]
-            appendItalic:@"%@", [self.dateFormatter stringFromDate:row.date]]
-                build];
+        [[[[APPFormattedString new]
+            boldText:@"%@", [XGALogViewController stringForLogLevel:row.logLevel]]
+            plainText:@"     "]
+            italicText:@"%@", [self.dateFormatter stringFromDate:row.date]];
 
     if (!self.statusPopover) self.statusPopover = [[XGAStatusPopover alloc] init];
     NSFont*font = [NSFont systemFontOfSize:[NSFont systemFontSize]];

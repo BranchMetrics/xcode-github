@@ -29,6 +29,9 @@
 @property (copy)   NSString *botID;
 @property (copy)   NSString *botTinyID;
 @property (copy)   NSString *integrationID;
+
+@property (copy)   NSString *repository;
+@property (copy)   NSString *branchOrPRName;
 @end
 
 @implementation XGAServerStatus
@@ -86,7 +89,7 @@
     self.window = self.view.window;
     XGAServerStatus *status = [XGAServerStatus new];
     status.statusImage = [NSImage imageNamed:@"RoundBlue"];
-    status.statusSummary = [APPFormattedString boldText:@"< Refreshing >"];
+    status.statusSummary = [[APPFormattedString new] boldText:@"< Refreshing >"];
     self.serverStatusArray = @[ status ];
     [self startStatusUpdates];
 }
@@ -125,9 +128,9 @@
     NSFont*font = [NSFont systemFontOfSize:[NSFont systemFontSize]];
     if (status.botName.length > 0) {
         self.statusPopover.titleTextField.attributedStringValue =
-            [[[[APPFormattedString builder]
-                appendBold:@"%@", status.botName]
-                    build] renderAttributedStringWithFont:font];
+            [[[APPFormattedString new]
+                boldText:@"%@", status.botName]
+                renderAttributedStringWithFont:font];
         [self.statusPopover.titleTextField setNeedsUpdateConstraints:YES];
     } else {
         self.statusPopover.titleTextField.stringValue = @"";
@@ -216,6 +219,15 @@
     [self updateStatusNow];
 }
 
+- (IBAction)smartSort:(id)sender {
+    self.tableView.sortDescriptors = @[
+        [NSSortDescriptor sortDescriptorWithKey:@"repository"
+            ascending:YES selector:@selector(caseInsensitiveCompare:)],
+        [NSSortDescriptor sortDescriptorWithKey:@"branchOrPRName"
+            ascending:YES selector:@selector(compare:)],
+    ];
+}
+
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem {
     if (menuItem.action == @selector(reload:)) return YES;
     SEL contextMenuItems[] = {
@@ -228,6 +240,10 @@
         NULL
     };
     SEL*item = contextMenuItems;
+    if (menuItem.action == @selector(smartSort:)) {
+        menuItem.state = (self.tableView.sortDescriptors.count == 2);
+        return YES;
+    }
     while (*item && *item != menuItem.action) ++item;
     if (*item) return ([self selectedTableItem] != nil);
     return NO;
@@ -361,12 +377,13 @@
             status.server = server;
             status.statusSummary = [APPFormattedString boldText:@"Server Error"];
             status.statusImage = [NSImage imageNamed:@"RoundAlert"];
-            status.statusDetail = [APPFormattedString plainText:error.localizedDescription];
+            status.statusDetail =
+                [APPFormattedString plainText:@"%@", error.localizedDescription];
             [statusArray addObject:status];
         } else {
             for (XGXcodeBot *bot in bots.objectEnumerator) {
                 XGXcodeBotStatus*botStatus = [bot status];
-                XGAServerStatus*status = [self statusWithBotStatus:botStatus];
+                XGAServerStatus*status = [self statusWithBot:bot status:botStatus];
                 if (status) [statusArray addObject:status];
             }
         }
@@ -382,7 +399,7 @@
     });
 }
 
-- (XGAServerStatus*) statusWithBotStatus:(XGXcodeBotStatus*)botStatus {
+- (XGAServerStatus*) statusWithBot:(XGXcodeBot*)bot status:(XGXcodeBotStatus*)botStatus {
     if (botStatus == nil) return nil;
     XGAServerStatus *status = [XGAServerStatus new];
     for (XGAServer*ss in XGASettings.shared.servers) {
@@ -392,12 +409,16 @@
         }
     }
     if (status.server == nil) return nil;
-    status.botName = ([XGXcodeBot gitHubPRNameFromString:botStatus.botName]) ?: botStatus.botName;
-    status.statusSummary = [APPFormattedString boldText:botStatus.summaryString];
+    status.botName = botStatus.botName;
+    status.statusSummary = [APPFormattedString boldText:@"%@", botStatus.summaryString];
     status.botID = botStatus.botID;
     status.botTinyID = botStatus.botTinyID;
     status.integrationID = botStatus.integrationID;
-
+    status.repository = [NSString stringWithFormat:@"%@/%@", bot.repoOwner, bot.repoName];
+    NSString*name = [XGXcodeBot gitHubPRNameFromBotName:botStatus.botName];
+    if (name.length <= 0) name = bot.branch;
+    status.branchOrPRName = name;
+    
     NSString *result = [botStatus.result lowercaseString];
     if ([botStatus.currentStep containsString:@"completed"]) {
 

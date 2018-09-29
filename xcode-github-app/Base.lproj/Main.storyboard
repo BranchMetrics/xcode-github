@@ -314,6 +314,12 @@
                                                 <action selector="toggleFullScreen:" target="Ady-hI-5gd" id="dU3-MA-1Rq"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Smart Sort" id="eB3-mP-8cw">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="smartSort:" target="Ady-hI-5gd" id="ItS-LH-KfI"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
@@ -333,12 +339,12 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="sYl-5l-Qyn"/>
-                                        <menuItem title="Status" keyEquivalent="0" id="1Ql-T4-ozZ">
+                                        <menuItem title="Status" keyEquivalent="1" id="1Ql-T4-ozZ">
                                             <connections>
                                                 <action selector="showStatusWindow:" target="Voe-Tx-rLC" id="ptT-dM-yk7"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Log" keyEquivalent="1" id="dTC-TW-i92">
+                                        <menuItem title="Log" keyEquivalent="2" id="dTC-TW-i92">
                                             <connections>
                                                 <action selector="showLogWindow:" target="Voe-Tx-rLC" id="xjJ-z8-g8d"/>
                                             </connections>

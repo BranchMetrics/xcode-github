@@ -13,38 +13,19 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NS_ENUM(NSInteger, APPFormattedStringStyle) {
-    APPFormattedStringFormatPlain,
-    APPFormattedStringFormatBold,
-    APPFormattedStringFormatItalic,
-    APPFormattedStringFormatLine,
-};
-
-@class APPFormattedString;
-
-#pragma mark - APPFormattedStringBuilder
-
-@interface APPFormattedStringBuilder : NSObject
-@property (assign) APPFormattedStringStyle style;
-@property (strong) NSString*_Nonnull string;
-
-- (instancetype) appendPlain:(NSString*)format, ... NS_FORMAT_FUNCTION(1,2);
-- (instancetype) appendBold:(NSString*)format, ... NS_FORMAT_FUNCTION(1,2);
-- (instancetype) appendItalic:(NSString*)format, ... NS_FORMAT_FUNCTION(1,2);
-- (instancetype) appendLine;
-
-- (APPFormattedString*) build;
-@end
-
-#pragma mark - APPFormattedString
-
 @interface APPFormattedString : NSObject
 
-+ (APPFormattedStringBuilder*) builder;
-- (APPFormattedStringBuilder*) builder;
++ (instancetype) plainText:(NSString*)format, ... NS_FORMAT_FUNCTION(1,2);
++ (instancetype) boldText:(NSString*)format, ... NS_FORMAT_FUNCTION(1,2);
++ (instancetype) italicText:(NSString*)format, ... NS_FORMAT_FUNCTION(1,2);
++ (instancetype) line;
 
-+ (APPFormattedString*) plainText:(NSString*)text;
-+ (APPFormattedString*) boldText:(NSString*)text;
+- (instancetype) plainText:(NSString*)format, ... NS_FORMAT_FUNCTION(1,2);
+- (instancetype) boldText:(NSString*)format, ... NS_FORMAT_FUNCTION(1,2);
+- (instancetype) italicText:(NSString*)format, ... NS_FORMAT_FUNCTION(1,2);
+- (instancetype) line;
+
+- (instancetype) append:(APPFormattedString*)string;
 
 - (NSString*) renderText;
 - (NSString*) renderMarkDown;
