@@ -9,7 +9,7 @@
 */
 
 #import <Foundation/Foundation.h>
-#import "APPFormattedString.h"
+#import "APFormattedString.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -76,7 +76,7 @@ NS_ASSUME_NONNULL_BEGIN
                                   NS_DESIGNATED_INITIALIZER;
 
 - (NSString*) summaryString;
-- (APPFormattedString*) formattedDetailString;
+- (APFormattedString*) formattedDetailString;
 @end
 
 #pragma mark - XGXcodeBot

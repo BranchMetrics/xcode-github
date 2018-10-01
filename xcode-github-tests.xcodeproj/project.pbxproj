@@ -25,10 +25,9 @@
 		4D5303E42142EE8D006E8A7B /* BNCNetworkService.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D5303E22142EE8D006E8A7B /* BNCNetworkService.h */; };
 		4D5303E52142EE8D006E8A7B /* BNCNetworkService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D5303E32142EE8D006E8A7B /* BNCNetworkService.m */; };
 		4D54C09320A76FC600C76496 /* BNCThreads.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D54C09220A76FC500C76496 /* BNCThreads.Test.m */; };
-		4D790E3A2095ADB7008A9492 /* APPFormattedString.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D790E392095ADB7008A9492 /* APPFormattedString.Test.m */; };
-		4D790E3B2095BBE9008A9492 /* APPFormattedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D790E372095AD8E008A9492 /* APPFormattedString.m */; };
-		4D99819C209260D400F2633A /* OCMock.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 4D99819B209260D400F2633A /* OCMock.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4DB6561D209253FC00D1FA25 /* BNCTestCase.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB6561C209253FC00D1FA25 /* BNCTestCase.Test.m */; };
+		4DC2438D216040D000368B95 /* APFormattedString.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC2438A216040CF00368B95 /* APFormattedString.Test.m */; };
+		4DC2438E216040D000368B95 /* APFormattedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC2438C216040D000368B95 /* APFormattedString.m */; };
 		4DED4894209BE450008DE877 /* BNCThreads.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DED4893209BE450008DE877 /* BNCThreads.m */; };
 		4DF6563721545EA300380FD0 /* BNCEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF6563421545EA300380FD0 /* BNCEncoder.m */; };
 		4DF6563821545EA300380FD0 /* BNCEncoder.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF6563621545EA300380FD0 /* BNCEncoder.Test.m */; };
@@ -43,20 +42,6 @@
 			remoteInfo = "xcode-github-test";
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		4D262C8720913C2B00DD80F4 /* Copy Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 16;
-			files = (
-				4D99819C209260D400F2633A /* OCMock.framework in Copy Frameworks */,
-			);
-			name = "Copy Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		4D262C492090FE5800DD80F4 /* xcode_github.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = xcode_github.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,12 +72,12 @@
 		4D5303E22142EE8D006E8A7B /* BNCNetworkService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BNCNetworkService.h; path = Vendor/Branch/BNCNetworkService.h; sourceTree = SOURCE_ROOT; };
 		4D5303E32142EE8D006E8A7B /* BNCNetworkService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BNCNetworkService.m; path = Vendor/Branch/BNCNetworkService.m; sourceTree = SOURCE_ROOT; };
 		4D54C09220A76FC500C76496 /* BNCThreads.Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BNCThreads.Test.m; path = Vendor/Branch/BNCThreads.Test.m; sourceTree = SOURCE_ROOT; };
-		4D790E362095AD8E008A9492 /* APPFormattedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APPFormattedString.h; path = Vendor/Branch/APPFormattedString.h; sourceTree = SOURCE_ROOT; };
-		4D790E372095AD8E008A9492 /* APPFormattedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APPFormattedString.m; path = Vendor/Branch/APPFormattedString.m; sourceTree = SOURCE_ROOT; };
-		4D790E392095ADB7008A9492 /* APPFormattedString.Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = APPFormattedString.Test.m; path = Vendor/Branch/APPFormattedString.Test.m; sourceTree = SOURCE_ROOT; };
 		4D99819B209260D400F2633A /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMock.framework; path = Vendor/OCMock/OCMock.framework; sourceTree = "<group>"; };
 		4DB6561C209253FC00D1FA25 /* BNCTestCase.Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = BNCTestCase.Test.m; path = ../Vendor/Branch/BNCTestCase.Test.m; sourceTree = "<group>"; };
 		4DB6561E20925A0300D1FA25 /* xcode-github-info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "xcode-github-info.plist"; sourceTree = "<group>"; };
+		4DC2438A216040CF00368B95 /* APFormattedString.Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APFormattedString.Test.m; path = Vendor/Branch/APFormattedString.Test.m; sourceTree = SOURCE_ROOT; };
+		4DC2438B216040D000368B95 /* APFormattedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APFormattedString.h; path = Vendor/Branch/APFormattedString.h; sourceTree = SOURCE_ROOT; };
+		4DC2438C216040D000368B95 /* APFormattedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APFormattedString.m; path = Vendor/Branch/APFormattedString.m; sourceTree = SOURCE_ROOT; };
 		4DED4892209BE450008DE877 /* BNCThreads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BNCThreads.h; path = Vendor/Branch/BNCThreads.h; sourceTree = SOURCE_ROOT; };
 		4DED4893209BE450008DE877 /* BNCThreads.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BNCThreads.m; path = Vendor/Branch/BNCThreads.m; sourceTree = SOURCE_ROOT; };
 		4DF6563421545EA300380FD0 /* BNCEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BNCEncoder.m; path = Vendor/Branch/BNCEncoder.m; sourceTree = SOURCE_ROOT; };
@@ -140,9 +125,9 @@
 		4D262C562090FE5800DD80F4 /* xcode-github-tests */ = {
 			isa = PBXGroup;
 			children = (
-				4D790E362095AD8E008A9492 /* APPFormattedString.h */,
-				4D790E372095AD8E008A9492 /* APPFormattedString.m */,
-				4D790E392095ADB7008A9492 /* APPFormattedString.Test.m */,
+				4DC2438B216040D000368B95 /* APFormattedString.h */,
+				4DC2438C216040D000368B95 /* APFormattedString.m */,
+				4DC2438A216040CF00368B95 /* APFormattedString.Test.m */,
 				4D262C7C2091234100DD80F4 /* BNCDebug.h */,
 				4D262C7E2091234100DD80F4 /* BNCDebug.m */,
 				4D262C7D2091234100DD80F4 /* BNCDebug.Test.m */,
@@ -229,7 +214,6 @@
 				4D262C4E2090FE5800DD80F4 /* Sources */,
 				4D262C4F2090FE5800DD80F4 /* Frameworks */,
 				4D262C502090FE5800DD80F4 /* Resources */,
-				4D262C8720913C2B00DD80F4 /* Copy Frameworks */,
 			);
 			buildRules = (
 			);
@@ -299,7 +283,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D790E3B2095BBE9008A9492 /* APPFormattedString.m in Sources */,
 				4D5303DC2142E977006E8A7B /* XGSettings.m in Sources */,
 				4D262C852091254700DD80F4 /* NSString+Branch.m in Sources */,
 				4D262C74209101F300DD80F4 /* BNCLog.m in Sources */,
@@ -313,18 +296,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DC2438E216040D000368B95 /* APFormattedString.m in Sources */,
 				4D5303E12142EB36006E8A7B /* XGGitHubPullRequest.m in Sources */,
 				4D54C09320A76FC600C76496 /* BNCThreads.Test.m in Sources */,
 				4DED4894209BE450008DE877 /* BNCThreads.m in Sources */,
 				4D4E19E020923EAB00397575 /* NSString+Branch.Test.m in Sources */,
 				4DF6563721545EA300380FD0 /* BNCEncoder.m in Sources */,
-				4D790E3A2095ADB7008A9492 /* APPFormattedString.Test.m in Sources */,
 				4D262C6D2090FED300DD80F4 /* BNCLog.Test.m in Sources */,
 				4D262C802091234100DD80F4 /* BNCDebug.Test.m in Sources */,
 				4D262C6E2090FED300DD80F4 /* BNCTestCase.m in Sources */,
 				4DF6563821545EA300380FD0 /* BNCEncoder.Test.m in Sources */,
 				4DB6561D209253FC00D1FA25 /* BNCTestCase.Test.m in Sources */,
 				4D5303DE2142EA1F006E8A7B /* XGSettings.Test.m in Sources */,
+				4DC2438D216040D000368B95 /* APFormattedString.Test.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

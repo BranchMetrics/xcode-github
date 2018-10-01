@@ -11,7 +11,7 @@
 #import "XGALogViewController.h"
 #import "BNCLog.h"
 #import "BNCThreads.h"
-#import "APPFormattedString.h"
+#import "APFormattedString.h"
 #import "XGASettings.h"
 #import "XGAStatusPopover.h"
 
@@ -31,7 +31,7 @@ NSString*const XGALogUpdateNotification = @"XGALogUpdatedNotification";
 
 #pragma mark - XGALogViewController
 
-@interface XGALogViewController ()
+@interface XGALogViewController () <NSPopoverDelegate>
 + (NSMutableArray<XGALogRow*>*) logArray;
 + (NSImage*) imageForLogLevel:(BNCLogLevel)level;
 @property (strong) NSDateFormatter*dateFormatter;
@@ -145,8 +145,7 @@ void XGALogFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Null
         self.dateFormatter.dateStyle = NSDateFormatterShortStyle;
         self.dateFormatter.timeStyle = NSDateFormatterShortStyle;
     }
-
-    [self.tableView setDoubleAction:@selector(showstatusPopoverAction:)];
+    [self.tableView setDoubleAction:@selector(showStatusPopoverAction:)];
     [[NSNotificationCenter defaultCenter]
         addObserver:self
         selector:@selector(logUpdatedNotification:)
@@ -195,11 +194,10 @@ void XGALogFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Null
 }
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification {
-    if (self.statusPopover)
-        [self showstatusPopoverAction:self];
+    if (self.statusPopover.popover.isShown) [self showStatusPopoverAction:self.tableView];
 }
 
-- (void) showstatusPopoverAction:(id)sender {
+- (void) showStatusPopoverAction:(id)sender {
     NSInteger idx = self.tableView.selectedRow;
     if (idx < 0 || idx >= [self.arrayController.arrangedObjects count]) {
         [self.statusPopover close];
@@ -208,19 +206,26 @@ void XGALogFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Null
     XGALogRow *row = [self.arrayController.arrangedObjects objectAtIndex:idx];
     if (![row isKindOfClass:XGALogRow.class]) return;
 
-    APPFormattedString*status =
-        [[[[APPFormattedString new]
+    APFormattedString*status =
+        [[[APFormattedString
             boldText:@"%@", [XGALogViewController stringForLogLevel:row.logLevel]]
             plainText:@"     "]
             italicText:@"%@", [self.dateFormatter stringFromDate:row.date]];
 
-    if (!self.statusPopover) self.statusPopover = [[XGAStatusPopover alloc] init];
+    if (!self.statusPopover) {
+        self.statusPopover = [[XGAStatusPopover alloc] init];
+    }
     NSFont*font = [NSFont systemFontOfSize:[NSFont systemFontSize]];
     self.statusPopover.statusImageView.image = [XGALogViewController imageForLogLevel:row.logLevel];
     self.statusPopover.statusTextField.attributedStringValue = [status renderAttributedStringWithFont:font];
     self.statusPopover.detailTextField.stringValue = row.logMessage;
 
     NSRect r = [self.tableView rectOfRow:idx];
+    if ([sender isKindOfClass:NSTableView.class]) {
+        NSPoint p = self.window.mouseLocationOutsideOfEventStream;
+        r.size.width = 20.0;
+        r.origin.x = p.x - 10.0;
+    }
     [self.statusPopover showRelativeToRect:r ofView:self.tableView preferredEdge:NSRectEdgeMaxY];
 }
 

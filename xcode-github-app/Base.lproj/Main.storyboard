@@ -320,6 +320,14 @@
                                                 <action selector="smartSort:" target="Ady-hI-5gd" id="ItS-LH-KfI"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Monitor Repo For Pull Requests" id="ehL-Gi-Mfd">
+                                            <string key="keyEquivalent" base64-UTF8="YES">
+CQ
+</string>
+                                            <connections>
+                                                <action selector="smartSort:" target="Ady-hI-5gd" id="Ydr-Lm-M0H"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>

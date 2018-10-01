@@ -23,9 +23,11 @@
 @implementation XGAAppDelegate
 
 - (void)awakeFromNib {
-    [BNCNetworkService shared].allowAnySSLCert = YES;
-    self.logController = [XGALogViewController new];
-    self.statusController = [XGAStatusViewController new];
+    if (!self.logController) {
+        [BNCNetworkService shared].allowAnySSLCert = YES;
+        self.logController = [XGALogViewController new];
+        self.statusController = [XGAStatusViewController new];
+    }
 }
 
 - (IBAction)showStatusWindow:(id)sender {

@@ -9,31 +9,30 @@
 */
 
 #import "BNCTestCase.h"
-#import "APPFormattedString.h"
+#import "APFormattedString.h"
 
-@interface APPFormattedStringTest : BNCTestCase
+@interface APFormattedStringTest : BNCTestCase
 @end
 
-@implementation APPFormattedStringTest
+@implementation APFormattedStringTest
 
-- (APPFormattedString*) createTestString {
-    APPFormattedString *string =
-        [[[[[APPFormattedString builder]
-            appendPlain:@"Ten: %ld.", (long) 10]
-            appendBold:@" Bold text."]
-            appendPlain:@" Normal text."]
-                build];
+- (APFormattedString*) createTestString {
+    APFormattedString *string =
+        [[[APFormattedString
+            plainText:@"Ten: %ld.", (long) 10]
+            boldText:@" Bold text."]
+            plainText:@" Normal text."];
     return string;
 }
 
 - (void) testText {
-    APPFormattedString *string = [self createTestString];
+    APFormattedString *string = [self createTestString];
     NSString* result = [string renderText];
     XCTAssertEqualObjects(result, @"Ten: 10. Bold text. Normal text.");
 }
 
 - (void) testMarkDown {
-    APPFormattedString *string = [self createTestString];
+    APFormattedString *string = [self createTestString];
     NSString* result = [string renderMarkDown];
     XCTAssertEqualObjects(result, @"Ten: 10.** Bold text.** Normal text.");
 }

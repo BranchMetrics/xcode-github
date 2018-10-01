@@ -8,7 +8,7 @@
  @copyright     Copyright © 2018 Branch. All rights reserved.
 */
 
-#import "APPFormattedString.h"
+#import "APFormattedString.h"
 #import <CoreText/CoreText.h>
 
 typedef NS_ENUM(NSInteger, APPFormattedStringStyle) {
@@ -30,11 +30,11 @@ typedef NS_ENUM(NSInteger, APPFormattedStringStyle) {
 
 #pragma mark - APPFormattedString
 
-@interface APPFormattedString ()
+@interface APFormattedString ()
 @property (strong) NSMutableArray<APPFormattedStringPart*>*partArray;
 @end
 
-@implementation APPFormattedString
+@implementation APFormattedString
 
 - (instancetype) init {
     self = [super init];
@@ -77,7 +77,7 @@ typedef NS_ENUM(NSInteger, APPFormattedStringStyle) {
     return self;
 }
 
-- (instancetype) append:(APPFormattedString *)string {
+- (instancetype) append:(APFormattedString *)string {
     [self.partArray addObjectsFromArray:string.partArray];
     return self;
 }
@@ -85,7 +85,7 @@ typedef NS_ENUM(NSInteger, APPFormattedStringStyle) {
 #define createFormattedString \
     va_list argList; \
     va_start(argList, format); \
-    __auto_type formattedString = [APPFormattedString new]; \
+    __auto_type formattedString = [APFormattedString new]; \
     __auto_type part = [[APPFormattedStringPart alloc] init]; \
     part.string = [[NSString alloc] initWithFormat:format arguments:argList]; \
     [formattedString.partArray addObject:part]; \
@@ -110,7 +110,7 @@ typedef NS_ENUM(NSInteger, APPFormattedStringStyle) {
 }
 
 + (instancetype) line {
-    return [[APPFormattedString new] line];
+    return [[APFormattedString new] line];
 }
 
 - (NSString*) renderText {

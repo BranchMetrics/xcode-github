@@ -1,5 +1,5 @@
 /**
- @file          APPFormattedString.h
+ @file          APFormattedString.h
  @package       xcode-github
  @brief         A generalized formatted string that can render multiple formats.
 
@@ -13,7 +13,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface APPFormattedString : NSObject
+@interface APFormattedString : NSObject
 
 + (instancetype) plainText:(NSString*)format, ... NS_FORMAT_FUNCTION(1,2);
 + (instancetype) boldText:(NSString*)format, ... NS_FORMAT_FUNCTION(1,2);
@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype) italicText:(NSString*)format, ... NS_FORMAT_FUNCTION(1,2);
 - (instancetype) line;
 
-- (instancetype) append:(APPFormattedString*)string;
+- (instancetype) append:(APFormattedString*)string;
 
 - (NSString*) renderText;
 - (NSString*) renderMarkDown;

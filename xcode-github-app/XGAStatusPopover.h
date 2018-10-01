@@ -13,6 +13,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface XGAStatusPopover : NSViewController
+@property (strong) IBOutlet NSPopover*popover;
 @property (strong) IBOutlet NSTextField*titleTextField;
 @property (strong) IBOutlet NSImageView*statusImageView;
 @property (strong) IBOutlet NSTextField*statusTextField;

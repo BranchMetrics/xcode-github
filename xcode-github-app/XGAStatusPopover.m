@@ -23,10 +23,6 @@
 
 #pragma mark - XGAStatusPopover
 
-@interface XGAStatusPopover ()
-@property (strong) IBOutlet NSPopover*popover;
-@end
-
 @implementation XGAStatusPopover
 
 - (instancetype) init {

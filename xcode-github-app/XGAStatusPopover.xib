@@ -28,7 +28,7 @@
                 <outlet property="view" destination="LKa-LI-ccx" id="DGu-y3-WZ4"/>
             </connections>
         </viewController>
-        <popover behavior="t" id="Eaz-WC-T3R">
+        <popover id="Eaz-WC-T3R">
             <connections>
                 <outlet property="contentViewController" destination="-2" id="6tC-SX-8Jg"/>
             </connections>

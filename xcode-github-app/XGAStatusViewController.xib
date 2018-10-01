@@ -105,6 +105,7 @@
                                                             </textFieldCell>
                                                             <connections>
                                                                 <binding destination="NBb-IA-dak" name="value" keyPath="objectValue.statusSummary.description" id="dDa-Ip-3M8"/>
+                                                                <binding destination="NBb-IA-dak" name="toolTip" keyPath="objectValue.statusSummary.description" id="OXo-vd-Oj1"/>
                                                             </connections>
                                                         </textField>
                                                     </subviews>
@@ -156,7 +157,7 @@
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn editable="NO" width="64" minWidth="64" maxWidth="10000" id="Q9V-1X-wm1">
+                                        <tableColumn editable="NO" width="128" minWidth="64" maxWidth="10000" id="Q9V-1X-wm1">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Repository">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -171,11 +172,11 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView id="Lcp-KT-mJ5">
-                                                    <rect key="frame" x="243" y="1" width="64" height="17"/>
+                                                    <rect key="frame" x="243" y="1" width="128" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6WU-PD-kUy">
-                                                            <rect key="frame" x="0.0" y="0.0" width="64" height="17"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="128" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="mw2-PF-nBo">
                                                                 <font key="font" metaFont="system"/>
@@ -183,6 +184,7 @@
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
+                                                                <binding destination="Lcp-KT-mJ5" name="toolTip" keyPath="objectValue.repository" id="dZC-bI-wnJ"/>
                                                                 <binding destination="Lcp-KT-mJ5" name="value" keyPath="objectValue.repository" id="tqO-El-hIG">
                                                                     <dictionary key="options">
                                                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
@@ -213,7 +215,7 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView id="dg4-gi-bqo">
-                                                    <rect key="frame" x="310" y="1" width="424" height="20"/>
+                                                    <rect key="frame" x="374" y="1" width="424" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eQS-1D-NKN">
@@ -272,7 +274,7 @@
                     <constraint firstItem="ifZ-K6-x8v" firstAttribute="leading" secondItem="vWG-l8-hki" secondAttribute="leading" id="vOC-k4-GLa"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="899" y="-245"/>
+            <point key="canvasLocation" x="896" y="-277"/>
         </window>
         <arrayController objectClassName="NSMutableArray" editable="NO" automaticallyRearrangesObjects="YES" id="cGa-aF-L8a">
             <connections>
@@ -299,19 +301,19 @@
                         <action selector="showInBrowser:" target="-2" id="rIg-H3-pnK"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Download Details" id="ROY-hH-sT7">
+                <menuItem title="Download Integration Log" id="ROY-hH-sT7">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="downloadAssets:" target="-2" id="OiF-Nq-Tdk"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Monitor GitHub Repo" state="on" id="UUl-ub-dpc">
+                <menuItem title="Monitor For Pull Requests" state="on" id="UUl-ub-dpc">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="monitorRepo:" target="-2" id="ufv-JG-XnI"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Delete" id="IKy-Sz-f9z">
+                <menuItem title="Delete Xcode Bot" id="IKy-Sz-f9z">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="delete:" target="-2" id="1bp-XN-ztm"/>

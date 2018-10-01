@@ -24,8 +24,8 @@
 @property (strong) XGAServer *server;
 @property (copy)   NSString *botName;
 @property (strong) NSImage  *statusImage;
-@property (strong) APPFormattedString *statusSummary;
-@property (strong) APPFormattedString *statusDetail;
+@property (strong) APFormattedString *statusSummary;
+@property (strong) APFormattedString *statusDetail;
 @property (copy)   NSString *botID;
 @property (copy)   NSString *botTinyID;
 @property (copy)   NSString *integrationID;
@@ -39,7 +39,7 @@
 
 #pragma mark - XGAStatusViewController
 
-@interface XGAStatusViewController () {
+@interface XGAStatusViewController () <NSTableViewDelegate, NSPopoverDelegate> {
     NSArray<XGAServerStatus*>*_serverStatusArray;
 }
 @property (strong) dispatch_queue_t asyncQueue;
@@ -49,6 +49,7 @@
 @property (strong) XGAStatusPopover*statusPopover;
 @property (weak)   IBOutlet NSTableView *tableView;
 @property (strong) IBOutlet NSArrayController *arrayController;
+@property (assign) BOOL awake;
 
 // Display update
 @property (weak)   IBOutlet NSProgressIndicator *updateProgessIndictor;
@@ -84,19 +85,21 @@
 }
 
 - (void)awakeFromNib {
-    [super viewDidLoad];
-    [self.tableView setDoubleAction:@selector(showInfo:)];
-    self.window = self.view.window;
-    XGAServerStatus *status = [XGAServerStatus new];
-    status.statusImage = [NSImage imageNamed:@"RoundBlue"];
-    status.statusSummary = [[APPFormattedString new] boldText:@"< Refreshing >"];
-    self.serverStatusArray = @[ status ];
-    [self startStatusUpdates];
+    if (!self.awake) {
+        self.awake = YES;
+        [self.tableView setDoubleAction:@selector(showInfo:)];
+        self.window = self.view.window;
+        XGAServerStatus *status = [XGAServerStatus new];
+        status.statusImage = [NSImage imageNamed:@"RoundBlue"];
+        status.statusSummary = [APFormattedString boldText:@"< Refreshing >"];
+        self.serverStatusArray = @[ status ];
+        [self startStatusUpdates];
+        self.tableView.delegate = self;
+    }
 }
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification {
-    if (self.statusPopover)
-        [self showInfo:self];
+    if (self.statusPopover.popover.isShown) [self showInfo:self.tableView];
 }
 
 - (XGAServerStatus*) selectedTableItem {
@@ -117,31 +120,39 @@
     NSInteger idx = self.tableView.selectedRow;
     if (idx < 0 || idx >= [self.arrayController.arrangedObjects count]) {
         [self.statusPopover close];
-        self.statusPopover = nil;
         return;
     }
     XGAServerStatus*status = [self.arrayController.arrangedObjects objectAtIndex:idx];
     if (![status isKindOfClass:XGAServerStatus.class]) return;
 
     // Show the status panel:
-    if (!self.statusPopover) self.statusPopover = [[XGAStatusPopover alloc] init];
-    NSFont*font = [NSFont systemFontOfSize:[NSFont systemFontSize]];
-    if (status.botName.length > 0) {
-        self.statusPopover.titleTextField.attributedStringValue =
-            [[[APPFormattedString new]
-                boldText:@"%@", status.botName]
-                renderAttributedStringWithFont:font];
-        [self.statusPopover.titleTextField setNeedsUpdateConstraints:YES];
-    } else {
-        self.statusPopover.titleTextField.stringValue = @"";
+    if (!self.statusPopover) {
+        self.statusPopover = [[XGAStatusPopover alloc] init];
     }
+    NSFont*font = [NSFont systemFontOfSize:[NSFont systemFontSize]];
+
+    // Title
+    self.statusPopover.titleTextField.stringValue = @"";
+
+    // Status
     self.statusPopover.statusImageView.image = status.statusImage;
     self.statusPopover.statusTextField.attributedStringValue =
         [status.statusSummary renderAttributedStringWithFont:font];
+
+    // Detail
+    __auto_type detail =
+        [APFormattedString boldText:@"%@\n%@\n\n", status.repository, status.branchOrPRName];
+    [detail append:status.statusDetail];
+    [detail italicText:@"\n\nBot: %@", status.botName];
     self.statusPopover.detailTextField.attributedStringValue =
-        [status.statusDetail renderAttributedStringWithFont:font];
+        [detail renderAttributedStringWithFont:font];
 
     NSRect r = [self.tableView rectOfRow:idx];
+    if ([sender isKindOfClass:NSTableView.class]) {
+        NSPoint p = self.window.mouseLocationOutsideOfEventStream;
+        r.size.width = 20.0;
+        r.origin.x = p.x - 10.0;
+    }
     [self.statusPopover showRelativeToRect:r ofView:self.tableView preferredEdge:NSRectEdgeMaxY];
 }
 
@@ -229,7 +240,20 @@
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem {
-    if (menuItem.action == @selector(reload:)) return YES;
+    if (menuItem.action == @selector(reload:))
+        return YES;
+    if (menuItem.action == @selector(smartSort:)) {
+        menuItem.state = (self.tableView.sortDescriptors.count == 2);
+        return YES;
+    }
+    if (menuItem.action == @selector(monitorRepo:)) {
+        XGAServerStatus*statusItem = [self selectedTableItem];
+        if (statusItem.hasGitHubRepo && !statusItem.isXGASpawn) {
+            menuItem.state = statusItem.isXGAMonitored;
+            return YES;
+        }
+        return NO;
+    }
     SEL contextMenuItems[] = {
         @selector(showInfo:),
         @selector(monitorRepo:),
@@ -240,10 +264,6 @@
         NULL
     };
     SEL*item = contextMenuItems;
-    if (menuItem.action == @selector(smartSort:)) {
-        menuItem.state = (self.tableView.sortDescriptors.count == 2);
-        return YES;
-    }
     while (*item && *item != menuItem.action) ++item;
     if (*item) return ([self selectedTableItem] != nil);
     return NO;
@@ -375,10 +395,9 @@
         if (error) {
             XGAServerStatus *status = [XGAServerStatus new];
             status.server = server;
-            status.statusSummary = [APPFormattedString boldText:@"Server Error"];
+            status.statusSummary = [APFormattedString boldText:@"Server Error"];
             status.statusImage = [NSImage imageNamed:@"RoundAlert"];
-            status.statusDetail =
-                [APPFormattedString plainText:@"%@", error.localizedDescription];
+            status.statusDetail = [APFormattedString plainText:@"%@", error.localizedDescription];
             [statusArray addObject:status];
         } else {
             for (XGXcodeBot *bot in bots.objectEnumerator) {
@@ -391,7 +410,7 @@
     if (statusArray.count == 0) {
         XGAServerStatus *status = [XGAServerStatus new];
         status.statusImage = [NSImage imageNamed:@"RoundBlue"];
-        status.statusSummary = [APPFormattedString boldText:@"< No Xcode servers added yet >"];
+        status.statusSummary = [APFormattedString boldText:@"< No Xcode servers added yet >"];
         [statusArray addObject:status];
     }
     BNCPerformBlockOnMainThreadAsync(^{
@@ -410,7 +429,7 @@
     }
     if (status.server == nil) return nil;
     status.botName = botStatus.botName;
-    status.statusSummary = [APPFormattedString boldText:@"%@", botStatus.summaryString];
+    status.statusSummary = [APFormattedString boldText:@"%@", botStatus.summaryString];
     status.botID = botStatus.botID;
     status.botTinyID = botStatus.botTinyID;
     status.integrationID = botStatus.integrationID;

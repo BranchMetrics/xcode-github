@@ -34,10 +34,12 @@
 }
 
 - (void)awakeFromNib {
-    [super awakeFromNib];
-    self.settings = [XGASettings shared];
-    self.removeButton.enabled = NO;
-    self.serverArrayController.content = self.settings.servers;
+    if (!self.settings) {
+        [super awakeFromNib];
+        self.settings = [XGASettings shared];
+        self.removeButton.enabled = NO;
+        self.serverArrayController.content = self.settings.servers;
+    }
 }
 
 - (IBAction)valueChanged:(id)sender {
