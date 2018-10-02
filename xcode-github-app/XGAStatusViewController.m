@@ -17,35 +17,14 @@
 #import "BNCNetworkService.h"
 #import "BNCLog.h"
 #import "NSAttributedString+App.h"
+#import "XGAStatusViewItem.h"
 
-#pragma mark XGAServerStatus
+#pragma mark XGAStatusViewController
 
-@interface XGAServerStatus : NSObject
-@property (strong) XGAServer *server;
-@property (copy)   NSString *botName;
-@property (strong) NSImage  *statusImage;
-@property (strong) APFormattedString *statusSummary;
-@property (strong) APFormattedString *statusDetail;
-@property (copy)   NSString *botID;
-@property (copy)   NSString *botTinyID;
-@property (copy)   NSString *integrationID;
-
-@property (copy)   NSString *repository;
-@property (copy)   NSString *branchOrPRName;
-@end
-
-@implementation XGAServerStatus
-@end
-
-#pragma mark - XGAStatusViewController
-
-@interface XGAStatusViewController () <NSTableViewDelegate, NSPopoverDelegate> {
-    NSArray<XGAServerStatus*>*_serverStatusArray;
-}
+@interface XGAStatusViewController () <NSTableViewDelegate, NSPopoverDelegate>
 @property (strong) dispatch_queue_t asyncQueue;
 @property (strong) dispatch_source_t statusTimer;
 @property (assign, nonatomic) _Atomic(BOOL) statusIsInProgress;
-@property (strong) NSArray<XGAServerStatus*> *serverStatusArray;
 @property (strong) XGAStatusPopover*statusPopover;
 @property (weak)   IBOutlet NSTableView *tableView;
 @property (strong) IBOutlet NSArrayController *arrayController;
@@ -71,28 +50,15 @@
     return controller;
 }
 
-- (void) setServerStatusArray:(NSArray<XGAServerStatus *> *)serverStatusArray {
-    @synchronized(self) {
-        _serverStatusArray = serverStatusArray;
-        self.arrayController.content = _serverStatusArray;
-    }
-}
-
-- (NSArray<XGAServerStatus*>*) serverStatusArray {
-    @synchronized(self) {
-        return _serverStatusArray;
-    }
-}
-
 - (void)awakeFromNib {
     if (!self.awake) {
         self.awake = YES;
         [self.tableView setDoubleAction:@selector(showInfo:)];
         self.window = self.view.window;
-        XGAServerStatus *status = [XGAServerStatus new];
+        XGAStatusViewItem *status = [XGAStatusViewItem new];
         status.statusImage = [NSImage imageNamed:@"RoundBlue"];
         status.statusSummary = [APFormattedString boldText:@"< Refreshing >"];
-        self.serverStatusArray = @[ status ];
+        self.arrayController.content = @[ status ];
         [self startStatusUpdates];
         self.tableView.delegate = self;
     }
@@ -102,7 +68,7 @@
     if (self.statusPopover.popover.isShown) [self showInfo:self.tableView];
 }
 
-- (XGAServerStatus*) selectedTableItem {
+- (XGAStatusViewItem*) selectedTableItem {
     NSInteger idx = self.tableView.clickedRow;
     if (idx >= 0 && idx < [self.arrayController.arrangedObjects count]) {
         [self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:idx] byExtendingSelection:NO];
@@ -122,8 +88,8 @@
         [self.statusPopover close];
         return;
     }
-    XGAServerStatus*status = [self.arrayController.arrangedObjects objectAtIndex:idx];
-    if (![status isKindOfClass:XGAServerStatus.class]) return;
+    XGAStatusViewItem*status = [self.arrayController.arrangedObjects objectAtIndex:idx];
+    if (![status isKindOfClass:XGAStatusViewItem.class]) return;
 
     // Show the status panel:
     if (!self.statusPopover) {
@@ -143,7 +109,7 @@
     __auto_type detail =
         [APFormattedString boldText:@"%@\n%@\n\n", status.repository, status.branchOrPRName];
     [detail append:status.statusDetail];
-    [detail italicText:@"\n\nBot: %@", status.botName];
+    [detail italicText:@"\n\nBot: %@", status.botName.length ? status.botName : @"Unknown"];
     self.statusPopover.detailTextField.attributedStringValue =
         [detail renderAttributedStringWithFont:font];
 
@@ -157,16 +123,37 @@
 }
 
 - (IBAction) monitorRepo:(id)sender {
-    __auto_type status = [self selectedTableItem];
-    __auto_type task = [XGAGitHubSyncTask new];
-    task.xcodeServer = status.server;
-    task.templateBotName = status.botName;
-    [XGASettings.shared.gitHubSyncTasks addObject:task];
-    [XGASettings.shared save];
+    XGAStatusViewItem*item = [self selectedTableItem];
+    if (!item || !item.hasGitHubRepo || [item.botIsFromTemplate boolValue])
+        return;
+    if (item.isXGAMonitored) {
+
+        __auto_type tasks = [XGASettings shared].gitHubSyncTasks;
+        XGAGitHubSyncTask*taskToRemove = nil;
+        for (XGAGitHubSyncTask*task in tasks) {
+            if (item.server.length && item.bot.name.length &&
+                [task.xcodeServer isEqualToString:item.server] &&
+                [task.botNameForTemplate isEqualToString:item.bot.name]) {
+                taskToRemove = task;
+                break;
+            }
+        }
+        if (taskToRemove) [tasks removeObject:taskToRemove];
+
+    } else {
+
+        __auto_type task = [XGAGitHubSyncTask new];
+        task.xcodeServer = item.bot.serverName;
+        task.botNameForTemplate = item.botName;
+        [[XGASettings shared].gitHubSyncTasks addObject:task];
+
+    }
+    [[XGASettings shared] save];
+    [self reload:self];
 }
 
 - (IBAction) delete:(id)sender {
-    XGAServerStatus*status = [self selectedTableItem];
+    XGAStatusViewItem*status = [self selectedTableItem];
     if (!status) return;
     __auto_type alert = [[NSAlert alloc] init];
     alert.messageText = [NSString stringWithFormat:@"Delete '%@'?", status.botName];
@@ -177,7 +164,7 @@
     [[alert addButtonWithTitle:@"Cancel"] setTag:NSModalResponseCancel];
     [alert beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse returnCode) {
         if (returnCode == NSModalResponseOK) {
-            __auto_type*bot = [[XGXcodeBot alloc] initWithServerName:status.server.server botID:status.botID];
+            __auto_type*bot = [[XGXcodeBot alloc] initWithServerName:status.server botID:status.bot.botID];
             NSError*error = [bot removeFromServer];
             if (error) {
                 __auto_type ea = [[NSAlert alloc] init];
@@ -193,35 +180,36 @@
 }
 
 - (IBAction) showInXcode:(id)sender {
-    XGAServerStatus*status = [self selectedTableItem];
+    XGAStatusViewItem*status = [self selectedTableItem];
     if (!status) return;
     NSString*string = nil;
-    if (status.integrationID) {
+    if (status.botStatus.integrationID) {
         string = [NSString stringWithFormat:@"xcbot://%@/botID/%@/integrationID/%@",
-            status.server.server, status.botID, status.integrationID];
+            status.server, status.bot.botID, status.botStatus.integrationID];
     } else {
         string = [NSString stringWithFormat:@"xcbot://%@/botID/%@",
-            status.server.server, status.botID];
+            status.server, status.bot.botID];
     }
     NSURL*URL = [NSURL URLWithString:string];
     [[NSWorkspace sharedWorkspace] openURL:URL];
 }
 
 - (IBAction) showInBrowser:(id)sender {
-    XGAServerStatus*status = [self selectedTableItem];
+    XGAStatusViewItem*status = [self selectedTableItem];
     if (!status) return;
     NSString*string =
-        [NSString stringWithFormat:@"https://%@/xcode/bots/%@", status.server.server, status.botTinyID];
+        [NSString stringWithFormat:@"https://%@/xcode/bots/%@",
+            status.server, status.botStatus.botTinyID];
     NSURL*URL = [NSURL URLWithString:string];
     [[NSWorkspace sharedWorkspace] openURL:URL];
 }
 
 - (IBAction) downloadAssets:(id)sender {
-    XGAServerStatus*status = [self selectedTableItem];
+    XGAStatusViewItem*status = [self selectedTableItem];
     if (!status) return;
     NSString*string =
         [NSString stringWithFormat:@"https://%@/xcode/internal/api/integrations/%@/assets",
-            status.server.server, status.integrationID];
+            status.server, status.botStatus.integrationID];
     NSURL*URL = [NSURL URLWithString:string];
     [[NSWorkspace sharedWorkspace] openURL:URL];
 }
@@ -231,12 +219,25 @@
 }
 
 - (IBAction)smartSort:(id)sender {
+    // Sort by repository, template bot name, botIsFromTemplate first, branchOrPRName
+    self.tableView.sortDescriptors = @[
+        [NSSortDescriptor sortDescriptorWithKey:@"repository"
+            ascending:YES selector:@selector(caseInsensitiveCompare:)],
+        [NSSortDescriptor sortDescriptorWithKey:@"templateBotName"
+            ascending:YES selector:@selector(caseInsensitiveCompare:)],
+        [NSSortDescriptor sortDescriptorWithKey:@"botIsFromTemplate"
+            ascending:NO selector:@selector(compare:)],
+        [NSSortDescriptor sortDescriptorWithKey:@"branchOrPRName"
+            ascending:YES selector:@selector(caseInsensitiveCompare:)],
+    ];
+/*
     self.tableView.sortDescriptors = @[
         [NSSortDescriptor sortDescriptorWithKey:@"repository"
             ascending:YES selector:@selector(caseInsensitiveCompare:)],
         [NSSortDescriptor sortDescriptorWithKey:@"branchOrPRName"
             ascending:YES selector:@selector(compare:)],
     ];
+*/
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem {
@@ -247,9 +248,10 @@
         return YES;
     }
     if (menuItem.action == @selector(monitorRepo:)) {
-        XGAServerStatus*statusItem = [self selectedTableItem];
-        if (statusItem.hasGitHubRepo && !statusItem.isXGASpawn) {
-            menuItem.state = statusItem.isXGAMonitored;
+        menuItem.state = 0;
+        XGAStatusViewItem*item = [self selectedTableItem];
+        if (item.hasGitHubRepo && ![item.botIsFromTemplate boolValue]) {
+            menuItem.state = item.isXGAMonitored;
             return YES;
         }
         return NO;
@@ -340,14 +342,17 @@
 
     BNCLogDebug(@"Start updateStatus.");
     BNCPerformBlockOnMainThreadAsync(^{ self.statusTextField.stringValue = @""; });
-    NSMutableSet *statusServers = [[NSMutableSet alloc] initWithArray:XGASettings.shared.servers];
+    NSMutableSet<NSString*>*statusServers = [NSMutableSet new];
+    for (XGAServer*server in XGASettings.shared.servers) {
+        [statusServers addObject:server.server];
+    }
     NSArray<XGAGitHubSyncTask*>* syncTasks = XGASettings.shared.gitHubSyncTasks;
     for (XGAGitHubSyncTask*task in syncTasks) {
-        if (task.xcodeServer.server.length == 0) continue;
+        if (task.xcodeServer.length == 0) continue;
         [self updateSyncBots:task];
         [statusServers addObject:task.xcodeServer];
     }
-    for (XGAServer*server in statusServers) {
+    for (NSString*server in statusServers) {
         [self updateXcodeServerStatus:server];
     }
     if (syncTasks.count == 0 && statusServers.count == 0) {
@@ -364,11 +369,11 @@
 
 - (void) updateSyncBots:(XGAGitHubSyncTask*)syncTask {
     NSError*error = nil;
-    if (syncTask.xcodeServer.server.length &&
-        syncTask.templateBotName.length) {
+    if (syncTask.xcodeServer.length &&
+        syncTask.botNameForTemplate.length) {
         XGCommandOptions*options = [XGCommandOptions new];
-        options.xcodeServerName = syncTask.xcodeServer.server;
-        options.templateBotName = syncTask.templateBotName;
+        options.xcodeServerName = syncTask.xcodeServer;
+        options.templateBotName = syncTask.botNameForTemplate;
         options.githubAuthToken = XGASettings.shared.gitHubToken;
         options.dryRun = YES;
         error = XGUpdateXcodeBotsWithGitHub(options);
@@ -387,13 +392,13 @@
     }
 }
 
-- (void) updateXcodeServerStatus:(XGAServer*)server {
+- (void) updateXcodeServerStatus:(NSString*)server {
     NSError*error = nil;
     NSMutableArray *statusArray = [NSMutableArray new];
-    if (server.server.length > 0) {
-        NSDictionary<NSString*, XGXcodeBot*>* bots = [XGXcodeBot botsForServer:server.server error:&error];
+    if (server.length > 0) {
+        NSDictionary<NSString*, XGXcodeBot*>* bots = [XGXcodeBot botsForServer:server error:&error];
         if (error) {
-            XGAServerStatus *status = [XGAServerStatus new];
+            XGAStatusViewItem *status = [XGAStatusViewItem new];
             status.server = server;
             status.statusSummary = [APFormattedString boldText:@"Server Error"];
             status.statusImage = [NSImage imageNamed:@"RoundAlert"];
@@ -402,68 +407,20 @@
         } else {
             for (XGXcodeBot *bot in bots.objectEnumerator) {
                 XGXcodeBotStatus*botStatus = [bot status];
-                XGAServerStatus*status = [self statusWithBot:bot status:botStatus];
-                if (status) [statusArray addObject:status];
+                __auto_type item = [XGAStatusViewItem itemWithBot:bot status:botStatus];
+                if (item) [statusArray addObject:item];
             }
         }
     }
     if (statusArray.count == 0) {
-        XGAServerStatus *status = [XGAServerStatus new];
+        XGAStatusViewItem *status = [XGAStatusViewItem new];
         status.statusImage = [NSImage imageNamed:@"RoundBlue"];
         status.statusSummary = [APFormattedString boldText:@"< No Xcode servers added yet >"];
         [statusArray addObject:status];
     }
     BNCPerformBlockOnMainThreadAsync(^{
-        self.serverStatusArray = statusArray;
+        self.arrayController.content = statusArray;
     });
-}
-
-- (XGAServerStatus*) statusWithBot:(XGXcodeBot*)bot status:(XGXcodeBotStatus*)botStatus {
-    if (botStatus == nil) return nil;
-    XGAServerStatus *status = [XGAServerStatus new];
-    for (XGAServer*ss in XGASettings.shared.servers) {
-        if ([ss.server isEqualToString:botStatus.serverName]) {
-            status.server = ss;
-            break;
-        }
-    }
-    if (status.server == nil) return nil;
-    status.botName = botStatus.botName;
-    status.statusSummary = [APFormattedString boldText:@"%@", botStatus.summaryString];
-    status.botID = botStatus.botID;
-    status.botTinyID = botStatus.botTinyID;
-    status.integrationID = botStatus.integrationID;
-    status.repository = [NSString stringWithFormat:@"%@/%@", bot.repoOwner, bot.repoName];
-    NSString*name = [XGXcodeBot gitHubPRNameFromBotName:botStatus.botName];
-    if (name.length <= 0) name = bot.branch;
-    status.branchOrPRName = name;
-    
-    NSString *result = [botStatus.result lowercaseString];
-    if ([botStatus.currentStep containsString:@"completed"]) {
-
-        NSString*imageName = @"RoundRed";
-        if ([result containsString:@"succeeded"])
-            imageName = @"RoundGreen";
-        else
-        if ([result containsString:@"unknown"])
-            imageName = @"RoundAlert";
-        else
-        if ([result containsString:@"warning"])
-            imageName = @"RoundYellow";
-        else
-        if ([result containsString:@"unknown"])
-            imageName = @"RoundAlert";
-
-        status.statusImage = [NSImage imageNamed:imageName];
-
-    } else
-    if ([botStatus.currentStep containsString:@"pending"]) {
-        status.statusImage = [NSImage imageNamed:@"RoundGrey"];
-    } else
-        status.statusImage = [NSImage imageNamed:@"RoundBlue"];
-
-    status.statusDetail = botStatus.formattedDetailString;
-    return status;
 }
 
 @end

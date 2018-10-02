@@ -330,6 +330,10 @@ NSString* XGDurationStringFromTimeInterval(NSTimeInterval timeInterval) {
     return newTitle;
 }
 
++ (BOOL) botNameIsCreatedFromTemplate:(NSString*)botName {
+    return [botName hasPrefix:@"xcode-github PR#"];
+}
+
 + (NSString*_Nullable) gitHubPRNameFromBotName:(NSString*_Nullable)string {
     if ([string hasPrefix:@"xcode-github PR#"])
         return [string substringFromIndex:13];

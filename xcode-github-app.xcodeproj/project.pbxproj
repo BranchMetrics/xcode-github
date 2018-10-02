@@ -28,6 +28,7 @@
 		4DAA4666214CBEFF007A39EB /* XGAAddServerPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DAA4664214CBEFF007A39EB /* XGAAddServerPanel.m */; };
 		4DAA4667214CBEFF007A39EB /* XGAAddServerPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DAA4665214CBEFF007A39EB /* XGAAddServerPanel.xib */; };
 		4DED4891209BDFCC008DE877 /* BNCGeometry.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DED4890209BDFCC008DE877 /* BNCGeometry.m */; };
+		4DEE32E42162EB20006BD06C /* XGAStatusViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DEE32E32162EB20006BD06C /* XGAStatusViewItem.m */; };
 		4DF0F57C208F91A90015D1F7 /* XGXcodeBot.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF0F578208F91A90015D1F7 /* XGXcodeBot.m */; };
 		4DF0F57D208F91A90015D1F7 /* XGGitHubPullRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF0F579208F91A90015D1F7 /* XGGitHubPullRequest.m */; };
 		4DF0F57E208F91A90015D1F7 /* XGCommandOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF0F57B208F91A90015D1F7 /* XGCommandOptions.m */; };
@@ -77,6 +78,8 @@
 		4DAA4665214CBEFF007A39EB /* XGAAddServerPanel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = XGAAddServerPanel.xib; sourceTree = "<group>"; };
 		4DED488F209BDFCC008DE877 /* BNCGeometry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BNCGeometry.h; sourceTree = "<group>"; };
 		4DED4890209BDFCC008DE877 /* BNCGeometry.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BNCGeometry.m; sourceTree = "<group>"; };
+		4DEE32E22162EB20006BD06C /* XGAStatusViewItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGAStatusViewItem.h; sourceTree = "<group>"; };
+		4DEE32E32162EB20006BD06C /* XGAStatusViewItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGAStatusViewItem.m; sourceTree = "<group>"; };
 		4DF0F576208F91A90015D1F7 /* XGGitHubPullRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XGGitHubPullRequest.h; path = "xcode-github/XGGitHubPullRequest.h"; sourceTree = SOURCE_ROOT; };
 		4DF0F577208F91A90015D1F7 /* XGXcodeBot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XGXcodeBot.h; path = "xcode-github/XGXcodeBot.h"; sourceTree = SOURCE_ROOT; };
 		4DF0F578208F91A90015D1F7 /* XGXcodeBot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XGXcodeBot.m; path = "xcode-github/XGXcodeBot.m"; sourceTree = SOURCE_ROOT; };
@@ -160,6 +163,8 @@
 				4D76616E2057565200216B72 /* XGAStatusViewController.h */,
 				4D76616F2057565200216B72 /* XGAStatusViewController.m */,
 				4D8352C520A3F30A00184259 /* XGAStatusViewController.xib */,
+				4DEE32E22162EB20006BD06C /* XGAStatusViewItem.h */,
+				4DEE32E32162EB20006BD06C /* XGAStatusViewItem.m */,
 			);
 			path = "xcode-github-app";
 			sourceTree = "<group>";
@@ -307,6 +312,7 @@
 				4D5CC05E2090CAB60042E98B /* BNCKeyChain.m in Sources */,
 				4DF0F57D208F91A90015D1F7 /* XGGitHubPullRequest.m in Sources */,
 				4DF0F57E208F91A90015D1F7 /* XGCommandOptions.m in Sources */,
+				4DEE32E42162EB20006BD06C /* XGAStatusViewItem.m in Sources */,
 				4DAA4666214CBEFF007A39EB /* XGAAddServerPanel.m in Sources */,
 				4D7661702057565200216B72 /* XGAStatusViewController.m in Sources */,
 				4DF0F58C208F923E0015D1F7 /* BNCNetworkService.m in Sources */,

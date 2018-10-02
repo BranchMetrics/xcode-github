@@ -87,16 +87,16 @@
                                                     <rect key="frame" x="1" y="1" width="120" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
-                                                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="242-kv-Pu0">
-                                                            <rect key="frame" x="3" y="0.0" width="16" height="16"/>
+                                                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ydA-Hp-O1N">
+                                                            <rect key="frame" x="5" y="0.0" width="16" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSActionTemplate" id="NI7-iV-Uci"/>
+                                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSActionTemplate" id="qE5-YF-pth"/>
                                                             <connections>
-                                                                <binding destination="NBb-IA-dak" name="value" keyPath="objectValue.statusImage" id="hfO-TA-YyI"/>
+                                                                <binding destination="NBb-IA-dak" name="value" keyPath="objectValue.statusImage" id="Ntv-bO-lfj"/>
                                                             </connections>
                                                         </imageView>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jlz-jg-E1H">
-                                                            <rect key="frame" x="25" y="0.0" width="95" height="17"/>
+                                                            <rect key="frame" x="24" y="0.0" width="95" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="TableCell" id="4aw-Yp-PbW">
                                                                 <font key="font" metaFont="system"/>
@@ -104,13 +104,12 @@
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
-                                                                <binding destination="NBb-IA-dak" name="value" keyPath="objectValue.statusSummary.description" id="dDa-Ip-3M8"/>
                                                                 <binding destination="NBb-IA-dak" name="toolTip" keyPath="objectValue.statusSummary.description" id="OXo-vd-Oj1"/>
+                                                                <binding destination="NBb-IA-dak" name="value" keyPath="objectValue.statusSummary.description" id="dDa-Ip-3M8"/>
                                                             </connections>
                                                         </textField>
                                                     </subviews>
                                                     <connections>
-                                                        <outlet property="imageView" destination="242-kv-Pu0" id="ptL-3c-Aio"/>
                                                         <outlet property="textField" destination="Jlz-jg-E1H" id="n9q-Bp-IdV"/>
                                                     </connections>
                                                 </tableCellView>
@@ -127,7 +126,7 @@
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
-                                            <sortDescriptor key="sortDescriptorPrototype" selector="caseInsensitiveCompare:" sortKey="server.server"/>
+                                            <sortDescriptor key="sortDescriptorPrototype" selector="caseInsensitiveCompare:" sortKey="server"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView id="cEg-Xo-ncp">
@@ -143,7 +142,7 @@
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
-                                                                <binding destination="cEg-Xo-ncp" name="value" keyPath="objectValue.server.server" id="iCp-Wx-ykT">
+                                                                <binding destination="cEg-Xo-ncp" name="value" keyPath="objectValue.server" id="4FL-pm-G4l">
                                                                     <dictionary key="options">
                                                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                                                     </dictionary>
@@ -274,7 +273,7 @@
                     <constraint firstItem="ifZ-K6-x8v" firstAttribute="leading" secondItem="vWG-l8-hki" secondAttribute="leading" id="vOC-k4-GLa"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="896" y="-277"/>
+            <point key="canvasLocation" x="846" y="-412"/>
         </window>
         <arrayController objectClassName="NSMutableArray" editable="NO" automaticallyRearrangesObjects="YES" id="cGa-aF-L8a">
             <connections>

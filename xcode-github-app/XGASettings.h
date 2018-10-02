@@ -24,8 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - XGGitHubSyncTask
 
 @interface XGAGitHubSyncTask : BNCCoding <NSSecureCoding>
-@property (strong) XGAServer*xcodeServer;
-@property (copy)   NSString*templateBotName;
+@property (strong) NSString*xcodeServer;
+@property (copy)   NSString*botNameForTemplate;
 @end
 
 #pragma mark - XGASettings
