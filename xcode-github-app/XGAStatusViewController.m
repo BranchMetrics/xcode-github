@@ -221,12 +221,14 @@
 - (IBAction)smartSort:(id)sender {
     // Sort by repository, template bot name, botIsFromTemplate first, branchOrPRName
     self.tableView.sortDescriptors = @[
+        [NSSortDescriptor sortDescriptorWithKey:@"server"
+            ascending:YES selector:@selector(caseInsensitiveCompare:)],
         [NSSortDescriptor sortDescriptorWithKey:@"repository"
             ascending:YES selector:@selector(caseInsensitiveCompare:)],
         [NSSortDescriptor sortDescriptorWithKey:@"templateBotName"
             ascending:YES selector:@selector(caseInsensitiveCompare:)],
         [NSSortDescriptor sortDescriptorWithKey:@"botIsFromTemplate"
-            ascending:NO selector:@selector(compare:)],
+            ascending:YES selector:@selector(compare:)],
         [NSSortDescriptor sortDescriptorWithKey:@"branchOrPRName"
             ascending:YES selector:@selector(caseInsensitiveCompare:)],
     ];
@@ -244,7 +246,7 @@
     if (menuItem.action == @selector(reload:))
         return YES;
     if (menuItem.action == @selector(smartSort:)) {
-        menuItem.state = (self.tableView.sortDescriptors.count == 2);
+        menuItem.state = (self.tableView.sortDescriptors.count == 5);
         return YES;
     }
     if (menuItem.action == @selector(monitorRepo:)) {
@@ -375,7 +377,7 @@
         options.xcodeServerName = syncTask.xcodeServer;
         options.templateBotName = syncTask.botNameForTemplate;
         options.githubAuthToken = XGASettings.shared.gitHubToken;
-        options.dryRun = YES;
+        options.dryRun = XGASettings.shared.dryRun;
         error = XGUpdateXcodeBotsWithGitHub(options);
         if (error) {
             NSMutableAttributedString*message =

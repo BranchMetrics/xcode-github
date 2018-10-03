@@ -49,7 +49,9 @@
     status->_hasGitHubRepo = [bot.sourceControlRepository hasPrefix:@"github.com:"];
     status->_botIsFromTemplate = [NSNumber numberWithBool:[XGXcodeBot botNameIsCreatedFromTemplate:bot.name]];
 
-templateBotName;
+    // TODO: Here. Add templateBotName.
+    status.templateBotName = bot.dictionary[@"templateBot"];
+    if (!status.templateBotName.length) status.templateBotName = status.bot.name;
 
     NSString *result = [botStatus.result lowercaseString];
     if ([botStatus.currentStep containsString:@"completed"]) {

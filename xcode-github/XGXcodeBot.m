@@ -559,9 +559,11 @@ exit:
             [templateBot.sourceControlWorkspaceBlueprintLocationsID]
             [@"DVTSourceControlBranchIdentifierKey"] =
                 branchName;
+        dictionary[@"configuration"][@"scheduleType"] = @2; // 2: On commit
         dictionary[@"integration_counter"] = nil;
         dictionary[@"lastRevisionBlueprint"] = nil;
         dictionary[@"name"] = newBotName;
+        dictionary[@"templateBot"] = templateBot.name;
 
         NSData *data = [NSJSONSerialization dataWithJSONObject:dictionary options:0 error:&localError];
         if (localError) goto exit;
