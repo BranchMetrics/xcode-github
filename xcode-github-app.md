@@ -13,7 +13,7 @@
 * [x] Add tests.
 * [-] Change status from table to tree.
 * [x] Add smart sort - by repository then by branchOrPR
-* [ ] Create new bot flow.
+* [x] Create new bot flow.
 * [ ] Fix security.
 * [ ] Clean up code. 
 * [ ] Add help.
