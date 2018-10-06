@@ -38,19 +38,22 @@
             status->_isXGAMonitored = YES;
     }
 
-    NSString*name = [XGXcodeBot gitHubPRNameFromBotName:botStatus.botName];
-    if (name.length <= 0) name = bot.branch;
-    status.branchOrPRName = name;
+    status->_botIsFromTemplate = @(NO);
+    if (bot.botIsFromTemplateBot && bot.pullRequestNumber.length) {
+        status->_botIsFromTemplate = @(YES);
+        status.branchOrPRName = [NSString stringWithFormat:@"PR#%@ %@", bot.pullRequestNumber, bot.pullRequestTitle];
+    } else {
+        if (status.isXGAMonitored)
+            status.branchOrPRName = [NSString stringWithFormat:@"✓ %@", bot.branch];
+        else
+            status.branchOrPRName = bot.branch;
+    }
     if (!status.branchOrPRName.length) status.branchOrPRName = @"< Unknown >";
-    if (status.isXGAMonitored)
-        status.branchOrPRName = [NSString stringWithFormat:@"✓ %@", status.botName];
-
 
     status->_hasGitHubRepo = [bot.sourceControlRepository hasPrefix:@"github.com:"];
-    status->_botIsFromTemplate = [NSNumber numberWithBool:[XGXcodeBot botNameIsCreatedFromTemplate:bot.name]];
+    status->_botIsFromTemplate = [NSNumber numberWithBool:bot.botIsFromTemplateBot];
 
-    // TODO: Here. Add templateBotName.
-    status.templateBotName = bot.dictionary[@"templateBot"];
+    status.templateBotName = bot.templateBotName;
     if (!status.templateBotName.length) status.templateBotName = status.bot.name;
 
     NSString *result = [botStatus.result lowercaseString];

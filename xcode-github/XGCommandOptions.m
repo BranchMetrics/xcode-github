@@ -97,46 +97,4 @@
     return kHelpString;
 }
 
-+ (instancetype _Nonnull) testWithBranchSDK {
-    XGCommandOptions*options = [[XGCommandOptions alloc] init];
-    options.xcodeServerName = @"esmith.local";
-    options.templateBotName = @"Branch-TestBed Test Bot";
-    options.githubAuthToken = @"13e499f7d9ba4fca42e4715558d1e5bc30a6a4e9";
-    options.dryRun = YES;
-    options.showHelp = NO;
-    options.showStatusOnly = NO;
-    options.verbosity = 10;
-    options.showVersion = NO;
-    options.badOptionsError = 0;
-    return options;
-}
-
-+ (instancetype _Nonnull) testWithBranchLabs {
-    XGCommandOptions*options = [[XGCommandOptions alloc] init];
-    options.xcodeServerName = @"esmith.local";
-    options.templateBotName = @"BranchLabs Bot";
-    options.githubAuthToken = @"13e499f7d9ba4fca42e4715558d1e5bc30a6a4e9";
-    options.dryRun = YES;
-    options.showHelp = NO;
-    options.showStatusOnly = YES;
-    options.verbosity = 0;//10;
-    options.showVersion = NO;
-    options.badOptionsError = 0;
-    return options;
-}
-
-+ (instancetype _Nonnull) testWithXcodeGitHub {
-    XGCommandOptions*options = [[XGCommandOptions alloc] init];
-    options.xcodeServerName = @"esmith.local";
-    options.templateBotName = @"BranchLabs Bot";
-    options.githubAuthToken = @"45dad6fcdb737e2110d066bd9c5c14b0e37562b7";
-    options.dryRun = YES;
-    options.showHelp = NO;
-    options.showStatusOnly = YES;
-    options.verbosity = 0; // 10;
-    options.showVersion = NO;
-    options.badOptionsError = 0;
-    return options;
-}
-
 @end

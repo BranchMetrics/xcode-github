@@ -26,9 +26,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype _Nonnull) initWithArgc:(int)argc argv:(char*const _Nullable[_Nullable])argv;
 + (NSString*) helpString;
-+ (instancetype _Nonnull) testWithBranchSDK;
-+ (instancetype _Nonnull) testWithBranchLabs;
-+ (instancetype _Nonnull) testWithXcodeGitHub;
 @end
 
 NS_ASSUME_NONNULL_END

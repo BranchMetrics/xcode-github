@@ -91,6 +91,16 @@
     [self.networkService startOperation:self];
 }
 
+// https://stackoverflow.com/questions/21105322/ios-cocoa-nsurlsession-handling-basic-https-authorization
+
+- (void) setUser:(NSString*)user password:(NSString*)password {
+    if (user.length == 0 || password.length == 0) return;
+    NSString *string = [NSString stringWithFormat:@"%@:%@", user, password];
+    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *auth = [NSString stringWithFormat: @"Basic %@", [data base64EncodedStringWithOptions:0]];
+    [self.request setValue:auth forHTTPHeaderField:@"Authorization"];
+}
+
 @end
 
 #pragma mark - BNCNetworkService

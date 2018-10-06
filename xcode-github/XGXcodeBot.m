@@ -251,20 +251,19 @@ NSString* XGDurationStringFromTimeInterval(NSTimeInterval timeInterval) {
     return apstring;
 }
 
+- (NSURL*) integrationLogURL {
+    NSString*string =
+        [NSString stringWithFormat:@"https://%@/xcode/internal/api/integrations/%@/assets",
+            self.serverName, self.integrationID];
+    NSURL*URL = [NSURL URLWithString:string];
+    return URL;
+}
+
 @end
 
 #pragma mark - XGXcodeBot
 
 @implementation XGXcodeBot
-
-- (instancetype) initWithServerName:(NSString*)serverName_
-                              botID:(NSString*)botID_ {
-    self = [super init];
-    if (!self) return self;
-    _serverName = [serverName_ copy];
-    _botID = [botID_ copy];
-    return self;
-}
 
 - (instancetype) initWithServerName:(NSString *)serverName dictionary:(NSDictionary *)dictionary {
     self = [super init];
@@ -286,6 +285,10 @@ NSString* XGDurationStringFromTimeInterval(NSTimeInterval timeInterval) {
                 [@"sourceControlBlueprint"]
                 [@"DVTSourceControlWorkspaceBlueprintLocationsKey"];
         _sourceControlWorkspaceBlueprintLocationsID = locations.allKeys.firstObject;
+
+        _templateBotName = _dictionary[@"templateBotName"];
+        _pullRequestNumber = _dictionary[@"pullRequestNumber"];
+        _pullRequestTitle = _dictionary[@"pullRequestTitle"];
     }
     @catch(id error) {
         BNCLogError(@"Can't retrieve source control URL: %@", error);
@@ -319,25 +322,15 @@ NSString* XGDurationStringFromTimeInterval(NSTimeInterval timeInterval) {
 
 + (NSString*) botNameFromPRNumber:(NSString *)number title:(NSString *)title {
     if (!number) number = @"0";
-    if (!title) title = @"no-title";
+    if (!title) title = @"<No PR Title>";
     NSString *newTitle =
-        [[[[[title lowercaseString]
+        [[[[title
             stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]
-            stringByReplacingOccurrencesOfString:@" " withString:@"-"]
-            stringByReplacingOccurrencesOfString:@"\n" withString:@"-"]
-            stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+            stringByReplacingOccurrencesOfString:@"\t" withString:@" "]
+            stringByReplacingOccurrencesOfString:@"\n" withString:@" "]
+            stringByReplacingOccurrencesOfString:@"\r" withString:@" "];
     newTitle = [NSString stringWithFormat:@"xcode-github PR#%@ %@", number, newTitle];
     return newTitle;
-}
-
-+ (BOOL) botNameIsCreatedFromTemplate:(NSString*)botName {
-    return [botName hasPrefix:@"xcode-github PR#"];
-}
-
-+ (NSString*_Nullable) gitHubPRNameFromBotName:(NSString*_Nullable)string {
-    if ([string hasPrefix:@"xcode-github PR#"])
-        return [string substringFromIndex:13];
-    return nil;
 }
 
 + (NSDictionary<NSString*, XGXcodeBot*>*_Nullable) botsForServer:(NSString*_Nonnull)xcodeServerName
@@ -411,6 +404,10 @@ exit:
     return bots;
 }
 
+- (BOOL) botIsFromTemplateBot {
+    return (self.templateBotName.length == 0) ? NO : YES;
+}
+
 - (XGXcodeBotStatus*_Nonnull) status {
     NSError *localError = nil;
     XGXcodeBotStatus *status = nil;
@@ -447,7 +444,7 @@ exit:
             if (a.count >= 1)
                 status = [[XGXcodeBotStatus alloc] initWithServerName:self.serverName dictionary:a[0]];
             else {
-                status = [[XGXcodeBotStatus alloc] init];
+                status = [[XGXcodeBotStatus alloc] initWithServerName:self.serverName dictionary:nil];
                 status.botID = self.botID;
                 status.botName = self.name;
                 status.serverName = self.serverName;
@@ -470,7 +467,7 @@ exit:
     return status;
 }
 
-- (NSError*_Nullable) removeFromServer {
+- (NSError*_Nullable) deleteBot {
     NSError *localError = nil;
     NSString *string = [NSString stringWithFormat:
         @"https://%@:20343/api/bots/%@", self.serverName, self.botID];
@@ -510,29 +507,18 @@ exit:
     return nil;
 }
 
-- (NSString*_Nullable) pullRequestNumber {
-    NSString*const kBotPrefixString = @"xcode-github PR#";
-    if ([self.name hasPrefix:kBotPrefixString] && self.name.length > kBotPrefixString.length) {
-        NSString *number = nil;
-        NSScanner *scanner = [NSScanner scannerWithString:self.name];
-        [scanner scanString:kBotPrefixString intoString:nil];
-        [scanner scanCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] intoString:&number];
-        return number;
-    }
-    return nil;
-}
-
-+ (XGXcodeBot*_Nullable) duplicateBot:(XGXcodeBot*_Nonnull)templateBot
-                          withNewName:(NSString*_Nonnull)newBotName
-                     gitHubBranchName:(NSString*_Nonnull)branchName
-                                error:(NSError*__autoreleasing _Nullable*_Nullable)error {
+- (XGXcodeBot*_Nullable) duplicateBotWithNewName:(NSString*_Nonnull)newBotName
+                                      branchName:(NSString*_Nonnull)branchName
+                         gitHubPullRequestNumber:(NSString*_Nonnull)pullRequestNumber
+                          gitHubPullRequestTitle:(NSString*_Nonnull)pullRequestTitle
+                                           error:(NSError*__autoreleasing _Nullable*_Nullable)error {
     XGXcodeBot *bot = nil;
     NSError *localError = nil;
     {
         NSString *string =
             [NSString stringWithFormat:@"https://%@:20343/api/bots/%@/duplicate",
-                templateBot.serverName,
-                templateBot.botID];
+                self.serverName,
+                self.botID];
         NSURL *URL = [NSURL URLWithString:string];
         if (!URL) {
             localError =
@@ -540,30 +526,32 @@ exit:
                     code:NSURLErrorBadURL
                     userInfo:@{
                         NSLocalizedDescriptionKey:
-                            [NSString stringWithFormat:@"Bad server name '%@'.", templateBot.serverName]
+                            [NSString stringWithFormat:@"Bad server name '%@'.", self.serverName]
                     }
                 ];
-            BNCLogError(@"Bad server name '%@'.", templateBot.serverName);
+            BNCLogError(@"Bad server name '%@'.", self.serverName);
             goto exit;
         }
 
         NSMutableDictionary *dictionary = (__bridge_transfer NSMutableDictionary*)
             CFPropertyListCreateDeepCopy(
                 kCFAllocatorDefault,
-                (CFDictionaryRef)templateBot.dictionary,
+                (CFDictionaryRef)self.dictionary,
                 kCFPropertyListMutableContainers
         );
         dictionary[@"configuration"]
             [@"sourceControlBlueprint"]
             [@"DVTSourceControlWorkspaceBlueprintLocationsKey"]
-            [templateBot.sourceControlWorkspaceBlueprintLocationsID]
+            [self.sourceControlWorkspaceBlueprintLocationsID]
             [@"DVTSourceControlBranchIdentifierKey"] =
                 branchName;
         dictionary[@"configuration"][@"scheduleType"] = @2; // 2: On commit
         dictionary[@"integration_counter"] = nil;
         dictionary[@"lastRevisionBlueprint"] = nil;
         dictionary[@"name"] = newBotName;
-        dictionary[@"templateBot"] = templateBot.name;
+        dictionary[@"templateBotName"] = self.name;
+        dictionary[@"pullRequestNumber"] = pullRequestNumber;
+        dictionary[@"pullRequestTitle"] = pullRequestTitle;
 
         NSData *data = [NSJSONSerialization dataWithJSONObject:dictionary options:0 error:&localError];
         if (localError) goto exit;
@@ -595,7 +583,7 @@ exit:
         [operation deserializeJSONResponseData];
         NSDictionary *d = (id) operation.responseData;
         if ([d isKindOfClass:NSDictionary.class]) {
-            bot = [[XGXcodeBot alloc] initWithServerName:templateBot.serverName dictionary:d];
+            bot = [[XGXcodeBot alloc] initWithServerName:self.serverName dictionary:d];
             if (bot) {
                 [bot startIntegration];
                 goto exit;

@@ -34,9 +34,10 @@ NSError*_Nullable XGCreateBotWithOptions(
         message:@"Creating Xcode bot..."
         statusURL:nil
         authToken:options.githubAuthToken];
-    [XGXcodeBot duplicateBot:templateBot
-        withNewName:newBotName
-        gitHubBranchName:pr.branch
+    [templateBot duplicateBotWithNewName:newBotName
+        branchName:pr.branch
+        gitHubPullRequestNumber:pr.number
+        gitHubPullRequestTitle:pr.title
         error:&error];
     if (error) {
         BNCLogError(@"Can't create Xcode bot: %@.", error);
@@ -54,7 +55,7 @@ NSError*_Nullable XGDeleteBotWithOptions(
         return error;
     }
     BNCLogDebug(@"Deleting old bot '%@'...", bot.name);
-    error = [bot removeFromServer];
+    error = [bot deleteBot];
     if (error) {
         BNCLogError(
             @"Can't remove old bot named '%@' from server: %@.", bot.name, error
@@ -153,31 +154,16 @@ NSError*_Nullable XGUpdatePRStatusOnGitHub(
     return nil;
 }
 
-NSError *XGShowXcodeBotStatus(NSString* xcodeServerName) {
-    // Update the bots and display the results:
-
-    // Allow self-signed certs from the xcode server:
-    [BNCNetworkService shared].allowAnySSLCert = YES;
-
-    BNCLogDebug(@"Refreshing Xcode bot status...");
-    NSError *error = nil;
-    NSDictionary<NSString*, XGXcodeBot*> *bots = [XGXcodeBot botsForServer:xcodeServerName error:&error];
-    if (error) {
-        BNCLogError(@"Can't retrieve Xcode bot information from '%@': %@.",
-            xcodeServerName, error);
-        return error;
-    }
-
+void XGShowXcodeBotStatus(NSDictionary<NSString*, XGXcodeBot*> *bots) {
     if (bots.count == 0) {
         BNCLog(@"Xcode bot status: No Xcode bots.");
-    } else {
-        BNCLog(@"Xcode bot status:");
-        for (XGXcodeBot *bot in bots.objectEnumerator) {
-            XGXcodeBotStatus *status = [bot status];
-            BNCLog(@"%@", status);
-        }
+        return;
     }
-    return nil;
+    BNCLog(@"Xcode bot status:");
+    for (XGXcodeBot *bot in bots.objectEnumerator) {
+        XGXcodeBotStatus *status = [bot status];
+        BNCLog(@"%@", status);
+    }
 }
 
 #pragma mark - Main Function
@@ -190,7 +176,6 @@ NSError*_Nullable XGUpdateXcodeBotsWithGitHub(XGCommandOptions*_Nonnull options)
         [BNCNetworkService shared].allowAnySSLCert = YES;
 
         BNCLogDebug(@"Getting Xcode bots on '%@'...", options.xcodeServerName);
-
         NSDictionary<NSString*, XGXcodeBot*> *bots =
             [XGXcodeBot botsForServer:options.xcodeServerName error:&error];
         if (error) {
@@ -199,7 +184,12 @@ NSError*_Nullable XGUpdateXcodeBotsWithGitHub(XGCommandOptions*_Nonnull options)
             returnCode = EX_NOHOST;
             goto exit;
         }
-
+        if (options.showStatusOnly) {
+            XGShowXcodeBotStatus(bots);
+            returnCode = EXIT_SUCCESS;
+            goto exit;
+        }
+        
         // Check that the template bot exists:
         XGXcodeBot *templateBot = bots[options.templateBotName];
         if (!templateBot) {

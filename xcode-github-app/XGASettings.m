@@ -16,7 +16,7 @@
 
 #pragma mark XGAServer
 
-NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
+NSString*const kXGAServiceName = @"io.branch.XcodeGitHub";
 
 @implementation XGAServer
 
@@ -42,32 +42,30 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
         pass];
 }
 
-/*
 - (NSString*) password {
     @synchronized (self) {
-        NSString *password = nil;
-        if (self.server.length) {
-            NSError*error = nil;
-                [BNCKeyChain retrieveValueForService:kXGAServiceName key:self.server error:&error];
-            if (error) BNCLog(@"Can't retrieve password: %@.", error);
-        }
+        if (self.server.length == 0 || self.user.length == 0) return nil;
+        NSError*error = nil;
+        NSString *password =
+            [BNCKeyChain retrieveValueForService:self.server
+                key:self.user
+                error:&error];
+        if (error) BNCLog(@"Can't retrieve password: %@.", error);
         return password;
     }
 }
 
 - (void) setPassword:(NSString *)password {
     @synchronized (self) {
-        if (self.server.length) {
-            NSError *error =
-                [BNCKeyChain storeValue:password
-                    forService:kXGAServiceName
-                    key:self.server
-                    cloudAccessGroup:nil];
-            if (error) BNCLog(@"Can't save password: %@.", error);
-        }
+        if (self.server.length == 0 || self.user.length == 0 || self.password.length == 0) return;
+        NSError *error =
+            [BNCKeyChain storeValue:password
+                forService:kXGAServiceName
+                key:self.server
+                cloudAccessGroup:nil];
+        if (error) BNCLog(@"Can't save password: %@.", error);
     }
 }
-*/
 
 @end
 
@@ -89,7 +87,9 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
 - (instancetype) init {
     self = [super init];
     if (!self) return self;
-    [self clear];
+    self.dryRun = NO;
+    self.showDebugMessages = NO;
+    self.refreshSeconds = 60.0;
     return self;
 }
 
@@ -103,6 +103,29 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
 }
 
 #pragma mark - Setters/Getters
+
+- (NSString*) gitHubToken {
+    @synchronized (self) {
+        NSError*error = nil;
+        NSString*token =
+            [BNCKeyChain retrieveValueForService:kXGAServiceName
+                key:@"GitHubToken"
+                error:&error];
+        if (error) BNCLog(@"Can't retrieve GitHubToken: %@.", error);
+        return token;
+    }
+}
+
+- (void) setGitHubToken:(NSString *)token {
+    @synchronized (self) {
+        NSError *error =
+            [BNCKeyChain storeValue:token
+                forService:kXGAServiceName
+                key:@"GitHubToken"
+                cloudAccessGroup:nil];
+        if (error) BNCLog(@"Can't save GitHubToken: %@.", error);
+    }
+}
 
 - (NSMutableArray<XGAServer*>*) servers {
     @synchronized (self) {
@@ -164,8 +187,8 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHubService";
 }
 
 - (void) clear {
-    self.dryRun = YES;
-    self.showDebugMessages = YES;
+    self.dryRun = NO;
+    self.showDebugMessages = NO;
     self.refreshSeconds = 60.0;
     self.gitHubToken = @"";
     [self.servers removeAllObjects];

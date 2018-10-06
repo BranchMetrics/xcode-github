@@ -91,6 +91,7 @@ void XGALogFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Null
         topLevelObjects:nil];
     controller.window.excludedFromWindowsMenu = YES;
     [controller startObservers];
+    [controller updateMessageFilter];
     return controller;
 }
 
@@ -169,6 +170,10 @@ void XGALogFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Null
         ofObject:(id)object
         change:(NSDictionary<NSKeyValueChangeKey, id> *)change
         context:(void *)context {
+    [self updateMessageFilter];
+}
+
+- (void) updateMessageFilter {
     if ([XGASettings shared].showDebugMessages) {
         self.arrayController.filterPredicate = nil;
     } else {

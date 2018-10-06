@@ -61,6 +61,7 @@
         self.arrayController.content = @[ status ];
         [self startStatusUpdates];
         self.tableView.delegate = self;
+        [self smartSort:self];
     }
 }
 
@@ -164,8 +165,7 @@
     [[alert addButtonWithTitle:@"Cancel"] setTag:NSModalResponseCancel];
     [alert beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse returnCode) {
         if (returnCode == NSModalResponseOK) {
-            __auto_type*bot = [[XGXcodeBot alloc] initWithServerName:status.server botID:status.bot.botID];
-            NSError*error = [bot removeFromServer];
+            NSError*error = [status.bot deleteBot];
             if (error) {
                 __auto_type ea = [[NSAlert alloc] init];
                 ea.messageText = [NSString stringWithFormat:@"Error deleting '%@'.", status.botName];
@@ -207,10 +207,7 @@
 - (IBAction) downloadAssets:(id)sender {
     XGAStatusViewItem*status = [self selectedTableItem];
     if (!status) return;
-    NSString*string =
-        [NSString stringWithFormat:@"https://%@/xcode/internal/api/integrations/%@/assets",
-            status.server, status.botStatus.integrationID];
-    NSURL*URL = [NSURL URLWithString:string];
+    NSURL*URL = status.botStatus.integrationLogURL;
     [[NSWorkspace sharedWorkspace] openURL:URL];
 }
 
@@ -232,14 +229,6 @@
         [NSSortDescriptor sortDescriptorWithKey:@"branchOrPRName"
             ascending:YES selector:@selector(caseInsensitiveCompare:)],
     ];
-/*
-    self.tableView.sortDescriptors = @[
-        [NSSortDescriptor sortDescriptorWithKey:@"repository"
-            ascending:YES selector:@selector(caseInsensitiveCompare:)],
-        [NSSortDescriptor sortDescriptorWithKey:@"branchOrPRName"
-            ascending:YES selector:@selector(compare:)],
-    ];
-*/
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem {

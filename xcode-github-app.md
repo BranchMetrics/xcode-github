@@ -15,6 +15,7 @@
 * [x] Add smart sort - by repository then by branchOrPR
 * [x] Create new bot flow.
 * [ ] Fix security.
+* [ ] On bots, if last integration# != current# then update the status on GitHub.
 * [ ] Clean up code. 
 * [ ] Add help.
 ```

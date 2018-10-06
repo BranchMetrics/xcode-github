@@ -190,7 +190,7 @@
                             <constraint firstItem="m3O-1F-jYg" firstAttribute="leading" secondItem="9Wt-5C-o87" secondAttribute="leading" id="wr3-AD-t2A"/>
                         </constraints>
                     </customView>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="drg-zm-rHi">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="drg-zm-rHi" customClass="NSSecureTextField">
                         <rect key="frame" x="20" y="120" width="453" height="22"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" drawsBackground="YES" id="OVV-Um-m2O">
                             <font key="font" metaFont="system"/>

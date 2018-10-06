@@ -28,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void) deserializeJSONResponseData;
 - (NSString*_Nullable) stringFromResponseData;
+- (void) setUser:(NSString*)user password:(NSString*)password;
 @end
 
 #pragma mark - BNCNetworkService

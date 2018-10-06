@@ -14,17 +14,7 @@
 /**
  Creates or updates an Xcode bot when a new GitHub pull request is created on a GitHub project.
 
- @param options The options for the new bot. The options specify the Xcode server, and the template bot.
-
+ @param  options The options for the new bot. The options specify the Xcode server, and the template bot.
  @return Returns an error if one occurs else nil.
 */
 FOUNDATION_EXPORT NSError*_Nullable XGUpdateXcodeBotsWithGitHub(XGCommandOptions*_Nonnull options);
-
-/**
- Prints the status of all bots on the given Xcode bot server in the BNCLog.
-
- @param xcodeServerName The name of the Xcode server
-
- @return Returns an error if one occurs else nil.
- */
-FOUNDATION_EXPORT NSError*_Nullable XGShowXcodeBotStatus(NSString*_Nonnull xcodeServerName);
