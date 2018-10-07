@@ -42,10 +42,7 @@ start:
         BNCLogSetOutputFunction(LogOutputFunction);
         BNCLogSetDisplayLevel(BNCLogLevelWarning);
 
-        // XGCommandOptions *options = [XGCommandOptions testWithBranchSDK];
-        XGCommandOptions *options = [XGCommandOptions testWithXcodeGitHub];
-        // XGCommandLineOptions *options = [XGCommandLineOptions testWithBranchLabs];
-        // XGCommandLineOptions *options = [[XGCommandLineOptions alloc] initWithArgc:argc argv:argv];
+        XGCommandOptions *options = [[XGCommandOptions alloc] initWithArgc:argc argv:argv];
         if (options.badOptionsError) {
             returnCode = EX_USAGE;
             goto exit;
@@ -70,7 +67,7 @@ start:
         }
 
         if (options.showStatusOnly) {
-            if (XGShowXcodeBotStatus(options.xcodeServerName) == nil)
+            if (XGLogXcodeBotStatus(options.xcodeServerName) == nil)
                 returnCode = EXIT_SUCCESS;
             goto exit;
         }
@@ -81,7 +78,7 @@ start:
             goto exit;
         }
 
-        error = XGShowXcodeBotStatus(options.xcodeServerName);
+        error = XGLogXcodeBotStatus(options.xcodeServerName);
         if (error == nil) returnCode = EXIT_SUCCESS;
 
         repeatForever = options.repeatForever;

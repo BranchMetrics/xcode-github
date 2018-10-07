@@ -18,3 +18,11 @@
  @return Returns an error if one occurs else nil.
 */
 FOUNDATION_EXPORT NSError*_Nullable XGUpdateXcodeBotsWithGitHub(XGCommandOptions*_Nonnull options);
+
+/**
+ Writes the current Xcode server status to the log.
+
+ @param  xcodeServerName The name of the Xcode server of which to log the status.
+ @return Returns an NSError if an error occurs or nil on success.
+*/
+FOUNDATION_EXPORT NSError*_Nullable XGLogXcodeBotStatus(NSString*_Nonnull xcodeServerName);
