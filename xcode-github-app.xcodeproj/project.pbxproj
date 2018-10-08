@@ -10,7 +10,6 @@
 		4D0DD54520597FE6001721C1 /* xcode-github-app.md in Resources */ = {isa = PBXBuildFile; fileRef = 4D0DD54420597FE6001721C1 /* xcode-github-app.md */; };
 		4D12BA0D20A252CE00E5B1DB /* XGALogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D12BA0B20A252CE00E5B1DB /* XGALogViewController.m */; };
 		4D12BA0E20A252CE00E5B1DB /* XGALogViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D12BA0C20A252CE00E5B1DB /* XGALogViewController.xib */; };
-		4D5303EA21431547006E8A7B /* XGSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D5303E921431547006E8A7B /* XGSettings.m */; };
 		4D5CC05E2090CAB60042E98B /* BNCKeyChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D5CC05D2090CAB60042E98B /* BNCKeyChain.m */; };
 		4D65363621504842000812E1 /* XGAStatusPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D65363521504842000812E1 /* XGAStatusPopover.m */; };
 		4D6536382150486B000812E1 /* XGAStatusPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D6536372150486B000812E1 /* XGAStatusPopover.xib */; };
@@ -19,7 +18,6 @@
 		4D7661722057565200216B72 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D7661712057565200216B72 /* Assets.xcassets */; };
 		4D7661752057565200216B72 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D7661732057565200216B72 /* Main.storyboard */; };
 		4D7661782057565300216B72 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D7661772057565300216B72 /* main.m */; };
-		4D790E352095A43C008A9492 /* APFormattedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D790E342095A43C008A9492 /* APFormattedString.m */; };
 		4D7D249A20A617DB0086FA59 /* NSAttributedString+App.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D7D249920A617DB0086FA59 /* NSAttributedString+App.m */; };
 		4D8352C620A3F30A00184259 /* XGAStatusViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D8352C520A3F30A00184259 /* XGAStatusViewController.xib */; };
 		4D8352CC20A4F93A00184259 /* XGAStatusLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D8352CB20A4F93A00184259 /* XGAStatusLineView.m */; };
@@ -27,15 +25,10 @@
 		4D8352D120A516A200184259 /* XGAPreferencesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D8352CF20A516A200184259 /* XGAPreferencesViewController.xib */; };
 		4DAA4666214CBEFF007A39EB /* XGAAddServerPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DAA4664214CBEFF007A39EB /* XGAAddServerPanel.m */; };
 		4DAA4667214CBEFF007A39EB /* XGAAddServerPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DAA4665214CBEFF007A39EB /* XGAAddServerPanel.xib */; };
+		4DDAA55C216AEE0D002F3F8E /* XcodeGitHub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDAA54E216ACF17002F3F8E /* XcodeGitHub.framework */; };
 		4DED4891209BDFCC008DE877 /* BNCGeometry.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DED4890209BDFCC008DE877 /* BNCGeometry.m */; };
 		4DEE32E42162EB20006BD06C /* XGAStatusViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DEE32E32162EB20006BD06C /* XGAStatusViewItem.m */; };
-		4DF0F57C208F91A90015D1F7 /* XGXcodeBot.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF0F578208F91A90015D1F7 /* XGXcodeBot.m */; };
-		4DF0F57D208F91A90015D1F7 /* XGGitHubPullRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF0F579208F91A90015D1F7 /* XGGitHubPullRequest.m */; };
-		4DF0F57E208F91A90015D1F7 /* XGCommandOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF0F57B208F91A90015D1F7 /* XGCommandOptions.m */; };
-		4DF0F58B208F923E0015D1F7 /* BNCLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF0F583208F923E0015D1F7 /* BNCLog.m */; };
-		4DF0F58C208F923E0015D1F7 /* BNCNetworkService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF0F584208F923E0015D1F7 /* BNCNetworkService.m */; };
 		4DF0F58E208F923E0015D1F7 /* BNCThreads.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF0F588208F923E0015D1F7 /* BNCThreads.m */; };
-		4DF0F594209000B80015D1F7 /* XGCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF0F593209000B80015D1F7 /* XGCommand.m */; };
 		4DF0F5972090474D0015D1F7 /* XGASettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF0F5962090474D0015D1F7 /* XGASettings.m */; };
 		4DF656312153620100380FD0 /* BNCEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF6562F2153620100380FD0 /* BNCEncoder.m */; };
 		4DFB5308215DCD6700DB1209 /* XGANetworkServiceBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DFB5307215DCD6700DB1209 /* XGANetworkServiceBrowser.m */; };
@@ -46,8 +39,6 @@
 		4D12BA0A20A252CE00E5B1DB /* XGALogViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGALogViewController.h; sourceTree = "<group>"; };
 		4D12BA0B20A252CE00E5B1DB /* XGALogViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGALogViewController.m; sourceTree = "<group>"; };
 		4D12BA0C20A252CE00E5B1DB /* XGALogViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = XGALogViewController.xib; sourceTree = "<group>"; };
-		4D5303E821431547006E8A7B /* XGSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XGSettings.h; path = "xcode-github/XGSettings.h"; sourceTree = SOURCE_ROOT; };
-		4D5303E921431547006E8A7B /* XGSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XGSettings.m; path = "xcode-github/XGSettings.m"; sourceTree = SOURCE_ROOT; };
 		4D5CC05C2090CAB50042E98B /* BNCKeyChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCKeyChain.h; sourceTree = "<group>"; };
 		4D5CC05D2090CAB60042E98B /* BNCKeyChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCKeyChain.m; sourceTree = "<group>"; };
 		4D65363421504842000812E1 /* XGAStatusPopover.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGAStatusPopover.h; sourceTree = "<group>"; };
@@ -63,8 +54,6 @@
 		4D7661762057565200216B72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D7661772057565300216B72 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4D7661792057565300216B72 /* xcode-github-app.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "xcode-github-app.entitlements"; sourceTree = "<group>"; };
-		4D790E332095A43C008A9492 /* APFormattedString.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APFormattedString.h; sourceTree = "<group>"; };
-		4D790E342095A43C008A9492 /* APFormattedString.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APFormattedString.m; sourceTree = "<group>"; };
 		4D7D249820A617DB0086FA59 /* NSAttributedString+App.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSAttributedString+App.h"; path = "Vendor/Branch/NSAttributedString+App.h"; sourceTree = SOURCE_ROOT; };
 		4D7D249920A617DB0086FA59 /* NSAttributedString+App.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSAttributedString+App.m"; path = "Vendor/Branch/NSAttributedString+App.m"; sourceTree = SOURCE_ROOT; };
 		4D8352C520A3F30A00184259 /* XGAStatusViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = XGAStatusViewController.xib; sourceTree = "<group>"; };
@@ -76,24 +65,13 @@
 		4DAA4663214CBEFF007A39EB /* XGAAddServerPanel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGAAddServerPanel.h; sourceTree = "<group>"; };
 		4DAA4664214CBEFF007A39EB /* XGAAddServerPanel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGAAddServerPanel.m; sourceTree = "<group>"; };
 		4DAA4665214CBEFF007A39EB /* XGAAddServerPanel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = XGAAddServerPanel.xib; sourceTree = "<group>"; };
+		4DDAA54E216ACF17002F3F8E /* XcodeGitHub.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XcodeGitHub.framework; path = Products/XcodeGitHub.framework; sourceTree = "<group>"; };
 		4DED488F209BDFCC008DE877 /* BNCGeometry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BNCGeometry.h; sourceTree = "<group>"; };
 		4DED4890209BDFCC008DE877 /* BNCGeometry.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BNCGeometry.m; sourceTree = "<group>"; };
 		4DEE32E22162EB20006BD06C /* XGAStatusViewItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGAStatusViewItem.h; sourceTree = "<group>"; };
 		4DEE32E32162EB20006BD06C /* XGAStatusViewItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGAStatusViewItem.m; sourceTree = "<group>"; };
-		4DF0F576208F91A90015D1F7 /* XGGitHubPullRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XGGitHubPullRequest.h; path = "xcode-github/XGGitHubPullRequest.h"; sourceTree = SOURCE_ROOT; };
-		4DF0F577208F91A90015D1F7 /* XGXcodeBot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XGXcodeBot.h; path = "xcode-github/XGXcodeBot.h"; sourceTree = SOURCE_ROOT; };
-		4DF0F578208F91A90015D1F7 /* XGXcodeBot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XGXcodeBot.m; path = "xcode-github/XGXcodeBot.m"; sourceTree = SOURCE_ROOT; };
-		4DF0F579208F91A90015D1F7 /* XGGitHubPullRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XGGitHubPullRequest.m; path = "xcode-github/XGGitHubPullRequest.m"; sourceTree = SOURCE_ROOT; };
-		4DF0F57A208F91A90015D1F7 /* XGCommandOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XGCommandOptions.h; path = "xcode-github/XGCommandOptions.h"; sourceTree = SOURCE_ROOT; };
-		4DF0F57B208F91A90015D1F7 /* XGCommandOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XGCommandOptions.m; path = "xcode-github/XGCommandOptions.m"; sourceTree = SOURCE_ROOT; };
 		4DF0F582208F923E0015D1F7 /* BNCThreads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCThreads.h; sourceTree = "<group>"; };
-		4DF0F583208F923E0015D1F7 /* BNCLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCLog.m; sourceTree = "<group>"; };
-		4DF0F584208F923E0015D1F7 /* BNCNetworkService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCNetworkService.m; sourceTree = "<group>"; };
-		4DF0F587208F923E0015D1F7 /* BNCLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCLog.h; sourceTree = "<group>"; };
 		4DF0F588208F923E0015D1F7 /* BNCThreads.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCThreads.m; sourceTree = "<group>"; };
-		4DF0F589208F923E0015D1F7 /* BNCNetworkService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCNetworkService.h; sourceTree = "<group>"; };
-		4DF0F592209000B80015D1F7 /* XGCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XGCommand.h; path = "xcode-github/XGCommand.h"; sourceTree = SOURCE_ROOT; };
-		4DF0F593209000B80015D1F7 /* XGCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XGCommand.m; path = "xcode-github/XGCommand.m"; sourceTree = SOURCE_ROOT; };
 		4DF0F5952090474D0015D1F7 /* XGASettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGASettings.h; sourceTree = "<group>"; };
 		4DF0F5962090474D0015D1F7 /* XGASettings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGASettings.m; sourceTree = "<group>"; };
 		4DF6562F2153620100380FD0 /* BNCEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCEncoder.m; sourceTree = "<group>"; };
@@ -107,6 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DDAA55C216AEE0D002F3F8E /* XcodeGitHub.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,6 +98,7 @@
 				4D0DD54420597FE6001721C1 /* xcode-github-app.md */,
 				4D76616A2057565200216B72 /* xcode-github-app */,
 				4D7661692057565200216B72 /* Products */,
+				4DDAA54D216ACF16002F3F8E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -138,7 +118,6 @@
 				4D7661772057565300216B72 /* main.m */,
 				4D7661732057565200216B72 /* Main.storyboard */,
 				4DF0F57F208F92140015D1F7 /* Vendor */,
-				4DF0F575208F910C0015D1F7 /* xcode-github */,
 				4D7661792057565300216B72 /* xcode-github-app.entitlements */,
 				4DAA4663214CBEFF007A39EB /* XGAAddServerPanel.h */,
 				4DAA4664214CBEFF007A39EB /* XGAAddServerPanel.m */,
@@ -169,21 +148,12 @@
 			path = "xcode-github-app";
 			sourceTree = "<group>";
 		};
-		4DF0F575208F910C0015D1F7 /* xcode-github */ = {
+		4DDAA54D216ACF16002F3F8E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4DF0F592209000B80015D1F7 /* XGCommand.h */,
-				4DF0F593209000B80015D1F7 /* XGCommand.m */,
-				4DF0F57A208F91A90015D1F7 /* XGCommandOptions.h */,
-				4DF0F57B208F91A90015D1F7 /* XGCommandOptions.m */,
-				4DF0F576208F91A90015D1F7 /* XGGitHubPullRequest.h */,
-				4DF0F579208F91A90015D1F7 /* XGGitHubPullRequest.m */,
-				4D5303E821431547006E8A7B /* XGSettings.h */,
-				4D5303E921431547006E8A7B /* XGSettings.m */,
-				4DF0F577208F91A90015D1F7 /* XGXcodeBot.h */,
-				4DF0F578208F91A90015D1F7 /* XGXcodeBot.m */,
+				4DDAA54E216ACF17002F3F8E /* XcodeGitHub.framework */,
 			);
-			name = "xcode-github";
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		4DF0F57F208F92140015D1F7 /* Vendor */ = {
@@ -197,18 +167,12 @@
 		4DF0F580208F923E0015D1F7 /* Branch */ = {
 			isa = PBXGroup;
 			children = (
-				4D790E332095A43C008A9492 /* APFormattedString.h */,
-				4D790E342095A43C008A9492 /* APFormattedString.m */,
 				4DF656302153620100380FD0 /* BNCEncoder.h */,
 				4DF6562F2153620100380FD0 /* BNCEncoder.m */,
 				4DED488F209BDFCC008DE877 /* BNCGeometry.h */,
 				4DED4890209BDFCC008DE877 /* BNCGeometry.m */,
 				4D5CC05C2090CAB50042E98B /* BNCKeyChain.h */,
 				4D5CC05D2090CAB60042E98B /* BNCKeyChain.m */,
-				4DF0F587208F923E0015D1F7 /* BNCLog.h */,
-				4DF0F583208F923E0015D1F7 /* BNCLog.m */,
-				4DF0F589208F923E0015D1F7 /* BNCNetworkService.h */,
-				4DF0F584208F923E0015D1F7 /* BNCNetworkService.m */,
 				4DF0F582208F923E0015D1F7 /* BNCThreads.h */,
 				4DF0F588208F923E0015D1F7 /* BNCThreads.m */,
 				4D7D249820A617DB0086FA59 /* NSAttributedString+App.h */,
@@ -303,29 +267,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D790E352095A43C008A9492 /* APFormattedString.m in Sources */,
 				4D7D249A20A617DB0086FA59 /* NSAttributedString+App.m in Sources */,
 				4DED4891209BDFCC008DE877 /* BNCGeometry.m in Sources */,
-				4DF0F58B208F923E0015D1F7 /* BNCLog.m in Sources */,
 				4DFB5308215DCD6700DB1209 /* XGANetworkServiceBrowser.m in Sources */,
 				4DF0F58E208F923E0015D1F7 /* BNCThreads.m in Sources */,
-				4DF0F594209000B80015D1F7 /* XGCommand.m in Sources */,
 				4D12BA0D20A252CE00E5B1DB /* XGALogViewController.m in Sources */,
 				4D8352CC20A4F93A00184259 /* XGAStatusLineView.m in Sources */,
 				4D5CC05E2090CAB60042E98B /* BNCKeyChain.m in Sources */,
-				4DF0F57D208F91A90015D1F7 /* XGGitHubPullRequest.m in Sources */,
-				4DF0F57E208F91A90015D1F7 /* XGCommandOptions.m in Sources */,
 				4DEE32E42162EB20006BD06C /* XGAStatusViewItem.m in Sources */,
 				4DAA4666214CBEFF007A39EB /* XGAAddServerPanel.m in Sources */,
 				4D7661702057565200216B72 /* XGAStatusViewController.m in Sources */,
-				4DF0F58C208F923E0015D1F7 /* BNCNetworkService.m in Sources */,
 				4D8352D020A516A200184259 /* XGAPreferencesViewController.m in Sources */,
 				4D7661782057565300216B72 /* main.m in Sources */,
-				4DF0F57C208F91A90015D1F7 /* XGXcodeBot.m in Sources */,
 				4D65363621504842000812E1 /* XGAStatusPopover.m in Sources */,
 				4D76616D2057565200216B72 /* XGAAppDelegate.m in Sources */,
 				4DF0F5972090474D0015D1F7 /* XGASettings.m in Sources */,
-				4D5303EA21431547006E8A7B /* XGSettings.m in Sources */,
 				4DF656312153620100380FD0 /* BNCEncoder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -460,6 +416,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = R63EM248DP;
 				ENABLE_HARDENED_RUNTIME = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Products",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/xcode-github-app/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.xcode-github-app";
@@ -476,6 +436,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = R63EM248DP;
 				ENABLE_HARDENED_RUNTIME = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Products",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/xcode-github-app/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.xcode-github-app";

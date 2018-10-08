@@ -9,8 +9,7 @@
 */
 
 #import <Foundation/Foundation.h>
-#import "APFormattedString.h"
-#import "XGXcodeBot.h"
+#import <XcodeGitHub/XcodeGitHub.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

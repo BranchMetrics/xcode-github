@@ -8,12 +8,11 @@
  @copyright     Copyright © 2018 Branch. All rights reserved.
 */
 
-#import "XGALogViewController.h"
-#import "BNCLog.h"
 #import "BNCThreads.h"
-#import "APFormattedString.h"
+#import "XGALogViewController.h"
 #import "XGASettings.h"
 #import "XGAStatusPopover.h"
+#import <XcodeGitHub/XcodeGitHub.h>
 
 NSString*const XGALogUpdateNotification = @"XGALogUpdatedNotification";
 

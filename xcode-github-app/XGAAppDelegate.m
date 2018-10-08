@@ -12,7 +12,7 @@
 #import "XGALogViewController.h"
 #import "XGAStatusViewController.h"
 #import "XGAPreferencesViewController.h"
-#import "BNCNetworkService.h"
+#import <XcodeGitHub/XcodeGitHub.h>
 
 @interface XGAAppDelegate () <NSWindowDelegate>
 @property (nonatomic, strong) IBOutlet XGALogViewController*logController;

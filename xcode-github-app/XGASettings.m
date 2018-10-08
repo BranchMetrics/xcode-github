@@ -11,8 +11,7 @@
 #import "XGASettings.h"
 #import "BNCKeyChain.h"
 #import "BNCEncoder.h"
-#import "BNCLog.h"
-
+#import <XcodeGitHub/XcodeGitHub.h>
 
 #pragma mark XGAServer
 

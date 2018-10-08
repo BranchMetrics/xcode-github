@@ -7,15 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4D447E1E2050557900A72842 /* XGCommandOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D447E1D2050557900A72842 /* XGCommandOptions.m */; };
-		4D5303D8214205B8006E8A7B /* XGSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D5303D7214205B8006E8A7B /* XGSettings.m */; };
 		4D744C072047A53B002CA796 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D744C062047A53B002CA796 /* main.m */; };
-		4D744C162047BA5F002CA796 /* BNCLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D744C112047BA5F002CA796 /* BNCLog.m */; };
-		4D744C172047BA5F002CA796 /* BNCNetworkService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D744C122047BA5F002CA796 /* BNCNetworkService.m */; };
-		4D744C1E2047C652002CA796 /* XGXcodeBot.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D744C1D2047C652002CA796 /* XGXcodeBot.m */; };
-		4D744C212047C9E1002CA796 /* XGGitHubPullRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D744C202047C9E1002CA796 /* XGGitHubPullRequest.m */; };
-		4DDAA4CC2169F8D2002F3F8E /* APFormattedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DDAA4CB2169F8D2002F3F8E /* APFormattedString.m */; };
-		4DF0F591208FE64E0015D1F7 /* XGCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF0F590208FE64E0015D1F7 /* XGCommand.m */; };
+		4DDAA55B216AEC95002F3F8E /* XcodeGitHub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDAA55A216AEC95002F3F8E /* XcodeGitHub.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,25 +24,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		4D447E1C2050557900A72842 /* XGCommandOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGCommandOptions.h; sourceTree = "<group>"; };
-		4D447E1D2050557900A72842 /* XGCommandOptions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGCommandOptions.m; sourceTree = "<group>"; };
-		4D5303D6214205B8006E8A7B /* XGSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGSettings.h; sourceTree = "<group>"; };
-		4D5303D7214205B8006E8A7B /* XGSettings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGSettings.m; sourceTree = "<group>"; };
 		4D7335452097CF6700A0D416 /* xcode-github.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "xcode-github.md"; sourceTree = "<group>"; };
 		4D744C032047A53B002CA796 /* xcode-github */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "xcode-github"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D744C062047A53B002CA796 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		4D744C112047BA5F002CA796 /* BNCLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCLog.m; sourceTree = "<group>"; };
-		4D744C122047BA5F002CA796 /* BNCNetworkService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCNetworkService.m; sourceTree = "<group>"; };
-		4D744C132047BA5F002CA796 /* BNCLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCLog.h; sourceTree = "<group>"; };
-		4D744C152047BA5F002CA796 /* BNCNetworkService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCNetworkService.h; sourceTree = "<group>"; };
-		4D744C1C2047C652002CA796 /* XGXcodeBot.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGXcodeBot.h; sourceTree = "<group>"; };
-		4D744C1D2047C652002CA796 /* XGXcodeBot.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGXcodeBot.m; sourceTree = "<group>"; };
-		4D744C1F2047C9E1002CA796 /* XGGitHubPullRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGGitHubPullRequest.h; sourceTree = "<group>"; };
-		4D744C202047C9E1002CA796 /* XGGitHubPullRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGGitHubPullRequest.m; sourceTree = "<group>"; };
-		4DDAA4CA2169F8D2002F3F8E /* APFormattedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APFormattedString.h; sourceTree = "<group>"; };
-		4DDAA4CB2169F8D2002F3F8E /* APFormattedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APFormattedString.m; sourceTree = "<group>"; };
-		4DF0F58F208FE64E0015D1F7 /* XGCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGCommand.h; sourceTree = "<group>"; };
-		4DF0F590208FE64E0015D1F7 /* XGCommand.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGCommand.m; sourceTree = "<group>"; };
+		4DDAA55A216AEC95002F3F8E /* XcodeGitHub.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XcodeGitHub.framework; path = Products/XcodeGitHub.framework; sourceTree = "<group>"; };
 		4DF1DA432049DB65001425C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -58,6 +36,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DDAA55B216AEC95002F3F8E /* XcodeGitHub.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -69,8 +48,8 @@
 			children = (
 				4D7335452097CF6700A0D416 /* xcode-github.md */,
 				4D744C052047A53B002CA796 /* xcode-github */,
-				4D744C0E2047BA5F002CA796 /* Vendor */,
 				4D744C042047A53B002CA796 /* Products */,
+				4DDAA545216AC9D7002F3F8E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -87,39 +66,16 @@
 			children = (
 				4DF1DA432049DB65001425C7 /* Info.plist */,
 				4D744C062047A53B002CA796 /* main.m */,
-				4DF0F58F208FE64E0015D1F7 /* XGCommand.h */,
-				4DF0F590208FE64E0015D1F7 /* XGCommand.m */,
-				4D447E1C2050557900A72842 /* XGCommandOptions.h */,
-				4D447E1D2050557900A72842 /* XGCommandOptions.m */,
-				4D744C1F2047C9E1002CA796 /* XGGitHubPullRequest.h */,
-				4D744C202047C9E1002CA796 /* XGGitHubPullRequest.m */,
-				4D5303D6214205B8006E8A7B /* XGSettings.h */,
-				4D5303D7214205B8006E8A7B /* XGSettings.m */,
-				4D744C1C2047C652002CA796 /* XGXcodeBot.h */,
-				4D744C1D2047C652002CA796 /* XGXcodeBot.m */,
 			);
 			path = "xcode-github";
 			sourceTree = "<group>";
 		};
-		4D744C0E2047BA5F002CA796 /* Vendor */ = {
+		4DDAA545216AC9D7002F3F8E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4D744C0F2047BA5F002CA796 /* Branch */,
+				4DDAA55A216AEC95002F3F8E /* XcodeGitHub.framework */,
 			);
-			path = Vendor;
-			sourceTree = "<group>";
-		};
-		4D744C0F2047BA5F002CA796 /* Branch */ = {
-			isa = PBXGroup;
-			children = (
-				4DDAA4CA2169F8D2002F3F8E /* APFormattedString.h */,
-				4DDAA4CB2169F8D2002F3F8E /* APFormattedString.m */,
-				4D744C132047BA5F002CA796 /* BNCLog.h */,
-				4D744C112047BA5F002CA796 /* BNCLog.m */,
-				4D744C152047BA5F002CA796 /* BNCNetworkService.h */,
-				4D744C122047BA5F002CA796 /* BNCNetworkService.m */,
-			);
-			path = Branch;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -179,15 +135,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4DDAA4CC2169F8D2002F3F8E /* APFormattedString.m in Sources */,
-				4D744C162047BA5F002CA796 /* BNCLog.m in Sources */,
-				4D744C212047C9E1002CA796 /* XGGitHubPullRequest.m in Sources */,
 				4D744C072047A53B002CA796 /* main.m in Sources */,
-				4DF0F591208FE64E0015D1F7 /* XGCommand.m in Sources */,
-				4D5303D8214205B8006E8A7B /* XGSettings.m in Sources */,
-				4D447E1E2050557900A72842 /* XGCommandOptions.m in Sources */,
-				4D744C1E2047C652002CA796 /* XGXcodeBot.m in Sources */,
-				4D744C172047BA5F002CA796 /* BNCNetworkService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,7 +255,15 @@
 				CODE_SIGN_STYLE = Automatic;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				DEVELOPMENT_TEAM = R63EM248DP;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Products",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/xcode-github/Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Products",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.xcode-github.command";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -320,7 +276,15 @@
 				CODE_SIGN_STYLE = Automatic;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				DEVELOPMENT_TEAM = R63EM248DP;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Products",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/xcode-github/Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Products",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.xcode-github.command";
 				PRODUCT_NAME = "$(TARGET_NAME)";

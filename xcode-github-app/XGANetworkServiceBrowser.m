@@ -9,7 +9,7 @@
 */
 
 #import "XGANetworkServiceBrowser.h"
-#import "BNCLog.h"
+#import <XcodeGitHub/XcodeGitHub.h>
 #import <arpa/inet.h>
 
 // https://superuser.com/questions/443514/how-to-get-shared-computers-ip-addresses-in-os-x-10-7?answertab=votes#tab-top

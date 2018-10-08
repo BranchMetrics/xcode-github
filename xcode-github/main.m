@@ -9,9 +9,10 @@
 */
 
 #import <Foundation/Foundation.h>
-#import "XGCommandOptions.h"
-#import "XGCommand.h"
-#import "BNCLog.h"
+#import <XcodeGitHub/XcodeGitHub.h>
+//#import "XGCommandOptions.h"
+//#import "XGCommand.h"
+//#import "BNCLog.h"
 #include <sysexits.h>
 
 static BNCLogLevel global_logLevel = BNCLogLevelWarning;

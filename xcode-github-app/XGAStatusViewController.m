@@ -9,15 +9,12 @@
 */
 
 #import "XGAStatusViewController.h"
-#import "XGXcodeBot.h"
-#import "XGCommand.h"
+#import <XcodeGitHub/XcodeGitHub.h>
 #import "XGASettings.h"
 #import "XGAStatusPopover.h"
-#import "BNCThreads.h"
-#import "BNCNetworkService.h"
-#import "BNCLog.h"
-#import "NSAttributedString+App.h"
 #import "XGAStatusViewItem.h"
+#import "BNCThreads.h"
+#import "NSAttributedString+App.h"
 
 #pragma mark XGAStatusViewController
 

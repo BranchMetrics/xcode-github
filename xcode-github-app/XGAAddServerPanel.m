@@ -8,11 +8,10 @@
  @copyright     Copyright © 2018 Branch. All rights reserved.
 */
 
+#import <XcodeGitHub/XcodeGitHub.h>
 #import "XGAAddServerPanel.h"
-#import "XGXcodeBot.h"
 #import "XGANetworkServiceBrowser.h"
 #import "BNCThreads.h"
-#import "BNCLog.h"
 
 NSTimeInterval const kNetworkRefreshInterval = 7.0;
 

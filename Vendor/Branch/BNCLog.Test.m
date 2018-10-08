@@ -9,6 +9,7 @@
 */
 
 #import <XCTest/XCTest.h>
+#import "BNCDebug.h"
 #import "BNCLog.h"
 #import "NSString+Branch.h"
 #import "BNCTestCase.h"
@@ -54,7 +55,7 @@ extern void BNCLogInternalErrorFunction(int linenumber, NSString*format, ...);
     BNCLog(@"Debug message with no parameters.");
     BNCLogFlushMessages();
     XCTAssertEqualObjects(globalTestLogString,
-        @"[branch.io] BNCLog.Test.m(54) Log: Debug message with no parameters.");
+        @"[branch.io] BNCLog.Test.m(55) Log: Debug message with no parameters.");
 }
 
 - (void) testLog {

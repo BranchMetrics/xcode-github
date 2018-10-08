@@ -18,16 +18,14 @@
 		4D262C822091250200DD80F4 /* BNCDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D262C7E2091234100DD80F4 /* BNCDebug.m */; };
 		4D262C852091254700DD80F4 /* NSString+Branch.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D262C7620911CB400DD80F4 /* NSString+Branch.m */; };
 		4D4E19E020923EAB00397575 /* NSString+Branch.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D4E19DF20923EAB00397575 /* NSString+Branch.Test.m */; };
-		4D5303DB2142E977006E8A7B /* XGSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D5303D92142E977006E8A7B /* XGSettings.h */; };
-		4D5303DC2142E977006E8A7B /* XGSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D5303DA2142E977006E8A7B /* XGSettings.m */; };
-		4D5303DE2142EA1F006E8A7B /* XGSettings.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D5303DD2142EA1F006E8A7B /* XGSettings.Test.m */; };
-		4D5303E12142EB36006E8A7B /* XGGitHubPullRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D5303E02142EB36006E8A7B /* XGGitHubPullRequest.m */; };
 		4D5303E42142EE8D006E8A7B /* BNCNetworkService.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D5303E22142EE8D006E8A7B /* BNCNetworkService.h */; };
 		4D5303E52142EE8D006E8A7B /* BNCNetworkService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D5303E32142EE8D006E8A7B /* BNCNetworkService.m */; };
 		4D54C09320A76FC600C76496 /* BNCThreads.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D54C09220A76FC500C76496 /* BNCThreads.Test.m */; };
 		4DB6561D209253FC00D1FA25 /* BNCTestCase.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB6561C209253FC00D1FA25 /* BNCTestCase.Test.m */; };
 		4DC2438D216040D000368B95 /* APFormattedString.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC2438A216040CF00368B95 /* APFormattedString.Test.m */; };
 		4DC2438E216040D000368B95 /* APFormattedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC2438C216040D000368B95 /* APFormattedString.m */; };
+		4DDAA560216AEFC4002F3F8E /* XGSettings.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DDAA55D216AEFC4002F3F8E /* XGSettings.Test.m */; };
+		4DDAA562216AEFDD002F3F8E /* XGSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DDAA55E216AEFC4002F3F8E /* XGSettings.m */; };
 		4DED4894209BE450008DE877 /* BNCThreads.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DED4893209BE450008DE877 /* BNCThreads.m */; };
 		4DF6563721545EA300380FD0 /* BNCEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF6563421545EA300380FD0 /* BNCEncoder.m */; };
 		4DF6563821545EA300380FD0 /* BNCEncoder.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF6563621545EA300380FD0 /* BNCEncoder.Test.m */; };
@@ -64,11 +62,6 @@
 		4D262C7D2091234100DD80F4 /* BNCDebug.Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BNCDebug.Test.m; path = ../Vendor/Branch/BNCDebug.Test.m; sourceTree = "<group>"; };
 		4D262C7E2091234100DD80F4 /* BNCDebug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BNCDebug.m; path = ../Vendor/Branch/BNCDebug.m; sourceTree = "<group>"; };
 		4D4E19DF20923EAB00397575 /* NSString+Branch.Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Branch.Test.m"; path = "../Vendor/Branch/NSString+Branch.Test.m"; sourceTree = "<group>"; };
-		4D5303D92142E977006E8A7B /* XGSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XGSettings.h; path = "../xcode-github/XGSettings.h"; sourceTree = "<group>"; };
-		4D5303DA2142E977006E8A7B /* XGSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XGSettings.m; path = "../xcode-github/XGSettings.m"; sourceTree = "<group>"; };
-		4D5303DD2142EA1F006E8A7B /* XGSettings.Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = XGSettings.Test.m; path = "xcode-github/XGSettings.Test.m"; sourceTree = SOURCE_ROOT; };
-		4D5303DF2142EB36006E8A7B /* XGGitHubPullRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XGGitHubPullRequest.h; path = "xcode-github/XGGitHubPullRequest.h"; sourceTree = SOURCE_ROOT; };
-		4D5303E02142EB36006E8A7B /* XGGitHubPullRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XGGitHubPullRequest.m; path = "xcode-github/XGGitHubPullRequest.m"; sourceTree = SOURCE_ROOT; };
 		4D5303E22142EE8D006E8A7B /* BNCNetworkService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BNCNetworkService.h; path = Vendor/Branch/BNCNetworkService.h; sourceTree = SOURCE_ROOT; };
 		4D5303E32142EE8D006E8A7B /* BNCNetworkService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BNCNetworkService.m; path = Vendor/Branch/BNCNetworkService.m; sourceTree = SOURCE_ROOT; };
 		4D54C09220A76FC500C76496 /* BNCThreads.Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BNCThreads.Test.m; path = Vendor/Branch/BNCThreads.Test.m; sourceTree = SOURCE_ROOT; };
@@ -78,6 +71,9 @@
 		4DC2438A216040CF00368B95 /* APFormattedString.Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APFormattedString.Test.m; path = Vendor/Branch/APFormattedString.Test.m; sourceTree = SOURCE_ROOT; };
 		4DC2438B216040D000368B95 /* APFormattedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APFormattedString.h; path = Vendor/Branch/APFormattedString.h; sourceTree = SOURCE_ROOT; };
 		4DC2438C216040D000368B95 /* APFormattedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APFormattedString.m; path = Vendor/Branch/APFormattedString.m; sourceTree = SOURCE_ROOT; };
+		4DDAA55D216AEFC4002F3F8E /* XGSettings.Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XGSettings.Test.m; path = XcodeGitHub/XGSettings.Test.m; sourceTree = SOURCE_ROOT; };
+		4DDAA55E216AEFC4002F3F8E /* XGSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XGSettings.m; path = XcodeGitHub/XGSettings.m; sourceTree = SOURCE_ROOT; };
+		4DDAA55F216AEFC4002F3F8E /* XGSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XGSettings.h; path = XcodeGitHub/XGSettings.h; sourceTree = SOURCE_ROOT; };
 		4DED4892209BE450008DE877 /* BNCThreads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BNCThreads.h; path = Vendor/Branch/BNCThreads.h; sourceTree = SOURCE_ROOT; };
 		4DED4893209BE450008DE877 /* BNCThreads.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BNCThreads.m; path = Vendor/Branch/BNCThreads.m; sourceTree = SOURCE_ROOT; };
 		4DF6563421545EA300380FD0 /* BNCEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BNCEncoder.m; path = Vendor/Branch/BNCEncoder.m; sourceTree = SOURCE_ROOT; };
@@ -155,11 +151,9 @@
 				4D262C4C2090FE5800DD80F4 /* xcode_github.h */,
 				4DB6561E20925A0300D1FA25 /* xcode-github-info.plist */,
 				4D262C592090FE5800DD80F4 /* xcode-github-tests-info.plist */,
-				4D5303DF2142EB36006E8A7B /* XGGitHubPullRequest.h */,
-				4D5303E02142EB36006E8A7B /* XGGitHubPullRequest.m */,
-				4D5303D92142E977006E8A7B /* XGSettings.h */,
-				4D5303DA2142E977006E8A7B /* XGSettings.m */,
-				4D5303DD2142EA1F006E8A7B /* XGSettings.Test.m */,
+				4DDAA55F216AEFC4002F3F8E /* XGSettings.h */,
+				4DDAA55E216AEFC4002F3F8E /* XGSettings.m */,
+				4DDAA55D216AEFC4002F3F8E /* XGSettings.Test.m */,
 			);
 			path = "xcode-github-tests";
 			sourceTree = "<group>";
@@ -180,7 +174,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D5303DB2142E977006E8A7B /* XGSettings.h in Headers */,
 				4D262C5A2090FE5800DD80F4 /* xcode_github.h in Headers */,
 				4D5303E42142EE8D006E8A7B /* BNCNetworkService.h in Headers */,
 			);
@@ -283,8 +276,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D5303DC2142E977006E8A7B /* XGSettings.m in Sources */,
 				4D262C852091254700DD80F4 /* NSString+Branch.m in Sources */,
+				4DDAA562216AEFDD002F3F8E /* XGSettings.m in Sources */,
 				4D262C74209101F300DD80F4 /* BNCLog.m in Sources */,
 				4D262C822091250200DD80F4 /* BNCDebug.m in Sources */,
 				4D5303E52142EE8D006E8A7B /* BNCNetworkService.m in Sources */,
@@ -297,17 +290,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				4DC2438E216040D000368B95 /* APFormattedString.m in Sources */,
-				4D5303E12142EB36006E8A7B /* XGGitHubPullRequest.m in Sources */,
 				4D54C09320A76FC600C76496 /* BNCThreads.Test.m in Sources */,
 				4DED4894209BE450008DE877 /* BNCThreads.m in Sources */,
 				4D4E19E020923EAB00397575 /* NSString+Branch.Test.m in Sources */,
+				4DDAA560216AEFC4002F3F8E /* XGSettings.Test.m in Sources */,
 				4DF6563721545EA300380FD0 /* BNCEncoder.m in Sources */,
 				4D262C6D2090FED300DD80F4 /* BNCLog.Test.m in Sources */,
 				4D262C802091234100DD80F4 /* BNCDebug.Test.m in Sources */,
 				4D262C6E2090FED300DD80F4 /* BNCTestCase.m in Sources */,
 				4DF6563821545EA300380FD0 /* BNCEncoder.Test.m in Sources */,
 				4DB6561D209253FC00D1FA25 /* BNCTestCase.Test.m in Sources */,
-				4D5303DE2142EA1F006E8A7B /* XGSettings.Test.m in Sources */,
 				4DC2438D216040D000368B95 /* APFormattedString.Test.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
