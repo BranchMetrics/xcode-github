@@ -25,7 +25,7 @@
 		4D8352D120A516A200184259 /* XGAPreferencesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D8352CF20A516A200184259 /* XGAPreferencesViewController.xib */; };
 		4DAA4666214CBEFF007A39EB /* XGAAddServerPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DAA4664214CBEFF007A39EB /* XGAAddServerPanel.m */; };
 		4DAA4667214CBEFF007A39EB /* XGAAddServerPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DAA4665214CBEFF007A39EB /* XGAAddServerPanel.xib */; };
-		4DDAA55C216AEE0D002F3F8E /* XcodeGitHub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDAA54E216ACF17002F3F8E /* XcodeGitHub.framework */; };
+		4DC9E5CA216DCD7300F1F4EE /* libXcodeGitHub.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DC9E5C9216DCD6700F1F4EE /* libXcodeGitHub.a */; };
 		4DED4891209BDFCC008DE877 /* BNCGeometry.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DED4890209BDFCC008DE877 /* BNCGeometry.m */; };
 		4DEE32E42162EB20006BD06C /* XGAStatusViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DEE32E32162EB20006BD06C /* XGAStatusViewItem.m */; };
 		4DF0F58E208F923E0015D1F7 /* BNCThreads.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF0F588208F923E0015D1F7 /* BNCThreads.m */; };
@@ -33,6 +33,16 @@
 		4DF656312153620100380FD0 /* BNCEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF6562F2153620100380FD0 /* BNCEncoder.m */; };
 		4DFB5308215DCD6700DB1209 /* XGANetworkServiceBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DFB5307215DCD6700DB1209 /* XGANetworkServiceBrowser.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4DC9E5C8216DCD6700F1F4EE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4DC9E5C4216DCD6700F1F4EE /* XcodeGitHub.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4DDAA4D6216ABF40002F3F8E;
+			remoteInfo = XcodeGitHub;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		4D0DD54420597FE6001721C1 /* xcode-github-app.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "xcode-github-app.md"; sourceTree = "<group>"; };
@@ -65,6 +75,7 @@
 		4DAA4663214CBEFF007A39EB /* XGAAddServerPanel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGAAddServerPanel.h; sourceTree = "<group>"; };
 		4DAA4664214CBEFF007A39EB /* XGAAddServerPanel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGAAddServerPanel.m; sourceTree = "<group>"; };
 		4DAA4665214CBEFF007A39EB /* XGAAddServerPanel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = XGAAddServerPanel.xib; sourceTree = "<group>"; };
+		4DC9E5C4216DCD6700F1F4EE /* XcodeGitHub.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = XcodeGitHub.xcodeproj; sourceTree = "<group>"; };
 		4DDAA54E216ACF17002F3F8E /* XcodeGitHub.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XcodeGitHub.framework; path = Products/XcodeGitHub.framework; sourceTree = "<group>"; };
 		4DED488F209BDFCC008DE877 /* BNCGeometry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BNCGeometry.h; sourceTree = "<group>"; };
 		4DED4890209BDFCC008DE877 /* BNCGeometry.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BNCGeometry.m; sourceTree = "<group>"; };
@@ -85,7 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4DDAA55C216AEE0D002F3F8E /* XcodeGitHub.framework in Frameworks */,
+				4DC9E5CA216DCD7300F1F4EE /* libXcodeGitHub.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				4D0DD54420597FE6001721C1 /* xcode-github-app.md */,
+				4DC9E5C4216DCD6700F1F4EE /* XcodeGitHub.xcodeproj */,
 				4D76616A2057565200216B72 /* xcode-github-app */,
 				4D7661692057565200216B72 /* Products */,
 				4DDAA54D216ACF16002F3F8E /* Frameworks */,
@@ -146,6 +158,14 @@
 				4DEE32E32162EB20006BD06C /* XGAStatusViewItem.m */,
 			);
 			path = "xcode-github-app";
+			sourceTree = "<group>";
+		};
+		4DC9E5C5216DCD6700F1F4EE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4DC9E5C9216DCD6700F1F4EE /* libXcodeGitHub.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		4DDAA54D216ACF16002F3F8E /* Frameworks */ = {
@@ -237,12 +257,28 @@
 			mainGroup = 4D76615F2057565200216B72;
 			productRefGroup = 4D7661692057565200216B72 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 4DC9E5C5216DCD6700F1F4EE /* Products */;
+					ProjectRef = 4DC9E5C4216DCD6700F1F4EE /* XcodeGitHub.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				4D7661672057565200216B72 /* xcode-github-app */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		4DC9E5C9216DCD6700F1F4EE /* libXcodeGitHub.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libXcodeGitHub.a;
+			remoteRef = 4DC9E5C8216DCD6700F1F4EE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		4D7661662057565200216B72 /* Resources */ = {

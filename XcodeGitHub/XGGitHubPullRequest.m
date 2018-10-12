@@ -19,7 +19,7 @@ NSString*_Nonnull NSStringFromXGPullRequestStatus(XGPullRequestStatus status) {
         @"XGPullRequestStatusPending",
         @"XGPullRequestStatusSuccess",
     ];
-    if (status >= XGPullRequestStatusError && status < XGPullRequestStatusSuccess)
+    if (status >= XGPullRequestStatusError && status <= XGPullRequestStatusSuccess)
         return statusStrings[status];
     return [NSString stringWithFormat:@"< Unknown status '%ld' >", (long) status];
 }
