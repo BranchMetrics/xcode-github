@@ -4,7 +4,7 @@ set -euo pipefail
 #  make-static-lib.sh
 #  xcode-github-lib
 #
-#  Created by Edward on 10/7/18.
+#  Created by Edward Smith on 10/7/18.
 #  Copyright © 2018 Branch. All rights reserved.
 
 #

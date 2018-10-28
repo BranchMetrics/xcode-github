@@ -21,9 +21,11 @@
         {"dryrun",      no_argument,        NULL, 'd'},
         {"github",      required_argument,  NULL, 'g'},
         {"help",        no_argument,        NULL, 'h'},
+        {"password",    required_argument,  NULL, 'p'},
         {"repeat",      no_argument,        NULL, 'r'},
         {"status",      no_argument,        NULL, 's'},
         {"template",    required_argument,  NULL, 't'},
+        {"user",        required_argument,  NULL, 'u'},
         {"verbose",     no_argument,        NULL, 'v'},
         {"version",     no_argument,        NULL, 'V'},
         {"xcodeserver", required_argument,  NULL, 'x'},
@@ -39,9 +41,11 @@
         case 'd':   self.dryRun = YES; break;
         case 'g':   self.githubAuthToken = [self.class stringFromParameter]; break;
         case 'h':   self.showHelp = YES; break;
+        case 'p':   self.xcodeServerPassword = [self.class stringFromParameter]; break;
         case 'r':   self.repeatForever = YES; break;
         case 's':   self.showStatusOnly = YES; break;
         case 't':   self.templateBotName = [self.class stringFromParameter]; break;
+        case 'u':   self.xcodeServerUser = [self.class stringFromParameter]; break;
         case 'v':   self.verbosity++; break;
         case 'V':   self.showVersion = YES; break;
         case 'x':   self.xcodeServerName = [self.class stringFromParameter]; break;
@@ -74,6 +78,9 @@
          "  -h, --help\n"
          "      Print this help information.\n"
          "\n"
+         "  -p, --password <password>\n"
+         "      Password for the Xcode server.\n"
+         "\n"
          "  -r, --repeat\n"
          "      Repeat updating the status forever, waiting 60 seconds between updates.\n"
          "\n"
@@ -83,6 +90,9 @@
          "  -t --template <bot-template>\n"
          "      An existing bot on the xcode server that is used as a template\n"
          "      for the new GitHub PR bots.\n"
+         "\n"
+         "  -u, --user <user>\n"
+         "      User for the Xcode server.\n"
          "\n"
          "  -V, --version\n"
          "      Show version and exit.\n"

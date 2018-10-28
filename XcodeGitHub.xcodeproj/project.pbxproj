@@ -79,6 +79,7 @@
 		4DDAA4D8216ABF40002F3F8E /* XcodeGitHub */ = {
 			isa = PBXGroup;
 			children = (
+				4DDAA558216ADB83002F3F8E /* make-static-lib.sh */,
 				4DDAA550216AD06D002F3F8E /* module.modulemap */,
 				4DDAA537216AC0C5002F3F8E /* Vender */,
 				4DDAA54A216ACBD8002F3F8E /* XcodeGitHub.h */,
@@ -92,7 +93,6 @@
 				4DDAA4E3216AC08F002F3F8E /* XGSettings.m */,
 				4DDAA4E4216AC08F002F3F8E /* XGXcodeBot.h */,
 				4DDAA4E6216AC08F002F3F8E /* XGXcodeBot.m */,
-				4DDAA558216ADB83002F3F8E /* make-static-lib.sh */,
 			);
 			path = XcodeGitHub;
 			sourceTree = "<group>";
