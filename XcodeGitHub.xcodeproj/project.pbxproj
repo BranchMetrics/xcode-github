@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D4CBE2E218980F3007FE904 /* XGUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D4CBE2C218980F3007FE904 /* XGUtility.h */; };
+		4D4CBE2F218980F3007FE904 /* XGUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D4CBE2D218980F3007FE904 /* XGUtility.m */; };
 		4DDAA4ED216AC08F002F3F8E /* XGGitHubPullRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DDAA4E2216AC08F002F3F8E /* XGGitHubPullRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4DDAA4EE216AC08F002F3F8E /* XGSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DDAA4E3216AC08F002F3F8E /* XGSettings.m */; };
 		4DDAA4EF216AC08F002F3F8E /* XGXcodeBot.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DDAA4E4216AC08F002F3F8E /* XGXcodeBot.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -27,6 +29,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4D4CBE2C218980F3007FE904 /* XGUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGUtility.h; sourceTree = "<group>"; };
+		4D4CBE2D218980F3007FE904 /* XGUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGUtility.m; sourceTree = "<group>"; };
 		4DDAA4D6216ABF40002F3F8E /* libXcodeGitHub.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libXcodeGitHub.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DDAA4E2216AC08F002F3F8E /* XGGitHubPullRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XGGitHubPullRequest.h; sourceTree = "<group>"; };
 		4DDAA4E3216AC08F002F3F8E /* XGSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XGSettings.m; sourceTree = "<group>"; };
@@ -93,6 +97,8 @@
 				4DDAA4E3216AC08F002F3F8E /* XGSettings.m */,
 				4DDAA4E4216AC08F002F3F8E /* XGXcodeBot.h */,
 				4DDAA4E6216AC08F002F3F8E /* XGXcodeBot.m */,
+				4D4CBE2C218980F3007FE904 /* XGUtility.h */,
+				4D4CBE2D218980F3007FE904 /* XGUtility.m */,
 			);
 			path = XcodeGitHub;
 			sourceTree = "<group>";
@@ -132,6 +138,7 @@
 				4DDAA53D216AC0EE002F3F8E /* APFormattedString.h in Headers */,
 				4DDAA551216AD102002F3F8E /* XcodeGitHub.h in Headers */,
 				4DDAA53E216AC0EE002F3F8E /* BNCLog.h in Headers */,
+				4D4CBE2E218980F3007FE904 /* XGUtility.h in Headers */,
 				4DDAA4F5216AC08F002F3F8E /* XGSettings.h in Headers */,
 				4DDAA4EF216AC08F002F3F8E /* XGXcodeBot.h in Headers */,
 				4DDAA543216AC1DA002F3F8E /* BNCNetworkService.h in Headers */,
@@ -225,6 +232,7 @@
 				4DDAA4F7216AC08F002F3F8E /* XGCommandOptions.m in Sources */,
 				4DDAA4F1216AC08F002F3F8E /* XGXcodeBot.m in Sources */,
 				4DDAA4EE216AC08F002F3F8E /* XGSettings.m in Sources */,
+				4D4CBE2F218980F3007FE904 /* XGUtility.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,6 +354,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				DEVELOPMENT_TEAM = R63EM248DP;
 				EXECUTABLE_PREFIX = lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -356,6 +365,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				DEVELOPMENT_TEAM = R63EM248DP;
 				EXECUTABLE_PREFIX = lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";

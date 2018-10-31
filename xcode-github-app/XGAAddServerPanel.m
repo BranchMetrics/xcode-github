@@ -32,30 +32,27 @@ NSTimeInterval const kNetworkRefreshInterval = 7.0;
 
 @implementation XGAAddServerPanel
 
-+ (instancetype) new {
+- (instancetype) initWithServer:(XGAServer *)server {
+    XGAAddServerPanel*panel = nil;
     NSArray*objects = nil;
     [[NSBundle mainBundle]
         loadNibNamed:NSStringFromClass(self.class)
         owner:nil
         topLevelObjects:&objects];
-    for (XGAAddServerPanel*panel in objects) {
-        if ([panel isKindOfClass:XGAAddServerPanel.class]) {
-            return panel;
-        }
+    for (panel in objects) {
+        if ([panel isKindOfClass:XGAAddServerPanel.class])
+            break;
     }
-    return [[XGAAddServerPanel alloc] init];
-}
+    if (![panel isKindOfClass:XGAAddServerPanel.class])
+        panel = [[XGAAddServerPanel alloc] init];
+    if (server) {
+        // Copy the values:
+        panel.server.server = server.server;
+        panel.server.user = server.user;
+        panel.server.password = server.password;
+    }
+    self = panel;
 
-- (void) dealloc {
-    [self stopNetworkLookup];
-}
-
-- (BOOL) canBecomeKeyWindow {
-    return YES;
-}
-
-- (void)becomeKeyWindow {
-    [super becomeKeyWindow];
     [self startNetworkLookup];
     if (self.server.server.length) {
         self.addButton.title = @"Update";
@@ -64,6 +61,15 @@ NSTimeInterval const kNetworkRefreshInterval = 7.0;
         self.addButton.title = @"Add";
         self.addButton.enabled = NO;
     }
+    return self;
+}
+
+- (void) dealloc {
+    [self stopNetworkLookup];
+}
+
+- (BOOL) canBecomeKeyWindow {
+    return YES;
 }
 
 - (void) controlTextDidChange:(NSNotification *)obj {
@@ -87,12 +93,6 @@ NSTimeInterval const kNetworkRefreshInterval = 7.0;
     [self.sheetParent endSheet:self returnCode:NSModalResponseCancel];
 }
 
-- (NSString*) cleanString:(NSString*)string {
-    if (string == nil) string = @"";
-    return [string stringByTrimmingCharactersInSet:
-            [NSCharacterSet whitespaceAndNewlineCharacterSet]];
-}
-
 - (void) showAlertWithError:(NSError*)error {
     NSAlert*alert = [[NSAlert alloc] init];
     alert.messageText = [NSString stringWithFormat:@"Can't connect to '%@'", self.server.server];
@@ -102,32 +102,23 @@ NSTimeInterval const kNetworkRefreshInterval = 7.0;
 }
 
 - (IBAction)add:(id)sender {
-    self.server.server = [self cleanString:self.serverTextField.stringValue];
-    self.server.user = [self cleanString:self.userTextField.stringValue];
-    self.server.password = [self cleanString:self.passwordTextField.stringValue];
+    self.server.server = XGACleanString(self.serverTextField.stringValue);
+    self.server.user = XGACleanString(self.userTextField.stringValue);
+    self.server.password = XGACleanString(self.passwordTextField.stringValue);
     if (self.server.server.length <= 0) return;
 
     NSError*error = nil;
-    [XGXcodeBot botsForServer:self.server.server error:&error];
+    [XGXcodeBot botsForServer:self.server error:&error];
     if (error) {
         [self showAlertWithError:error];
         return;
     }
+    [self stopNetworkLookup];
     self.serverArrayController = nil;
     [self.sheetParent endSheet:self returnCode:NSModalResponseOK];
 }
 
 #pragma mark - Networking
-
-    /*
-        if (![self.serverArrayController.arrangedObjects containsObject:server])
-            [self.serverArrayController addObject:server];
-        if (!moreComing) {
-            BNCAfterSecondsPerformBlockOnMainThread(2.0, ^{
-                [self restartNetworkLookup];
-            });
-        }
-    */
 
 - (void) startNetworkLookup {
     @synchronized(self) {

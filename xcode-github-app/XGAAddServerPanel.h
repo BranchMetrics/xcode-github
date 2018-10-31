@@ -14,6 +14,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface XGAAddServerPanel : NSPanel
+- (instancetype) initWithServer:(XGAServer*_Nullable)server;
 @property (strong) IBOutlet XGAServer*server;
 @end
 

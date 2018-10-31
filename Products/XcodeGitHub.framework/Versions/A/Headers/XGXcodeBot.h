@@ -13,7 +13,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#pragma mark XGXcodeBotStatus
+#pragma mark XGServer
+
+@interface XGServer : NSObject
+@property (copy) NSString*server;
+@property (copy) NSString*user;
+@property (copy) NSString*password;
+@end
+
+#pragma mark - XGXcodeBotStatus
 
 @interface XGXcodeBotStatus : NSObject
 @property (strong, readonly) NSString*_Nullable botID;
@@ -116,12 +124,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype) init NS_UNAVAILABLE;
 
 /**
- @param xcodeServerName  The network name of the Xcode server.
- @param error            If not nil, any error encountered is returned here.
+ @param xcodeServer The network name of the Xcode server.
+ @param error       If not nil, on exit, any error encountered is returned here.
  @return A dictionary with a key of the bot name and value of the bot status.
 */
-+ (NSDictionary<NSString*, XGXcodeBot*>*_Nullable) botsForServer:(NSString*_Nonnull)xcodeServerName
-                                                           error:(NSError*__autoreleasing _Nullable*_Nullable)error;
++ (NSDictionary<NSString*, XGXcodeBot*>*_Nullable) botsForServer:(XGServer*)xcodeServer
+                                                    error:(NSError*__autoreleasing _Nullable*_Nullable)error;
 
 + (NSString*_Nonnull) botNameFromPRNumber:(NSString*_Nonnull)number title:(NSString*_Nonnull)title;
 

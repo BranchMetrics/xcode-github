@@ -146,4 +146,8 @@ static NSString*const kGitHubStatusKey = @"githubStatus";
     }
 }
 
+- (void) clear {
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kGitHubStatusKey];
+}
+
 @end

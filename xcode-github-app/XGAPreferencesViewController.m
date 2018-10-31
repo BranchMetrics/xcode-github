@@ -34,11 +34,13 @@
 }
 
 - (void)awakeFromNib {
-    if (!self.settings) {
-        [super awakeFromNib];
-        self.settings = [XGASettings shared];
-        self.removeButton.enabled = NO;
-        self.serverArrayController.content = self.settings.servers;
+    [super awakeFromNib];
+    @synchronized (self) {
+        if (!self.settings) {
+            self.settings = [XGASettings shared];
+            self.removeButton.enabled = NO;
+            self.serverArrayController.content = self.settings.servers;
+        }
     }
 }
 
@@ -66,12 +68,11 @@
 
 - (void) showServer:(XGAServer*)server {
     if (!server) server = [[XGAServer alloc] init];
-    self.addServerPanel = [XGAAddServerPanel new];
-    self.addServerPanel.server = server;
+    self.addServerPanel = [[XGAAddServerPanel alloc] initWithServer:server];
     [self.window beginSheet:self.addServerPanel completionHandler:^(NSModalResponse returnCode) {
         __auto_type result = self.addServerPanel.server;
         if (returnCode == NSModalResponseOK && result.server.length) {
-            [self.serverArrayController addObject:server];
+            [self.settings.servers addObject:result];
             [self.settings save];
         }
         self.addServerPanel = nil;

@@ -17,58 +17,59 @@
 
 NSString*const kXGAServiceName = @"io.branch.XcodeGitHub";
 
+NSString*_Nonnull XGACleanString(NSString*_Nullable string) {
+    if (string == nil) return @"";
+    if (![string isKindOfClass:NSString.class]) {
+        string = ([string respondsToSelector:@selector(description)]) ? [string description] : @"";
+    }
+    return [string stringByTrimmingCharactersInSet:
+            [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+}
+
 @implementation XGAServer
 
-+ (NSArray<NSString*>*) ignoreIvars {
-    return @[ @"_password" ];
++ (BOOL) supportsSecureCoding {
+    return YES;
 }
 
-- (instancetype) init {
+- (instancetype) initWithCoder:(NSCoder *)aDecoder {
     self = [super init];
     if (!self) return self;
-    _server = @"";
-    _user = @"";
-    return self;
-}
-
-- (NSString*) description {
-    NSString *pass = self.password.length ? @"••••" : @"nil";
-    return [NSString stringWithFormat:@"<%@ %p %@ %@ %@>",
-        NSStringFromClass(self.class),
-        (void*)self,
-        self.server,
-        self.user,
-        pass];
-}
-
-- (NSString*) password {
-    @synchronized (self) {
-        if (self.server.length == 0 || self.user.length == 0) return nil;
+    self.server = XGACleanString([aDecoder decodeObjectOfClass:NSString.class forKey:@"_server"]);
+    self.user = XGACleanString([aDecoder decodeObjectOfClass:NSString.class forKey:@"_user"]);
+    self.password = @"";
+    if (self.server.length != 0 && self.user.length != 0) {
         NSError*error = nil;
-        NSString *password =
+        self.password =
             [BNCKeyChain retrieveValueForService:self.server
                 key:self.user
                 error:&error];
-        if (error) BNCLog(@"Can't retrieve password: %@.", error);
-        return password;
+        if (error) {
+            BNCLog(@"Can't retrieve password: %@.", error);
+            self.password = @"";
+        }
     }
+    return self;
 }
 
-- (void) setPassword:(NSString *)password {
+- (void) encodeWithCoder:(NSCoder *)aCoder {
     @synchronized (self) {
-        if (self.server.length == 0 || self.user.length == 0 || self.password.length == 0) return;
-        NSError *error =
-            [BNCKeyChain storeValue:password
-                forService:kXGAServiceName
-                key:self.server
-                cloudAccessGroup:nil];
-        if (error) BNCLog(@"Can't save password: %@.", error);
+        [aCoder encodeObject:self.server forKey:@"_server"];
+        [aCoder encodeObject:self.user forKey:@"_user"];
+        if (self.server.length != 0 && self.user.length != 0) {
+            NSError *error =
+                [BNCKeyChain storeValue:self.password
+                    forService:self.server
+                    key:self.user
+                    cloudAccessGroup:nil];
+            if (error) BNCLog(@"Can't save password: %@.", error);
+        }
     }
 }
 
 @end
 
-#pragma mark XGAGitHubSyncTask
+#pragma mark - XGAGitHubSyncTask
 
 @implementation XGAGitHubSyncTask
 @end
@@ -197,22 +198,22 @@ NSString*const kXGAServiceName = @"io.branch.XcodeGitHub";
 - (void) validate {
     self.refreshSeconds = MAX(15.0, MIN(self.refreshSeconds, 60.0*60.0*24.0*1.0));
 
-    __auto_type indexSet = [NSMutableIndexSet new];
-    for (NSInteger i = 0; i < self.servers.count; i++) {
-        self.servers[i].server =
-            [self.servers[i].server stringByTrimmingCharactersInSet:
-                [NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        if (self.servers[i].server.length <= 0) {
-            [indexSet addIndex:i];
-            continue;
-        }
-        for (NSInteger j = i+1; j < self.servers.count; j++) {
-            if ([self.servers[i].server isEqualToString:self.servers[j].server]) {
-                [indexSet addIndex:i];
-            }
-        }
+    // Assure that servers are unique:
+    NSMutableDictionary*d = NSMutableDictionary.new;
+    for (XGAServer*server in self.servers) {
+        if (server.server.length) d[server.server] = server;
     }
-    [self.servers removeObjectsAtIndexes:indexSet];
+    [self.servers removeAllObjects];
+    [self.servers addObjectsFromArray:d.allValues];
+
+    // Assure that tasks are unique:
+    [d removeAllObjects];
+    for (XGAGitHubSyncTask*task in self.gitHubSyncTasks) {
+        NSString*string = [NSString stringWithFormat:@"%@:%@", task.xcodeServer, task.botNameForTemplate];
+        d[string] = task;
+    }
+    [self.gitHubSyncTasks removeAllObjects];
+    [self.gitHubSyncTasks addObjectsFromArray:d.allValues];
 }
 
 @end

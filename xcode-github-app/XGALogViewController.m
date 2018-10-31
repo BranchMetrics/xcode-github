@@ -233,4 +233,19 @@ void XGALogFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Null
     [self.statusPopover showRelativeToRect:r ofView:self.tableView preferredEdge:NSRectEdgeMaxY];
 }
 
+- (void)copy:(id)sender {
+    __auto_type copyBuffer = NSMutableString.new;
+    [self.tableView.selectedRowIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        XGALogRow*row = [self.arrayController.arrangedObjects objectAtIndex:idx];
+        [copyBuffer appendFormat:@"%@\t%@\t%@\n",
+            row.date,
+            BNCLogStringFromLogLevel(row.logLevel),
+            row.logMessage];
+    }];
+    __auto_type pb = [NSPasteboard generalPasteboard];
+    [pb clearContents];
+    [pb declareTypes:@[NSPasteboardTypeString] owner:nil];
+    [pb setString:copyBuffer forType:NSPasteboardTypeString];
+}
+
 @end

@@ -104,10 +104,15 @@
         [status.statusSummary renderAttributedStringWithFont:font];
 
     // Detail
-    __auto_type detail =
-        [APFormattedString boldText:@"%@\n%@\n\n", status.repository, status.branchOrPRName];
+    APFormattedString*detail = nil;
+    if (status.repository.length == 0 || status.branchOrPRName.length == 0) {
+        detail = [APFormattedString boldText:@"%@\n", status.server];
+    } else {
+        detail = [APFormattedString boldText:@"%@\n%@\n\n", status.repository, status.branchOrPRName];
+    }
     [detail append:status.statusDetail];
-    [detail italicText:@"\n\nBot: %@", status.botName.length ? status.botName : @"Unknown"];
+    if (status.botName.length)
+        [detail italicText:@"\n\nBot: %@", status.botName];
     self.statusPopover.detailTextField.attributedStringValue =
         [detail renderAttributedStringWithFont:font];
 
@@ -330,20 +335,22 @@
 
     BNCLogDebug(@"Start updateStatus.");
     BNCPerformBlockOnMainThreadAsync(^{ self.statusTextField.stringValue = @""; });
-    NSMutableSet<NSString*>*statusServers = [NSMutableSet new];
+    NSMutableDictionary<NSString*, XGServer*>*statusServers = [NSMutableDictionary new];
     for (XGAServer*server in XGASettings.shared.servers) {
-        [statusServers addObject:server.server];
+        if (server.server.length > 0)
+            statusServers[server.server] = server;
     }
     NSArray<XGAGitHubSyncTask*>* syncTasks = XGASettings.shared.gitHubSyncTasks;
     for (XGAGitHubSyncTask*task in syncTasks) {
-        if (task.xcodeServer.length == 0) continue;
+        if (task.xcodeServer.length == 0 || statusServers[task.xcodeServer] == nil)
+            continue;
         [self updateSyncBots:task];
-        [statusServers addObject:task.xcodeServer];
     }
-    for (NSString*server in statusServers) {
+    for (XGAServer*server in statusServers.objectEnumerator) {
         [self updateXcodeServerStatus:server];
     }
     if (syncTasks.count == 0 && statusServers.count == 0) {
+        // Update with 'nil' to add content for an empty display:
         [self updateXcodeServerStatus:nil];
     }
     BNCLogDebug(@"End updateStatus.");
@@ -380,14 +387,14 @@
     }
 }
 
-- (void) updateXcodeServerStatus:(NSString*)server {
+- (void) updateXcodeServerStatus:(XGServer*)server {
     NSError*error = nil;
     NSMutableArray *statusArray = [NSMutableArray new];
-    if (server.length > 0) {
+    if (server.server.length > 0) {
         NSDictionary<NSString*, XGXcodeBot*>* bots = [XGXcodeBot botsForServer:server error:&error];
         if (error) {
             XGAStatusViewItem *status = [XGAStatusViewItem new];
-            status.server = server;
+            status.server = server.server;
             status.statusSummary = [APFormattedString boldText:@"Server Error"];
             status.statusImage = [NSImage imageNamed:@"RoundAlert"];
             status.statusDetail = [APFormattedString plainText:@"%@", error.localizedDescription];

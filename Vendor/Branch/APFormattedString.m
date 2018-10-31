@@ -11,6 +11,27 @@
 #import "APFormattedString.h"
 #import <CoreText/CoreText.h>
 
+@implementation NSString (APFormattedString)
+
+- (NSRange) rangeOfAlphanumericSubstring {
+    if (self.length == 0) return NSMakeRange(NSNotFound, 0);
+    NSCharacterSet*characterSet = [NSCharacterSet alphanumericCharacterSet];
+
+    NSRange alpha = [self rangeOfCharacterFromSet:characterSet
+        options:NSCaseInsensitiveSearch | NSDiacriticInsensitiveSearch];
+    if (alpha.location == NSNotFound) return NSMakeRange(NSNotFound, 0);
+
+    NSRange omega = [self rangeOfCharacterFromSet:characterSet
+        options:NSCaseInsensitiveSearch | NSDiacriticInsensitiveSearch | NSBackwardsSearch];
+
+    NSRange range = NSMakeRange(alpha.location, omega.location - alpha.location + 1);
+    return range;
+}
+
+@end
+
+#pragma mark -
+
 typedef NS_ENUM(NSInteger, APPFormattedStringStyle) {
     APPFormattedStringFormatPlain,
     APPFormattedStringFormatBold,
@@ -124,16 +145,36 @@ typedef NS_ENUM(NSInteger, APPFormattedStringStyle) {
 - (NSString*) renderMarkDown {
     NSMutableString*string = [NSMutableString new];
     for (APPFormattedStringPart*part in self.partArray) {
+        NSRange r;
         switch (part.style) {
         default:
         case APPFormattedStringFormatPlain:
             [string appendString:part.string];
             break;
         case APPFormattedStringFormatBold:
-            [string appendFormat:@"**%@**", part.string];
+            r = [part.string rangeOfAlphanumericSubstring];
+            if (r.location == NSNotFound)
+                [string appendString:part.string];
+            else {
+                [string appendString:[part.string substringToIndex:r.location]];
+                [string appendString:@"**"];
+                [string appendString:[part.string substringWithRange:r]];
+                [string appendString:@"**"];
+                [string appendString:[part.string substringFromIndex:r.location+r.length]];
+            }
             break;
         case APPFormattedStringFormatItalic:
-            [string appendFormat:@"*%@*", part.string];
+            r = [part.string rangeOfAlphanumericSubstring];
+            if (r.location == NSNotFound)
+                [string appendString:part.string];
+            else {
+                [string appendString:[part.string substringToIndex:r.location]];
+                [string appendString:@"_"];
+                [string appendString:[part.string substringWithRange:r]];
+                [string appendString:@"_"];
+                [string appendString:[part.string substringFromIndex:r.location+r.length]];
+            }
+            break;
             break;
         case APPFormattedStringFormatLine:
             [string appendString:@"\n---\n"];

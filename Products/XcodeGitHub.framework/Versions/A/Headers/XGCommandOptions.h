@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface XGCommandOptions : NSObject
 @property (copy)   NSString*_Nullable xcodeServerName;
+@property (copy)   NSString*_Nullable xcodeServerUser;      // Optional
+@property (copy)   NSString*_Nullable xcodeServerPassword;  // Optional
 @property (copy)   NSString*_Nullable templateBotName;
 @property (copy)   NSString*_Nullable githubAuthToken;
 @property (assign) int  verbosity;

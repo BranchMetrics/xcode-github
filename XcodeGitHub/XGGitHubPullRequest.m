@@ -9,6 +9,7 @@
 */
 
 #import "XGGitHubPullRequest.h"
+#import "XGUtility.h"
 #import "BNCLog.h"
 #import "BNCNetworkService.h"
 
@@ -24,7 +25,54 @@ NSString*_Nonnull NSStringFromXGPullRequestStatus(XGPullRequestStatus status) {
     return [NSString stringWithFormat:@"< Unknown status '%ld' >", (long) status];
 }
 
+#pragma mark - XGGitHubPullRequestStatus
+
+@interface XGGitHubPullRequestStatus ()
+@property (strong) NSDictionary*dictionary;
+@end
+
+@implementation XGGitHubPullRequestStatus
+
+- (instancetype) initWithDictionary:(NSDictionary*)dictionary_ {
+    self = [super init];
+    if (!self) return self;
+    self.dictionary = dictionary_;
+    return self;
+}
+
+- (XGPullRequestStatus) status {
+    NSDictionary*d = @{
+        @"error":   @(XGPullRequestStatusError),
+        @"failure": @(XGPullRequestStatusFailure),
+        @"pending": @(XGPullRequestStatusPending),
+        @"success": @(XGPullRequestStatusSuccess)
+    };
+    NSString*status = self.dictionary[@"state"];
+    if (status) {
+        NSNumber*n = d[status];
+        if (n) return n.integerValue;
+    }
+    return XGPullRequestStatusError;
+}
+
+- (NSString*_Nullable) message {
+    return self.dictionary[@"description"];
+}
+
+- (NSDate*_Nullable) updateDate {
+    NSString*s = self.dictionary[@"updated_at"];
+    if (!s) return nil;
+    NSDateFormatter *dateFormatter = [NSDateFormatter dateFormatter8601];
+    return [dateFormatter dateFromString:s];
+}
+
+@end
+
 #pragma mark - XGGitHubPullRequest
+
+@interface XGGitHubPullRequest ()
+@property (strong) NSString*_Nullable authToken;
+@end
 
 @implementation XGGitHubPullRequest
 
@@ -152,7 +200,10 @@ NSString*_Nonnull NSStringFromXGPullRequestStatus(XGPullRequestStatus status) {
         prs = [NSMutableDictionary new];
         for (NSDictionary *d in array) {
             XGGitHubPullRequest *pr = [[XGGitHubPullRequest alloc] initWithDictionary:d];
-            if (pr && pr.number) prs[pr.number] = pr;
+            if (pr && pr.number) {
+                pr.authToken = authToken;
+                prs[pr.number] = pr;
+            }
         }
     }
 
@@ -172,10 +223,85 @@ exit:
     return a[status];
 }
 
+- (NSArray<XGGitHubPullRequestStatus*>*_Nullable) statusesWithError:
+        (NSError*_Nullable __autoreleasing *_Nullable)error_ {
+    NSError*error = nil;
+    NSMutableArray<XGGitHubPullRequestStatus*>*results = nil;
+
+    {
+    NSString* string = [NSString stringWithFormat:
+        @"https://api.github.com/repos/%@/%@/commits/%@/statuses",
+            self.repoOwner, self.repoName, self.sha];
+    NSURL *URL = [NSURL URLWithString:string];
+    if (!URL) {
+        error =
+            [NSError errorWithDomain:NSNetServicesErrorDomain code:NSURLErrorBadURL userInfo:@{
+                NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Bad URL '%@'.", URL]
+            }];
+        BNCLogError(@"Bad URL '%@'.", URL);
+        goto exit;
+    }
+
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    BNCNetworkOperation *operation =
+        [[BNCNetworkService shared]
+            getOperationWithURL:URL
+            completion:^(BNCNetworkOperation *operation) {
+            dispatch_semaphore_signal(semaphore);
+        }];
+    [operation.request addValue:@"application/vnd.github.v3+json" forHTTPHeaderField:@"Accept"];
+    if (self.authToken.length > 0) {
+        NSString *token = [NSString stringWithFormat:@"token %@", self.authToken];
+        [operation.request addValue:token forHTTPHeaderField:@"Authorization"];
+    }
+    [operation start];
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+
+    if (operation.error) {
+        NSString *message = operation.stringFromResponseData;
+        if (message.length) BNCLogError(@"From GitHub: %@.", message);
+        error = operation.error;
+        goto exit;
+    }
+    [operation deserializeJSONResponseData];
+    if (operation.error) {
+        NSString *message = operation.stringFromResponseData;
+        if (message.length) BNCLogError(@"From GitHub: %@.", message);
+        error = operation.error;
+        goto exit;
+    }
+    if (operation.HTTPStatusCode != 200) {
+        error = [NSError errorWithDomain:NSNetServicesErrorDomain
+            code:NSNetServicesInvalidError userInfo:@{NSLocalizedDescriptionKey:
+                [NSString stringWithFormat:@"HTTP Status %ld", (long) operation.HTTPStatusCode]}];
+        BNCLogError(@"Response was: %@.", [operation stringFromResponseData]);
+        goto exit;
+    }
+    NSArray*array = (NSArray*) operation.responseData;
+    if (![array isKindOfClass:NSArray.class]) {
+        error = [NSError errorWithDomain:NSNetServicesErrorDomain
+            code:NSNetServicesInvalidError userInfo:@{NSLocalizedDescriptionKey:
+                [NSString stringWithFormat:@"Expecting an array: %@.", NSStringFromClass(array.class)]}];
+        BNCLogError(@"Response was: %@.", [operation stringFromResponseData]);
+        goto exit;
+    }
+    results = [NSMutableArray new];
+    for (NSDictionary*d in array) {
+        if (d.count > 0) {
+            XGGitHubPullRequestStatus*status = [[XGGitHubPullRequestStatus alloc] initWithDictionary:d];
+            if (status) [results addObject:status];
+        }
+    }
+
+    }
+exit:
+    if (error_) *error_ = error;
+    return results;
+}
+
 - (NSError*_Nullable) setStatus:(XGPullRequestStatus)status
                         message:(NSString*)message
-                      statusURL:(NSURL*)statusURL
-                      authToken:(NSString*)authToken {
+                      statusURL:(NSURL*)statusURL {
     NSError *error = nil;
     NSString* string = [NSString stringWithFormat:
         @"https://api.github.com/repos/%@/%@/statuses/%@",
@@ -205,8 +331,8 @@ exit:
             dispatch_semaphore_signal(semaphore);
         }];
     [operation.request addValue:@"application/vnd.github.v3+json" forHTTPHeaderField:@"Accept"];
-    if (authToken.length > 0) {
-        NSString *token = [NSString stringWithFormat:@"token %@", authToken];
+    if (self.authToken.length > 0) {
+        NSString *token = [NSString stringWithFormat:@"token %@", self.authToken];
         [operation.request addValue:token forHTTPHeaderField:@"Authorization"];
     }
     [operation start];
@@ -230,12 +356,10 @@ exit:
         BNCLogError(@"Response was: %@.", [operation stringFromResponseData]);
         return error;
     }
-
     return error;
 }
 
-- (NSError*_Nullable) addComment:(NSString*)comment
-                       authToken:(NSString*)authToken {
+- (NSError*_Nullable) addComment:(NSString*)comment {
     NSError *error = nil;
     NSString* string = [NSString stringWithFormat:
         @"https://api.github.com/repos/%@/%@/commits/%@/comments",
@@ -262,8 +386,8 @@ exit:
             dispatch_semaphore_signal(semaphore);
         }];
     [operation.request addValue:@"application/vnd.github.v3.raw+json" forHTTPHeaderField:@"Accept"];
-    if (authToken.length > 0) {
-        NSString *token = [NSString stringWithFormat:@"token %@", authToken];
+    if (self.authToken.length > 0) {
+        NSString *token = [NSString stringWithFormat:@"token %@", self.authToken];
         [operation.request addValue:token forHTTPHeaderField:@"Authorization"];
     }
     [operation start];

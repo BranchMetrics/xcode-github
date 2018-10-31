@@ -21,6 +21,18 @@ typedef NS_ENUM(NSInteger, XGPullRequestStatus) {
 
 FOUNDATION_EXPORT NSString*_Nonnull NSStringFromXGPullRequestStatus(XGPullRequestStatus status);
 
+#pragma mark - XGGitHubPullRequestStatus
+
+@interface XGGitHubPullRequestStatus : NSObject
+- (instancetype) init NS_UNAVAILABLE;
++ (instancetype) new  NS_UNAVAILABLE;
+@property (assign, readonly) XGPullRequestStatus status;
+@property (strong, readonly) NSString*_Nullable message;
+@property (strong, readonly) NSDate*_Nullable updateDate;
+@end
+
+#pragma mark - XGGitHubPullRequest
+
 @interface XGGitHubPullRequest : NSObject
 @property (strong, readonly) NSString*_Nullable repoOwner;
 @property (strong, readonly) NSString*_Nullable repoName;
@@ -38,13 +50,13 @@ FOUNDATION_EXPORT NSString*_Nonnull NSStringFromXGPullRequestStatus(XGPullReques
 
 - (instancetype _Nonnull) initWithDictionary:(NSDictionary*_Nullable)dictionary NS_DESIGNATED_INITIALIZER;
 
+- (NSArray<XGGitHubPullRequestStatus*>*_Nullable) statusesWithError:(NSError*_Nullable __autoreleasing *_Nullable)error;
+
 - (NSError*_Nullable) setStatus:(XGPullRequestStatus)status
                         message:(NSString*)message
-                      statusURL:(NSURL*_Nullable)statusURL
-                      authToken:(NSString*_Nullable)authToken;
+                      statusURL:(NSURL*_Nullable)statusURL;
 
-- (NSError*_Nullable) addComment:(NSString*)comment
-                       authToken:(NSString*)authToken;
+- (NSError*_Nullable) addComment:(NSString*)comment;
 
 + (NSDictionary<NSString*, XGGitHubPullRequest*>*_Nullable)
     pullsRequestsForRepository:(NSString*_Nonnull)sourceControlRepository

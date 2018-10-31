@@ -29,6 +29,9 @@ NS_ASSUME_NONNULL_BEGIN
     repoName:(NSString*)repoName
     branch:(NSString*)branch;
 
+/// Clears all settings.
+- (void) clear;
+
 /// Time in seconds to expire old entries. Defaults 30 days.
 @property (assign) NSTimeInterval dataExpirationSeconds;
 @end

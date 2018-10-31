@@ -38,4 +38,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@interface NSString (APFormattedString)
+- (NSRange) rangeOfAlphanumericSubstring;
+@end
+
 NS_ASSUME_NONNULL_END

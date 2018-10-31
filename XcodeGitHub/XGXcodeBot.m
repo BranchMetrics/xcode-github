@@ -9,64 +9,30 @@
 */
 
 #import "XGXcodeBot.h"
+#import "XGUtility.h"
 #import "BNCLog.h"
 #import "BNCNetworkService.h"
 #import "APFormattedString.h"
 
-#pragma mark Helper Functions
+@implementation XGServer
 
-NSString* XGDurationStringFromTimeInterval(NSTimeInterval timeInterval) {
-    int seconds = (int) round(fabs(timeInterval));
-    int minutes = seconds / 60;
-    seconds = seconds % 60;
-    int hours = minutes / 60;
-    minutes = minutes % 60;
-
-    NSMutableString *string = [NSMutableString new];
-    if (hours == 1)
-        [string appendString:@"one hour, "];
-    else
-    if (hours > 0)
-        [string appendFormat:@"%d hours, ", hours];
-
-    if (minutes == 1)
-        [string appendString:@"one minute, "];
-    else
-    if (minutes > 0)
-        [string appendFormat:@"%d minutes, ", minutes];
-
-    if (seconds == 1)
-        [string appendString:@"one second, "];
-    else
-    if (seconds > 0)
-        [string appendFormat:@"%d seconds, ", seconds];
-
-    if (string.length > 2)
-        [string deleteCharactersInRange:NSMakeRange(string.length-2, 2)];
-    else
-        string = [NSMutableString stringWithString:@"zero seconds"];
-
-    NSString *result = [NSString stringWithFormat:@"%@%@",
-        [[string substringToIndex:1] uppercaseString],
-        [string substringFromIndex:1]];
-
-    return result;
+- (instancetype) init {
+    self = [super init];
+    if (!self) return self;
+    _server = @"";
+    _user = @"";
+    _password = @"";
+    return self;
 }
 
-#pragma mark - NSDateFormatter (xcodegithub)
-
-@interface NSDateFormatter (xcodegithub)
-+ (NSDateFormatter*_Nonnull) dateFormatter8601;
-@end
-
-@implementation NSDateFormatter (xcodegithub)
-
-+ (NSDateFormatter*) dateFormatter8601 {
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.locale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
-    formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSSX";
-    formatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
-    return formatter;
+- (NSString*) description {
+    NSString *pass = self.password.length ? @"'••••'" : @"nil";
+    return [NSString stringWithFormat:@"<%@ %p %@ u:'%@' p:%@>",
+        NSStringFromClass(self.class),
+        (void*)self,
+        self.server,
+        self.user,
+        pass];
 }
 
 @end
@@ -333,7 +299,7 @@ NSString* XGDurationStringFromTimeInterval(NSTimeInterval timeInterval) {
     return newTitle;
 }
 
-+ (NSDictionary<NSString*, XGXcodeBot*>*_Nullable) botsForServer:(NSString*_Nonnull)xcodeServerName
++ (NSDictionary<NSString*, XGXcodeBot*>*_Nullable) botsForServer:(XGServer*)xcodeServer
         error:(NSError*__autoreleasing _Nullable*_Nullable)error {
 
     NSError *localError = nil;
@@ -341,7 +307,7 @@ NSString* XGDurationStringFromTimeInterval(NSTimeInterval timeInterval) {
     
     {
         NSString *serverURLString =
-            [NSString stringWithFormat:@"https://%@:20343/api/bots", xcodeServerName];
+            [NSString stringWithFormat:@"https://%@:20343/api/bots", xcodeServer.server];
         NSURL *serverURL = [NSURL URLWithString:serverURLString];
         if (!serverURL) {
             localError =
@@ -349,10 +315,10 @@ NSString* XGDurationStringFromTimeInterval(NSTimeInterval timeInterval) {
                     code:NSURLErrorBadURL
                     userInfo:@{
                         NSLocalizedDescriptionKey:
-                            [NSString stringWithFormat:@"Bad server name '%@'.", xcodeServerName]
+                            [NSString stringWithFormat:@"Bad server name '%@'.", xcodeServer.server]
                     }
                 ];
-            BNCLogError(@"Bad server name '%@'.", xcodeServerName);
+            BNCLogError(@"Bad server name '%@'.", xcodeServer.server);
             goto exit;
         }
 
@@ -362,6 +328,8 @@ NSString* XGDurationStringFromTimeInterval(NSTimeInterval timeInterval) {
                 getOperationWithURL:serverURL completion:^(BNCNetworkOperation *operation) {
                 dispatch_semaphore_signal(semaphore);
             }];
+        if (xcodeServer.user.length > 0)
+            [operation setUser:xcodeServer.user password:xcodeServer.password];
         [operation start];
         dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
 
@@ -386,7 +354,7 @@ NSString* XGDurationStringFromTimeInterval(NSTimeInterval timeInterval) {
 
         bots = [NSMutableDictionary new];
         for (NSDictionary *d in results) {
-            XGXcodeBot *bot = [[XGXcodeBot alloc] initWithServerName:xcodeServerName dictionary:d];
+            XGXcodeBot *bot = [[XGXcodeBot alloc] initWithServerName:xcodeServer.server dictionary:d];
             if (bot && bot.name) {
                 bots[bot.name] = bot;
             }

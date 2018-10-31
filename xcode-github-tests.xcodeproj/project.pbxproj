@@ -19,7 +19,6 @@
 		4D262C852091254700DD80F4 /* NSString+Branch.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D262C7620911CB400DD80F4 /* NSString+Branch.m */; };
 		4D4E19E020923EAB00397575 /* NSString+Branch.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D4E19DF20923EAB00397575 /* NSString+Branch.Test.m */; };
 		4D5303E42142EE8D006E8A7B /* BNCNetworkService.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D5303E22142EE8D006E8A7B /* BNCNetworkService.h */; };
-		4D5303E52142EE8D006E8A7B /* BNCNetworkService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D5303E32142EE8D006E8A7B /* BNCNetworkService.m */; };
 		4D54C09320A76FC600C76496 /* BNCThreads.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D54C09220A76FC500C76496 /* BNCThreads.Test.m */; };
 		4DB6561D209253FC00D1FA25 /* BNCTestCase.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB6561C209253FC00D1FA25 /* BNCTestCase.Test.m */; };
 		4DC2438D216040D000368B95 /* APFormattedString.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC2438A216040CF00368B95 /* APFormattedString.Test.m */; };
@@ -280,7 +279,6 @@
 				4DDAA562216AEFDD002F3F8E /* XGSettings.m in Sources */,
 				4D262C74209101F300DD80F4 /* BNCLog.m in Sources */,
 				4D262C822091250200DD80F4 /* BNCDebug.m in Sources */,
-				4D5303E52142EE8D006E8A7B /* BNCNetworkService.m in Sources */,
 				4D262C73209101E900DD80F4 /* BNCKeyChain.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

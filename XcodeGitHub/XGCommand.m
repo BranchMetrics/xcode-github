@@ -32,8 +32,7 @@ NSError*_Nullable XGCreateBotWithOptions(
     BNCLogDebug(@"Creating bot '%@'...", newBotName);
     [pr setStatus:XGPullRequestStatusPending
         message:@"Creating Xcode bot..."
-        statusURL:nil
-        authToken:options.githubAuthToken];
+        statusURL:nil];
     [templateBot duplicateBotWithNewName:newBotName
         branchName:pr.branch
         gitHubPullRequestNumber:pr.number
@@ -114,13 +113,6 @@ NSError*_Nullable XGUpdatePRStatusOnGitHub(
     }
 
     NSString*message = botStatus.summaryString;
-
-    if (options.dryRun) {
-        BNCLog(@"Would update PR#%@ with status %@: %@.",
-            pr.number, NSStringFromXGPullRequestStatus(status), message);
-        return nil;
-    }
-
     NSString*statusHash = [NSString stringWithFormat:@"%@:%@",
         NSStringFromXGPullRequestStatus(status), message];
 
@@ -129,14 +121,40 @@ NSError*_Nullable XGUpdatePRStatusOnGitHub(
             gitHubStatusForRepoOwner:pr.repoOwner
             repoName:pr.repoName
             branch:pr.branch];
+
+    if (lastStatusHash == nil) {
+        // Get the last status from GitHub:
+        XGGitHubPullRequestStatus *status = [[pr statusesWithError:nil] firstObject];
+        if (status) {
+            lastStatusHash = [NSString stringWithFormat:@"%@:%@",
+                NSStringFromXGPullRequestStatus(status.status), status.message];
+            [[XGSettings sharedSettings]
+                setGitHubStatus:lastStatusHash
+                forRepoOwner:pr.repoOwner
+                repoName:pr.repoName
+                branch:pr.branch];
+        }
+    }
+
     if ([lastStatusHash isEqualToString:statusHash])
         return nil;
 
+    if (options.dryRun) {
+        BNCLog(@"Would update PR#%@ with status %@: %@.",
+            pr.number, NSStringFromXGPullRequestStatus(status), message);
+        return nil;
+    }
+
     error = [pr setStatus:status
-        message:(NSString*)message
-        statusURL:nil
-        authToken:options.githubAuthToken];
+        message:message
+        statusURL:nil];
     if (error) return error;
+
+    // Add a completion message to the PR:
+    if ([botStatus.currentStep isEqualToString:@"completed"]) {
+        error = [pr addComment:[botStatus.formattedDetailString renderMarkDown]];
+        if (error) return error;
+    }
 
     [[XGSettings sharedSettings]
         setGitHubStatus:statusHash
@@ -144,28 +162,26 @@ NSError*_Nullable XGUpdatePRStatusOnGitHub(
         repoName:pr.repoName
         branch:pr.branch];
 
-    // Send a completion message:
-    if ([botStatus.currentStep isEqualToString:@"completed"]) {
-        error = [pr addComment:[botStatus.formattedDetailString renderMarkDown]
-            authToken:options.githubAuthToken];
-        if (error) return error;
-    }
-
     return nil;
 }
 
-NSError *XGLogXcodeBotStatus(NSString* xcodeServerName) {
+NSError* XGShowXcodeBotStatus(XGCommandOptions* options) {
     // Update the bots and display the results:
+
+    XGServer*xcodeServer = [[XGServer alloc] init];
+    xcodeServer.server = options.xcodeServerName;
+    xcodeServer.user = options.xcodeServerUser;
+    xcodeServer.password = options.xcodeServerPassword;
 
     // Allow self-signed certs from the xcode server:
     [BNCNetworkService shared].allowAnySSLCert = YES;
 
     BNCLogDebug(@"Refreshing Xcode bot status...");
     NSError *error = nil;
-    NSDictionary<NSString*, XGXcodeBot*> *bots = [XGXcodeBot botsForServer:xcodeServerName error:&error];
+    NSDictionary<NSString*, XGXcodeBot*> *bots = [XGXcodeBot botsForServer:xcodeServer error:&error];
     if (error) {
         BNCLogError(@"Can't retrieve Xcode bot information from '%@': %@.",
-            xcodeServerName, error);
+            xcodeServer.server, error);
         return error;
     }
 
@@ -187,12 +203,17 @@ NSError*_Nullable XGUpdateXcodeBotsWithGitHub(XGCommandOptions*_Nonnull options)
     NSError *error = nil;
     int returnCode = EXIT_FAILURE;
     {
+        XGServer*xcodeServer = [[XGServer alloc] init];
+        xcodeServer.server = options.xcodeServerName;
+        xcodeServer.user = options.xcodeServerUser;
+        xcodeServer.password = options.xcodeServerPassword;
+
         // Allow self-signed certs from the xcode server:
         [BNCNetworkService shared].allowAnySSLCert = YES;
 
         BNCLogDebug(@"Getting Xcode bots on '%@'...", options.xcodeServerName);
         NSDictionary<NSString*, XGXcodeBot*> *bots =
-            [XGXcodeBot botsForServer:options.xcodeServerName error:&error];
+            [XGXcodeBot botsForServer:xcodeServer error:&error];
         if (error) {
             BNCLogError(@"Can't retrieve Xcode bot information from %@: %@.",
                 options.xcodeServerName, error);
@@ -200,7 +221,7 @@ NSError*_Nullable XGUpdateXcodeBotsWithGitHub(XGCommandOptions*_Nonnull options)
             goto exit;
         }
         if (options.showStatusOnly) {
-            error = XGLogXcodeBotStatus(options.xcodeServerName);
+            error = XGShowXcodeBotStatus(options);
             if (!error) returnCode = EXIT_SUCCESS;
             goto exit;
         }
