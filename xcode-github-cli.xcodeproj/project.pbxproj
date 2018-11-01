@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D4CBE31218B783B007FE904 /* XcodeGitHub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDAA55A216AEC95002F3F8E /* XcodeGitHub.framework */; };
 		4D744C072047A53B002CA796 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D744C062047A53B002CA796 /* main.m */; };
-		4DDAA55B216AEC95002F3F8E /* XcodeGitHub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDAA55A216AEC95002F3F8E /* XcodeGitHub.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,7 +24,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		4D7335452097CF6700A0D416 /* xcode-github.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "xcode-github.md"; sourceTree = "<group>"; };
+		4D7335452097CF6700A0D416 /* xcode-github-cli.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "xcode-github-cli.md"; path = "xcode-github-cli/xcode-github-cli.md"; sourceTree = "<group>"; };
 		4D744C032047A53B002CA796 /* xcode-github */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "xcode-github"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D744C062047A53B002CA796 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4DDAA55A216AEC95002F3F8E /* XcodeGitHub.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XcodeGitHub.framework; path = Products/XcodeGitHub.framework; sourceTree = "<group>"; };
@@ -36,7 +36,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4DDAA55B216AEC95002F3F8E /* XcodeGitHub.framework in Frameworks */,
+				4D4CBE31218B783B007FE904 /* XcodeGitHub.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -46,8 +46,8 @@
 		4D744BFA2047A53B002CA796 = {
 			isa = PBXGroup;
 			children = (
-				4D7335452097CF6700A0D416 /* xcode-github.md */,
-				4D744C052047A53B002CA796 /* xcode-github */,
+				4D7335452097CF6700A0D416 /* xcode-github-cli.md */,
+				4D744C052047A53B002CA796 /* xcode-github-cli */,
 				4D744C042047A53B002CA796 /* Products */,
 				4DDAA545216AC9D7002F3F8E /* Frameworks */,
 			);
@@ -61,13 +61,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		4D744C052047A53B002CA796 /* xcode-github */ = {
+		4D744C052047A53B002CA796 /* xcode-github-cli */ = {
 			isa = PBXGroup;
 			children = (
 				4DF1DA432049DB65001425C7 /* Info.plist */,
 				4D744C062047A53B002CA796 /* main.m */,
 			);
-			path = "xcode-github";
+			path = "xcode-github-cli";
 			sourceTree = "<group>";
 		};
 		4DDAA545216AC9D7002F3F8E /* Frameworks */ = {
@@ -113,7 +113,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 4D744BFE2047A53B002CA796 /* Build configuration list for PBXProject "xcode-github" */;
+			buildConfigurationList = 4D744BFE2047A53B002CA796 /* Build configuration list for PBXProject "xcode-github-cli" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -259,7 +259,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Products",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/xcode-github/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/xcode-github-cli/Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Products",
@@ -280,7 +280,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Products",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/xcode-github/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/xcode-github-cli/Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Products",
@@ -294,7 +294,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4D744BFE2047A53B002CA796 /* Build configuration list for PBXProject "xcode-github" */ = {
+		4D744BFE2047A53B002CA796 /* Build configuration list for PBXProject "xcode-github-cli" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4D744C082047A53B002CA796 /* Debug */,

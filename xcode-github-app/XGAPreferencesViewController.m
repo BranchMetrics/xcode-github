@@ -18,6 +18,7 @@
 @property (strong) IBOutlet NSTextField*gitHubTokenTextField;
 @property (strong) IBOutlet NSButton *removeButton;
 @property (strong) IBOutlet NSTableView *tableView;
+@property (strong) IBOutlet NSNumberFormatter *refreshTimeFormatter;
 @property (strong) XGAAddServerPanel *addServerPanel;
 @end
 
@@ -36,11 +37,13 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     @synchronized (self) {
-        if (!self.settings) {
-            self.settings = [XGASettings shared];
-            self.removeButton.enabled = NO;
-            self.serverArrayController.content = self.settings.servers;
-        }
+        if (self.settings) return;
+        self.settings = [XGASettings shared];
+        self.removeButton.enabled = NO;
+        self.serverArrayController.content = self.settings.servers;
+        self.refreshTimeFormatter.multiplier = @(1.0/60.0);
+        self.refreshTimeFormatter.minimumFractionDigits = 0;
+        self.refreshTimeFormatter.maximumFractionDigits = 0;
     }
 }
 
@@ -52,7 +55,6 @@
     NSInteger idx = self.tableView.selectedRow;
     self.removeButton.enabled = (idx >= 0 && idx < [self.serverArrayController.arrangedObjects count]);
 }
-
 
 - (IBAction)addServerAction:(id)sender {
     [self showServer:nil];

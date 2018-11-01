@@ -1,10 +1,12 @@
-//
-//  XGUtility.m
-//  XcodeGitHub
-//
-//  Created by Edward on 10/30/18.
-//  Copyright © 2018 Branch. All rights reserved.
-//
+/**
+ @file          XGUtility.m
+ @package       xcode-github
+ @brief         Small utility functions and classes.
+
+ @author        Edward Smith
+ @date          November 1, 2018
+ @copyright     Copyright © 2018 Branch. All rights reserved.
+*/
 
 #import "XGUtility.h"
 

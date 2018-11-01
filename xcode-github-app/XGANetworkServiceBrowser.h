@@ -3,8 +3,8 @@
  @package       xcode-github-app
  @brief         Browses for Bonjour (mDNS) services.
 
- @author        Edward
- @date          2018
+ @author        Edward Smith
+ @date          September 2018
  @copyright     Copyright © 2018 Branch. All rights reserved.
 */
 

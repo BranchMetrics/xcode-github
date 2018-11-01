@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// Clears all settings.
 - (void) clear;
 
-/// Time in seconds to expire old entries. Defaults 30 days.
+/// Time in seconds to expire old entries. Defaults 7 days.
 @property (assign) NSTimeInterval dataExpirationSeconds;
 @end
 

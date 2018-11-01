@@ -10,9 +10,6 @@
 
 #import <Foundation/Foundation.h>
 #import <XcodeGitHub/XcodeGitHub.h>
-//#import "XGCommandOptions.h"
-//#import "XGCommand.h"
-//#import "BNCLog.h"
 #include <sysexits.h>
 
 static BNCLogLevel global_logLevel = BNCLogLevelWarning;
@@ -68,7 +65,7 @@ start:
         }
 
         if (options.showStatusOnly) {
-            if (XGLogXcodeBotStatus(options.xcodeServerName) == nil)
+            if (XGShowXcodeBotStatus(options) == nil)
                 returnCode = EXIT_SUCCESS;
             goto exit;
         }
@@ -79,7 +76,7 @@ start:
             goto exit;
         }
 
-        error = XGLogXcodeBotStatus(options.xcodeServerName);
+        error = XGShowXcodeBotStatus(options);
         if (error == nil) returnCode = EXIT_SUCCESS;
 
         repeatForever = options.repeatForever;

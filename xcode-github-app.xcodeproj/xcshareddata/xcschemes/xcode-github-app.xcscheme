@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "4D7661672057565200216B72"
-               BuildableName = "Xcode-GitHub.app"
+               BuildableName = "XcodeGitHub.app"
                BlueprintName = "xcode-github-app"
                ReferencedContainer = "container:xcode-github-app.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4D7661672057565200216B72"
-            BuildableName = "Xcode-GitHub.app"
+            BuildableName = "XcodeGitHub.app"
             BlueprintName = "xcode-github-app"
             ReferencedContainer = "container:xcode-github-app.xcodeproj">
          </BuildableReference>
@@ -56,7 +56,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4D7661672057565200216B72"
-            BuildableName = "Xcode-GitHub.app"
+            BuildableName = "XcodeGitHub.app"
             BlueprintName = "xcode-github-app"
             ReferencedContainer = "container:xcode-github-app.xcodeproj">
          </BuildableReference>
@@ -75,7 +75,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4D7661672057565200216B72"
-            BuildableName = "Xcode-GitHub.app"
+            BuildableName = "XcodeGitHub.app"
             BlueprintName = "xcode-github-app"
             ReferencedContainer = "container:xcode-github-app.xcodeproj">
          </BuildableReference>

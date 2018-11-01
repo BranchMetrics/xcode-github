@@ -46,7 +46,7 @@ NSTimeInterval const kNetworkRefreshInterval = 7.0;
     if (![panel isKindOfClass:XGAAddServerPanel.class])
         panel = [[XGAAddServerPanel alloc] init];
     if (server) {
-        // Copy the values:
+        // Copy the values, not the whole object:
         panel.server.server = server.server;
         panel.server.user = server.user;
         panel.server.password = server.password;

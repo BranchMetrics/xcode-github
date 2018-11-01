@@ -18,8 +18,8 @@ The command line tool that creates new Xcode bots when a new PR is created on an
 * [x] Create Xcode bots from new PRs.
 * [x] Start rough version of the Mac app.
 * [x] Update integration status in GitHub.
-* [ ] Clean up command line app logging and messages.
-* [ ] Polish Documentation.
+* [x] Clean up command line app logging and messages.
+* [x] Polish Documentation.
 ```
 
 ## Overview

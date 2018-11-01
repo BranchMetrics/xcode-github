@@ -63,7 +63,7 @@ static NSString*const kGitHubStatusKey = @"githubStatus";
 - (instancetype) init {
     self = [super init];
     if (!self) return self;
-    self.dataExpirationSeconds = 60.0*60.0*24.0*30.0;
+    self.dataExpirationSeconds = 60.0*60.0*24.0*7.0;
     return self;
 }
 

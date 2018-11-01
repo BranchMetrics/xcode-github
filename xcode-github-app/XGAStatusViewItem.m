@@ -16,7 +16,7 @@
 + (instancetype) itemWithBot:(XGXcodeBot*)bot status:(XGXcodeBotStatus*)botStatus {
     if (bot == nil || botStatus == nil) return nil;
     XGAStatusViewItem *status = [XGAStatusViewItem new];
-    if (!status) return status;
+    NSAssert(status, @"Nil XGAStatusViewItem!");
 
     status->_bot = bot;
     status->_botStatus = botStatus;

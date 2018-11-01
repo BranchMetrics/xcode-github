@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4D0DD54520597FE6001721C1 /* xcode-github-app.md in Resources */ = {isa = PBXBuildFile; fileRef = 4D0DD54420597FE6001721C1 /* xcode-github-app.md */; };
 		4D12BA0D20A252CE00E5B1DB /* XGALogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D12BA0B20A252CE00E5B1DB /* XGALogViewController.m */; };
 		4D12BA0E20A252CE00E5B1DB /* XGALogViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D12BA0C20A252CE00E5B1DB /* XGALogViewController.xib */; };
 		4D5CC05E2090CAB60042E98B /* BNCKeyChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D5CC05D2090CAB60042E98B /* BNCKeyChain.m */; };
@@ -45,7 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4D0DD54420597FE6001721C1 /* xcode-github-app.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "xcode-github-app.md"; sourceTree = "<group>"; };
+		4D0DD54420597FE6001721C1 /* xcode-github-app.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = "xcode-github-app.md"; path = "xcode-github-app/xcode-github-app.md"; sourceTree = "<group>"; };
 		4D12BA0A20A252CE00E5B1DB /* XGALogViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGALogViewController.h; sourceTree = "<group>"; };
 		4D12BA0B20A252CE00E5B1DB /* XGALogViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGALogViewController.m; sourceTree = "<group>"; };
 		4D12BA0C20A252CE00E5B1DB /* XGALogViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = XGALogViewController.xib; sourceTree = "<group>"; };
@@ -54,7 +53,7 @@
 		4D65363421504842000812E1 /* XGAStatusPopover.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGAStatusPopover.h; sourceTree = "<group>"; };
 		4D65363521504842000812E1 /* XGAStatusPopover.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGAStatusPopover.m; sourceTree = "<group>"; };
 		4D6536372150486B000812E1 /* XGAStatusPopover.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = XGAStatusPopover.xib; sourceTree = "<group>"; };
-		4D7661682057565200216B72 /* Xcode-GitHub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Xcode-GitHub.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D7661682057565200216B72 /* XcodeGitHub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XcodeGitHub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D76616B2057565200216B72 /* XGAAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGAAppDelegate.h; sourceTree = "<group>"; };
 		4D76616C2057565200216B72 /* XGAAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGAAppDelegate.m; sourceTree = "<group>"; };
 		4D76616E2057565200216B72 /* XGAStatusViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGAStatusViewController.h; sourceTree = "<group>"; };
@@ -116,7 +115,7 @@
 		4D7661692057565200216B72 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4D7661682057565200216B72 /* Xcode-GitHub.app */,
+				4D7661682057565200216B72 /* XcodeGitHub.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -217,7 +216,7 @@
 			);
 			name = "xcode-github-app";
 			productName = XcodeGitHub;
-			productReference = 4D7661682057565200216B72 /* Xcode-GitHub.app */;
+			productReference = 4D7661682057565200216B72 /* XcodeGitHub.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -283,7 +282,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D0DD54520597FE6001721C1 /* xcode-github-app.md in Resources */,
 				4D7661722057565200216B72 /* Assets.xcassets in Resources */,
 				4D8352D120A516A200184259 /* XGAPreferencesViewController.xib in Resources */,
 				4D6536382150486B000812E1 /* XGAStatusPopover.xib in Resources */,
@@ -457,7 +455,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/xcode-github-app/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.xcode-github-app";
-				PRODUCT_NAME = "Xcode-GitHub";
+				PRODUCT_NAME = XcodeGitHub;
 			};
 			name = Debug;
 		};
@@ -477,7 +475,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/xcode-github-app/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.xcode-github-app";
-				PRODUCT_NAME = "Xcode-GitHub";
+				PRODUCT_NAME = XcodeGitHub;
 			};
 			name = Release;
 		};

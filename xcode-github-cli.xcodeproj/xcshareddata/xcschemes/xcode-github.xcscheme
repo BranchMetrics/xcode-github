@@ -17,7 +17,7 @@
                BlueprintIdentifier = "4D744C022047A53B002CA796"
                BuildableName = "xcode-github"
                BlueprintName = "xcode-github"
-               ReferencedContainer = "container:xcode-github.xcodeproj">
+               ReferencedContainer = "container:xcode-github-cli.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
             BlueprintIdentifier = "4D744C022047A53B002CA796"
             BuildableName = "xcode-github"
             BlueprintName = "xcode-github"
-            ReferencedContainer = "container:xcode-github.xcodeproj">
+            ReferencedContainer = "container:xcode-github-cli.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -58,7 +58,7 @@
             BlueprintIdentifier = "4D744C022047A53B002CA796"
             BuildableName = "xcode-github"
             BlueprintName = "xcode-github"
-            ReferencedContainer = "container:xcode-github.xcodeproj">
+            ReferencedContainer = "container:xcode-github-cli.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>
@@ -83,7 +83,7 @@
             BlueprintIdentifier = "4D744C022047A53B002CA796"
             BuildableName = "xcode-github"
             BlueprintName = "xcode-github"
-            ReferencedContainer = "container:xcode-github.xcodeproj">
+            ReferencedContainer = "container:xcode-github-cli.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

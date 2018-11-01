@@ -50,7 +50,7 @@ NSString*_Nonnull NSStringFromXGPullRequestStatus(XGPullRequestStatus status) {
     NSString*status = self.dictionary[@"state"];
     if (status) {
         NSNumber*n = d[status];
-        if (n) return n.integerValue;
+        if (n != nil) return n.integerValue;
     }
     return XGPullRequestStatusError;
 }

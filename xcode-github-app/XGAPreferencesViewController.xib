@@ -9,6 +9,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="XGAPreferencesViewController">
             <connections>
                 <outlet property="gitHubTokenTextField" destination="drg-zm-rHi" id="JRg-vq-3cK"/>
+                <outlet property="refreshTimeFormatter" destination="x9S-89-6UL" id="tGE-0E-OKe"/>
                 <outlet property="removeButton" destination="2m4-7m-gCy" id="Tfc-Sk-i1x"/>
                 <outlet property="serverArrayController" destination="KdM-cZ-U5K" id="Ihu-EI-fA4"/>
                 <outlet property="tableView" destination="Llm-sj-s68" id="5Zj-XT-sMN"/>
@@ -235,7 +236,7 @@
                                 </constraints>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" drawsBackground="YES" id="hqh-Q3-9ZT">
                                     <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" lenient="YES" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="x9S-89-6UL">
-                                        <real key="minimum" value="15"/>
+                                        <real key="minimum" value="1"/>
                                         <real key="maximum" value="86400"/>
                                     </numberFormatter>
                                     <font key="font" metaFont="system"/>
@@ -255,8 +256,8 @@
                                 </connections>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zN5-A4-6gK">
-                                <rect key="frame" x="158" y="56" width="106" height="17"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Refresh seconds" id="WVV-AW-E6W">
+                                <rect key="frame" x="158" y="56" width="103" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Refresh minutes" id="WVV-AW-E6W">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>

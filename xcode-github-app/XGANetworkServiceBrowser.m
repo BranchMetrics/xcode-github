@@ -3,8 +3,8 @@
  @package       xcode-github-app
  @brief         Browses for Bonjour (mDNS) services.
 
- @author        Edward
- @date          2018
+ @author        Edward Smith
+ @date          September 2018
  @copyright     Copyright © 2018 Branch. All rights reserved.
 */
 
@@ -144,11 +144,9 @@
 - (void)netServiceBrowser:(NSNetServiceBrowser *)browser
              didNotSearch:(NSDictionary<NSString *,NSNumber *> *)errorDict {
     BNCLogError(@"NSNetServiceBrowser error: %@.", errorDict);
-//    NSString*errorDomain = errorDict[@"NSNetServiceBrowserErrorDomain"];
-//    if (!errorDomain) errorDomain = NSNetServicesErrorDomain;
     NSNumber*code = errorDict[@"NSNetServiceBrowserErrorCode"];
-    if (!code) code = [NSNumber numberWithInteger:-1];
-    self.error = [NSError errorWithDomain:NSNetServicesErrorDomain code:code.integerValue userInfo:nil];
+    if (code == nil) code = [NSNumber numberWithInteger:-1];
+    self.error = [NSError errorWithDomain:NSNetServicesErrorDomain code:code.integerValue userInfo:errorDict];
     if ([self.delegate respondsToSelector:@selector(browser:finishedWithError:)]) {
         [self.delegate browser:self finishedWithError:self.error];
     }
@@ -168,7 +166,8 @@
                 [self.delegate browser:self discoveredHost:serviceHost];
             }
         }
-        [self.resolvingHosts removeObject:serviceHost];
+        if (serviceHost)
+            [self.resolvingHosts removeObject:serviceHost];
         if (!moreComing) {
             self.hosts = self.resolvedHosts;
             self.resolvedHosts = nil;

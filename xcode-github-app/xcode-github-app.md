@@ -15,8 +15,13 @@
 * [x] Add smart sort - by repository then by branchOrPR
 * [x] Create new bot flow.
 * [x] Fix security.
-* [ ] On bots, if last integration# != current# then update the status on GitHub.
-* [ ] Clean up code. 
+* [x] On bots, if last integration# != current# then update the status on GitHub.
+* [x] Clean up code.
+* [x] Refresh Sec -> Min 
+* [ ] Rename build products: XcodeGitHub.framework, Xcode-GitHub.app, xcode-github (cli tool), Tests
+* [ ] Fix tests, test name, and bindings.
+* [ ] Add 'New' menu items: Add new server, new Xcode bot.
+* [ ] Add 'About...' panel.
 * [ ] Add help.
 ```
  
@@ -24,7 +29,8 @@
  * About
    - Problems it solves.
    - What it does.
-    
+   - How to do it.
+
  * Setup & Use
    1. Create an Xcode bot on the Xcode server as a template: The PR bots will be modelled after this bot exactly.
    2. In the Xcode-GitHub app, add the Xcode server as a new server.
@@ -34,7 +40,7 @@
    
  * Credits
    - Branch Metrics for the time and resources to cretae this tool.
-   - Design & programming: Edward Smith.
+   - Design & Programming: Edward Smith.
    
 * What I Learned
   - Updated my Mac programming skills.

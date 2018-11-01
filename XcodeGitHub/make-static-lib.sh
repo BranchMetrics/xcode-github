@@ -7,6 +7,8 @@ set -euo pipefail
 #  Created by Edward Smith on 10/7/18.
 #  Copyright © 2018 Branch. All rights reserved.
 
+/bin/rm -Rf   "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework"
+
 # Headers:
 /bin/mkdir -p "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/A/Headers"
 /bin/cp -a \
