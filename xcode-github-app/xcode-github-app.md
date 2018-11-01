@@ -18,8 +18,8 @@
 * [x] On bots, if last integration# != current# then update the status on GitHub.
 * [x] Clean up code.
 * [x] Refresh Sec -> Min 
-* [ ] Rename build products: XcodeGitHub.framework, Xcode-GitHub.app, xcode-github (cli tool), Tests
-* [ ] Fix tests, test name, and bindings.
+* [x] Rename build products: XcodeGitHub.framework, Xcode-GitHub.app, xcode-github (cli tool), Tests
+* [ ] Fix testing: fix the project layout, test bundle name, and project bindings.
 * [ ] Add 'New' menu items: Add new server, new Xcode bot.
 * [ ] Add 'About...' panel.
 * [ ] Add help.

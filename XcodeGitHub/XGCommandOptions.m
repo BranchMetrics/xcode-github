@@ -32,6 +32,11 @@
         {0, 0, 0, 0}
     };
 
+    if (argc <= 1) {
+        self.showHelp = YES;
+        return self;
+    }
+
     int c = 0;
     do {
         int option_index = 0;

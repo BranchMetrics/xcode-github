@@ -34,6 +34,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		4D4CBE38218B8253007FE904 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4DC9E5C4216DCD6700F1F4EE /* XcodeGitHub.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 4DDAA4D5216ABF40002F3F8E;
+			remoteInfo = XcodeGitHub;
+		};
 		4DC9E5C8216DCD6700F1F4EE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4DC9E5C4216DCD6700F1F4EE /* XcodeGitHub.xcodeproj */;
@@ -213,6 +220,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				4D4CBE39218B8253007FE904 /* PBXTargetDependency */,
 			);
 			name = "xcode-github-app";
 			productName = XcodeGitHub;
@@ -319,6 +327,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4D4CBE39218B8253007FE904 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = XcodeGitHub;
+			targetProxy = 4D4CBE38218B8253007FE904 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		4D7661732057565200216B72 /* Main.storyboard */ = {
@@ -446,13 +462,16 @@
 				CODE_SIGN_ENTITLEMENTS = "xcode-github-app/xcode-github-app.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEPLOYMENT_LOCATION = YES;
 				DEVELOPMENT_TEAM = R63EM248DP;
+				DSTROOT = "${SOURCE_ROOT}/";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Products",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/xcode-github-app/Info.plist";
+				INSTALL_PATH = Products;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.xcode-github-app";
 				PRODUCT_NAME = XcodeGitHub;
@@ -466,13 +485,16 @@
 				CODE_SIGN_ENTITLEMENTS = "xcode-github-app/xcode-github-app.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEPLOYMENT_LOCATION = YES;
 				DEVELOPMENT_TEAM = R63EM248DP;
+				DSTROOT = "${SOURCE_ROOT}/";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Products",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/xcode-github-app/Info.plist";
+				INSTALL_PATH = Products;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.xcode-github-app";
 				PRODUCT_NAME = XcodeGitHub;

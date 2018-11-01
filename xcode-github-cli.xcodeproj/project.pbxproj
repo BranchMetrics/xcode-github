@@ -254,12 +254,15 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
+				DEPLOYMENT_LOCATION = YES;
 				DEVELOPMENT_TEAM = R63EM248DP;
+				DSTROOT = "${SOURCE_ROOT}/";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Products",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/xcode-github-cli/Info.plist";
+				INSTALL_PATH = Products;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Products",
@@ -275,12 +278,15 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
+				DEPLOYMENT_LOCATION = YES;
 				DEVELOPMENT_TEAM = R63EM248DP;
+				DSTROOT = "${SOURCE_ROOT}/";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Products",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/xcode-github-cli/Info.plist";
+				INSTALL_PATH = Products;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Products",
