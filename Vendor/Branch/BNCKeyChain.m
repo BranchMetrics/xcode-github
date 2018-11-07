@@ -124,6 +124,9 @@ CFStringRef SecCopyErrorMessageString(OSStatus status, void *reserved) {
     };
     CFDataRef valueData = NULL;
     OSStatus status = SecItemCopyMatching((__bridge CFDictionaryRef)dictionary, (CFTypeRef *)&valueData);
+    if (status == errSecItemNotFound) {
+        return nil;
+    }
     if (status) {
         NSError *localError = [self errorWithKey:key OSStatus:status];
         BNCLogDebugSDK(@"Can't retrieve key: %@.", localError);
