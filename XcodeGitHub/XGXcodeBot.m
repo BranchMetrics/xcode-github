@@ -114,13 +114,31 @@
     return summary;
 }
 
+/*
+Theirs:
+
+Result of [Integration 2](https://stlt.herokuapp.com/v1/xcs_deeplink/qabot.stage.branch.io/b388335146db7e936b7215574d28037e/742d12409905670706fa2c837a41b416)
+---
+*Duration*: 8 minutes and 32 seconds
+*Result*: **Perfect build!** All 199 tests passed. :+1:
+*Test Coverage*: 60%
+
+Mine:
+
+**Result of Integration 1**
+---
+_Duration_: 10 minutes, 2 seconds
+_Result_: **Perfect build**! 👍
+_Test Coverage_: 65% (193 tests).
+*/
+
 - (APFormattedString*) formattedDetailString {
     NSTimeInterval duration = [self.endedDate timeIntervalSinceDate:self.startedDate];
     NSString*durationString = XGDurationStringFromTimeInterval(duration);
 
     APFormattedString *apstring =
         [[[[APFormattedString
-            boldText:@"Result of Integration %@", self.integrationNumber]
+            plainText:@"Result of Integration %@", self.integrationNumber]
             line]
             italicText:@"Duration"]
             plainText:@": %@\n", durationString];
@@ -191,27 +209,32 @@
         return apstring;
     }
 
-    if ([self.errorCount integerValue] == 0 &&
-        [self.result isEqualToString:@"succeeded"]) {
-        [apstring boldText:@"Perfect build! 👍"];
-
-        if ([self.testsCount integerValue] > 0) {
-            if ([self.codeCoveragePercentage doubleValue] > 0.0) {
-                [[apstring
-                    italicText:@"\nTest Coverage"]
-                    plainText:@": %@%% (%@ tests).", self.codeCoveragePercentage, self.testsCount];
+    if ([self.errorCount integerValue] == 0 && [self.result isEqualToString:@"succeeded"]) {
+        if (self.testsCount.integerValue == 0) {
+            [apstring boldText:@"Perfect build! 👍"];
+        } else {
+            if (self.testFailureCount.integerValue == 0) {
+                [apstring boldText:@"Perfect build!"];
+                [apstring plainText:@" All %ld tests passed. 👍\n", (long) self.testsCount.integerValue];
+                if (self.codeCoveragePercentage.doubleValue > 0.0) {
+                    [[apstring
+                        italicText:@"Test Coverage"]
+                        plainText:@": %@%%", self.codeCoveragePercentage];
+                }
             } else {
-                [apstring italicText:@"\nAll %@ tests passed.", self.testsCount];
+                [apstring boldText:@"Perfect build!"];
+                [apstring plainText:@" But please fix %ld failing tests.\n", (long) self.testFailureCount.integerValue];
+                [[apstring
+                    italicText:@"Test Coverage"]
+                    plainText:@": %@%% (%@ tests).", self.codeCoveragePercentage, self.testsCount];
             }
         }
-
         return apstring;
     }
 
     [apstring boldText:@"Failing state: %@.", self.summaryString];
     if ([self.tags containsObject:@"xcs-upgrade"]) {
-        [apstring
-            italicText:@"\nThe current configuration may not be supported by the Xcode upgrade."];
+        [apstring italicText:@"\nThe current configuration may not be supported by the Xcode upgrade."];
     }
 
     return apstring;

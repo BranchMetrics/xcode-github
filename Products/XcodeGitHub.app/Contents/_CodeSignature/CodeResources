@@ -10,7 +10,7 @@
 		</data>
 		<key>Resources/Assets.car</key>
 		<data>
-		QTCIwfKksjCZeHq6QmJsa7t6ju8=
+		jonTIII2grzm93yYitBSkqSxZyg=
 		</data>
 		<key>Resources/Base.lproj/Main.storyboardc/Info.plist</key>
 		<data>
@@ -18,7 +18,7 @@
 		</data>
 		<key>Resources/Base.lproj/Main.storyboardc/MainMenu.nib</key>
 		<data>
-		HdvwyCx2rzT9Yls7gDTsYxy+Aj4=
+		vLgLld9h7a69oM75wmyaqu/otv8=
 		</data>
 		<key>Resources/XGAAddServerPanel.nib</key>
 		<data>
@@ -26,7 +26,7 @@
 		</data>
 		<key>Resources/XGALogViewController.nib</key>
 		<data>
-		OSinBcz5C8LdOQjK21bCKf0TRo0=
+		LMndAetp5MO8S6/HXfFhzc6IWJM=
 		</data>
 		<key>Resources/XGAPreferencesViewController.nib</key>
 		<data>
@@ -38,7 +38,7 @@
 		</data>
 		<key>Resources/XGAStatusViewController.nib</key>
 		<data>
-		+4WmzDRvmJMp7eqHb9+8TGhyQ/M=
+		KCIAt1MnYX3npSGBIeBzlDBUeJ4=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -58,11 +58,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			QTCIwfKksjCZeHq6QmJsa7t6ju8=
+			jonTIII2grzm93yYitBSkqSxZyg=
 			</data>
 			<key>hash2</key>
 			<data>
-			C4I+8K7r/mV3KGm9PLLuk2PeBQ03TFQN2D5nb2VTAC4=
+			vQvnuQ+PYDolTRZmgsaj4NzXBEzzuC8gNT+YB64ADrw=
 			</data>
 		</dict>
 		<key>Resources/Base.lproj/Main.storyboardc/Info.plist</key>
@@ -80,11 +80,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			HdvwyCx2rzT9Yls7gDTsYxy+Aj4=
+			vLgLld9h7a69oM75wmyaqu/otv8=
 			</data>
 			<key>hash2</key>
 			<data>
-			g30X3IsfVH5e+wpf63ximzX3CBfNZjqp6hGbQQFmvEc=
+			OP6D1mxIwG67LMYw53OpmambUbi0NqcN5LVVcvHPDc4=
 			</data>
 		</dict>
 		<key>Resources/XGAAddServerPanel.nib</key>
@@ -102,11 +102,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			OSinBcz5C8LdOQjK21bCKf0TRo0=
+			LMndAetp5MO8S6/HXfFhzc6IWJM=
 			</data>
 			<key>hash2</key>
 			<data>
-			snoDa+9dulodYPuB9FwkY7T1YA1/o0ZQgmTmCG+4u+c=
+			ZSTzB9p8JT6LZT+G48jy5Yla/UuF4lZRYxYU+b5cn84=
 			</data>
 		</dict>
 		<key>Resources/XGAPreferencesViewController.nib</key>
@@ -135,11 +135,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			+4WmzDRvmJMp7eqHb9+8TGhyQ/M=
+			KCIAt1MnYX3npSGBIeBzlDBUeJ4=
 			</data>
 			<key>hash2</key>
 			<data>
-			wejGG3ibqalns5mvA4orVNawRT1sAaCHxY+Ehb9qUdc=
+			UZHwiy+aU2huz311DNUk0Fk7pCZAmM6tS49tRMuEs70=
 			</data>
 		</dict>
 	</dict>
