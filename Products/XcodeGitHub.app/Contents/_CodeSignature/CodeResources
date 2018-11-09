@@ -6,11 +6,11 @@
 	<dict>
 		<key>Resources/AppIcon.icns</key>
 		<data>
-		BzPY50tfR8K3DAqFXJ5vG1zzFKw=
+		+cKypt8KEXLcF19vjY4LEr96TL8=
 		</data>
 		<key>Resources/Assets.car</key>
 		<data>
-		jonTIII2grzm93yYitBSkqSxZyg=
+		FFjPwoEd2nB6L9rY/Mds6lkkFIw=
 		</data>
 		<key>Resources/Base.lproj/Main.storyboardc/Info.plist</key>
 		<data>
@@ -18,27 +18,27 @@
 		</data>
 		<key>Resources/Base.lproj/Main.storyboardc/MainMenu.nib</key>
 		<data>
-		vLgLld9h7a69oM75wmyaqu/otv8=
+		vre9KRLLUVDa3EznWT/aTrIA+ZM=
 		</data>
 		<key>Resources/XGAAddServerPanel.nib</key>
 		<data>
-		zKqBwYFnODXM4YTjeDcNQjgoiOE=
+		GNR78ITN4J/w+LpkBW2/daWoHEE=
 		</data>
 		<key>Resources/XGALogViewController.nib</key>
 		<data>
-		LMndAetp5MO8S6/HXfFhzc6IWJM=
+		E6S1447ppG6RuPtMVztkF/skuZs=
 		</data>
 		<key>Resources/XGAPreferencesViewController.nib</key>
 		<data>
-		RsnDJgQGQSeUPQ6/cyb96TuMuXY=
+		OSVwmk1AxxtvyKtnpfGJWcKZVZY=
 		</data>
 		<key>Resources/XGAStatusPopover.nib</key>
 		<data>
-		IQYYUWsLytlz7v0DE5zAnAz3mvU=
+		gHYFsrvv6oPIadc+mRCGNWz6XfI=
 		</data>
 		<key>Resources/XGAStatusViewController.nib</key>
 		<data>
-		KCIAt1MnYX3npSGBIeBzlDBUeJ4=
+		j7oFqs8IQfITuP+owQqbhKZ1SRs=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -47,22 +47,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			BzPY50tfR8K3DAqFXJ5vG1zzFKw=
+			+cKypt8KEXLcF19vjY4LEr96TL8=
 			</data>
 			<key>hash2</key>
 			<data>
-			sZWW/dBotS8allTjW8bPqJqClVVri5nolraxSkUgI1I=
+			dIppfu9R/NNUUrEYu8ySo7ze62Bh+VQf9Cqa4qcHulU=
 			</data>
 		</dict>
 		<key>Resources/Assets.car</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			jonTIII2grzm93yYitBSkqSxZyg=
+			FFjPwoEd2nB6L9rY/Mds6lkkFIw=
 			</data>
 			<key>hash2</key>
 			<data>
-			vQvnuQ+PYDolTRZmgsaj4NzXBEzzuC8gNT+YB64ADrw=
+			73XrQYJ09f42xdBmUTkJowSPs2pTWqugIn2fzb2B4so=
 			</data>
 		</dict>
 		<key>Resources/Base.lproj/Main.storyboardc/Info.plist</key>
@@ -80,66 +80,66 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			vLgLld9h7a69oM75wmyaqu/otv8=
+			vre9KRLLUVDa3EznWT/aTrIA+ZM=
 			</data>
 			<key>hash2</key>
 			<data>
-			OP6D1mxIwG67LMYw53OpmambUbi0NqcN5LVVcvHPDc4=
+			blUeSH9LrjlVRNvxz7B2RyYh7VseEQG/a6TjCKgIRyk=
 			</data>
 		</dict>
 		<key>Resources/XGAAddServerPanel.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			zKqBwYFnODXM4YTjeDcNQjgoiOE=
+			GNR78ITN4J/w+LpkBW2/daWoHEE=
 			</data>
 			<key>hash2</key>
 			<data>
-			lMwN2ee+lgvAM/p2LRJrFp2kTMYJhJcqvxm2doxSFZg=
+			zbF8eN6ib0gPuo0liLYUywNYIenknTj4Bpe5wFOJ1AA=
 			</data>
 		</dict>
 		<key>Resources/XGALogViewController.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			LMndAetp5MO8S6/HXfFhzc6IWJM=
+			E6S1447ppG6RuPtMVztkF/skuZs=
 			</data>
 			<key>hash2</key>
 			<data>
-			ZSTzB9p8JT6LZT+G48jy5Yla/UuF4lZRYxYU+b5cn84=
+			2umL14I9A7CTmVmpx/EsW6zCmrbvuWBIXe1KXiSDHF4=
 			</data>
 		</dict>
 		<key>Resources/XGAPreferencesViewController.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			RsnDJgQGQSeUPQ6/cyb96TuMuXY=
+			OSVwmk1AxxtvyKtnpfGJWcKZVZY=
 			</data>
 			<key>hash2</key>
 			<data>
-			L+jloOsEhvh+iNEOUPnzj+e80b5xsdZqhGRjlS1lnok=
+			YWogrdKCjgIi+S2yiJn0zN68sszCgjTbHasjxy9tqKw=
 			</data>
 		</dict>
 		<key>Resources/XGAStatusPopover.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			IQYYUWsLytlz7v0DE5zAnAz3mvU=
+			gHYFsrvv6oPIadc+mRCGNWz6XfI=
 			</data>
 			<key>hash2</key>
 			<data>
-			IFXbNJ6cFKQi72AQd3qovngswohuqhAm9852SRzdDrk=
+			ADY3i/khJCykVe85Q+uPK9JY6H6Pmv4ef+4WwYCjOZY=
 			</data>
 		</dict>
 		<key>Resources/XGAStatusViewController.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			KCIAt1MnYX3npSGBIeBzlDBUeJ4=
+			j7oFqs8IQfITuP+owQqbhKZ1SRs=
 			</data>
 			<key>hash2</key>
 			<data>
-			UZHwiy+aU2huz311DNUk0Fk7pCZAmM6tS49tRMuEs70=
+			rwD5HrUF6+/6vk8NwulAyd+saPVU1GbsNyUP/rYAt1o=
 			</data>
 		</dict>
 	</dict>

@@ -353,7 +353,10 @@ exit:
         error = [NSError errorWithDomain:NSNetServicesErrorDomain
             code:NSNetServicesInvalidError userInfo:@{NSLocalizedDescriptionKey:
                 [NSString stringWithFormat:@"HTTP Status %ld", (long) operation.HTTPStatusCode]}];
-        BNCLogError(@"Response was: %@.", [operation stringFromResponseData]);
+        BNCLogError(
+            @"Can't access GitHub status. Is write access enabled and the token set?\nResponse was: %@.",
+            [operation stringFromResponseData]
+        );
         return error;
     }
     return error;
