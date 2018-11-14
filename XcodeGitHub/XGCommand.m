@@ -123,7 +123,7 @@ NSError*_Nullable XGUpdatePRStatusOnGitHub(
             branch:pr.branch];
 
     if (lastStatusHash == nil) {
-        // Get the last status from GitHub:
+        // Get the most recent status from GitHub:
         XGGitHubPullRequestStatus *status = [[pr statusesWithError:nil] firstObject];
         if (status) {
             lastStatusHash = [NSString stringWithFormat:@"%@:%@",

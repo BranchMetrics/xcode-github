@@ -19,9 +19,9 @@
 * [x] Clean up code.
 * [x] Refresh Sec -> Min 
 * [x] Rename build products: XcodeGitHub.framework, Xcode-GitHub.app, xcode-github (cli tool), Tests
-* [ ] Don't update 'Products' every time, just when making a release with a build script.
-* [ ] Fix testing: fix the project layout, test bundle name, and project bindings.
-* [ ] Add 'New' menu items: Add new server, new Xcode bot.
+* [x] Don't update 'Products' every time, just when making a release with a build script.
+* [x] Fix testing: fix the project layout, test bundle name, and project bindings.
+* [ ] Add 'New' menu items: Add new server. Add new Xcode bot?
 * [ ] Add 'About...' panel.
 * [ ] Add help.
 ```
