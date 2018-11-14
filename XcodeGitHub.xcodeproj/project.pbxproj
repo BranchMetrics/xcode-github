@@ -26,6 +26,7 @@
 		4DDAA543216AC1DA002F3F8E /* BNCNetworkService.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DDAA541216AC1DA002F3F8E /* BNCNetworkService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4DDAA544216AC1DA002F3F8E /* BNCNetworkService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DDAA542216AC1DA002F3F8E /* BNCNetworkService.m */; };
 		4DDAA551216AD102002F3F8E /* XcodeGitHub.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DDAA54A216ACBD8002F3F8E /* XcodeGitHub.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4DF8729E219C906D00EDCB98 /* XcodeGitHub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF8729D219C906D00EDCB98 /* XcodeGitHub.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,8 @@
 		4DDAA54A216ACBD8002F3F8E /* XcodeGitHub.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XcodeGitHub.h; sourceTree = "<group>"; };
 		4DDAA550216AD06D002F3F8E /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		4DDAA558216ADB83002F3F8E /* make-static-lib.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "make-static-lib.sh"; sourceTree = "<group>"; };
+		4DF8729C219C8F6E00EDCB98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4DF8729D219C906D00EDCB98 /* XcodeGitHub.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XcodeGitHub.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,10 +86,12 @@
 		4DDAA4D8216ABF40002F3F8E /* XcodeGitHub */ = {
 			isa = PBXGroup;
 			children = (
+				4DF8729C219C8F6E00EDCB98 /* Info.plist */,
 				4DDAA558216ADB83002F3F8E /* make-static-lib.sh */,
 				4DDAA550216AD06D002F3F8E /* module.modulemap */,
 				4DDAA537216AC0C5002F3F8E /* Vender */,
 				4DDAA54A216ACBD8002F3F8E /* XcodeGitHub.h */,
+				4DF8729D219C906D00EDCB98 /* XcodeGitHub.m */,
 				4DDAA4E7216AC08F002F3F8E /* XGCommand.h */,
 				4DDAA4E8216AC08F002F3F8E /* XGCommand.m */,
 				4DDAA4EB216AC08F002F3F8E /* XGCommandOptions.h */,
@@ -95,10 +100,10 @@
 				4DDAA4E9216AC08F002F3F8E /* XGGitHubPullRequest.m */,
 				4DDAA4EA216AC08F002F3F8E /* XGSettings.h */,
 				4DDAA4E3216AC08F002F3F8E /* XGSettings.m */,
-				4DDAA4E4216AC08F002F3F8E /* XGXcodeBot.h */,
-				4DDAA4E6216AC08F002F3F8E /* XGXcodeBot.m */,
 				4D4CBE2C218980F3007FE904 /* XGUtility.h */,
 				4D4CBE2D218980F3007FE904 /* XGUtility.m */,
+				4DDAA4E4216AC08F002F3F8E /* XGXcodeBot.h */,
+				4DDAA4E6216AC08F002F3F8E /* XGXcodeBot.m */,
 			);
 			path = XcodeGitHub;
 			sourceTree = "<group>";
@@ -155,7 +160,7 @@
 				4DDAA4D2216ABF40002F3F8E /* Headers */,
 				4DDAA4D3216ABF40002F3F8E /* Sources */,
 				4DDAA4D4216ABF40002F3F8E /* Frameworks */,
-				4DDAA559216ADCA4002F3F8E /* Make Framework */,
+				4DF8729A219BA41A00EDCB98 /* Build Static Library */,
 			);
 			buildRules = (
 			);
@@ -199,7 +204,7 @@
 /* End PBXProject section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		4DDAA559216ADCA4002F3F8E /* Make Framework */ = {
+		4DF8729A219BA41A00EDCB98 /* Build Static Library */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -207,16 +212,15 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"$(TARGET_BUILD_DIR)/libXcodeGitHub.a",
+				"$(CONFIGURATION_BUILD_DIR)/libXcodeGitHub.a",
 			);
-			name = "Make Framework";
+			name = "Build Static Library";
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/XcodeGitHub.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
+			shellPath = /bin/bash;
 			shellScript = "\"${SOURCE_ROOT}\"/\"${PRODUCT_NAME}\"/make-static-lib.sh\n";
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -234,6 +238,7 @@
 				4DDAA4F7216AC08F002F3F8E /* XGCommandOptions.m in Sources */,
 				4DDAA4F1216AC08F002F3F8E /* XGXcodeBot.m in Sources */,
 				4DDAA4EE216AC08F002F3F8E /* XGSettings.m in Sources */,
+				4DF8729E219C906D00EDCB98 /* XcodeGitHub.m in Sources */,
 				4D4CBE2F218980F3007FE904 /* XGUtility.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -291,6 +296,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -344,6 +350,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;

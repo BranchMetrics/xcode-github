@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4D262C532090FE5800DD80F4 /* xcode_github.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D262C492090FE5800DD80F4 /* xcode_github.framework */; };
-		4D262C5A2090FE5800DD80F4 /* xcode_github.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D262C4C2090FE5800DD80F4 /* xcode_github.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4D262C532090FE5800DD80F4 /* xcode_github_test_lib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D262C492090FE5800DD80F4 /* xcode_github_test_lib.framework */; };
+		4D262C5A2090FE5800DD80F4 /* xcode-github-tests.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D262C4C2090FE5800DD80F4 /* xcode-github-tests.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D262C6D2090FED300DD80F4 /* BNCLog.Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D262C652090FED300DD80F4 /* BNCLog.Test.m */; };
 		4D262C6E2090FED300DD80F4 /* BNCTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D262C692090FED300DD80F4 /* BNCTestCase.m */; };
 		4D262C73209101E900DD80F4 /* BNCKeyChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D262C632090FED300DD80F4 /* BNCKeyChain.m */; };
@@ -41,8 +41,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4D262C492090FE5800DD80F4 /* xcode_github.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = xcode_github.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4D262C4C2090FE5800DD80F4 /* xcode_github.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = xcode_github.h; sourceTree = "<group>"; };
+		4D262C492090FE5800DD80F4 /* xcode_github_test_lib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = xcode_github_test_lib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D262C4C2090FE5800DD80F4 /* xcode-github-tests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "xcode-github-tests.h"; sourceTree = "<group>"; };
 		4D262C522090FE5800DD80F4 /* xcode-github-tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "xcode-github-tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D262C592090FE5800DD80F4 /* xcode-github-tests-info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "xcode-github-tests-info.plist"; sourceTree = "<group>"; };
 		4D262C632090FED300DD80F4 /* BNCKeyChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BNCKeyChain.m; path = ../Vendor/Branch/BNCKeyChain.m; sourceTree = "<group>"; };
@@ -66,7 +66,6 @@
 		4D54C09220A76FC500C76496 /* BNCThreads.Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BNCThreads.Test.m; path = Vendor/Branch/BNCThreads.Test.m; sourceTree = SOURCE_ROOT; };
 		4D99819B209260D400F2633A /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMock.framework; path = Vendor/OCMock/OCMock.framework; sourceTree = "<group>"; };
 		4DB6561C209253FC00D1FA25 /* BNCTestCase.Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = BNCTestCase.Test.m; path = ../Vendor/Branch/BNCTestCase.Test.m; sourceTree = "<group>"; };
-		4DB6561E20925A0300D1FA25 /* xcode-github-info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "xcode-github-info.plist"; sourceTree = "<group>"; };
 		4DC2438A216040CF00368B95 /* APFormattedString.Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APFormattedString.Test.m; path = Vendor/Branch/APFormattedString.Test.m; sourceTree = SOURCE_ROOT; };
 		4DC2438B216040D000368B95 /* APFormattedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APFormattedString.h; path = Vendor/Branch/APFormattedString.h; sourceTree = SOURCE_ROOT; };
 		4DC2438C216040D000368B95 /* APFormattedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APFormattedString.m; path = Vendor/Branch/APFormattedString.m; sourceTree = SOURCE_ROOT; };
@@ -78,6 +77,7 @@
 		4DF6563421545EA300380FD0 /* BNCEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BNCEncoder.m; path = Vendor/Branch/BNCEncoder.m; sourceTree = SOURCE_ROOT; };
 		4DF6563521545EA300380FD0 /* BNCEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BNCEncoder.h; path = Vendor/Branch/BNCEncoder.h; sourceTree = SOURCE_ROOT; };
 		4DF6563621545EA300380FD0 /* BNCEncoder.Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BNCEncoder.Test.m; path = Vendor/Branch/BNCEncoder.Test.m; sourceTree = SOURCE_ROOT; };
+		4DF872A0219CA61E00EDCB98 /* xcode-github-test-lib-info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "xcode-github-test-lib-info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,7 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D262C532090FE5800DD80F4 /* xcode_github.framework in Frameworks */,
+				4D262C532090FE5800DD80F4 /* xcode_github_test_lib.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,7 +111,7 @@
 		4D262C4A2090FE5800DD80F4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4D262C492090FE5800DD80F4 /* xcode_github.framework */,
+				4D262C492090FE5800DD80F4 /* xcode_github_test_lib.framework */,
 				4D262C522090FE5800DD80F4 /* xcode-github-tests.xctest */,
 			);
 			name = Products;
@@ -147,8 +147,8 @@
 				4D262C7520911CB400DD80F4 /* NSString+Branch.h */,
 				4D262C7620911CB400DD80F4 /* NSString+Branch.m */,
 				4D4E19DF20923EAB00397575 /* NSString+Branch.Test.m */,
-				4D262C4C2090FE5800DD80F4 /* xcode_github.h */,
-				4DB6561E20925A0300D1FA25 /* xcode-github-info.plist */,
+				4D262C4C2090FE5800DD80F4 /* xcode-github-tests.h */,
+				4DF872A0219CA61E00EDCB98 /* xcode-github-test-lib-info.plist */,
 				4D262C592090FE5800DD80F4 /* xcode-github-tests-info.plist */,
 				4DDAA55F216AEFC4002F3F8E /* XGSettings.h */,
 				4DDAA55E216AEFC4002F3F8E /* XGSettings.m */,
@@ -173,7 +173,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D262C5A2090FE5800DD80F4 /* xcode_github.h in Headers */,
+				4D262C5A2090FE5800DD80F4 /* xcode-github-tests.h in Headers */,
 				4D5303E42142EE8D006E8A7B /* BNCNetworkService.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -181,9 +181,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		4D262C482090FE5800DD80F4 /* xcode-github */ = {
+		4D262C482090FE5800DD80F4 /* xcode-github-test-lib */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4D262C5D2090FE5800DD80F4 /* Build configuration list for PBXNativeTarget "xcode-github" */;
+			buildConfigurationList = 4D262C5D2090FE5800DD80F4 /* Build configuration list for PBXNativeTarget "xcode-github-test-lib" */;
 			buildPhases = (
 				4D262C442090FE5800DD80F4 /* Sources */,
 				4D262C452090FE5800DD80F4 /* Frameworks */,
@@ -194,9 +194,9 @@
 			);
 			dependencies = (
 			);
-			name = "xcode-github";
+			name = "xcode-github-test-lib";
 			productName = "xcode-github-test";
-			productReference = 4D262C492090FE5800DD80F4 /* xcode_github.framework */;
+			productReference = 4D262C492090FE5800DD80F4 /* xcode_github_test_lib.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		4D262C512090FE5800DD80F4 /* xcode-github-tests */ = {
@@ -246,7 +246,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				4D262C482090FE5800DD80F4 /* xcode-github */,
+				4D262C482090FE5800DD80F4 /* xcode-github-test-lib */,
 				4D262C512090FE5800DD80F4 /* xcode-github-tests */,
 			);
 		};
@@ -307,7 +307,7 @@
 /* Begin PBXTargetDependency section */
 		4D262C552090FE5800DD80F4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 4D262C482090FE5800DD80F4 /* xcode-github */;
+			target = 4D262C482090FE5800DD80F4 /* xcode-github-test-lib */;
 			targetProxy = 4D262C542090FE5800DD80F4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -440,14 +440,14 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "$(SRCROOT)/xcode-github-tests/xcode-github-info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/xcode-github-tests/xcode-github-test-lib-info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.xcode-github-test";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.xcode-github-test-lib";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 			};
@@ -465,14 +465,14 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "$(SRCROOT)/xcode-github-tests/xcode-github-info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/xcode-github-tests/xcode-github-test-lib-info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.xcode-github-test";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.xcode-github-test-lib";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 			};
@@ -528,7 +528,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4D262C5D2090FE5800DD80F4 /* Build configuration list for PBXNativeTarget "xcode-github" */ = {
+		4D262C5D2090FE5800DD80F4 /* Build configuration list for PBXNativeTarget "xcode-github-test-lib" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4D262C5E2090FE5800DD80F4 /* Debug */,

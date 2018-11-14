@@ -8,5 +8,5 @@
 
 #import <Cocoa/Cocoa.h>
 
-FOUNDATION_EXPORT double xcode_github_testVersionNumber;
-FOUNDATION_EXPORT const unsigned char xcode_github_testVersionString[];
+FOUNDATION_EXPORT double xcode_github_testsVersionNumber;
+FOUNDATION_EXPORT const unsigned char xcode_github_testsVersionString[];

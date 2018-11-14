@@ -24,6 +24,7 @@
 
 - (void)awakeFromNib {
     if (!self.logController) {
+        BNCLog(@"Library version %@.", XGVersion());
         [BNCNetworkService shared].allowAnySSLCert = YES;
         self.logController = [XGALogViewController new];
         self.statusController = [XGAStatusViewController new];

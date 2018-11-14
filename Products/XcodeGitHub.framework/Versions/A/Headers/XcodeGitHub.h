@@ -16,3 +16,5 @@
 #import "XGCommandOptions.h"
 #import "XGGitHubPullRequest.h"
 #import "XGXcodeBot.h"
+
+FOUNDATION_EXPORT NSString*_Nonnull XGVersion(void);
