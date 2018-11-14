@@ -48,10 +48,10 @@ usage: xcode-github [-dhsVv] -g <github-auth-token>
 
   -h, --help
       Print this help information.
-      
+
   -r, --repeat
       Repeat forever.
-      
+
   -s, --status
       Only print the status of the xcode server bots and quit.
 
@@ -182,7 +182,45 @@ curl --insecure --request POST \
         https://api.github.com/repos/BranchMetrics/ios-branch-deep-linking/commits/push-notifications/statuses
 ```
 
+Sample Result
+
+```
+[{
+    "avatar_url" = "https://avatars1.githubusercontent.com/u/1229047?v=4";
+    context = "continuous-integration/xcode-github";
+    "created_at" = "2018-11-14T20:10:27Z";
+    creator =     {
+        "avatar_url" = "https://avatars1.githubusercontent.com/u/1229047?v=4";
+        "events_url" = "https://api.github.com/users/E-B-Smith/events{/privacy}";
+        "followers_url" = "https://api.github.com/users/E-B-Smith/followers";
+        "following_url" = "https://api.github.com/users/E-B-Smith/following{/other_user}";
+        "gists_url" = "https://api.github.com/users/E-B-Smith/gists{/gist_id}";
+        "gravatar_id" = "";
+        "html_url" = "https://github.com/E-B-Smith";
+        id = 1229047;
+        login = "E-B-Smith";
+        "node_id" = "MDQ6VXNlcjEyMjkwNDc=";
+        "organizations_url" = "https://api.github.com/users/E-B-Smith/orgs";
+        "received_events_url" = "https://api.github.com/users/E-B-Smith/received_events";
+        "repos_url" = "https://api.github.com/users/E-B-Smith/repos";
+        "site_admin" = 0;
+        "starred_url" = "https://api.github.com/users/E-B-Smith/starred{/owner}{/repo}";
+        "subscriptions_url" = "https://api.github.com/users/E-B-Smith/subscriptions";
+        type = User;
+        url = "https://api.github.com/users/E-B-Smith";
+    };
+    description = "Creating Xcode bot...";
+    id = 5804895119;
+    "node_id" = MDEzOlN0YXR1c0NvbnRleHQ1ODA0ODk1MTE5;
+    state = pending;
+    "target_url" = "<null>";
+    "updated_at" = "2018-11-14T20:10:27Z";
+    url = "https://api.github.com/repos/BranchMetrics/xcode-github/statuses/55fa5949e8d8ad6879df2333a21b69228eb90f67";
+}]
+```
+
 ## Note Pad
+
 ```
 curl -k https://esmith.local:20343/api/bots | prettyjson
 curl -k https://esmith.local:20343/api/bots/1a023fbac7f749ede507153bb43d6878/integrations?last=1 | prettyjson
