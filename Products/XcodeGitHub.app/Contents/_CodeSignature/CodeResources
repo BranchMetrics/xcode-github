@@ -10,7 +10,7 @@
 		</data>
 		<key>Resources/Assets.car</key>
 		<data>
-		geasiuVYrjDAdT8+iC/RGRAFh1Y=
+		ePFeq4yE+dagtxXyZeWxoL+xAQs=
 		</data>
 		<key>Resources/Base.lproj/Main.storyboardc/Info.plist</key>
 		<data>
@@ -18,7 +18,7 @@
 		</data>
 		<key>Resources/Base.lproj/Main.storyboardc/MainMenu.nib</key>
 		<data>
-		RR2WzaMq3HHfjr7cI5uWfSQLUkQ=
+		hpIbmAhHEUabx2N+8zv+81ljp4E=
 		</data>
 		<key>Resources/XGAAddServerPanel.nib</key>
 		<data>
@@ -26,7 +26,7 @@
 		</data>
 		<key>Resources/XGALogViewController.nib</key>
 		<data>
-		pSPBetpmiHlRNv5cHBKAskYeHBs=
+		OSinBcz5C8LdOQjK21bCKf0TRo0=
 		</data>
 		<key>Resources/XGAPreferencesViewController.nib</key>
 		<data>
@@ -58,11 +58,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			geasiuVYrjDAdT8+iC/RGRAFh1Y=
+			ePFeq4yE+dagtxXyZeWxoL+xAQs=
 			</data>
 			<key>hash2</key>
 			<data>
-			qBJnZfhUmnbQyNJvoSowHX9hRGmPQdd/gylBH85tbbo=
+			v2eM8fD4+r7Cg6bdWJC2TvFQaFGPgFAOg13dQ+8YJTA=
 			</data>
 		</dict>
 		<key>Resources/Base.lproj/Main.storyboardc/Info.plist</key>
@@ -80,11 +80,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			RR2WzaMq3HHfjr7cI5uWfSQLUkQ=
+			hpIbmAhHEUabx2N+8zv+81ljp4E=
 			</data>
 			<key>hash2</key>
 			<data>
-			LEcK+7Nu5YJGkX0NpOQasd8CWB99assRxYn+E3zSQUE=
+			h8oGNaxlxwS6SWNq4bkMG3mEzC8x4rcHKUDMwQ4CxLk=
 			</data>
 		</dict>
 		<key>Resources/XGAAddServerPanel.nib</key>
@@ -102,11 +102,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			pSPBetpmiHlRNv5cHBKAskYeHBs=
+			OSinBcz5C8LdOQjK21bCKf0TRo0=
 			</data>
 			<key>hash2</key>
 			<data>
-			PAgd0ol07dFAJOX+NYVWZfPOTaswyRhED46t5v7mxeg=
+			snoDa+9dulodYPuB9FwkY7T1YA1/o0ZQgmTmCG+4u+c=
 			</data>
 		</dict>
 		<key>Resources/XGAPreferencesViewController.nib</key>
