@@ -410,7 +410,11 @@
     if (statusArray.count == 0) {
         XGAStatusViewItem *status = [XGAStatusViewItem new];
         status.statusImage = [NSImage imageNamed:@"RoundBlue"];
-        status.statusSummary = [APFormattedString boldText:@"< No Xcode servers added yet >"];
+        if (server.server.length > 0) {
+            status.statusSummary = [APFormattedString boldText:@"< No Xcode bots found >"];
+        } else {
+            status.statusSummary = [APFormattedString boldText:@"< No Xcode servers added yet >"];
+        }
         [statusArray addObject:status];
     }
     BNCPerformBlockOnMainThreadAsync(^{
