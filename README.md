@@ -17,7 +17,7 @@ I'd been using [Buildasaur](https://github.com/buildasaurs/Buildasaur), a great 
 * A macOS app that monitors your GitHub repos for PRs and creates new Xcode bots for them.
 * A command line utility that has many of the same functions of the macOS app.
 * A static library that has interfaces for GitHub and the Xcode CI system.
-* An xctest test bundle for testing.
+* An xctest bundle for testing.
 
 ## Project Goals
 
