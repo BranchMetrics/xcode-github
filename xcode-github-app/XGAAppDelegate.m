@@ -12,6 +12,7 @@
 #import "XGALogViewController.h"
 #import "XGAStatusViewController.h"
 #import "XGAPreferencesViewController.h"
+#import "XGASettings.h"
 #import <XcodeGitHub/XcodeGitHub.h>
 
 @interface XGAAppDelegate () <NSWindowDelegate>
@@ -47,9 +48,19 @@
     [self.preferencesController.window makeKeyAndOrderFront:self];
 }
 
+- (IBAction)addNewServer:(id)sender {
+    [self showPreferences:sender];
+    [self.preferencesController addServerAction:sender];
+}
+
 - (BOOL)windowShouldClose:(NSWindow*)window {
     self.preferencesController = nil;
     return YES;
+}
+
+- (void)applicationDidFinishLaunching:(NSNotification *)notification {
+    if (XGASettings.shared.servers.count == 0 && XGASettings.shared.gitHubSyncTasks.count == 0)
+        [self addNewServer:nil];
 }
 
 @end

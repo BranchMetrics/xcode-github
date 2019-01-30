@@ -151,6 +151,17 @@ FOUNDATION_EXPORT void BNCLogFlushMessages(void);
 ///@return  Returns true if the app is currently attached to a debugger.
 FOUNDATION_EXPORT BOOL BNCLogDebuggerIsAttached(void);
 
+#pragma - Debugging
+
+///@return  Returns true if the app is currently attached to a debugger.
+extern BOOL BNCLogDebuggerIsAttached(void);
+
+/// Stops execution at the current execution point.
+/// If attached to a debugger, current app will halt and wait for the debugger.
+/// If not attached to a debugger then the current app will probably quit executing.
+#define BNCLogDebugBreakpoint() \
+    do { raise(SIGINT); } while (0)
+
 #pragma mark - Logging
 ///@info Logging
 
@@ -179,9 +190,9 @@ FOUNDATION_EXPORT BOOL BNCLogDebuggerIsAttached(void);
     do  { \
         if (BNCLogBreakPointsAreEnabled()) { \
             BNCLogWriteMessageFormat(BNCLogLevelBreakPoint, __FILE__, __LINE__, @"Programmatic breakpoint."); \
-            if (BNCDebuggerIsAttached()) { \
+            if (BNCLogDebuggerIsAttached()) { \
                 BNCLogFlushMessages(); \
-                BNCDebugBreakpoint(); \
+                BNCLogDebugBreakpoint(); \
             } \
         } \
     } while (0)
@@ -191,9 +202,9 @@ FOUNDATION_EXPORT BOOL BNCLogDebuggerIsAttached(void);
     do  { \
         if (BNCLogBreakPointsAreEnabled() { \
             BNCLogWriteMessageFormat(BNCLogLevelBreakPoint, __FILE__, __LINE__, __VA_ARGS__); \
-            if (BNCDebuggerIsAttached()) { \
+            if (BNCLogDebuggerIsAttached()) { \
                 BNCLogFlushMessages(); \
-                BNCDebugBreakpoint(); \
+                BNCLogDebugBreakpoint(); \
             } \
         } \
     } while (0)
@@ -203,9 +214,9 @@ FOUNDATION_EXPORT BOOL BNCLogDebuggerIsAttached(void);
     do  { \
         if (!(condition)) { \
             BNCLogWriteMessageFormat(BNCLogLevelAssert, __FILE__, __LINE__, @"(%s) !!!", #condition); \
-            if (BNCLogBreakPointsAreEnabled() && BNCDebuggerIsAttached()) { \
+            if (BNCLogBreakPointsAreEnabled() && BNCLogDebuggerIsAttached()) { \
                 BNCLogFlushMessages(); \
-                BNCDebugBreakpoint(); \
+                BNCLogDebugBreakpoint(); \
             } \
         } \
     } while (0)
@@ -217,9 +228,9 @@ FOUNDATION_EXPORT BOOL BNCLogDebuggerIsAttached(void);
         if (!(condition)) { \
             NSString *m = [NSString stringWithFormat:message, __VA_ARGS__]; \
             BNCLogWriteMessageFormat(BNCLogLevelAssert, __FILE__, __LINE__, @"(%s) !!! %@", #condition, m); \
-            if (BNCLogBreakPointsAreEnabled() && BNCDebuggerIsAttached()) { \
+            if (BNCLogBreakPointsAreEnabled() && BNCLogDebuggerIsAttached()) { \
                 BNCLogFlushMessages(); \
-                BNCDebugBreakpoint(); \
+                BNCLogDebugBreakpoint(); \
             } \
         } \
     } while (0)

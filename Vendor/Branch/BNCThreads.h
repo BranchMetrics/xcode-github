@@ -38,6 +38,10 @@ static inline void BNCPerformBlockOnMainThreadSync(dispatch_block_t block) {
     }
 }
 
+static inline void BNCPerformBlockAsync(dispatch_block_t block) {
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), block);
+}
+
 static inline void BNCSleepForTimeInterval(NSTimeInterval seconds) {
     double secPart = trunc(seconds);
     double nanoPart = trunc((seconds - secPart) * ((double)NSEC_PER_SEC));

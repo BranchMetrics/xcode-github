@@ -41,11 +41,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BNCNetworkOperation*) postOperationWithURL:(NSURL *)URL
                         contentType:(NSString*)contentType
-                               data:(NSData *)data
+                               data:(NSData*_Nullable)data
                          completion:(void (^)(BNCNetworkOperation*operation))completion;
 
 - (BNCNetworkOperation*) postOperationWithURL:(NSURL *)URL
-                                     JSONData:(id)dictionaryOrArray
+                                     JSONData:(id _Nullable)dictionaryOrArray
                                    completion:(void (^)(BNCNetworkOperation*operation))completion;
 
 - (NSError*_Nullable) pinSessionToPublicSecKeyRefs:(NSArray/**<SecKeyRef>*/*)publicKeys;

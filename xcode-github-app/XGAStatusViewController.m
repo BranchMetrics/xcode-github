@@ -146,7 +146,7 @@
     } else {
 
         __auto_type task = [XGAGitHubSyncTask new];
-        task.xcodeServer = item.bot.serverName;
+        task.xcodeServer = item.bot.server.server;
         task.botNameForTemplate = item.botName;
         [[XGASettings shared].gitHubSyncTasks addObject:task];
 
@@ -213,6 +213,24 @@
     [[NSWorkspace sharedWorkspace] openURL:URL];
 }
 
+- (IBAction)startStopIntegration:(id)sender {
+    XGAStatusViewItem*item = [self selectedTableItem];
+    if (!item) return;
+
+    BNCPerformBlockAsync(^ {
+        if (item.botStatus.integrationID != nil &&
+          ![item.botStatus.currentStep isEqualToString:@"completed"]) {
+            [item.bot cancelIntegrationID:item.botStatus.integrationID];
+        } else {
+            [item.bot startIntegration];
+        }
+        BNCSleepForTimeInterval(0.5);
+        BNCPerformBlockOnMainThreadSync(^{
+            [self reload:nil];
+        });
+    });
+}
+
 - (IBAction)reload:(id)sender {
     [self updateStatusNow];
 }
@@ -248,6 +266,16 @@
             return YES;
         }
         return NO;
+    }
+    if (menuItem.action == @selector(startStopIntegration:)) {
+        XGAStatusViewItem*item = [self selectedTableItem];
+        if (!item) return NO;
+        if (item.botStatus.integrationID != nil &&
+          ![item.botStatus.currentStep isEqualToString:@"completed"])
+            menuItem.title = @"Cancel Integration";
+        else
+            menuItem.title = @"Start Integration";
+        return YES;
     }
     SEL contextMenuItems[] = {
         @selector(showInfo:),
@@ -335,16 +363,18 @@
 
     BNCLogDebug(@"Start updateStatus.");
     BNCPerformBlockOnMainThreadAsync(^{ self.statusTextField.stringValue = @""; });
+    /*
     NSMutableDictionary<NSString*, XGServer*>*statusServers = [NSMutableDictionary new];
-    for (XGAServer*server in XGASettings.shared.servers) {
+    for (XGAServer*server in XGASettings.shared.servers.objectEnumerator) {
         if (server.server.length > 0)
             statusServers[server.server] = server;
     }
+    */
     NSArray<XGAGitHubSyncTask*>* syncTasks = XGASettings.shared.gitHubSyncTasks;
+    NSDictionary<NSString*, XGServer*>*statusServers = XGASettings.shared.servers;
     for (XGAGitHubSyncTask*task in syncTasks) {
-        if (task.xcodeServer.length == 0 || statusServers[task.xcodeServer] == nil)
-            continue;
-        [self updateSyncBots:task];
+        if (task.xcodeServer.length != 0 && statusServers[task.xcodeServer] != nil)
+            [self updateSyncBots:task];
     }
     for (XGAServer*server in statusServers.objectEnumerator) {
         [self updateXcodeServerStatus:server];
@@ -364,10 +394,16 @@
 
 - (void) updateSyncBots:(XGAGitHubSyncTask*)syncTask {
     NSError*error = nil;
-    if (syncTask.xcodeServer.length &&
-        syncTask.botNameForTemplate.length) {
+    if (syncTask.xcodeServer.length && syncTask.botNameForTemplate.length) {
+        XGAServer*server = [XGASettings shared].servers[syncTask.xcodeServer];
+        if (!server) {
+            server = [XGAServer new];
+            server.server = syncTask.xcodeServer;
+        }
         XGCommandOptions*options = [XGCommandOptions new];
-        options.xcodeServerName = syncTask.xcodeServer;
+        options.xcodeServerName = server.server;
+        options.xcodeServerUser = server.user;
+        options.xcodeServerPassword = server.password;
         options.templateBotName = syncTask.botNameForTemplate;
         options.githubAuthToken = XGASettings.shared.gitHubToken;
         options.dryRun = XGASettings.shared.dryRun;
@@ -402,7 +438,7 @@
         } else {
             for (XGXcodeBot *bot in bots.objectEnumerator) {
                 XGXcodeBotStatus*botStatus = [bot status];
-                __auto_type item = [XGAStatusViewItem itemWithBot:bot status:botStatus];
+                __auto_type item = [XGAStatusViewItem newItemWithBot:bot status:botStatus];
                 if (item) [statusArray addObject:item];
             }
         }

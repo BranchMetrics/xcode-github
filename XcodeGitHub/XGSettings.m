@@ -9,6 +9,7 @@
 */
 
 #import "XGSettings.h"
+#import "BNCLog.h"
 
 @interface NSMutableDictionary (XG)
 + (instancetype _Nonnull) mutableDeepCopy:(NSDictionary*)dictionary;
@@ -33,7 +34,7 @@
     }
     
 exit:
-    if (error) NSLog(@"Error creating mutable dictionary: %@.", error);
+    if (error) BNCLogError(@"Error creating mutable dictionary: %@.", error);
     if (!result) result = [NSMutableDictionary new];
     return result;
 }

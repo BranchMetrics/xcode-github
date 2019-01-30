@@ -67,6 +67,9 @@ usage: xcode-github [-dhsVv] -g <github-auth-token>
 
   -x, --xcodeserver <xcode-server-domain-name>
       The network name of the xcode server.
+
+The tool returns 0 on success, otherwise a non-zero value.
+
 ```
 
 ## Program Flow

@@ -39,7 +39,11 @@ NSError*_Nullable XGCreateBotWithOptions(
         gitHubPullRequestTitle:pr.title
         error:&error];
     if (error) {
-        BNCLogError(@"Can't create Xcode bot: %@.", error);
+        if (error.code == -999) {
+            BNCLogError(@"Can't create Xcode bot, permission error: %@.", error);
+        } else {
+            BNCLogError(@"Can't create Xcode bot: %@.", error);
+        }
     }
     return error;
 }

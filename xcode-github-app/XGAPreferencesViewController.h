@@ -10,7 +10,12 @@
 
 #import <Cocoa/Cocoa.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface XGAPreferencesViewController : NSViewController
 + (instancetype) new;
+- (IBAction)addServerAction:(id _Nullable)sender;
 @property (strong) IBOutlet NSWindow*window;
 @end
+
+NS_ASSUME_NONNULL_END

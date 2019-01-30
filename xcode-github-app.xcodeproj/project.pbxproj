@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2BB6F4D321F9E3FF001E8693 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2BB6F4D121F9E3FF001E8693 /* Credits.rtf */; };
 		4D12BA0D20A252CE00E5B1DB /* XGALogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D12BA0B20A252CE00E5B1DB /* XGALogViewController.m */; };
 		4D12BA0E20A252CE00E5B1DB /* XGALogViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D12BA0C20A252CE00E5B1DB /* XGALogViewController.xib */; };
 		4D5CC05E2090CAB60042E98B /* BNCKeyChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D5CC05D2090CAB60042E98B /* BNCKeyChain.m */; };
@@ -51,6 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2BB6F4D221F9E3FF001E8693 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = Base; path = Base.lproj/Credits.rtf; sourceTree = "<group>"; };
 		4D0DD54420597FE6001721C1 /* xcode-github-app.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = "xcode-github-app.md"; path = "xcode-github-app/xcode-github-app.md"; sourceTree = "<group>"; };
 		4D12BA0A20A252CE00E5B1DB /* XGALogViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGALogViewController.h; sourceTree = "<group>"; };
 		4D12BA0B20A252CE00E5B1DB /* XGALogViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGALogViewController.m; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				4D7661712057565200216B72 /* Assets.xcassets */,
+				2BB6F4D121F9E3FF001E8693 /* Credits.rtf */,
 				4D7661762057565200216B72 /* Info.plist */,
 				4D7661772057565300216B72 /* main.m */,
 				4D7661732057565200216B72 /* Main.storyboard */,
@@ -293,6 +296,7 @@
 				4D7661722057565200216B72 /* Assets.xcassets in Resources */,
 				4D8352D120A516A200184259 /* XGAPreferencesViewController.xib in Resources */,
 				4D6536382150486B000812E1 /* XGAStatusPopover.xib in Resources */,
+				2BB6F4D321F9E3FF001E8693 /* Credits.rtf in Resources */,
 				4D12BA0E20A252CE00E5B1DB /* XGALogViewController.xib in Resources */,
 				4D8352C620A3F30A00184259 /* XGAStatusViewController.xib in Resources */,
 				4DAA4667214CBEFF007A39EB /* XGAAddServerPanel.xib in Resources */,
@@ -337,6 +341,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		2BB6F4D121F9E3FF001E8693 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2BB6F4D221F9E3FF001E8693 /* Base */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
 		4D7661732057565200216B72 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

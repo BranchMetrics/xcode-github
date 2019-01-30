@@ -54,11 +54,26 @@ build_project XcodeGitHub
 build_project xcode-github-cli
 build_project xcode-github-app
 
+ditto -c -k --sequesterRsrc --keepParent \
+    "$build_products_directory"/XcodeGitHub.app \
+    "$build_products_directory"/XcodeGitHub.app.zip
+rm -rf "$build_products_directory"/XcodeGitHub.app
+
+ditto -c -k --sequesterRsrc --keepParent \
+    "$build_products_directory"/XcodeGitHub.framework \
+    "$build_products_directory"/XcodeGitHub.framework.zip
+rm -rf "$build_products_directory"/XcodeGitHub.framework
+
 rm -Rf "$build_products_directory"/libXcodeGitHub.a
 rm -Rf "$build_products_directory"/usr
 
 echo ">>> Build ${marketing_version}(${build_version}) products in 'Products':"
 ls -al Products
+
+if ! askYN "Release version ${marketing_version}?"
+then
+    exit 1
+fi
 
 git add --all
 git commit --allow-empty -m "Release ${marketing_version}."

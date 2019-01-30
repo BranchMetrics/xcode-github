@@ -20,6 +20,7 @@
 @property (strong) NSNetService*service;
 @property (strong) NSArray<NSString*>*names;
 @property (strong) NSArray<NSString*>*addresses;
+@property (strong) NSError*_Nullable error;
 @property (copy)   void (^completion)(XGANetworkServiceHost*serviceHost);
 @end
 
@@ -48,7 +49,7 @@
 - (void)netService:(NSNetService *)netService
      didNotResolve:(NSDictionary *)errorDict {
     BNCLogDebug(@"Can't resolve %@: %@.", netService, errorDict);
-//    self.error = [NSError errorWithDomain:NSNetworkDomain code:-1 userInfo:errorDict];
+    self.error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorDNSLookupFailed userInfo:errorDict];
 }
 
 - (void)netServiceDidStop:(NSNetService *)service {

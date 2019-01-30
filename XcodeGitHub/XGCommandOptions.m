@@ -67,7 +67,7 @@
 
 + (NSString*) helpString {
     NSString *kHelpString =
-        @"xcode-github - Creates an Xcode test bots for new GitHub PRs.\n"
+        @"xcode-github - Creates Xcode test bots for new GitHub PRs.\n"
          "\n"
          "usage: xcode-github [-dhsVv] -g <github-auth-token>\n"
          "                 -t <bot-template> -x <xcode-server-domain-name>\n"
@@ -107,6 +107,8 @@
          "\n"
          "  -x, --xcodeserver <xcode-server-domain-name>\n"
          "      The network name of the xcode server.\n"
+         "\n"
+         "The tool returns 0 on success, otherwise a non-zero value.\n"
          "\n"
          ;
     return kHelpString;

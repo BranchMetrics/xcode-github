@@ -100,7 +100,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (strong, readonly) NSString*_Nullable name;
 @property (strong, readonly) NSString*_Nullable botID;
-@property (strong, readonly) NSString*_Nonnull  serverName;
+@property (strong, readonly) XGServer*_Nonnull  server;
 
 /// @brief Repo Information
 
@@ -129,7 +129,7 @@ NS_ASSUME_NONNULL_BEGIN
  @return A dictionary with a key of the bot name and value of the bot status.
 */
 + (NSDictionary<NSString*, XGXcodeBot*>*_Nullable) botsForServer:(XGServer*)xcodeServer
-                                                    error:(NSError*__autoreleasing _Nullable*_Nullable)error;
+                                        error:(NSError*__autoreleasing _Nullable*_Nullable)error;
 
 + (NSString*_Nonnull) botNameFromPRNumber:(NSString*_Nonnull)number title:(NSString*_Nonnull)title;
 
@@ -140,6 +140,7 @@ NS_ASSUME_NONNULL_BEGIN
                                            error:(NSError*__autoreleasing _Nullable*_Nullable)error;
 
 - (NSError*_Nullable) startIntegration;
+- (NSError*_Nullable) cancelIntegrationID:(NSString*)integrationID;
 - (XGXcodeBotStatus*_Nonnull) status;
 - (NSError*_Nullable) deleteBot;
 @end

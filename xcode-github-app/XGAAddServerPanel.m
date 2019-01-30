@@ -12,6 +12,7 @@
 #import "XGAAddServerPanel.h"
 #import "XGANetworkServiceBrowser.h"
 #import "BNCThreads.h"
+#import <stdatomic.h>
 
 NSTimeInterval const kNetworkRefreshInterval = 7.0;
 
@@ -93,26 +94,48 @@ NSTimeInterval const kNetworkRefreshInterval = 7.0;
     [self.sheetParent endSheet:self returnCode:NSModalResponseCancel];
 }
 
-- (void) showAlertWithError:(NSError*)error {
-    NSAlert*alert = [[NSAlert alloc] init];
-    alert.messageText = [NSString stringWithFormat:@"Can't connect to '%@'", self.server.server];
-    alert.informativeText = [error localizedDescription];
-    alert.alertStyle = NSAlertStyleCritical;
-    [alert beginSheetModalForWindow:self completionHandler:nil];
-}
-
 - (IBAction)add:(id)sender {
-    self.server.server = XGACleanString(self.serverTextField.stringValue);
-    self.server.user = XGACleanString(self.userTextField.stringValue);
+    self.server.server   = XGACleanString(self.serverTextField.stringValue);
+    self.server.user     = XGACleanString(self.userTextField.stringValue);
     self.server.password = XGACleanString(self.passwordTextField.stringValue);
     if (self.server.server.length <= 0) return;
 
-    NSError*error = nil;
-    [XGXcodeBot botsForServer:self.server error:&error];
-    if (error) {
-        [self showAlertWithError:error];
-        return;
+    // Timeout in a few seconds--
+
+    __block _Atomic(BOOL) timedOut = NO;
+    __block _Atomic(NSError*) error = nil;
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    BNCPerformBlockAsync(^{
+        BNCSleepForTimeInterval(5.0);
+        atomic_exchange(&timedOut, YES);
+        dispatch_semaphore_signal(semaphore);
+    });
+    BNCPerformBlockAsync(^{
+        NSError*localError = nil;
+        [XGXcodeBot botsForServer:self.server error:&localError];
+        atomic_exchange(&error, localError);
+        dispatch_semaphore_signal(semaphore);
+    });
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+
+    if (error != nil || timedOut) {
+        NSAlert*alert = [[NSAlert alloc] init];
+        alert.messageText = [NSString stringWithFormat:@"Can't connect to '%@'.", self.server.server];
+        if (error != nil)
+            alert.informativeText = [error localizedDescription];
+        alert.alertStyle = NSAlertStyleWarning;
+        [alert addButtonWithTitle:@"Add Anyway"];
+        [alert addButtonWithTitle:@"Cancel"];
+        [alert beginSheetModalForWindow:self completionHandler:^(NSModalResponse returnCode) {
+            if (returnCode == NSAlertFirstButtonReturn) 
+                [self finishSheetWithResponseOK];
+        }];
+    } else {
+        [self finishSheetWithResponseOK];
     }
+}
+
+- (void) finishSheetWithResponseOK {
     [self stopNetworkLookup];
     self.serverArrayController = nil;
     [self.sheetParent endSheet:self returnCode:NSModalResponseOK];
@@ -145,7 +168,7 @@ NSTimeInterval const kNetworkRefreshInterval = 7.0;
 
 - (void) restartNetworkLookup {
     @synchronized(self) {
-        NSLog(@"restartNetworkLookup");
+        //NSLog(@"restartNetworkLookup");
         [self stopNetworkLookup];
         self.networkLookupDate = [NSDate dateWithTimeInterval:kNetworkRefreshInterval sinceDate:[NSDate date]];
         self.activityWheel.doubleValue = 0.0;

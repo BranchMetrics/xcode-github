@@ -1,5 +1,0 @@
-framework module XcodeGitHub {
-  umbrella header "XcodeGitHub.h"
-  export *
-  module * { export * }
-}
