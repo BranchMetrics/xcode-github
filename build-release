@@ -73,28 +73,11 @@ compress_product XcodeGitHub.app
 compress_product XcodeGitHub.app.dSYM
 compress_product XcodeGitHub.framework
 
-ditto -c -k --sequesterRsrc --keepParent \
-    "$build_products_directory"/XcodeGitHub.app \
-    "$build_products_directory"/XcodeGitHub.app.zip
-rm -rf "$build_products_directory"/XcodeGitHub.app
-
-ditto -c -k --sequesterRsrc --keepParent \
-    "$build_products_directory"/XcodeGitHub.framework \
-    "$build_products_directory"/XcodeGitHub.framework.zip
-rm -rf "$build_products_directory"/XcodeGitHub.framework
-
 rm -Rf "$build_products_directory"/libXcodeGitHub.a
 rm -Rf "$build_products_directory"/usr
 
 printf "${textBold}>>> Build ${marketing_version}(${build_version}) products in 'Products':${textNormal}\n"
 ls -al "$build_products_directory"
-
-if ! askYN "Release version ${marketing_version}?"
-then
-    exit 1
-fi
-
-rm -rf "$build_products_directory"
 
 if ! askYN "Release version ${marketing_version}?"
 then

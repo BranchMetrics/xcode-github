@@ -537,18 +537,29 @@ exit:
         );
         dictionary[@"configuration"]
             [@"sourceControlBlueprint"]
+            [@"DVTSourceControlWorkspaceBlueprintIdentifierKey"] =
+                [NSUUID UUID].UUIDString;
+        dictionary[@"configuration"]
+            [@"sourceControlBlueprint"]
             [@"DVTSourceControlWorkspaceBlueprintLocationsKey"]
             [self.sourceControlWorkspaceBlueprintLocationsID]
             [@"DVTSourceControlBranchIdentifierKey"] =
                 branchName;
+        dictionary[@"configuration"]
+            [@"sourceControlBlueprint"]
+            [@"DVTSourceControlWorkspaceBlueprintLocationsKey"]
+            [self.sourceControlWorkspaceBlueprintLocationsID]
+            [@"DVTSourceControlLocationRevisionKey"] =
+                nil;
         dictionary[@"configuration"][@"scheduleType"] = @2; // 2: On commit
-        dictionary[@"integration_counter"] = nil;
-        dictionary[@"lastRevisionBlueprint"] = nil;
+        dictionary[@"integration_counter"] = @0;
+        dictionary[@"lastRevisionBlueprint"] = @{};
         dictionary[@"name"] = newBotName;
         dictionary[@"templateBotName"] = self.name;
         dictionary[@"pullRequestNumber"] = pullRequestNumber;
         dictionary[@"pullRequestTitle"] = pullRequestTitle;
-
+        dictionary[@"sourceControlBlueprintIdentifier"] = [NSUUID UUID].UUIDString;
+        
         NSData *data = [NSJSONSerialization dataWithJSONObject:dictionary options:0 error:&localError];
         if (!data) {
             localError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSKeyValueValidationError
