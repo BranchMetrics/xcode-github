@@ -10,7 +10,7 @@
 
 #import <Foundation/Foundation.h>
 #import <XcodeGitHub/XcodeGitHub.h>
-#include <sysexits.h>
+#import <sysexits.h>
 
 static BNCLogLevel global_logLevel = BNCLogLevelWarning;
 

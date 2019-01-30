@@ -4,6 +4,9 @@ set -euo pipefail
 marketing_version=1.0.3
 build_version=1
 
+textBold="\e[1m\e[34m"  # Dark Blue
+textNormal="\e[0m"
+
 function full_path_of_directory() {
     local directory_name
     directory_name="$1"
@@ -42,17 +45,33 @@ mkdir -p "$build_products_directory"
 
 function build_project() {
     local project="$1"
+    local executable="$2"
+    printf "${textBold}>>> Building '$project'...${textNormal}\n" 1>&2
     update_version "$project"
     xcodebuild \
         -project "${project}".xcodeproj \
         -scheme "${project}" \
+        -configuration Release \
         -quiet clean build \
         CONFIGURATION_BUILD_DIR="$build_products_directory"
+    codesign -dv --verbose=4 "$build_products_directory"/"$executable"
+    echo ""
 }
 
-build_project XcodeGitHub
-build_project xcode-github-cli
-build_project xcode-github-app
+function compress_product() {
+    local product="$build_products_directory"/"$1"
+    ditto -c -k --sequesterRsrc --keepParent "$product" "$product".zip
+    rm -rf "$product"
+}
+
+build_project XcodeGitHub       XcodeGitHub.framework/Versions/A/XcodeGitHub
+build_project xcode-github-cli  xcode-github
+build_project xcode-github-app  XcodeGitHub.app
+
+compress_product xcode-github.dSYM
+compress_product XcodeGitHub.app
+compress_product XcodeGitHub.app.dSYM
+compress_product XcodeGitHub.framework
 
 ditto -c -k --sequesterRsrc --keepParent \
     "$build_products_directory"/XcodeGitHub.app \
@@ -67,8 +86,15 @@ rm -rf "$build_products_directory"/XcodeGitHub.framework
 rm -Rf "$build_products_directory"/libXcodeGitHub.a
 rm -Rf "$build_products_directory"/usr
 
-echo ">>> Build ${marketing_version}(${build_version}) products in 'Products':"
-ls -al Products
+printf "${textBold}>>> Build ${marketing_version}(${build_version}) products in 'Products':${textNormal}\n"
+ls -al "$build_products_directory"
+
+if ! askYN "Release version ${marketing_version}?"
+then
+    exit 1
+fi
+
+rm -rf "$build_products_directory"
 
 if ! askYN "Release version ${marketing_version}?"
 then
