@@ -295,7 +295,10 @@ _Test Coverage_: 65% (193 tests).
             _repoOwner = [self.sourceControlRepository
                 substringWithRange:NSMakeRange(ownerRange.location+1, repoRange.location - ownerRange.location - 1)];
             _repoName = [self.sourceControlRepository
-                substringWithRange:NSMakeRange(repoRange.location+1, self.sourceControlRepository.length - repoRange.location - 1)];
+                substringWithRange:NSMakeRange(
+                    repoRange.location+1,
+                    self.sourceControlRepository.length - repoRange.location - 1
+                )];
             if ([_repoName hasSuffix:@".git"]) {
                 _repoName = [_repoName substringWithRange:NSMakeRange(0, _repoName.length-4)];
             }
@@ -511,10 +514,21 @@ exit:
     XGXcodeBot *bot = nil;
     NSError *localError = nil;
     {
+        // Simply using the 'duplicate' bot api and changing the git branch won't actually change
+        // the git branch to the branch of the PR.
+        //
+        // Steps:
+        // 1. Duplicate the bot.
+        // 2. Get the new bot.
+        // 3. Modify the bot to the new branch with a PATCH.
+
+        //
+        // Duplicate the bot:
+        //
+
         NSString *string =
             [NSString stringWithFormat:@"https://%@:20343/api/bots/%@/duplicate",
-                self.server.server,
-                self.botID];
+                self.server.server, self.botID];
         NSURL *URL = [NSURL URLWithString:string];
         if (!URL) {
             localError =
@@ -528,38 +542,12 @@ exit:
             BNCLogError(@"Bad server name '%@'.", self.server.server);
             goto exit;
         }
-
-        NSMutableDictionary *dictionary = (__bridge_transfer NSMutableDictionary*)
-            CFPropertyListCreateDeepCopy(
-                kCFAllocatorDefault,
-                (CFDictionaryRef)self.dictionary,
-                kCFPropertyListMutableContainers
-        );
-        dictionary[@"configuration"]
-            [@"sourceControlBlueprint"]
-            [@"DVTSourceControlWorkspaceBlueprintIdentifierKey"] =
-                [NSUUID UUID].UUIDString;
-        dictionary[@"configuration"]
-            [@"sourceControlBlueprint"]
-            [@"DVTSourceControlWorkspaceBlueprintLocationsKey"]
-            [self.sourceControlWorkspaceBlueprintLocationsID]
-            [@"DVTSourceControlBranchIdentifierKey"] =
-                branchName;
-        dictionary[@"configuration"]
-            [@"sourceControlBlueprint"]
-            [@"DVTSourceControlWorkspaceBlueprintLocationsKey"]
-            [self.sourceControlWorkspaceBlueprintLocationsID]
-            [@"DVTSourceControlLocationRevisionKey"] =
-                nil;
-        dictionary[@"configuration"][@"scheduleType"] = @2; // 2: On commit
-        dictionary[@"integration_counter"] = @0;
-        dictionary[@"lastRevisionBlueprint"] = @{};
+        __auto_type dictionary = [NSMutableDictionary new];
         dictionary[@"name"] = newBotName;
         dictionary[@"templateBotName"] = self.name;
         dictionary[@"pullRequestNumber"] = pullRequestNumber;
         dictionary[@"pullRequestTitle"] = pullRequestTitle;
-        dictionary[@"sourceControlBlueprintIdentifier"] = [NSUUID UUID].UUIDString;
-        
+
         NSData *data = [NSJSONSerialization dataWithJSONObject:dictionary options:0 error:&localError];
         if (!data) {
             localError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSKeyValueValidationError
@@ -578,13 +566,13 @@ exit:
             }];
         if (self.server.user.length > 0)
             [operation setUser:self.server.user password:self.server.password];
+        [operation.request addValue:@"7" forHTTPHeaderField:@"X-XCSClientVersion"];
         [operation start];
         dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
         if (operation.error) {
             localError = operation.error;
             goto exit;
         }
-
         if (operation.HTTPStatusCode != 201) {
             localError = [NSError errorWithDomain:NSNetServicesErrorDomain
                 code:NSNetServicesInvalidError userInfo:@{NSLocalizedDescriptionKey:
@@ -592,9 +580,131 @@ exit:
             BNCLogDebug(@"Response was: %@.", [operation stringFromResponseData]);
             goto exit;
         }
-
         [operation deserializeJSONResponseData];
         NSDictionary *d = (id) operation.responseData;
+        if (!([d isKindOfClass:NSDictionary.class] && [d[@"_id"] isKindOfClass:NSString.class])) {
+            localError =
+                [NSError errorWithDomain:NSNetServicesErrorDomain
+                    code:NSURLErrorBadServerResponse
+                    userInfo:@{ NSLocalizedDescriptionKey: @"Expected an Xcode bot response." }];
+            goto exit;
+        }
+        NSString*newBotID = d[@"_id"];
+
+        //
+        // Get the just created bot:
+        //
+
+        string =
+            [NSString stringWithFormat:@"https://%@:20343/api/bots/%@",
+                self.server.server, newBotID];
+        URL = [NSURL URLWithString:string];
+        semaphore = dispatch_semaphore_create(0);
+        operation =
+            [[BNCNetworkService shared]
+                getOperationWithURL:URL
+                completion:^(BNCNetworkOperation *operation) {
+                    dispatch_semaphore_signal(semaphore);
+            }];
+        if (self.server.user.length > 0)
+            [operation setUser:self.server.user password:self.server.password];
+        [operation.request addValue:@"7" forHTTPHeaderField:@"X-XCSClientVersion"];
+        [operation start];
+        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+        if (operation.error) {
+            localError = operation.error;
+            goto exit;
+        }
+        if (operation.HTTPStatusCode != 200) {
+            localError = [NSError errorWithDomain:NSNetServicesErrorDomain
+                code:NSNetServicesInvalidError userInfo:@{NSLocalizedDescriptionKey:
+                    [NSString stringWithFormat:@"HTTP Status %ld", (long) operation.HTTPStatusCode]}];
+            BNCLogDebug(@"Response was: %@.", [operation stringFromResponseData]);
+            goto exit;
+        }
+        [operation deserializeJSONResponseData];
+        d = (id) operation.responseData;
+        if (!([d isKindOfClass:NSDictionary.class] &&
+              [d[@"_id"] isKindOfClass:NSString.class] &&
+              [newBotID isEqualToString:d[@"_id"]])) {
+            localError =
+                [NSError errorWithDomain:NSNetServicesErrorDomain
+                    code:NSURLErrorBadServerResponse
+                    userInfo:@{ NSLocalizedDescriptionKey: @"Expected an Xcode bot response." }];
+            goto exit;
+        }
+
+        //
+        // Fix up the git branch of the duplicated bot:
+        //
+
+        string =
+            [NSString stringWithFormat:@"https://%@:20343/api/bots/%@?overwriteBlueprint=true",
+                self.server.server, newBotID];
+        URL = [NSURL URLWithString:string];
+
+        dictionary = (__bridge_transfer NSMutableDictionary*)
+            CFPropertyListCreateDeepCopy(
+                kCFAllocatorDefault,
+                (CFDictionaryRef)d,
+                kCFPropertyListMutableContainers
+        );
+        dictionary[@"_id"] = nil;
+        dictionary[@"_rev"] = nil;
+        dictionary[@"tinyID"] = nil;
+        dictionary[@"configuration"]
+            [@"sourceControlBlueprint"]
+            [@"DVTSourceControlWorkspaceBlueprintLocationsKey"]
+            [self.sourceControlWorkspaceBlueprintLocationsID]
+            [@"DVTSourceControlBranchIdentifierKey"]
+                = branchName;
+        dictionary[@"configuration"]
+            [@"sourceControlBlueprint"]
+            [@"DVTSourceControlWorkspaceBlueprintRemoteRepositoryAuthenticationStrategiesKey"]
+                = @{};
+        dictionary[@"configuration"]
+            [@"sourceControlBlueprint"]
+            [@"DVTSourceControlWorkspaceBlueprintIdentifierKey"]
+                = [NSUUID UUID].UUIDString;
+        dictionary[@"configuration"][@"scheduleType"] = @2; // 2: On commit
+        dictionary[@"sourceControlBlueprintIdentifier"] = nil;
+        dictionary[@"lastRevisionBlueprint"] = nil;
+
+        data = [NSJSONSerialization dataWithJSONObject:dictionary options:0 error:&localError];
+        if (!data) {
+            localError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSKeyValueValidationError
+                userInfo:@{ NSLocalizedDescriptionKey: @"Can't create bot dictionary."}];
+        }
+        if (localError || !data) goto exit;
+
+        semaphore = dispatch_semaphore_create(0);
+        operation =
+            [[BNCNetworkService shared]
+                postOperationWithURL:URL
+                contentType:@"application/json"
+                data:data
+                completion:^(BNCNetworkOperation *operation) {
+                    dispatch_semaphore_signal(semaphore);
+            }];
+        if (self.server.user.length > 0)
+            [operation setUser:self.server.user password:self.server.password];
+        operation.request.HTTPMethod = @"PATCH";
+        [operation.request addValue:@"7" forHTTPHeaderField:@"X-XCSClientVersion"];
+        [operation start];
+        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+        if (operation.error) {
+            localError = operation.error;
+            goto exit;
+        }
+        if (operation.HTTPStatusCode != 200) {
+            localError = [NSError errorWithDomain:NSNetServicesErrorDomain
+                code:NSNetServicesInvalidError userInfo:@{NSLocalizedDescriptionKey:
+                    [NSString stringWithFormat:@"HTTP Status %ld", (long) operation.HTTPStatusCode]}];
+            BNCLogDebug(@"Response was: %@.", [operation stringFromResponseData]);
+            goto exit;
+        }
+        [operation deserializeJSONResponseData];
+        d = (id) operation.responseData;
         if ([d isKindOfClass:NSDictionary.class]) {
             bot = [[XGXcodeBot alloc] initWithServer:self.server dictionary:d];
             if (bot) {

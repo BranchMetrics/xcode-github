@@ -12,7 +12,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4D7335452097CF6700A0D416 /* xcode-github-cli.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "xcode-github-cli.md"; path = "xcode-github-cli/xcode-github-cli.md"; sourceTree = "<group>"; };
+		4D7335452097CF6700A0D416 /* xcode-github-cli.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "xcode-github-cli.md"; path = "Documentation/xcode-github-cli.md"; sourceTree = "<group>"; };
 		4D744C032047A53B002CA796 /* xcode-github */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "xcode-github"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D744C062047A53B002CA796 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4DDAA55A216AEC95002F3F8E /* XcodeGitHub.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XcodeGitHub.framework; path = Products/XcodeGitHub.framework; sourceTree = "<group>"; };

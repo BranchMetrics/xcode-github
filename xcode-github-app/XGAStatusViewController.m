@@ -113,6 +113,9 @@
     [detail append:status.statusDetail];
     if (status.botName.length)
         [detail italicText:@"\n\nBot: %@", status.botName];
+    if (status.branchOrPRName.length)
+        [detail italicText:@"\nRepo: %@/%@ %@",
+            status.bot.repoOwner, status.bot.repoName, status.bot.branch];
     self.statusPopover.detailTextField.attributedStringValue =
         [detail renderAttributedStringWithFont:font];
 
@@ -231,6 +234,18 @@
     });
 }
 
+- (IBAction)showPullRequest:(id)sender {
+    XGAStatusViewItem*item = [self selectedTableItem];
+    if (item.bot.repoOwner == nil || item.bot.repoName == nil || item.bot.pullRequestNumber == nil)
+        return;
+
+    NSString*string = [NSString stringWithFormat:@"https://github.com/%@/%@/pull/%@",
+        item.bot.repoOwner, item.bot.repoName, item.bot.pullRequestNumber];
+    NSURL*URL = [NSURL URLWithString:string];
+    if (!URL) return;
+    [[NSWorkspace sharedWorkspace] openURL:URL];
+}
+
 - (IBAction)reload:(id)sender {
     [self updateStatusNow];
 }
@@ -267,16 +282,24 @@
         }
         return NO;
     }
+    XGAStatusViewItem*statusItem = [self selectedTableItem];
     if (menuItem.action == @selector(startStopIntegration:)) {
-        XGAStatusViewItem*item = [self selectedTableItem];
-        if (!item) return NO;
-        if (item.botStatus.integrationID != nil &&
-          ![item.botStatus.currentStep isEqualToString:@"completed"])
+        if (!statusItem) return NO;
+        if (statusItem.botStatus.integrationID != nil &&
+          ![statusItem.botStatus.currentStep isEqualToString:@"completed"])
             menuItem.title = @"Cancel Integration";
         else
             menuItem.title = @"Start Integration";
         return YES;
     }
+    if (menuItem.action == @selector(showPullRequest:)) {
+        if (statusItem.bot.repoOwner == nil ||
+            statusItem.bot.repoName == nil ||
+            statusItem.bot.pullRequestNumber == nil)
+            return NO;
+        return YES;
+    }
+
     SEL contextMenuItems[] = {
         @selector(showInfo:),
         @selector(monitorRepo:),

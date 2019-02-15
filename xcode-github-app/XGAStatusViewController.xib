@@ -306,6 +306,12 @@
                         <action selector="downloadAssets:" target="-2" id="OiF-Nq-Tdk"/>
                     </connections>
                 </menuItem>
+                <menuItem title="Show Pull Request" id="vk3-TP-vUV">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="showPullRequest:" target="-1" id="igx-by-xcC"/>
+                    </connections>
+                </menuItem>
                 <menuItem isSeparatorItem="YES" id="W6q-6a-oAG"/>
                 <menuItem title="Monitor For Pull Requests" state="on" id="UUl-ub-dpc">
                     <modifierMask key="keyEquivalentModifierMask"/>
