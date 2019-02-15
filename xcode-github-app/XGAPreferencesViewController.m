@@ -66,7 +66,9 @@
 - (IBAction)serverDoubleAction:(id)sender {
     NSInteger idx = self.tableView.selectedRow;
     if (idx >= 0 && idx < [self.serverDictionaryController.arrangedObjects count]) {
-        XGAServer*server = [self.serverDictionaryController.arrangedObjects objectAtIndex:idx];
+        NSDictionaryControllerKeyValuePair*pair =
+            [self.serverDictionaryController.arrangedObjects objectAtIndex:idx];
+        XGAServer*server = pair.value;
         [self showServer:server];
     }
 }
@@ -79,6 +81,8 @@
         if (returnCode == NSModalResponseOK &&
             result.server.length &&
             self.settings.servers[result.server] == nil) {
+            self.settings.servers[result.server] = result;
+            [self.settings save];
             NSDictionaryControllerKeyValuePair*pair = [self.serverDictionaryController newObject];
             pair.key = result.server;
             pair.value = result;

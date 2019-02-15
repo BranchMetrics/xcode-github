@@ -386,26 +386,30 @@
 
     BNCLogDebug(@"Start updateStatus.");
     BNCPerformBlockOnMainThreadAsync(^{ self.statusTextField.stringValue = @""; });
-    /*
-    NSMutableDictionary<NSString*, XGServer*>*statusServers = [NSMutableDictionary new];
-    for (XGAServer*server in XGASettings.shared.servers.objectEnumerator) {
-        if (server.server.length > 0)
-            statusServers[server.server] = server;
-    }
-    */
+
+    // Create new bots as needed:
     NSArray<XGAGitHubSyncTask*>* syncTasks = XGASettings.shared.gitHubSyncTasks;
     NSDictionary<NSString*, XGServer*>*statusServers = XGASettings.shared.servers;
     for (XGAGitHubSyncTask*task in syncTasks) {
         if (task.xcodeServer.length != 0 && statusServers[task.xcodeServer] != nil)
             [self updateSyncBots:task];
     }
+
+    // Update the status:
+    NSMutableArray *statusArray = [NSMutableArray new];
     for (XGAServer*server in statusServers.objectEnumerator) {
-        [self updateXcodeServerStatus:server];
+        NSArray*a = [self updateXcodeServerStatus:server];
+        if (a) [statusArray addObjectsFromArray:a];
     }
-    if (syncTasks.count == 0 && statusServers.count == 0) {
-        // Update with 'nil' to add content for an empty display:
-        [self updateXcodeServerStatus:nil];
+    if (statusArray.count == 0) {
+        XGAStatusViewItem *status = [XGAStatusViewItem new];
+        status.statusImage = [NSImage imageNamed:@"RoundBlue"];
+        status.statusSummary = [APFormattedString boldText:@"< No Xcode servers added yet >"];
+        [statusArray addObject:status];
     }
+    BNCPerformBlockOnMainThreadAsync(^{
+        self.arrayController.content = statusArray;
+    });
     BNCLogDebug(@"End updateStatus.");
 
     self.lastUpdateDate = [NSDate date];
@@ -446,7 +450,7 @@
     }
 }
 
-- (void) updateXcodeServerStatus:(XGServer*)server {
+- (NSArray*) updateXcodeServerStatus:(XGServer*)server {
     NSError*error = nil;
     NSMutableArray *statusArray = [NSMutableArray new];
     if (server.server.length > 0) {
@@ -468,17 +472,12 @@
     }
     if (statusArray.count == 0) {
         XGAStatusViewItem *status = [XGAStatusViewItem new];
+        status.server = server.server;
         status.statusImage = [NSImage imageNamed:@"RoundBlue"];
-        if (server.server.length > 0) {
-            status.statusSummary = [APFormattedString boldText:@"< No Xcode bots found >"];
-        } else {
-            status.statusSummary = [APFormattedString boldText:@"< No Xcode servers added yet >"];
-        }
+        status.statusSummary = [APFormattedString boldText:@"< No Xcode bots found >"];
         [statusArray addObject:status];
     }
-    BNCPerformBlockOnMainThreadAsync(^{
-        self.arrayController.content = statusArray;
-    });
+    return statusArray;
 }
 
 @end

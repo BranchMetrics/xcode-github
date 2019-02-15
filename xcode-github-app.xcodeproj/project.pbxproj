@@ -54,6 +54,7 @@
 /* Begin PBXFileReference section */
 		2BB6F4D221F9E3FF001E8693 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = Base; path = Base.lproj/Credits.rtf; sourceTree = "<group>"; };
 		2BC31A1222041978003B0EE4 /* xcode-github-cli.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "xcode-github-cli.md"; path = "Documentation/xcode-github-cli.md"; sourceTree = "<group>"; };
+		2BFD78962216A06E00E63692 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		4D0DD54420597FE6001721C1 /* xcode-github-app.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = "xcode-github-app.md"; path = "Documentation/xcode-github-app.md"; sourceTree = "<group>"; };
 		4D12BA0A20A252CE00E5B1DB /* XGALogViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGALogViewController.h; sourceTree = "<group>"; };
 		4D12BA0B20A252CE00E5B1DB /* XGALogViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGALogViewController.m; sourceTree = "<group>"; };
@@ -114,6 +115,7 @@
 		4D76615F2057565200216B72 = {
 			isa = PBXGroup;
 			children = (
+				2BFD78962216A06E00E63692 /* CHANGELOG.md */,
 				4D0DD54420597FE6001721C1 /* xcode-github-app.md */,
 				2BC31A1222041978003B0EE4 /* xcode-github-cli.md */,
 				4DC9E5C4216DCD6700F1F4EE /* XcodeGitHub.xcodeproj */,
