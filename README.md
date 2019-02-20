@@ -39,13 +39,13 @@ Quickly automate your test and build process with XcodeGitHub, a macOS app that 
     - [Installation](#installation)
     - [Monitoring Your First Repo](#monitoring-your-first-repo)
     - [The Command Line Tool](#the-command-line-tool)
-* [Trouble Shooting &amp; Support](#trouble-shooting-support)
+* [Trouble Shooting &amp; Support](#trouble-shooting--support)
     - [Diagnosing Problems](#diagnosing-problems)
-    - [Reporting Issues &amp; Requesting Features](#reporting-issues-requesting-features)
+    - [Reporting Issues &amp; Requesting Features](#reporting-issues--requesting-features)
 * [Project Goals](#project-goals)
     - [Goal 1: Write a useful test automation tool](#goal-1-write-a-useful-test-automation-tool)
     - [Goal 2: Write a new macOS app](#goal-2-write-a-new-macos-app)
-    - [Goal 3: Experiment with using XCTest for macOS / iOS libraries](#goal-3-experiment-with-using-xctest-for-macos-ios-libraries
+    - [Goal 3: Experiment with using XCTest for macOS / iOS libraries](#goal-3-experiment-with-using-xctest-for-macos--ios-libraries
 )
 
 ## Getting Started
