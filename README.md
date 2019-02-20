@@ -45,10 +45,10 @@ Quickly automate your test and build process with XcodeGitHub, a macOS app that 
 * [Project Goals](#project-goals)
     - [Goal 1: Write a useful test automation tool](#goal-1-write-a-useful-test-automation-tool)
     - [Goal 2: Write a new macOS app](#goal-2-write-a-new-macos-app)
-    - [Goal 3: Experiment with using XCTest with macOS/iOS libraries](#goal-3-experiment-with-using-xctest-with-macos-ios-libraries
+    - [Goal 3: Experiment using XCTest with macOS / iOS libraries](#goal-3-experiment-using-xctest-with-macos-ios-libraries
 )
 
-## Getting Started and Usage
+## Getting Started
 
 ### Installation
 
@@ -169,13 +169,13 @@ usage: xcode-github [-dhsVv] -g <github-auth-token>
 The tool returns 0 on success, otherwise a non-zero value.
 ```
 
-## Trouble Shooting & Support
+## Trouble Shooting &amp; Support
 
 ### Diagnosing Problems
 
 If you're having problems the first diagnostic step is to open the log window (under the 'Window' menu) and look for any issues there. Toggling 'Show debug messages' on the lower right will show more verbose logging.
 
-### Reporting Issues & Feature Requests
+### Reporting Issues &amp; Feature Requests
 
 Report issues and make suggestions [here, at the issue section of this repository on GitHub.](https://github.com/E-B-Smith/xcode-github/issues) 
 
@@ -207,7 +207,7 @@ Some things have been updated, like `NSTableView`, which can now be view-based o
 
 On the other hand I really appreciated again how feature rich macOS and the development environment is. Native apps are kind of on their way out which is kind of too bad, since native apps have the potential to be very powerful and expressive, and the developement environment is generally pretty good.
 
-### Goal 3: Experiment with using XCTest with macOS / iOS libraries
+### Goal 3: Experiment using XCTest with macOS / iOS libraries
 
 At Branch we distribute iOS, tvOS, and macOS SDK libraries that are widely used and have to be tested and correct. Further, many developers want to run the Branch SDK tests as part of their testing. 
 
