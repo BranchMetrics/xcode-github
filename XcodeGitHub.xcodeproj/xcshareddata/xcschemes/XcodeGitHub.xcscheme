@@ -10,7 +10,7 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "#!/bin/bash&#10;&quot;${SOURCE_ROOT}&quot;/&quot;${PRODUCT_NAME}&quot;/make-static-lib.sh&#10;"
+               scriptText = "#!/bin/bash&#10;mkdir &quot;${SOURCE_ROOT}&quot;/Build&#10;log_file=&quot;${SOURCE_ROOT}&quot;/Build/make-static-lib.log&#10;exec &gt; &quot;$log_file&quot; 2&gt;&amp;1&#10;&quot;${SOURCE_ROOT}&quot;/&quot;${PRODUCT_NAME}&quot;/make-static-lib.sh&#10;"
                shellToInvoke = "/bin/bash">
                <EnvironmentBuildable>
                   <BuildableReference

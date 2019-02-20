@@ -244,7 +244,7 @@
 				DEVELOPMENT_TEAM = WRWLR8VRUH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Products",
+					"$(PROJECT_DIR)/Build",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/xcode-github-cli/Info.plist";
 				LIBRARY_SEARCH_PATHS = (
@@ -267,7 +267,7 @@
 				DEVELOPMENT_TEAM = WRWLR8VRUH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Products",
+					"$(PROJECT_DIR)/Build",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/xcode-github-cli/Info.plist";
 				LIBRARY_SEARCH_PATHS = (

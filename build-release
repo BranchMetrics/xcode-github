@@ -54,6 +54,7 @@ function build_project() {
         -configuration Release \
         -quiet clean build \
         CONFIGURATION_BUILD_DIR="$build_products_directory"
+    # Show the codesigning:
     codesign -dv --verbose=4 "$build_products_directory"/"$executable"
     echo ""
 }

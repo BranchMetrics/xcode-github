@@ -285,6 +285,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = Build;
 			};
 			name = Debug;
 		};
@@ -343,6 +344,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = Build;
 			};
 			name = Release;
 		};
@@ -350,7 +352,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
-				EXECUTABLE_PREFIX = lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -359,7 +360,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
-				EXECUTABLE_PREFIX = lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2BB6F4D321F9E3FF001E8693 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2BB6F4D121F9E3FF001E8693 /* Credits.rtf */; };
+		2BE8B585221D2C9E006D8B3D /* libXcodeGitHub.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DC9E5C9216DCD6700F1F4EE /* libXcodeGitHub.a */; };
 		4D12BA0D20A252CE00E5B1DB /* XGALogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D12BA0B20A252CE00E5B1DB /* XGALogViewController.m */; };
 		4D12BA0E20A252CE00E5B1DB /* XGALogViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D12BA0C20A252CE00E5B1DB /* XGALogViewController.xib */; };
 		4D5CC05E2090CAB60042E98B /* BNCKeyChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D5CC05D2090CAB60042E98B /* BNCKeyChain.m */; };
@@ -25,7 +26,6 @@
 		4D8352D120A516A200184259 /* XGAPreferencesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D8352CF20A516A200184259 /* XGAPreferencesViewController.xib */; };
 		4DAA4666214CBEFF007A39EB /* XGAAddServerPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DAA4664214CBEFF007A39EB /* XGAAddServerPanel.m */; };
 		4DAA4667214CBEFF007A39EB /* XGAAddServerPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DAA4665214CBEFF007A39EB /* XGAAddServerPanel.xib */; };
-		4DD6B69C219B972300A38210 /* libXcodeGitHub.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DC9E5C9216DCD6700F1F4EE /* libXcodeGitHub.a */; };
 		4DED4891209BDFCC008DE877 /* BNCGeometry.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DED4890209BDFCC008DE877 /* BNCGeometry.m */; };
 		4DEE32E42162EB20006BD06C /* XGAStatusViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DEE32E32162EB20006BD06C /* XGAStatusViewItem.m */; };
 		4DF0F58E208F923E0015D1F7 /* BNCThreads.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF0F588208F923E0015D1F7 /* BNCThreads.m */; };
@@ -35,18 +35,18 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		2BE8B583221D2C96006D8B3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4DC9E5C4216DCD6700F1F4EE /* XcodeGitHub.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 4DDAA4D5216ABF40002F3F8E;
+			remoteInfo = XcodeGitHub;
+		};
 		4DC9E5C8216DCD6700F1F4EE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4DC9E5C4216DCD6700F1F4EE /* XcodeGitHub.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 4DDAA4D6216ABF40002F3F8E;
-			remoteInfo = XcodeGitHub;
-		};
-		4DD6B69D219B973700A38210 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4DC9E5C4216DCD6700F1F4EE /* XcodeGitHub.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 4DDAA4D5216ABF40002F3F8E;
 			remoteInfo = XcodeGitHub;
 		};
 /* End PBXContainerItemProxy section */
@@ -105,7 +105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4DD6B69C219B972300A38210 /* libXcodeGitHub.a in Frameworks */,
+				2BE8B585221D2C9E006D8B3D /* libXcodeGitHub.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,7 +227,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				4DD6B69E219B973700A38210 /* PBXTargetDependency */,
+				2BE8B584221D2C96006D8B3D /* PBXTargetDependency */,
 			);
 			name = "xcode-github-app";
 			productName = XcodeGitHub;
@@ -337,10 +337,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		4DD6B69E219B973700A38210 /* PBXTargetDependency */ = {
+		2BE8B584221D2C96006D8B3D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = XcodeGitHub;
-			targetProxy = 4DD6B69D219B973700A38210 /* PBXContainerItemProxy */;
+			targetProxy = 2BE8B583221D2C96006D8B3D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -400,6 +400,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Build";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -458,6 +459,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Build";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -482,10 +484,6 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = WRWLR8VRUH;
 				ENABLE_HARDENED_RUNTIME = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Build/**",
-				);
 				INFOPLIST_FILE = "$(SRCROOT)/xcode-github-app/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.xcode-github-app";
@@ -504,10 +502,6 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = WRWLR8VRUH;
 				ENABLE_HARDENED_RUNTIME = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Build/**",
-				);
 				INFOPLIST_FILE = "$(SRCROOT)/xcode-github-app/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.xcode-github-app";

@@ -7,6 +7,9 @@ set -euo pipefail
 #  Created by Edward Smith on 10/7/18.
 #  Copyright © 2018 Branch. All rights reserved.
 
+echo "Building: ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework"
+
+cd "${PROJECT_DIR}"
 /bin/rm -Rf   "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework"
 
 # Headers:
@@ -42,10 +45,10 @@ set -euo pipefail
     "Versions/Current/${PRODUCT_NAME}" \
     "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/${PRODUCT_NAME}"
 
-## Copy to Products directory:
-#/usr/bin/ditto \
-#    "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework" \
-#    "${SOURCE_ROOT}/Products/${PRODUCT_NAME}.framework"
+# Copy to Products directory:
+/usr/bin/ditto \
+   "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework" \
+   "${SOURCE_ROOT}/Build/${PRODUCT_NAME}.framework"
 
-echo "Result:"
-echo "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework"
+echo "  Result: ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework"
+echo "   Ditto: ${SOURCE_ROOT}/Build/${PRODUCT_NAME}.framework"
