@@ -41,7 +41,7 @@ Quickly automate your test and build process with XcodeGitHub, a macOS app that 
     - [The Command Line Tool](#the-command-line-tool)
 * [Trouble Shooting &amp; Support](#trouble-shooting--support)
     - [Diagnosing Problems](#diagnosing-problems)
-    - [Reporting Issues &amp; Requesting Features](#reporting-issues--requesting-features)
+    - [Reporting Issues &amp; Feature Requests](#reporting-issues--feature-requests)
 * [Project Goals](#project-goals)
     - [Goal 1: Write a useful test automation tool](#goal-1-write-a-useful-test-automation-tool)
     - [Goal 2: Write a new macOS app](#goal-2-write-a-new-macos-app)
