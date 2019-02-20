@@ -39,13 +39,13 @@ Quickly automate your test and build process with XcodeGitHub, a macOS app that 
     - [Installation](#installation)
     - [Monitoring Your First Repo](#monitoring-your-first-repo)
     - [The Command Line Tool](#the-command-line-tool)
-* [Trouble Shooting & Support](#trouble-shooting-support)
+* [Trouble Shooting &amp; Support](#trouble-shooting-support)
     - [Diagnosing Problems](#diagnosing-problems)
-    - [Reporting Issues & Requesting Features](#reporting-issues-requesting-features)
+    - [Reporting Issues &amp; Requesting Features](#reporting-issues-requesting-features)
 * [Project Goals](#project-goals)
     - [Goal 1: Write a useful test automation tool](#goal-1-write-a-useful-test-automation-tool)
     - [Goal 2: Write a new macOS app](#goal-2-write-a-new-macos-app)
-    - [Goal 3: Experiment using XCTest with macOS / iOS libraries](#goal-3-experiment-using-xctest-with-macos-ios-libraries
+    - [Goal 3: Experiment with using XCTest for macOS / iOS libraries](#goal-3-experiment-with-using-xctest-for-macos-ios-libraries
 )
 
 ## Getting Started
@@ -207,7 +207,7 @@ Some things have been updated, like `NSTableView`, which can now be view-based o
 
 On the other hand I really appreciated again how feature rich macOS and the development environment is. Native apps are kind of on their way out which is kind of too bad, since native apps have the potential to be very powerful and expressive, and the developement environment is generally pretty good.
 
-### Goal 3: Experiment using XCTest with macOS / iOS libraries
+### Goal 3: Experiment with using XCTest for macOS / iOS libraries
 
 At Branch we distribute iOS, tvOS, and macOS SDK libraries that are widely used and have to be tested and correct. Further, many developers want to run the Branch SDK tests as part of their testing. 
 
