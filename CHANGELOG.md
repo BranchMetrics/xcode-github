@@ -1,5 +1,8 @@
 # xcode-github Change Log
 
+## v1.1.2 - February 20, 2019
+* Fixed the build so it works in development and release modes. (#8)
+
 ## v1.1.1 - February 15, 2019
 * Bug fix: Adding another server in the preferences wasn't always persisted.
 * Bug fix: If an Xcode server had no bots defined then no items appeared in the status window.
