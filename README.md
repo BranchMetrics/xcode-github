@@ -71,8 +71,8 @@ You'll have to set up a build/test computer with Xcode, enable Xcode server, and
 Here are some guides for setting Xcode server and configuring bots:
 
 [Xcode Help: Continuous Integration Overview](https://help.apple.com/xcode/mac/10.1/index.html?localePath=en.lproj#/dev466720061)
-<br>[How to use Xcode server in Xcode 9]
-(https://medium.com/bobo-shone/how-to-use-xcode-server-in-xcode-9-93d6d2ee128f)
+<br>
+[How to use Xcode server in Xcode 9](https://medium.com/bobo-shone/how-to-use-xcode-server-in-xcode-9-93d6d2ee128f)
 
 #### 2. Create a Template Test Bot in Xcode
 
