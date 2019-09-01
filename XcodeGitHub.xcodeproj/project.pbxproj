@@ -177,7 +177,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = XG;
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1030;
 				ORGANIZATIONNAME = Branch;
 				TargetAttributes = {
 					4DDAA4D5216ABF40002F3F8E = {
@@ -191,6 +191,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 4DDAA4CD216ABF40002F3F8E;
 			productRefGroup = 4DDAA4D7216ABF40002F3F8E /* Products */;
@@ -322,7 +323,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGNING_ALLOWED = YES;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;

@@ -240,6 +240,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 4D262C3F2090FE5800DD80F4;
 			productRefGroup = 4D262C4A2090FE5800DD80F4 /* Products */;
