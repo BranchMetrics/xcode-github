@@ -1,0 +1,50 @@
+#!/bin/bash
+function printHelp() {
+cat <<HELP
+Usage: xcode-coverage-report [ -h ] | [ <build-directory> ]
+
+Reads Xcode coverage data and outputs it in a format suitable for phabit ingestion.
+HELP
+}
+
+build_dir=""
+while (( $# > 0 ))
+do
+    if [[ $1 == -h ]]
+    then
+        printHelp
+        exit 0
+    fi
+    if (( ${#build_dir} != 0 ))
+    then
+        echo ">>> Error: Build directory already set: '$build_dir'. Scanning '$1'." 1>&2
+        exit 1
+    fi
+    build_dir="$1"
+    shift
+done
+
+if (( ${#build_dir} == 0 ))
+then
+    if [ -e "./Build" ]
+    then
+        build_dir="./Build"
+    else
+        build_dir=".build"
+    fi
+fi
+
+test_run=$(echo  ./Build/Logs/Test/**/**/*.xccovarchive)
+if (( $(echo "$test_run" | wc -l) != 1 ))
+then
+    echo ">>> Error: can't find xccovarchive file: '$test_run'." 1>&2
+    exit 1
+fi
+
+while IFS= read -r file
+do
+    echo "File: \"$file\""
+    xcrun xccov view \
+        --file "$file" \
+        "$test_run"
+done < <(xcrun xccov view --file-list "$test_run")
