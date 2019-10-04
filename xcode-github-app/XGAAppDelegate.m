@@ -12,7 +12,13 @@
 #import "XGALogViewController.h"
 #import "XGAStatusViewController.h"
 #import "XGAPreferencesViewController.h"
+#import "XGASettings.h"
 #import <XcodeGitHub/XcodeGitHub.h>
+
+/*
+ All about About Panels:
+ http://cocoadevcentral.com/articles/000071.php
+*/
 
 @interface XGAAppDelegate () <NSWindowDelegate>
 @property (nonatomic, strong) IBOutlet XGALogViewController*logController;
@@ -47,9 +53,22 @@
     [self.preferencesController.window makeKeyAndOrderFront:self];
 }
 
+- (IBAction)addNewServer:(id)sender {
+    [self showPreferences:sender];
+    [self.preferencesController addServerAction:sender];
+}
+
 - (BOOL)windowShouldClose:(NSWindow*)window {
-    self.preferencesController = nil;
-    return YES;
+    if (window == self.preferencesController.window) {
+        self.preferencesController = nil;
+        return YES;
+    }
+    return NO;
+}
+
+- (void)applicationDidFinishLaunching:(NSNotification *)notification {
+    if (XGASettings.shared.servers.count == 0 && XGASettings.shared.gitHubSyncTasks.count == 0)
+        [self addNewServer:nil];
 }
 
 @end

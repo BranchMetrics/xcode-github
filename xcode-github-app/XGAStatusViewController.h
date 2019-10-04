@@ -10,7 +10,11 @@
 
 #import <Cocoa/Cocoa.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface XGAStatusViewController : NSViewController
 + (instancetype) new;
 @property (strong) IBOutlet NSWindow*window;
 @end
+
+NS_ASSUME_NONNULL_END

@@ -42,7 +42,8 @@ FOUNDATION_EXPORT NSString*_Nonnull NSStringFromXGPullRequestStatus(XGPullReques
 @property (strong, readonly) NSString*_Nullable body;
 @property (strong, readonly) NSString*_Nullable state;
 @property (strong, readonly) NSDictionary*_Nullable dictionary;
-@property (strong, readonly) NSString*_Nullable sha;
+@property (strong, readonly) NSString*_Nullable headSHA;
+@property (strong, readonly) NSString*_Nullable baseSHA;
 @property (strong, readonly) NSString*_Nullable githubPRURL;
 
 + (instancetype _Nonnull) new NS_UNAVAILABLE;

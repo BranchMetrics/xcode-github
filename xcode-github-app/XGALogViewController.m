@@ -36,6 +36,7 @@ NSString*const XGALogUpdateNotification = @"XGALogUpdatedNotification";
 @property (strong) NSDateFormatter*dateFormatter;
 @property (strong) IBOutlet NSArrayController *arrayController;
 @property (weak)   IBOutlet NSTableView*tableView;
+@property (strong) IBOutlet XGASettings*settings;
 @property (strong) XGAStatusPopover*statusPopover;
 @end
 
@@ -84,6 +85,7 @@ void XGALogFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Null
 
 + (instancetype) new {
     XGALogViewController*controller = [[XGALogViewController alloc] init];
+    controller.settings = XGASettings.shared;
     [[NSBundle mainBundle]
         loadNibNamed:NSStringFromClass(self)
         owner:controller
@@ -179,6 +181,7 @@ void XGALogFunction(NSDate*_Nonnull timestamp, BNCLogLevel level, NSString*_Null
         self.arrayController.filterPredicate =
             [NSPredicate predicateWithFormat:@"logLevel > 2"];
     }
+    [self.settings save];
 }
 
 - (void)logUpdatedNotification:(NSNotification*)notification {

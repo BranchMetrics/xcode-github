@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2BB6F4D321F9E3FF001E8693 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2BB6F4D121F9E3FF001E8693 /* Credits.rtf */; };
+		2BE8B585221D2C9E006D8B3D /* libXcodeGitHub.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DC9E5C9216DCD6700F1F4EE /* libXcodeGitHub.a */; };
 		4D12BA0D20A252CE00E5B1DB /* XGALogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D12BA0B20A252CE00E5B1DB /* XGALogViewController.m */; };
 		4D12BA0E20A252CE00E5B1DB /* XGALogViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D12BA0C20A252CE00E5B1DB /* XGALogViewController.xib */; };
 		4D5CC05E2090CAB60042E98B /* BNCKeyChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D5CC05D2090CAB60042E98B /* BNCKeyChain.m */; };
@@ -24,7 +26,6 @@
 		4D8352D120A516A200184259 /* XGAPreferencesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D8352CF20A516A200184259 /* XGAPreferencesViewController.xib */; };
 		4DAA4666214CBEFF007A39EB /* XGAAddServerPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DAA4664214CBEFF007A39EB /* XGAAddServerPanel.m */; };
 		4DAA4667214CBEFF007A39EB /* XGAAddServerPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DAA4665214CBEFF007A39EB /* XGAAddServerPanel.xib */; };
-		4DD6B69C219B972300A38210 /* libXcodeGitHub.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DC9E5C9216DCD6700F1F4EE /* libXcodeGitHub.a */; };
 		4DED4891209BDFCC008DE877 /* BNCGeometry.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DED4890209BDFCC008DE877 /* BNCGeometry.m */; };
 		4DEE32E42162EB20006BD06C /* XGAStatusViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DEE32E32162EB20006BD06C /* XGAStatusViewItem.m */; };
 		4DF0F58E208F923E0015D1F7 /* BNCThreads.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF0F588208F923E0015D1F7 /* BNCThreads.m */; };
@@ -34,6 +35,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		2BE8B583221D2C96006D8B3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4DC9E5C4216DCD6700F1F4EE /* XcodeGitHub.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 4DDAA4D5216ABF40002F3F8E;
+			remoteInfo = XcodeGitHub;
+		};
 		4DC9E5C8216DCD6700F1F4EE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4DC9E5C4216DCD6700F1F4EE /* XcodeGitHub.xcodeproj */;
@@ -41,17 +49,13 @@
 			remoteGlobalIDString = 4DDAA4D6216ABF40002F3F8E;
 			remoteInfo = XcodeGitHub;
 		};
-		4DD6B69D219B973700A38210 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4DC9E5C4216DCD6700F1F4EE /* XcodeGitHub.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 4DDAA4D5216ABF40002F3F8E;
-			remoteInfo = XcodeGitHub;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4D0DD54420597FE6001721C1 /* xcode-github-app.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = "xcode-github-app.md"; path = "xcode-github-app/xcode-github-app.md"; sourceTree = "<group>"; };
+		2BB6F4D221F9E3FF001E8693 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = Base; path = Base.lproj/Credits.rtf; sourceTree = "<group>"; };
+		2BC31A1222041978003B0EE4 /* xcode-github-cli.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "xcode-github-cli.md"; path = "Documentation/xcode-github-cli.md"; sourceTree = "<group>"; };
+		2BFD78962216A06E00E63692 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
+		4D0DD54420597FE6001721C1 /* xcode-github-app.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = "xcode-github-app.md"; path = "Documentation/xcode-github-app.md"; sourceTree = "<group>"; };
 		4D12BA0A20A252CE00E5B1DB /* XGALogViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XGALogViewController.h; sourceTree = "<group>"; };
 		4D12BA0B20A252CE00E5B1DB /* XGALogViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XGALogViewController.m; sourceTree = "<group>"; };
 		4D12BA0C20A252CE00E5B1DB /* XGALogViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = XGALogViewController.xib; sourceTree = "<group>"; };
@@ -101,7 +105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4DD6B69C219B972300A38210 /* libXcodeGitHub.a in Frameworks */,
+				2BE8B585221D2C9E006D8B3D /* libXcodeGitHub.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,7 +115,9 @@
 		4D76615F2057565200216B72 = {
 			isa = PBXGroup;
 			children = (
+				2BFD78962216A06E00E63692 /* CHANGELOG.md */,
 				4D0DD54420597FE6001721C1 /* xcode-github-app.md */,
+				2BC31A1222041978003B0EE4 /* xcode-github-cli.md */,
 				4DC9E5C4216DCD6700F1F4EE /* XcodeGitHub.xcodeproj */,
 				4D76616A2057565200216B72 /* xcode-github-app */,
 				4D7661692057565200216B72 /* Products */,
@@ -131,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				4D7661712057565200216B72 /* Assets.xcassets */,
+				2BB6F4D121F9E3FF001E8693 /* Credits.rtf */,
 				4D7661762057565200216B72 /* Info.plist */,
 				4D7661772057565300216B72 /* main.m */,
 				4D7661732057565200216B72 /* Main.storyboard */,
@@ -220,7 +227,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				4DD6B69E219B973700A38210 /* PBXTargetDependency */,
+				2BE8B584221D2C96006D8B3D /* PBXTargetDependency */,
 			);
 			name = "xcode-github-app";
 			productName = XcodeGitHub;
@@ -234,12 +241,12 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = XGA;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1030;
 				ORGANIZATIONNAME = Branch;
 				TargetAttributes = {
 					4D7661672057565200216B72 = {
 						CreatedOnToolsVersion = 9.2;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.HardenedRuntime = {
 								enabled = 1;
@@ -293,6 +300,7 @@
 				4D7661722057565200216B72 /* Assets.xcassets in Resources */,
 				4D8352D120A516A200184259 /* XGAPreferencesViewController.xib in Resources */,
 				4D6536382150486B000812E1 /* XGAStatusPopover.xib in Resources */,
+				2BB6F4D321F9E3FF001E8693 /* Credits.rtf in Resources */,
 				4D12BA0E20A252CE00E5B1DB /* XGALogViewController.xib in Resources */,
 				4D8352C620A3F30A00184259 /* XGAStatusViewController.xib in Resources */,
 				4DAA4667214CBEFF007A39EB /* XGAAddServerPanel.xib in Resources */,
@@ -329,14 +337,22 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		4DD6B69E219B973700A38210 /* PBXTargetDependency */ = {
+		2BE8B584221D2C96006D8B3D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = XcodeGitHub;
-			targetProxy = 4DD6B69D219B973700A38210 /* PBXContainerItemProxy */;
+			targetProxy = 2BE8B583221D2C96006D8B3D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		2BB6F4D121F9E3FF001E8693 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2BB6F4D221F9E3FF001E8693 /* Base */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
 		4D7661732057565200216B72 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -384,6 +400,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Build";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -398,7 +415,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -442,6 +459,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Build";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -450,7 +468,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 				VALID_ARCHS = x86_64;
@@ -462,17 +480,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "xcode-github-app/xcode-github-app.entitlements";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = R63EM248DP;
+				DEVELOPMENT_TEAM = WRWLR8VRUH;
 				ENABLE_HARDENED_RUNTIME = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Products",
-				);
 				INFOPLIST_FILE = "$(SRCROOT)/xcode-github-app/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.xcode-github-app";
 				PRODUCT_NAME = XcodeGitHub;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -481,17 +497,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "xcode-github-app/xcode-github-app.entitlements";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = R63EM248DP;
+				DEVELOPMENT_TEAM = WRWLR8VRUH;
 				ENABLE_HARDENED_RUNTIME = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Products",
-				);
 				INFOPLIST_FILE = "$(SRCROOT)/xcode-github-app/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.branch.xcode-github-app";
 				PRODUCT_NAME = XcodeGitHub;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};

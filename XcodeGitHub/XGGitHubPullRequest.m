@@ -99,7 +99,8 @@ NSString*_Nonnull NSStringFromXGPullRequestStatus(XGPullRequestStatus status) {
         NSInteger index = range.location + range.length;
         if (index < fullname.length) _repoName = [fullname substringFromIndex:index];
     }
-    _sha = _dictionary[@"head"][@"sha"];
+    _headSHA = _dictionary[@"head"][@"sha"];
+    _baseSHA = _dictionary[@"base"][@"sha"];
     _githubPRURL = _dictionary[@"url"];
     return self;
 }
@@ -231,7 +232,7 @@ exit:
     {
     NSString* string = [NSString stringWithFormat:
         @"https://api.github.com/repos/%@/%@/commits/%@/statuses",
-            self.repoOwner, self.repoName, self.sha];
+            self.repoOwner, self.repoName, self.headSHA];
     NSURL *URL = [NSURL URLWithString:string];
     if (!URL) {
         error =
@@ -305,7 +306,7 @@ exit:
     NSError *error = nil;
     NSString* string = [NSString stringWithFormat:
         @"https://api.github.com/repos/%@/%@/statuses/%@",
-            self.repoOwner, self.repoName, self.sha];
+            self.repoOwner, self.repoName, self.headSHA];
     NSURL *URL = [NSURL URLWithString:string];
     if (!URL) {
         error =
@@ -366,7 +367,7 @@ exit:
     NSError *error = nil;
     NSString* string = [NSString stringWithFormat:
         @"https://api.github.com/repos/%@/%@/commits/%@/comments",
-            self.repoOwner, self.repoName, self.sha];
+            self.repoOwner, self.repoName, self.headSHA];
     NSURL *URL = [NSURL URLWithString:string];
     if (!URL) {
         error =

@@ -22,7 +22,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="113" y="498" width="905" height="300"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <value key="minSize" type="size" width="480" height="300"/>
             <view key="contentView" id="vWG-l8-hki">
                 <rect key="frame" x="0.0" y="0.0" width="905" height="300"/>
@@ -306,12 +306,26 @@
                         <action selector="downloadAssets:" target="-2" id="OiF-Nq-Tdk"/>
                     </connections>
                 </menuItem>
+                <menuItem title="Show Pull Request" id="vk3-TP-vUV">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="showPullRequest:" target="-1" id="igx-by-xcC"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="W6q-6a-oAG"/>
                 <menuItem title="Monitor For Pull Requests" state="on" id="UUl-ub-dpc">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="monitorRepo:" target="-2" id="ufv-JG-XnI"/>
                     </connections>
                 </menuItem>
+                <menuItem title="Start Integration" id="LTz-ry-hTo">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="startStopIntegration:" target="-2" id="OgI-ZH-7XV"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="10O-tV-3e7"/>
                 <menuItem title="Delete Xcode Bot" id="IKy-Sz-f9z">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
@@ -319,7 +333,7 @@
                     </connections>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="1575" y="-177"/>
+            <point key="canvasLocation" x="1493" y="-433"/>
         </menu>
     </objects>
     <resources>

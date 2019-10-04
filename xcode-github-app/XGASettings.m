@@ -67,6 +67,14 @@ NSString*_Nonnull XGACleanString(NSString*_Nullable string) {
     }
 }
 
+- (id) copyWithZone:(NSZone *)zone {
+    XGAServer*server = [[XGAServer alloc] init];
+    server.server   = self.server;
+    server.user     = self.user;
+    server.password = self.password;
+    return server;
+}
+
 @end
 
 #pragma mark - XGAGitHubSyncTask
@@ -77,7 +85,7 @@ NSString*_Nonnull XGACleanString(NSString*_Nullable string) {
 #pragma mark - XGASettings
 
 @interface XGASettings () {
-    NSMutableArray<XGAServer*>*_servers;
+    NSMutableDictionary<NSString*, XGAServer*>*_servers;
     NSMutableArray<XGAGitHubSyncTask*>*_gitHubSyncTasks;
 }
 @end
@@ -127,14 +135,14 @@ NSString*_Nonnull XGACleanString(NSString*_Nullable string) {
     }
 }
 
-- (NSMutableArray<XGAServer*>*) servers {
+- (NSMutableDictionary<NSString*, XGAServer*>*) servers {
     @synchronized (self) {
-        if (_servers == nil) _servers = [NSMutableArray new];
+        if (_servers == nil) _servers = [NSMutableDictionary new];
         return _servers;
     }
 }
 
-- (void) setServers:(NSMutableArray<XGAServer*>*)servers_ {
+- (void) setServers:(NSMutableDictionary<NSString*, XGAServer*>*)servers_ {
     @synchronized (self) {
         _servers = servers_;
     }
@@ -200,20 +208,24 @@ NSString*_Nonnull XGACleanString(NSString*_Nullable string) {
 
     // Assure that servers are unique:
     NSMutableDictionary*d = NSMutableDictionary.new;
-    for (XGAServer*server in self.servers) {
-        if (server.server.length) d[server.server] = server;
+    for (XGAServer*server in self.servers.objectEnumerator) {
+        NSString*name = XGACleanString(server.server);
+        if (name.length) {
+            server.server = name;
+            d[name] = server;
+        }
     }
     [self.servers removeAllObjects];
-    [self.servers addObjectsFromArray:d.allValues];
+    [self.servers addEntriesFromDictionary:d];
 
     // Assure that tasks are unique:
-    [d removeAllObjects];
+    NSMutableDictionary*t = NSMutableDictionary.new;
     for (XGAGitHubSyncTask*task in self.gitHubSyncTasks) {
         NSString*string = [NSString stringWithFormat:@"%@:%@", task.xcodeServer, task.botNameForTemplate];
-        d[string] = task;
+        t[string] = task;
     }
     [self.gitHubSyncTasks removeAllObjects];
-    [self.gitHubSyncTasks addObjectsFromArray:d.allValues];
+    [self.gitHubSyncTasks addObjectsFromArray:t.allValues];
 }
 
 @end

@@ -13,7 +13,7 @@
 
 @implementation XGAStatusViewItem
 
-+ (instancetype) itemWithBot:(XGXcodeBot*)bot status:(XGXcodeBotStatus*)botStatus {
++ (instancetype) newItemWithBot:(XGXcodeBot*)bot status:(XGXcodeBotStatus*)botStatus {
     if (bot == nil || botStatus == nil) return nil;
     XGAStatusViewItem *status = [XGAStatusViewItem new];
     NSAssert(status, @"Nil XGAStatusViewItem!");

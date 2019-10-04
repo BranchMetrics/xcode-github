@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 FOUNDATION_EXPORT NSString*_Nonnull XGACleanString(NSString*_Nullable string);
 
-@interface XGAServer : XGServer <NSSecureCoding>
+@interface XGAServer : XGServer <NSSecureCoding, NSCopying>
 @end
 
 #pragma mark XGGitHubSyncTask
@@ -37,7 +37,7 @@ FOUNDATION_EXPORT NSString*_Nonnull XGACleanString(NSString*_Nullable string);
 @property (assign) BOOL showDebugMessages;
 @property (assign) NSTimeInterval refreshSeconds;
 @property (copy)   NSString*gitHubToken;
-@property (strong, null_resettable) NSMutableArray<XGAServer*>*servers;
+@property (strong, null_resettable) NSMutableDictionary<NSString*, XGAServer*>*servers;
 @property (strong, null_resettable) NSMutableArray<XGAGitHubSyncTask*>*gitHubSyncTasks;
 @end
 

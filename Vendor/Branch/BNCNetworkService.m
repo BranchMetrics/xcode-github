@@ -172,7 +172,6 @@
 }
 
 - (BNCNetworkOperation*) networkOperationWithURL:(NSURL*)URL {
-
     BNCNetworkOperation *operation = [BNCNetworkOperation new];
     operation.request =
     [[NSMutableURLRequest alloc]

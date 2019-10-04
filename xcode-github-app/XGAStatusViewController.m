@@ -113,6 +113,9 @@
     [detail append:status.statusDetail];
     if (status.botName.length)
         [detail italicText:@"\n\nBot: %@", status.botName];
+    if (status.branchOrPRName.length)
+        [detail italicText:@"\nRepo: %@/%@ %@",
+            status.bot.repoOwner, status.bot.repoName, status.bot.branch];
     self.statusPopover.detailTextField.attributedStringValue =
         [detail renderAttributedStringWithFont:font];
 
@@ -146,7 +149,7 @@
     } else {
 
         __auto_type task = [XGAGitHubSyncTask new];
-        task.xcodeServer = item.bot.serverName;
+        task.xcodeServer = item.bot.server.server;
         task.botNameForTemplate = item.botName;
         [[XGASettings shared].gitHubSyncTasks addObject:task];
 
@@ -213,6 +216,36 @@
     [[NSWorkspace sharedWorkspace] openURL:URL];
 }
 
+- (IBAction)startStopIntegration:(id)sender {
+    XGAStatusViewItem*item = [self selectedTableItem];
+    if (!item) return;
+
+    BNCPerformBlockAsync(^ {
+        if (item.botStatus.integrationID != nil &&
+          ![item.botStatus.currentStep isEqualToString:@"completed"]) {
+            [item.bot cancelIntegrationID:item.botStatus.integrationID];
+        } else {
+            [item.bot startIntegration];
+        }
+        BNCSleepForTimeInterval(0.5);
+        BNCPerformBlockOnMainThreadSync(^{
+            [self reload:nil];
+        });
+    });
+}
+
+- (IBAction)showPullRequest:(id)sender {
+    XGAStatusViewItem*item = [self selectedTableItem];
+    if (item.bot.repoOwner == nil || item.bot.repoName == nil || item.bot.pullRequestNumber == nil)
+        return;
+
+    NSString*string = [NSString stringWithFormat:@"https://github.com/%@/%@/pull/%@",
+        item.bot.repoOwner, item.bot.repoName, item.bot.pullRequestNumber];
+    NSURL*URL = [NSURL URLWithString:string];
+    if (!URL) return;
+    [[NSWorkspace sharedWorkspace] openURL:URL];
+}
+
 - (IBAction)reload:(id)sender {
     [self updateStatusNow];
 }
@@ -249,6 +282,24 @@
         }
         return NO;
     }
+    XGAStatusViewItem*statusItem = [self selectedTableItem];
+    if (menuItem.action == @selector(startStopIntegration:)) {
+        if (!statusItem) return NO;
+        if (statusItem.botStatus.integrationID != nil &&
+          ![statusItem.botStatus.currentStep isEqualToString:@"completed"])
+            menuItem.title = @"Cancel Integration";
+        else
+            menuItem.title = @"Start Integration";
+        return YES;
+    }
+    if (menuItem.action == @selector(showPullRequest:)) {
+        if (statusItem.bot.repoOwner == nil ||
+            statusItem.bot.repoName == nil ||
+            statusItem.bot.pullRequestNumber == nil)
+            return NO;
+        return YES;
+    }
+
     SEL contextMenuItems[] = {
         @selector(showInfo:),
         @selector(monitorRepo:),
@@ -335,24 +386,30 @@
 
     BNCLogDebug(@"Start updateStatus.");
     BNCPerformBlockOnMainThreadAsync(^{ self.statusTextField.stringValue = @""; });
-    NSMutableDictionary<NSString*, XGServer*>*statusServers = [NSMutableDictionary new];
-    for (XGAServer*server in XGASettings.shared.servers) {
-        if (server.server.length > 0)
-            statusServers[server.server] = server;
-    }
+
+    // Create new bots as needed:
     NSArray<XGAGitHubSyncTask*>* syncTasks = XGASettings.shared.gitHubSyncTasks;
+    NSDictionary<NSString*, XGServer*>*statusServers = XGASettings.shared.servers;
     for (XGAGitHubSyncTask*task in syncTasks) {
-        if (task.xcodeServer.length == 0 || statusServers[task.xcodeServer] == nil)
-            continue;
-        [self updateSyncBots:task];
+        if (task.xcodeServer.length != 0 && statusServers[task.xcodeServer] != nil)
+            [self updateSyncBots:task];
     }
+
+    // Update the status:
+    NSMutableArray *statusArray = [NSMutableArray new];
     for (XGAServer*server in statusServers.objectEnumerator) {
-        [self updateXcodeServerStatus:server];
+        NSArray*a = [self updateXcodeServerStatus:server];
+        if (a) [statusArray addObjectsFromArray:a];
     }
-    if (syncTasks.count == 0 && statusServers.count == 0) {
-        // Update with 'nil' to add content for an empty display:
-        [self updateXcodeServerStatus:nil];
+    if (statusArray.count == 0) {
+        XGAStatusViewItem *status = [XGAStatusViewItem new];
+        status.statusImage = [NSImage imageNamed:@"RoundBlue"];
+        status.statusSummary = [APFormattedString boldText:@"< No Xcode servers added yet >"];
+        [statusArray addObject:status];
     }
+    BNCPerformBlockOnMainThreadAsync(^{
+        self.arrayController.content = statusArray;
+    });
     BNCLogDebug(@"End updateStatus.");
 
     self.lastUpdateDate = [NSDate date];
@@ -364,10 +421,16 @@
 
 - (void) updateSyncBots:(XGAGitHubSyncTask*)syncTask {
     NSError*error = nil;
-    if (syncTask.xcodeServer.length &&
-        syncTask.botNameForTemplate.length) {
+    if (syncTask.xcodeServer.length && syncTask.botNameForTemplate.length) {
+        XGAServer*server = [XGASettings shared].servers[syncTask.xcodeServer];
+        if (!server) {
+            server = [XGAServer new];
+            server.server = syncTask.xcodeServer;
+        }
         XGCommandOptions*options = [XGCommandOptions new];
-        options.xcodeServerName = syncTask.xcodeServer;
+        options.xcodeServerName = server.server;
+        options.xcodeServerUser = server.user;
+        options.xcodeServerPassword = server.password;
         options.templateBotName = syncTask.botNameForTemplate;
         options.githubAuthToken = XGASettings.shared.gitHubToken;
         options.dryRun = XGASettings.shared.dryRun;
@@ -387,7 +450,7 @@
     }
 }
 
-- (void) updateXcodeServerStatus:(XGServer*)server {
+- (NSArray*) updateXcodeServerStatus:(XGServer*)server {
     NSError*error = nil;
     NSMutableArray *statusArray = [NSMutableArray new];
     if (server.server.length > 0) {
@@ -402,20 +465,19 @@
         } else {
             for (XGXcodeBot *bot in bots.objectEnumerator) {
                 XGXcodeBotStatus*botStatus = [bot status];
-                __auto_type item = [XGAStatusViewItem itemWithBot:bot status:botStatus];
+                __auto_type item = [XGAStatusViewItem newItemWithBot:bot status:botStatus];
                 if (item) [statusArray addObject:item];
             }
         }
     }
     if (statusArray.count == 0) {
         XGAStatusViewItem *status = [XGAStatusViewItem new];
+        status.server = server.server;
         status.statusImage = [NSImage imageNamed:@"RoundBlue"];
-        status.statusSummary = [APFormattedString boldText:@"< No Xcode servers added yet >"];
+        status.statusSummary = [APFormattedString boldText:@"< No Xcode bots found >"];
         [statusArray addObject:status];
     }
-    BNCPerformBlockOnMainThreadAsync(^{
-        self.arrayController.content = statusArray;
-    });
+    return statusArray;
 }
 
 @end

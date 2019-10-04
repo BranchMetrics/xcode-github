@@ -18,15 +18,17 @@
 * [x] On bots, if last integration# != current# then update the status on GitHub.
 * [x] Clean up code.
 * [x] Refresh Sec -> Min 
-* [x] Rename build products: XcodeGitHub.framework, Xcode-GitHub.app, xcode-github (cli tool), Tests
+* [x] Rename build products: XcodeGitHub.framework, XcodeGitHub.app, xcode-github (cli tool), Tests
 * [x] Don't update 'Products' every time, just when making a release with a build script.
 * [x] Fix testing: fix the project layout, test bundle name, and project bindings.
-* [ ] Add 'New' menu items: Add new server. Add new Xcode bot?
-* [ ] Add 'About...' panel.
+* [x] Add 'Start/Cancel Integration' menu item.
+* [x] Add 'New' menu items: Add new server. Add new Xcode bot?
+* [x] Add 'About...' panel.
 * [ ] Add help.
 ```
  
- ## Help
+## Help
+ 
  * About
    - Problems it solves.
    - What it does.
@@ -74,17 +76,20 @@
 * Maybe: Button: Start / Stop Button
 * Maybe: Button: Download logs
 
-- or - 
+-- or -- 
 
 #### Tree with Columns
 
+```
 | Server | Repo | PRs | Status |
 
 Server
    +------ Repo
-                 +----- PR -- Status
+           +----- PR -- Status
+```
 
 ### Settings Window
+
 * Add server
 * Add GitHub Token
 * Dry run, show debug messages, refresh time

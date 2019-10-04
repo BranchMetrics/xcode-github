@@ -43,7 +43,7 @@ BOOL BNCLogDebuggerIsAttached() {
     size = sizeof(info);
     junk = sysctl(mib, sizeof(mib) / sizeof(*mib), &info, &size, NULL, 0);
     if (junk != 0) {
-        NSLog(@"Program error in BNCDebuggerIsAttached. Junk != 0!");
+        NSLog(@"Program error in BNCLogDebuggerIsAttached. Junk != 0!");
     }
 
     //  We're being debugged if the P_TRACED flag is set.

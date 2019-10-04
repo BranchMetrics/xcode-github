@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -11,7 +11,7 @@
                 <outlet property="gitHubTokenTextField" destination="drg-zm-rHi" id="JRg-vq-3cK"/>
                 <outlet property="refreshTimeFormatter" destination="x9S-89-6UL" id="tGE-0E-OKe"/>
                 <outlet property="removeButton" destination="2m4-7m-gCy" id="Tfc-Sk-i1x"/>
-                <outlet property="serverArrayController" destination="KdM-cZ-U5K" id="Ihu-EI-fA4"/>
+                <outlet property="serverDictionaryController" destination="oga-iZ-0jS" id="DTY-0p-vjh"/>
                 <outlet property="tableView" destination="Llm-sj-s68" id="5Zj-XT-sMN"/>
                 <outlet property="view" destination="9lr-Zd-a11" id="lAU-Ji-RFa"/>
                 <outlet property="window" destination="GJD-mm-6or" id="UWh-UO-wGD"/>
@@ -110,6 +110,14 @@
                                                             </connections>
                                                         </tableCellView>
                                                     </prototypeCellViews>
+                                                    <connections>
+                                                        <binding destination="oga-iZ-0jS" name="value" keyPath="arrangedObjects.value.server" id="FjQ-43-qpO">
+                                                            <dictionary key="options">
+                                                                <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                                                <bool key="NSConditionallySetsEditable" value="NO"/>
+                                                            </dictionary>
+                                                        </binding>
+                                                    </connections>
                                                 </tableColumn>
                                                 <tableColumn width="225" minWidth="40" maxWidth="1000" id="6Qx-5A-2XF">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="User">
@@ -150,22 +158,30 @@
                                                             </connections>
                                                         </tableCellView>
                                                     </prototypeCellViews>
+                                                    <connections>
+                                                        <binding destination="oga-iZ-0jS" name="value" keyPath="arrangedObjects.value.user" id="q01-aO-Niu">
+                                                            <dictionary key="options">
+                                                                <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                                                <bool key="NSConditionallySetsEditable" value="NO"/>
+                                                            </dictionary>
+                                                        </binding>
+                                                    </connections>
                                                 </tableColumn>
                                             </tableColumns>
                                             <connections>
                                                 <action trigger="doubleAction" selector="serverDoubleAction:" target="-2" id="OZA-dZ-KLG"/>
-                                                <binding destination="KdM-cZ-U5K" name="content" keyPath="arrangedObjects" id="Eec-vd-5o2"/>
+                                                <binding destination="oga-iZ-0jS" name="content" keyPath="arrangedObjects.value" id="jaP-Z5-H1N"/>
                                                 <outlet property="delegate" destination="-2" id="8Zv-VG-jBt"/>
                                                 <outlet property="nextKeyView" destination="M6Q-tj-8Lq" id="2tV-WG-GlU"/>
                                             </connections>
                                         </tableView>
                                     </subviews>
                                 </clipView>
-                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="8La-PI-91r">
+                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="8La-PI-91r">
                                     <rect key="frame" x="1" y="95" width="432" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="LRU-zb-eSE">
+                                <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="LRU-zb-eSE">
                                     <rect key="frame" x="224" y="17" width="15" height="102"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
@@ -263,23 +279,6 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FRz-yi-gKD">
-                                <rect key="frame" x="139" y="3" width="188" height="18"/>
-                                <buttonCell key="cell" type="check" title="Show debug log messages." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="cCo-lJ-pTF">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="valueChanged:" target="-2" id="CRN-Pp-L61"/>
-                                    <binding destination="-2" name="value" keyPath="self.settings.showDebugMessages" id="mFg-Vj-3SV">
-                                        <dictionary key="options">
-                                            <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
-                                            <bool key="NSConditionallySetsEnabled" value="NO"/>
-                                        </dictionary>
-                                    </binding>
-                                    <outlet property="nextKeyView" destination="lft-a9-WNu" id="rVs-qh-yz8"/>
-                                </connections>
-                            </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="g28-HK-FSY">
                                 <rect key="frame" x="139" y="27" width="287" height="18"/>
                                 <buttonCell key="cell" type="check" title="Only monitor repos - don't create new bots." bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="RoA-Ed-c90">
@@ -289,23 +288,20 @@
                                 <connections>
                                     <action selector="valueChanged:" target="-2" id="Fc8-BU-uIJ"/>
                                     <binding destination="-2" name="value" keyPath="self.settings.dryRun" id="Ud4-IF-B6K"/>
-                                    <outlet property="nextKeyView" destination="FRz-yi-gKD" id="GJv-AV-Eqt"/>
                                 </connections>
                             </button>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="FRz-yi-gKD" firstAttribute="top" secondItem="g28-HK-FSY" secondAttribute="bottom" constant="10" id="2R7-sM-bJJ"/>
                             <constraint firstItem="g28-HK-FSY" firstAttribute="top" secondItem="l6h-7u-oxM" secondAttribute="bottom" constant="10" id="2l8-gH-SAf"/>
                             <constraint firstItem="lft-a9-WNu" firstAttribute="leading" secondItem="1VB-54-2ze" secondAttribute="leading" id="Doy-Q7-2kv"/>
-                            <constraint firstAttribute="bottom" secondItem="FRz-yi-gKD" secondAttribute="bottom" constant="5" id="Fum-aU-Fin"/>
-                            <constraint firstItem="FRz-yi-gKD" firstAttribute="leading" secondItem="g28-HK-FSY" secondAttribute="leading" id="IZp-EP-RZa"/>
+                            <constraint firstItem="g28-HK-FSY" firstAttribute="leading" secondItem="1VB-54-2ze" secondAttribute="leading" constant="141" id="JSp-Kb-mz9"/>
                             <constraint firstAttribute="trailing" secondItem="g28-HK-FSY" secondAttribute="trailing" id="K3c-x4-quq"/>
                             <constraint firstAttribute="bottom" secondItem="lft-a9-WNu" secondAttribute="bottom" id="Lbe-r0-6pe"/>
                             <constraint firstItem="l6h-7u-oxM" firstAttribute="top" secondItem="1VB-54-2ze" secondAttribute="top" id="ObN-Rg-v9z"/>
                             <constraint firstItem="zN5-A4-6gK" firstAttribute="centerY" secondItem="l6h-7u-oxM" secondAttribute="centerY" id="dF6-40-CnO"/>
-                            <constraint firstItem="FRz-yi-gKD" firstAttribute="leading" secondItem="lft-a9-WNu" secondAttribute="trailing" constant="60" id="mVX-MV-qdT"/>
                             <constraint firstItem="zN5-A4-6gK" firstAttribute="leading" secondItem="l6h-7u-oxM" secondAttribute="trailing" constant="4" id="ooh-M5-621"/>
                             <constraint firstItem="g28-HK-FSY" firstAttribute="leading" secondItem="l6h-7u-oxM" secondAttribute="trailing" constant="-15" id="xPh-fb-sRG"/>
+                            <constraint firstAttribute="bottom" secondItem="g28-HK-FSY" secondAttribute="bottom" constant="29" id="z8w-u2-Q4c"/>
                         </constraints>
                     </customView>
                 </subviews>
@@ -331,7 +327,11 @@
             </connections>
             <point key="canvasLocation" x="-1230.5" y="-873"/>
         </window>
-        <arrayController id="KdM-cZ-U5K"/>
+        <dictionaryController objectClassName="_NSDictionaryControllerKeyValuePair" id="oga-iZ-0jS">
+            <connections>
+                <binding destination="-2" name="contentDictionary" keyPath="settings.servers" id="1BZ-5M-Zyv"/>
+            </connections>
+        </dictionaryController>
     </objects>
     <resources>
         <image name="NSAddTemplate" width="11" height="11"/>

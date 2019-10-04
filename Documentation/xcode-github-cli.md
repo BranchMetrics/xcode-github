@@ -67,6 +67,9 @@ usage: xcode-github [-dhsVv] -g <github-auth-token>
 
   -x, --xcodeserver <xcode-server-domain-name>
       The network name of the xcode server.
+
+The tool returns 0 on success, otherwise a non-zero value.
+
 ```
 
 ## Program Flow
@@ -99,6 +102,7 @@ GitHub "Close PR" Event -> xcode-github deletes Xcode Bot
 ### Xcode Bot Documentation
 
 * [Xcode Bot Documentation](https://developer.apple.com/library/content/documentation/Xcode/Conceptual/XcodeServerAPIReference/Bots.html)
+* Debugging hint: In console include messages with subsystem contains `xcsd`.
 
 #### Xcode Schemes
 * [Xcode URI Scheme Examples](https://cocoaengineering.com/2018/01/01/some-useful-url-schemes-in-xcode-9/)

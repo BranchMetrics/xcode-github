@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (copy)   NSString*_Nullable templateBotName;
 @property (copy)   NSNumber*_Nullable botIsFromTemplate;
 
-+ (instancetype) itemWithBot:(XGXcodeBot*)bot status:(XGXcodeBotStatus*)botStatus;
++ (instancetype) newItemWithBot:(XGXcodeBot*)bot status:(XGXcodeBotStatus*)botStatus;
 
 @property (strong, readonly) XGXcodeBot*_Nullable bot;
 @property (strong, readonly) XGXcodeBotStatus*_Nullable botStatus;
